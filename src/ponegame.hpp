@@ -5,6 +5,6 @@ class Game {
 public:
     Game();
     ~Game();
-}
+};
 
 #endif // PONE_GAME_HPP
