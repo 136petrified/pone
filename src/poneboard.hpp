@@ -15,6 +15,6 @@ public:
     ~Board();
 private:
     int length, width;
-}
+};
 
 #endif // PONE_BOARD_HPP
