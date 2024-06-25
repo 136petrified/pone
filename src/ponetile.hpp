@@ -7,6 +7,7 @@
 class Tile {
 public:
     Tile();
+    Tile(const int &x = 0, const int &y = 0, const std::string &color, const std::string &type);
     ~Tile();
 private:
     struct Attributes {
@@ -16,7 +17,7 @@ private:
         bool isCursor;      // is the cursor on this tile?
     };
 
-    std::vector<std::string> types;
+    std::vector<std::string> types{"empty", "switch", "key", "up", "down", "left", "right", "goal"};
 
     Attributes attr;
 };
