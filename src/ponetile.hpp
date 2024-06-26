@@ -10,16 +10,15 @@ public:
     Tile(const int &x = 0, const int &y = 0, const std::string &color, const std::string &type);
     ~Tile();
 private:
-    struct Attributes {
-        int x, y;           // coordinates of the tile
-        std::string color;
-        std::string type;   // what is the type of this tile?
-        bool isCursor;      // is the cursor on this tile?
-    };
+    // Tile attributes
+    // ---------------------------------------------
+    int x, y;           // coordinates of the tile
+    std::string color;
+    std::string type;   // what is the type of this tile?
+    bool isCursor;      // is the cursor on this tile?
 
-    std::vector<std::string> types{"empty", "switch", "key", "up", "down", "left", "right", "goal"};
 
-    Attributes attr;
+    const std::vector<std::string> types{"empty", "switch", "key", "up", "down", "left", "right", "goal"};
 };
 
 #endif // PONE_TILE_HPP
