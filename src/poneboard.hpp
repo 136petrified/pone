@@ -8,7 +8,7 @@
 class Board {
 public:
     Board();
-    Board(int length, int width);
+    Board(unsigned length, unsigned width);
 
     void setLength(const int &length);
     int getLength() const;
@@ -18,7 +18,7 @@ public:
 
     ~Board();
 private:
-    int length, width;
+    unsigned length, width;     // ! - Remember to except this if not unsigned!
     std::vector<Tile> tiles;    // A list of n * m tiles is needed for
 };
 
