@@ -7,13 +7,13 @@
 class Tile {
 public:
     Tile();
-    Tile(const int &x = 0, const int &y = 0, const std::string &color, const std::string &type);
+    Tile(const unsigned &x = 0, const unsigned &y = 0, const std::string &color, const std::string &type);
     ~Tile();
 
 private:
     // Tile attributes
     // ---------------------------------------------
-    int x, y;           // coordinates of the tile
+    unsigned x, y;           // coordinates of the tile
     std::string color;
     std::string type;   // what is the type of this tile?
     bool isCursor;      // is the cursor on this tile?
