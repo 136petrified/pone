@@ -10,4 +10,8 @@ add_executable(ponegame_tests ponegame_tests.cpp)
 add_executable(ponegui_tests ponegui_tests.cpp)
 add_executable(poneboard_tests poneboard_tests.cpp)
 
-target_link_libraries()
+target_link_libraries(ponetile_tests
+                      ponecursor_tests
+                      ponegame_tests
+                      ponegui_tests
+                      poneboard_tests)
