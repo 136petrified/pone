@@ -4,7 +4,7 @@ project(pone)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_library(googletest)
+include(GoogleTest)
 enable_testing()
 
 add_executable(
@@ -36,6 +36,13 @@ target_link_libraries(ponetile_tests
                       ponecursor_tests
                       ponegame_tests
                       ponegui_tests
-                      poneboard_tests)
+                      poneboard_tests
+                      Gtest::gtest_main)
 
-target_link_directories(googletest)
+gtest_discover_tests(
+                      ponetile_tests
+                      ponecursor_tests
+                      ponegame_tests
+                      ponegui_tests
+                      poneboard_tests
+)
