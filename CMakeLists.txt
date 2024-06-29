@@ -4,32 +4,33 @@ project(pone)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+add_directory(googletest)
 include(GoogleTest)
 enable_testing()
 
 add_executable(
 ponetile_tests 
-ponetile_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
 )
 
 add_executable(
 ponecursor_tests
-ponetile_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
 )
 
 add_executable(
 ponegame_tests
-ponegame_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
 )
 
 add_executable(
 ponegui_tests
-ponegui_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
 )
 
 add_executable(
 poneboard_tests
-poneboard_tests.cpp
+${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 )
 
 target_link_libraries(ponetile_tests
