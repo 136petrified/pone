@@ -6,8 +6,30 @@
 
 class Tile {
 public:
+    // Tile constructors
+    // ---------------------------------------------
     Tile();
     Tile(const unsigned &x = 0, const unsigned &y = 0, const std::string &color, const std::string &type);
+
+    // Tile getter/setter functions
+    // ---------------------------------------------
+    unsigned getX() const;
+    void setX();
+
+    unsigned getY() const;
+    void setY();
+
+    std::string getColor() const;
+    void setColor();
+
+    std::string getType() const;
+    void setType();
+
+    bool getCursorStatus() const;
+    void setCursorStatus();
+
+    // Tile destructor
+    // ---------------------------------------------
     ~Tile();
 
 private:
