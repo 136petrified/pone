@@ -23,7 +23,6 @@ private:
     // Cursor attributes
     // ---------------------------------------------
     unsigned x, y;      // where is the cursor?
-
 };
 
 #endif // PONE_CURSOR_HPP
