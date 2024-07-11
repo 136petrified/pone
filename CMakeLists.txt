@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.30.0)
 project(pone)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -39,3 +39,10 @@ target_link_libraries(ponetile_tests
                       ponegui_tests
                       poneboard_tests
                       Gtest::gtest_main)
+
+gtest_discover_tests(ponetile_tests
+                     ponecursor_tests
+                     ponegame_tests
+                     ponegui_tests
+                     poneboard_tests 
+)

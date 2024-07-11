@@ -35,7 +35,7 @@ public:
 private:
     // Tile attributes
     // ---------------------------------------------
-    unsigned x, y;           // coordinates of the tile
+    unsigned x, y;      // coordinates of the tile
     std::string color;
     std::string type;   // what is the type of this tile?
     bool isCursor;      // is the cursor on this tile?
