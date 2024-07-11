@@ -10,7 +10,14 @@
             "name": "default",
             "displayName": "Default Config",
             "description": "Default build using Ninja generator",
-            "generator": "Ninja"
+            "generator": "Ninja",
+            "binaryDir": "binaryDir",
+            "cacheVariables": {
+                "type": "BOOL",
+                "value": "OFF"
+            },
+            "cmakeExecutable": "C:\\Users\\conne\\cmake-3.30.0-rc4-windows-x86_64\\cmake-3.30.0-rc4-windows-x86_64\\bin\\cmake.exe",
+            
         }
     ]
 }
