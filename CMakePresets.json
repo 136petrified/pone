@@ -18,9 +18,9 @@
             },
             "environment": {
                 "MY_ENVIRONMENT_VARIABLE": "Test",
-                "PATH": "$env{HOME}\\ninja\\bin:$penv{PATH}"
+                "PATH": "$env{HOME}/ninja-win/ninja.exe"
             },
-            "cmakeExecutable": "$env{HOME}\\cmake-3.30.0-rc4-windows-x86_64\\cmake-3.30.0-rc4-windows-x86_64\\bin\\cmake.exe"
+            "cmakeExecutable": "$env{HOME}/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/bin/cmake.exe"
         }
     ],
     "buildPresets": [

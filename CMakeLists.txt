@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.30.0)
+set(CMAKE_MAKE_PROGRAM ninja)
 project(pone)
 
 set(CMAKE_CXX_STANDARD 20)
