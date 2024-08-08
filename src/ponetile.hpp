@@ -9,24 +9,24 @@ public:
     // Tile constructors
     // ---------------------------------------------
     Tile();
-    Tile(const unsigned &x = 0, const unsigned &y = 0, const std::string &color, const std::string &type);
+    Tile(const unsigned &x, const unsigned &y, const std::string &color, const std::string &type);
 
     // Tile getter/setter functions
     // ---------------------------------------------
     unsigned getX() const;
-    void setX();
+    void setX(const unsigned &x);
 
     unsigned getY() const;
-    void setY();
+    void setY(const unsigned &y);
 
     std::string getColor() const;
-    void setColor();
+    void setColor(const std::string &color);
 
     std::string getType() const;
-    void setType();
+    void setType(const std::string &type);
 
     bool getCursorStatus() const;
-    void setCursorStatus();
+    void setCursorStatus(bool status);
 
     // Tile destructor
     // ---------------------------------------------
