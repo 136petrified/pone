@@ -65,3 +65,8 @@ bool Tile::isCursor() const {
 bool Tile::isEmpty() const {
     return type == "empty";
 }
+
+// Tile destructor
+// ---------------------------------------------
+Tile::~Tile()
+{}
