@@ -25,3 +25,12 @@ unsigned Tile::getX() const {
 void Tile::setX(const unsigned &x) {
     this->x = x;
 }
+
+unsigned Tile::getY() const {
+    return y;
+}
+
+void Tile::setY(const unsigned &y) {
+    this->y = y;
+}
+

@@ -28,6 +28,11 @@ public:
     bool getCursorStatus() const;
     void setCursorStatus(bool status);
 
+    // Tile functions
+    // ---------------------------------------------
+    bool isCollision() const;
+    bool isEmpty() const;
+
     // Tile destructor
     // ---------------------------------------------
     ~Tile();
