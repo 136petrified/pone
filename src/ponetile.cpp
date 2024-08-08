@@ -6,7 +6,6 @@
 
 // Tile constructors
 // ---------------------------------------------
-
 Tile::Tile() : x{0}, y{0}, color{"none"}, type{"empty"}
 {}
 
@@ -17,7 +16,6 @@ Tile::Tile(const unsigned &x, const unsigned &y,
 
 // Tile getter/setter functions
 // ---------------------------------------------
-
 unsigned Tile::getX() const {
     return x;
 }
@@ -50,3 +48,20 @@ void Tile::setType(const std::string &type) {
     this->type = type;
 }
 
+void Tile::setCursor(bool c) {
+    cursor = c;
+}
+
+// Tile functions
+// ---------------------------------------------
+bool Tile::isCollision() const {
+    return type == "collision";
+}
+
+bool Tile::isCursor() const {
+    return cursor;
+}
+
+bool Tile::isEmpty() const {
+    return type == "empty";
+}

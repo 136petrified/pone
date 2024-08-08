@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+
 class Tile {
 public:
     // Tile constructors
@@ -25,12 +26,12 @@ public:
     std::string getType() const;
     void setType(const std::string &type);
 
-    bool getCursorStatus() const;
-    void setCursorStatus(bool status);
+    void setCursor(bool c);
 
     // Tile functions
     // ---------------------------------------------
     bool isCollision() const;
+    bool isCursor() const;
     bool isEmpty() const;
 
     // Tile destructor
@@ -43,7 +44,7 @@ private:
     unsigned x, y;      // coordinates of the tile
     std::string color;
     std::string type;   // what is the type of this tile?
-    bool isCursor;      // is the cursor on this tile?
+    bool cursor;        // is the cursor on this tile?
 
 
     // Tile constants
