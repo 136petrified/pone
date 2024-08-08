@@ -34,3 +34,19 @@ void Tile::setY(const unsigned &y) {
     this->y = y;
 }
 
+std::string Tile::getColor() const {
+    return color;
+}
+
+void Tile::setColor(const std::string &color) {
+    this->color = color;
+}
+
+std::string Tile::getType() const {
+    return type;
+}
+
+void Tile::setType(const std::string &type) {
+    this->type = type;
+}
+
