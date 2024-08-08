@@ -6,6 +6,7 @@ public:
     // Cursor constructor
     // ---------------------------------------------  
     Cursor();
+    Cursor(const unsigned &x, const unsigned &y);
 
     // Cursor setter/getter functions
     // ---------------------------------------------
