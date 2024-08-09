@@ -10,6 +10,7 @@
 class Board {
 public:
     // Board constructors
+    // ---------------------------------------------
     Board();
     Board(unsigned length, unsigned width);
 
@@ -21,10 +22,19 @@ public:
     void setWidth(const int &width);
     int getWidth() const;
 
+    Tile *getTile(const std::string &name);
+    GATE *getGate(const std::string &name);
+
     // Board functions
     // ---------------------------------------------
-    void insTile();
+    void insTile(int pos, Tile *t);
+    void remTile(Tile *t);
 
+    void insGate(int pos, GATE *g);
+    void remGate(GATE *g);
+
+    // Board debug functions
+    // ---------------------------------------------
 
 
     ~Board();
