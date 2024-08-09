@@ -5,6 +5,8 @@
 
 #include "ponetile.hpp"
 
+#define GATE std::pair<Tile*, Tile*>
+
 class Gate {
 public:
     // Gate constructors
@@ -20,8 +22,8 @@ public:
     void setTile2(Tile *t2);
     Tile *getTile2() const;
 
-    void setGate(std::pair<Tile*, Tile*> gate);
-    std::pair<Tile*, Tile*> getGate() const;
+    void setGate(GATE gate);
+    GATE getGate() const;
 
     // Gate destructor
     ~Gate();
@@ -29,7 +31,7 @@ public:
 private:
     // Gate attributes
     // ---------------------------------------------
-    std::pair<Tile*, Tile*> gate; // Is a gate between two adjacent tiles.
+    GATE gate; // Is a gate between two adjacent tiles.
 };
 
 #endif // __PONE_GATE_HPP
