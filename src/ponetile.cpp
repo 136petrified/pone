@@ -52,6 +52,22 @@ void Tile::setCursor(bool c) {
     cursor = c;
 }
 
+unsigned Tile::getID() const {
+    return id;
+}
+
+void Tile::setID(unsigned id) {
+    this->id = id;
+}
+
+std::string Tile::getName() const {
+    return name;
+}
+
+void Tile::setName(const std::string &name) {
+    this->name = name;
+}
+
 // Tile functions
 // ---------------------------------------------
 bool Tile::isCollision() const {

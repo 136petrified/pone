@@ -28,6 +28,12 @@ public:
 
     void setCursor(bool c);
 
+    unsigned getID() const;
+    void setID(unsigned id);
+
+    std::string getName() const;
+    void setName(const std::string &name);
+
     // Tile functions
     // ---------------------------------------------
     bool isCollision() const;
@@ -45,6 +51,8 @@ private:
     std::string color;
     std::string type;   // what is the type of this tile?
     bool cursor;        // is the cursor on this tile?
+    unsigned id;
+    std::string name;
 
 
     // Tile constants
