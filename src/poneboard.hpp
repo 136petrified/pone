@@ -30,10 +30,10 @@ public:
     
     // Board functions
     // ---------------------------------------------
-    void insTile(int pos, Tile *t);
+    void insTile(int pos = -1, Tile *t);
     void remTile(Tile *t);
 
-    void insGate(int pos, Gate *g);
+    void insGate(int pos = -1, Gate *g);
     void remGate(Gate *g);
 
     // Board debug functions

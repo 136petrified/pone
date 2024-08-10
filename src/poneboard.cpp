@@ -2,6 +2,8 @@
 *   Modified: AUG 9 2024
 */
 
+#include <iostream>
+#include <iterator>
 #include <vector>
 
 #include "poneboard.hpp"
@@ -11,16 +13,15 @@
 // Board constructors
 // ---------------------------------------------
 Board::Board() :
-    length{0}, width{0}, tiles{std::vector<Tile*>()}, gates{std::vector<GATE*>()}, currentTile{nullptr}
+    length{0}, width{0}, tiles{std::vector<Tile*>()}, gates{std::vector<Gate*>()}, currentTile{nullptr}
 {}
 
 Board::Board(unsigned length, unsigned width) :
-    length{length}, width{width}, tiles{std::vector<Tile*>()}, gates{std::vector<GATE*>()}, currentTile{nullptr}
+    length{length}, width{width}, tiles{std::vector<Tile*>()}, gates{std::vector<Gate*>()}, currentTile{nullptr}
 {}
 
 // Board getter/setter functions
 // ---------------------------------------------
-
 int Board::getLength() const {
     return length;
 }
@@ -51,4 +52,31 @@ Gate *Board::getGate(const std::string &name) {
     }
 
     return nullptr; // If no GATE* is found
+}
+
+Tile *Board::getCurrentTile() const {
+    return currentTile;
+}
+
+void Board::setCurrentTile(Tile *t) {
+    currentTile = t;
+}
+
+// Board functions
+// ---------------------------------------------
+void Board::insTile(int pos, Tile *t) {
+    // Leave pos as -1 to insert at last position by default
+    if (pos == -1) {
+        tiles.push_back(t);
+    } else if (pos < tiles.size() && pos > -2) {
+        auto it = tiles.begin(),
+             tilepos = std::next(it, pos);
+        tiles.insert(tilepos, t);
+    } else {
+        std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
+    }
+}
+
+void Board::remTile(Tile *t) {
+    
 }
