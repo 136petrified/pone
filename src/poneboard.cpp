@@ -2,6 +2,7 @@
 *   Modified: AUG 9 2024
 */
 
+#include <algorithm>
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -39,16 +40,16 @@ void Board::setWidth(const int &width) {
 }
 
 Tile *Board::getTile(const std::string &name) {
-    for (Tile *t : tiles) {
-        if (t->getName() == name) return t;
+    for (Tile *tile : tiles) {
+        if (tile->getName() == name) return tile;
     }
     
     return nullptr; // If no Tile* is found
 }
 
 Gate *Board::getGate(const std::string &name) {
-    for (Gate *g : gates) { 
-        if (g->getName() == name) return g;
+    for (Gate *gate : gates) { 
+        if (gate->getName() == name) return gate;
     }
 
     return nullptr; // If no GATE* is found
@@ -69,8 +70,7 @@ void Board::insTile(int pos, Tile *t) {
     if (pos == -1) {
         tiles.push_back(t);
     } else if (pos < tiles.size() && pos > -2) {
-        auto it = tiles.begin(),
-             tilepos = std::next(it, pos);
+        auto tilepos = it + pos;
         tiles.insert(tilepos, t);
     } else {
         std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
@@ -78,5 +78,25 @@ void Board::insTile(int pos, Tile *t) {
 }
 
 void Board::remTile(Tile *t) {
-    
+    auto tilepos = std::find(tiles.begin(), tiles.end(), t);
+    if (tilepos != tiles.end()) tiles.erase(tilepos);
+    else std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
+}
+
+void Board::insGate(int pos, Gate *g) {
+    // Leave pos as -1 to insert at last position by default
+    if (pos == -1) {
+        gates.push_back(g);
+    } else if (pos < tiles.size() && pos > -2) {
+        auto tilepos = it + pos;
+        tiles.insert(tilepos, t);
+    } else {
+        std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
+    }
+}
+
+void Board::remGate(Gate *g) {
+    auto gatepos = std::find(gates.begin(), gates.end(), g);
+    if (gatepos != gates.end()) gates.erase(gatepos);
+    else std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
 }

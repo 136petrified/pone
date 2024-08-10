@@ -82,6 +82,10 @@ bool Tile::isEmpty() const {
     return type == "empty";
 }
 
+bool Tile::operator==(const Tile &other) {
+    return this->name == other.name;
+}
+
 // Tile destructor
 // ---------------------------------------------
 Tile::~Tile()

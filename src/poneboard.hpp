@@ -36,6 +36,9 @@ public:
     void insGate(int pos = -1, Gate *g);
     void remGate(Gate *g);
 
+    void load();
+    void save();
+
     // Board debug functions
     // ---------------------------------------------
 

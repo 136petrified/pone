@@ -49,6 +49,14 @@ void Gate::setID(unsigned id) {
     this->id = id;
 }
 
+std::string Gate::getColor() const {
+    return color;
+}
+
+void Gate::setColor(const std::string &color) {
+    this->color = color;
+}
+
 std::string Gate::getName() const {
     return name;
 }

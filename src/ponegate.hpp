@@ -25,6 +25,9 @@ public:
     GATE getGate() const;
     void setGate(GATE gate);
 
+    std::string getColor() const;
+    void setColor(const std::string &color);
+
     unsigned getID() const;
     void setID(unsigned id);
 
@@ -38,6 +41,7 @@ private:
     // Gate attributes
     // ---------------------------------------------
     GATE gate; // Is a gate between two adjacent tiles.
+    std::string color;
     unsigned id;
     std::string name;
 };

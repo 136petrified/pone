@@ -40,6 +40,8 @@ public:
     bool isCursor() const;
     bool isEmpty() const;
 
+    bool operator==(const Tile &other);
+
     // Tile destructor
     // ---------------------------------------------
     ~Tile();
