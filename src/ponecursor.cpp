@@ -31,6 +31,10 @@ void Cursor::setY(const unsigned &y) {
     this->y = y;
 }
 
+Tile *Cursor::getTile(const Board &b) const {
+   return b.getCurrentTile();
+}
+
 // Cursor destructor
 // ---------------------------------------------
 Cursor::~Cursor()

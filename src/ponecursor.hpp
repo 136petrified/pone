@@ -1,6 +1,9 @@
 #ifndef PONE_CURSOR_HPP
 #define PONE_CURSOR_HPP
 
+#include "poneboard.hpp"
+#include "ponetile.hpp"
+
 class Cursor {
 public:
     // Cursor constructor
@@ -8,13 +11,15 @@ public:
     Cursor();
     Cursor(const unsigned &x = 0, const unsigned &y = 0);
 
-    // Cursor setter/getter functions
+    // Cursor getter/setter functions
     // ---------------------------------------------
     unsigned getX() const;
     void setX(const unsigned &x);
 
     unsigned getY() const;
     void setY(const unsigned &y);
+
+    Tile *getTile(const Board &b) const;
 
     // Cursor destructor
     // ---------------------------------------------
