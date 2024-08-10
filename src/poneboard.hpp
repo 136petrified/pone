@@ -1,5 +1,5 @@
-#ifndef __PONE_BOARD_HPP
-#define __PONE_BOARD_HPP
+#ifndef PONE_BOARD_HPP
+#define PONE_BOARD_HPP
 
 #include <utility>
 #include <vector>
@@ -44,4 +44,4 @@ private:
     std::vector<GATE*> gates;
 };
 
-#endif // __PONE_BOARD_HPP
+#endif // PONE_BOARD_HPP

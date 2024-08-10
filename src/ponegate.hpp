@@ -1,5 +1,5 @@
-#ifndef __PONE_GATE_HPP
-#define __PONE_GATE_HPP
+#ifndef PONE_GATE_HPP
+#define PONE_GATE_HPP
 
 #include <utility>
 
@@ -42,4 +42,4 @@ private:
     std::string name;
 };
 
-#endif // __PONE_GATE_HPP
+#endif // PONE_GATE_HPP
