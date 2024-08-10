@@ -70,7 +70,7 @@ void Board::insTile(int pos, Tile *t) {
     if (pos == -1) {
         tiles.push_back(t);
     } else if (pos < tiles.size() && pos > -2) {
-        auto tilepos = it + pos;
+        auto tilepos = tiles.begin() + pos;
         tiles.insert(tilepos, t);
     } else {
         std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
@@ -87,9 +87,9 @@ void Board::insGate(int pos, Gate *g) {
     // Leave pos as -1 to insert at last position by default
     if (pos == -1) {
         gates.push_back(g);
-    } else if (pos < tiles.size() && pos > -2) {
-        auto tilepos = it + pos;
-        tiles.insert(tilepos, t);
+    } else if (pos < gates.size() && pos > -2) {
+        auto gatepos = gates.begin() + pos;
+        gates.insert(gatepos, g);
     } else {
         std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
     }
@@ -99,4 +99,12 @@ void Board::remGate(Gate *g) {
     auto gatepos = std::find(gates.begin(), gates.end(), g);
     if (gatepos != gates.end()) gates.erase(gatepos);
     else std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
+}
+
+void Board::load() {
+
+}
+
+void Board::save() {
+
 }
