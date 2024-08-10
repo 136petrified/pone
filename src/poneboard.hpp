@@ -23,7 +23,7 @@ public:
     void setWidth(const int &width);
 
     Tile *getTile(const std::string &name);
-    GATE *getGate(const std::string &name);
+    Gate *getGate(const std::string &name);
 
     Tile *getCurrentTile() const;
     void setCurrentTile(Tile *t);
@@ -33,18 +33,20 @@ public:
     void insTile(int pos, Tile *t);
     void remTile(Tile *t);
 
-    void insGate(int pos, GATE *g);
-    void remGate(GATE *g);
+    void insGate(int pos, Gate *g);
+    void remGate(Gate *g);
 
     // Board debug functions
     // ---------------------------------------------
 
-
+    // Board destructor
+    // ---------------------------------------------
     ~Board();
+
 private:
     unsigned length, width;     // ! - Remember to except this if not unsigned!
     std::vector<Tile*> tiles;   // A list of n * m tiles is needed for
-    std::vector<GATE*> gates;
+    std::vector<Gate*> gates;
 
     Tile *currentTile;          // track the current tile being pointed by cursor
 };
