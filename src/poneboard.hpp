@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 
+#include "ponec"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -41,7 +42,15 @@ public:
 
     // Board commands
     // ---------------------------------------------
-    
+    void moveCursorUP(Cursor *c);
+    void moveCursorDOWN(Cursor *c);
+    void moveCursorLEFT(Cursor *c);
+    void moveCursorRIGHT(Cursor *c);
+
+    bool checkMoveUP(Cursor *c);
+    bool checkMoveDOWN(Cursor *c);
+    bool checkMoveLEFT(Cursor *c);
+    bool checkMoveRIGHT(Cursor *c);
 
     // Board debug functions
     // ---------------------------------------------
