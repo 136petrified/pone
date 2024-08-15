@@ -1,15 +1,11 @@
 /*  Created: JUN 23 2024
-*   Modified: AUG 10 2024
+*   Modified: AUG 15 2024
 */
 
 #include <iostream>
 
+#include "poneconst.hpp"
 #include "ponegame.hpp"
-
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
 
 // Game constructor
 // ---------------------------------------------

@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "poneboard.hpp"
+#include "poneconst.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
