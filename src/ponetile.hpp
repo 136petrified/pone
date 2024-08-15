@@ -39,7 +39,7 @@ public:
     bool isCollision() const;
     bool isCursor() const;
     bool isEmpty() const;
-    bool isType() const;
+    bool isType(const std::string &type) const;
 
     bool operator==(const Tile &other);
 
