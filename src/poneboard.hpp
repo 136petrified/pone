@@ -27,6 +27,7 @@ public:
     Tile *getTile(const Tile *t, int direction);
 
     Gate *getGate(const std::string &name);
+    Tile *getGate(const Tile *t, int direction);
 
     Tile *getCurrentTile() const;
     void setCurrentTile(Tile *t);
