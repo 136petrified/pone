@@ -13,7 +13,7 @@ public:
     // Board constructors
     // ---------------------------------------------
     Board();
-    Board(unsigned length, unsigned width);
+    Board(const unsigned &length, const unsigned &width);
 
     // Board getter/setter functions
     // ---------------------------------------------

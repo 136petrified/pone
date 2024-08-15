@@ -1,5 +1,5 @@
 /*  Created: JUN 23 2024
-*   Modified: AUG 10 2024
+*   Modified: AUG 15 2024
 */
 
 #include <algorithm>
@@ -17,7 +17,7 @@ Board::Board() :
     length{0}, width{0}, tiles{std::vector<Tile*>()}, gates{std::vector<Gate*>()}, currentTile{nullptr}
 {}
 
-Board::Board(unsigned length, unsigned width) :
+Board::Board(const unsigned &length, const unsigned &width) :
     length{length}, width{width}, tiles{std::vector<Tile*>()}, gates{std::vector<Gate*>()}, currentTile{nullptr}
 {}
 
@@ -107,4 +107,11 @@ void Board::load() {
 
 void Board::save() {
 
+}
+
+void Board::moveCursorUP(Cursor *c) {
+    currentTile->setCursor(false);
+    c->setY(c->getY() + 1);
+    currentTile = getTile(currentTile, UP);
+    currentTile->setCursor(true)
 }
