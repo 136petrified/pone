@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include "ponec"
+#include "ponecursor.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -24,6 +24,8 @@ public:
     void setWidth(const int &width);
 
     Tile *getTile(const std::string &name);
+    Tile *getTile(const Tile *t, int direction);
+
     Gate *getGate(const std::string &name);
 
     Tile *getCurrentTile() const;

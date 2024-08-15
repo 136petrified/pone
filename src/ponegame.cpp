@@ -17,7 +17,7 @@
 Game::Game() : board{nullptr}, cursor{nullptr}
 {}
 
-void Game::setup(unsigned length, unsigned width) {
+void Game::setup(const unsigned &length, const unsigned &width) {
     if (length > 0 && width > 0) {
         board = & Board(length, width);
         cursor = & Cursor(1, 1);
