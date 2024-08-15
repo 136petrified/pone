@@ -110,9 +110,18 @@ void Board::save() {
 
 }
 
-void Board::moveCursorUP(Cursor *c) {
+void Board::moveCursor(Cursor *c, const int &direction) {
     currentTile->setCursor(false);
-    c->setY(c->getY() + 1);
-    currentTile = getTile(currentTile, UP);
-    currentTile->setCursor(true)
+    switch (direction) {
+        case UP:
+            c->setY(c->getY() + 1); break;
+        case DOWN:
+            c->setY(c->getY() - 1); break;
+        case LEFT:
+            c->setX(c->getX() - 1); break;
+        case RIGHT:
+            c->setX(c->getX() + 1); break;
+    }
+    currentTile = getTile(currentTile, direction);
+    currentTile->setCursor(true);
 }

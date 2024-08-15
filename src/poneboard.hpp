@@ -24,10 +24,10 @@ public:
     void setWidth(const int &width);
 
     Tile *getTile(const std::string &name);
-    Tile *getTile(const Tile *t, int direction);
+    Tile *getTile(const Tile *t, const int &direction);
 
     Gate *getGate(const std::string &name);
-    Tile *getGate(const Tile *t, int direction);
+    Tile *getGate(const Tile *t, const int &direction);
 
     Tile *getCurrentTile() const;
     void setCurrentTile(Tile *t);
@@ -45,15 +45,8 @@ public:
 
     // Board commands
     // ---------------------------------------------
-    void moveCursorUP(Cursor *c);
-    void moveCursorDOWN(Cursor *c);
-    void moveCursorLEFT(Cursor *c);
-    void moveCursorRIGHT(Cursor *c);
-
-    bool checkMoveUP(Cursor *c);
-    bool checkMoveDOWN(Cursor *c);
-    bool checkMoveLEFT(Cursor *c);
-    bool checkMoveRIGHT(Cursor *c);
+    void moveCursor(Cursor *c, const int &direction);
+    bool checkMove(Cursor *c, const int &direction);
 
     // Board debug functions
     // ---------------------------------------------
