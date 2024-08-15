@@ -121,7 +121,19 @@ void Board::moveCursor(Cursor *c, const int &direction) {
             c->setX(c->getX() - 1); break;
         case RIGHT:
             c->setX(c->getX() + 1); break;
+        default:
+            std::cerr << "[ERROR]: Move cursor failed given direction "
+                      << direction << std::endl;
+            break;
     }
     currentTile = getTile(currentTile, direction);
     currentTile->setCursor(true);
+}
+
+bool Board::checkMove(Cursor *c, const int &direction) {
+    // Check collision first
+    Tile *target = getTile(currentTile, direction);
+    if (target->isCollision()) 
+        return false;
+    else if (currentTile)
 }

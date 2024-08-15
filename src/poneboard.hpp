@@ -23,11 +23,13 @@ public:
     int getWidth() const;
     void setWidth(const int &width);
 
-    Tile *getTile(const std::string &name);
-    Tile *getTile(const Tile *t, const int &direction);
+    Tile *getTile(const std::string &name) const;
+    Tile *getTile(const Tile *t, const int &direction) const;
 
     Gate *getGate(const std::string &name);
-    Tile *getGate(const Tile *t, const int &direction);
+    Gate *getGate(const Tile *t, const int &direction) const;
+    Gate *getGate(const Tile *t1, const Tile *t2) const;
+
 
     Tile *getCurrentTile() const;
     void setCurrentTile(Tile *t);
