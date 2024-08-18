@@ -135,5 +135,9 @@ bool Board::checkMove(Cursor *c, const int &direction) {
     Tile *target = getTile(currentTile, direction);
     if (target->isCollision()) 
         return false;
-    else if (currentTile)
+    else if (getGate(currentTile, target)) {
+        return false;
+    }
+
+    return true;
 }
