@@ -38,7 +38,12 @@ public:
     // Board functions
     // ---------------------------------------------
 
-    // TODO: make a function that checks for tile or gate duplicates
+    bool compareByTileCoordinate() const;
+    bool compareByTileName() const;
+    bool compareByTileReference() const;
+
+    bool hasDupTiles() const;
+    bool hasDupGates() const;
 
     void insTile(int pos = -1, Tile *t);
     void remTile(Tile *t);

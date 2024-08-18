@@ -155,6 +155,22 @@ Gate *Board::getGate(const Tile *t, const int &direction) const {
 
 // Board functions
 // ---------------------------------------------
+
+bool Board::hasDupTiles() const {
+    std::vector<Tile*> compare{tiles};
+    Tile *currCompare;
+    int c;
+
+    while (compare.size()) {
+        currCompare = compare.front(); 
+        c = 0;
+        for (const Tile *t : tiles) {
+            if (currCompare->getX() == t->getX()
+                && currCompare->getY() == t->getY()
+        }
+    }
+}
+
 void Board::insTile(int pos, Tile *t) {
     // Leave pos as -1 to insert at last position by default
     if (pos == -1) {
