@@ -27,9 +27,9 @@ public:
     Tile *getTile(const unsigned &x, const unsigned &y) const;
     Tile *getTile(const Tile *t, const int &direction) const;
 
-    Gate *getGate(const std::string &name);
-    Gate *getGate(const Tile *t, const int &direction) const;
+    Gate *getGate(const std::string &name) const;
     Gate *getGate(const Tile *t1, const Tile *t2) const;
+    Gate *getGate(const Tile *t, const int &direction) const;
 
 
     Tile *getCurrentTile() const;
@@ -37,6 +37,9 @@ public:
     
     // Board functions
     // ---------------------------------------------
+
+    // TODO: make a function that checks for tile or gate duplicates
+
     void insTile(int pos = -1, Tile *t);
     void remTile(Tile *t);
 

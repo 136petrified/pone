@@ -1,5 +1,5 @@
 /*  Created: JUN 23 2024
-*   Modified: AUG 17 2024
+*   Modified: AUG 18 2024
 */
 
 #include <algorithm>
@@ -48,7 +48,7 @@ Tile *Board::getTile(const std::string &name) {
     return nullptr; // If no Tile* is found
 }
 
-Gate *Board::getGate(const std::string &name) {
+Gate *Board::getGate(const std::string &name) const {
     for (Gate *gate : gates) { 
         if (gate->getName() == name) return gate;
     }
@@ -81,6 +81,11 @@ Tile *Board::getTile(const unsigned &x, const unsigned &y) const {
 }
 
 Tile *Board::getTile(const Tile *t, const int &direction) const {
+    if (!t) {
+        // Throw an exception here
+        std::cerr << "[ERROR]: Tile does not exist." << std::endl;
+        return nullptr;
+    }
 
     switch (direction) {
         case UP:
@@ -92,7 +97,7 @@ Tile *Board::getTile(const Tile *t, const int &direction) const {
         case RIGHT:
             return getTile(t->getX() - 1, t->getY());
         default:
-            std::cerr << "[ERROR]: Move cursor failed given direction "
+            std::cerr << "[ERROR]: Invalid direction: "
                       << direction << std::endl;
             break;
     }
@@ -100,7 +105,52 @@ Tile *Board::getTile(const Tile *t, const int &direction) const {
     return nullptr;
 }
 
-Gate *getGate()
+Gate *Board::getGate(const std::string &name) const {
+    for (Gate *g : gates) {
+        if (g->getName() == name) return g;
+    }
+
+    return nullptr;
+}
+
+Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
+    if (!t1 || !t2) { // Throw exception here
+        std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument." 
+                  << std::endl;
+    }
+
+    for (Gate *g : gates) {
+        if (g->getTile1() == t1 && g->getTile2() == t2) return g;
+    }
+
+    return nullptr;
+}
+
+Gate *Board::getGate(const Tile *t, const int &direction) const {
+
+    if (!t) {
+        // Throw an exception here
+        std::cerr << "[ERROR]: Tile does not exist." << std::endl;
+        return nullptr;
+    }
+    
+    switch (direction) {
+        case UP:
+            return getGate(currentTile, getTile(currentTile, UP));
+        case DOWN:
+            return getGate(currentTile, getTile(currentTile, DOWN));
+        case LEFT:
+            return getGate(currentTile, getTile(currentTile, LEFT));
+        case RIGHT:
+            return getGate(currentTile, getTile(currentTile, RIGHT));
+        default:
+            std::cerr << "[ERROR]: Invalid direction: "
+                      << direction << std::endl;
+            break;
+
+        return nullptr;
+    }
+}
 
 
 // Board functions
@@ -148,6 +198,9 @@ void Board::load() {
 void Board::save() {
 
 }
+
+// Board commands
+// ---------------------------------------------
 
 void Board::moveCursor(Cursor *c, const int &direction) {
     currentTile->setCursor(false);
