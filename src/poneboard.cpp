@@ -72,6 +72,36 @@ Tile *Board::getTile(const std::string &name) const {
     return nullptr // Return nullptr if not found
 }
 
+Tile *Board::getTile(const unsigned &x, const unsigned &y) const {
+    for (Tile *t : tiles) {
+        if (t->getX() == x && t->getY() == y) return t;
+    }
+
+    return nullptr;
+}
+
+Tile *Board::getTile(const Tile *t, const int &direction) const {
+
+    switch (direction) {
+        case UP:
+            return getTile(t->getX(), t->getY() + 1);
+        case DOWN:
+            return getTile(t->getX(), t->getY() - 1);
+        case LEFT:
+            return getTile(t->getX() + 1, t->getY());
+        case RIGHT:
+            return getTile(t->getX() - 1, t->getY());
+        default:
+            std::cerr << "[ERROR]: Move cursor failed given direction "
+                      << direction << std::endl;
+            break;
+    }
+
+    return nullptr;
+}
+
+Gate *getGate()
+
 
 // Board functions
 // ---------------------------------------------
@@ -135,6 +165,7 @@ void Board::moveCursor(Cursor *c, const int &direction) {
                       << direction << std::endl;
             break;
     }
+
     currentTile = getTile(currentTile, direction);
     currentTile->setCursor(true);
 }
