@@ -24,6 +24,7 @@ public:
     void setWidth(const int &width);
 
     Tile *getTile(const std::string &name) const;
+    Tile *getTile(const unsigned &x, const unsigned &y) const;
     Tile *getTile(const Tile *t, const int &direction) const;
 
     Gate *getGate(const std::string &name);

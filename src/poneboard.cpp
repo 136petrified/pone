@@ -64,6 +64,15 @@ void Board::setCurrentTile(Tile *t) {
     currentTile = t;
 }
 
+Tile *Board::getTile(const std::string &name) const {
+    for (Tile *t : tiles) {
+        if (t->getName() == name) return t;
+    }
+
+    return nullptr // Return nullptr if not found
+}
+
+
 // Board functions
 // ---------------------------------------------
 void Board::insTile(int pos, Tile *t) {
