@@ -139,5 +139,5 @@ bool Board::checkMove(Cursor *c, const int &direction) {
         return false;
     }
 
-    return true;
+    return true; 
 }
