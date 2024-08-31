@@ -3,6 +3,7 @@
 */
 
 #include <algorithm>
+#include <deque>
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -15,11 +16,11 @@
 // Board constructors
 // ---------------------------------------------
 Board::Board() :
-    length{0}, width{0}, tiles{std::vector<Tile*>()}, gates{std::vector<Gate*>()}, currentTile{nullptr}
+    length{0}, width{0}, tiles{TileList()}, gates{GateList()}, currentTile{nullptr}
 {}
 
 Board::Board(const unsigned &length, const unsigned &width) :
-    length{length}, width{width}, tiles{std::vector<Tile*>()}, gates{std::vector<Gate*>()}, currentTile{nullptr}
+    length{length}, width{width}, tiles{TileList()}, gates{GateList()}, currentTile{nullptr}
 {}
 
 // Board getter/setter functions
@@ -40,7 +41,7 @@ void Board::setWidth(const int &width) {
     this->width = width;
 }
 
-Tile *Board::getTile(const std::string &name) {
+Tile *Board::getTile(const std::string &name) const {
     for (Tile *tile : tiles) {
         if (tile->getName() == name) return tile;
     }
@@ -69,7 +70,7 @@ Tile *Board::getTile(const std::string &name) const {
         if (t->getName() == name) return t;
     }
 
-    return nullptr // Return nullptr if not found
+    return nullptr; // Return nullptr if not found
 }
 
 Tile *Board::getTile(const unsigned &x, const unsigned &y) const {
@@ -156,19 +157,43 @@ Gate *Board::getGate(const Tile *t, const int &direction) const {
 // Board functions
 // ---------------------------------------------
 
-bool Board::hasDupTiles() const {
-    std::vector<Tile*> compare{tiles};
-    Tile *currCompare;
-    int c;
+bool Board::compareByTileCoordinate(const Tile *t1, const Tile *t2) const {
+    return t1->getX() == t2->getX() && t1->getY() == t2->getY();
+}
 
+bool Board::compareByTileName(const Tile *t1, const Tile *t2) const {
+    return t1->getName() == t2->getName();
+}
+
+bool Board::compareByTileReference(const Tile *t1, const Tile *t2) const {
+    return t1 == t2;
+}
+
+bool Board::compareByGateTiles(const Gate *g1, const Gate *g2) const {
+    return g1->getTile1() == g2->getTile1() && g1->getTile2() == g2->getTile2();
+}
+
+bool Board::compareByGateName(const Gate *g1, const Gate *g2) const {
+    return g1->getName() == g2->getName();
+}
+
+bool Board::compareByGateReference(const Gate *g1, const Gate *g2) const {
+    return g1 == g2;
+}
+
+bool Board::hasDupTiles() const {
+    std::deque<Tile*> compare{tiles}; // using copy constructor
+    Tile *currCompare;
+    int c1, c2;
+    /*
     while (compare.size()) {
         currCompare = compare.front(); 
-        c = 0;
-        for (const Tile *t : tiles) {
-            if (currCompare->getX() == t->getX()
-                && currCompare->getY() == t->getY()
-        }
-    }
+        compare.pop_front();
+        c1 = 0, c2 = 0;
+        std::count(compare.cbegin(), compare.cend(), )
+    } */
+
+   return false;
 }
 
 void Board::insTile(int pos, Tile *t) {

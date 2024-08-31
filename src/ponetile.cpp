@@ -83,7 +83,7 @@ bool Tile::isEmpty() const {
 }
 
 bool Tile::operator==(const Tile &other) {
-    return this->name == other.name;
+    return x == other.x && y == other.y;
 }
 
 // Tile destructor

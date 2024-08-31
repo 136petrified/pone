@@ -1,12 +1,15 @@
 #ifndef PONE_BOARD_HPP
 #define PONE_BOARD_HPP
 
+#include <deque>
 #include <utility>
-#include <vector>
 
 #include "ponecursor.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
+
+#define TileList std::deque<Tile *>
+#define GateList std::deque<Gate *>
 
 class Board {
 public:
@@ -38,9 +41,13 @@ public:
     // Board functions
     // ---------------------------------------------
 
-    bool compareByTileCoordinate() const;
-    bool compareByTileName() const;
-    bool compareByTileReference() const;
+    bool compareByTileCoordinate(const Tile *t1, const Tile *t2) const;
+    bool compareByTileName(const Tile *t1, const Tile *t2) const;
+    bool compareByTileReference(const Tile *t1, const Tile *t2) const;
+
+    bool compareByGateTiles(const Gate *g1, const Gate *g2) const;
+    bool compareByGateName(const Gate *g1, const Gate *g2) const;
+    bool compareByGateReference(const Gate *g1, const Gate *g2) const;
 
     bool hasDupTiles() const;
     bool hasDupGates() const;
@@ -68,8 +75,8 @@ public:
 
 private:
     unsigned length, width;     // ! - Remember to except this if not unsigned!
-    std::vector<Tile*> tiles;   // A list of n * m tiles is needed for
-    std::vector<Gate*> gates;
+    TileList tiles;   // A list of n * m tiles is needed for
+    GateList gates;
 
     Tile *currentTile;          // track the current tile being pointed by cursor
 };
