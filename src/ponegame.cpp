@@ -22,6 +22,9 @@ void Game::setup(const unsigned &length, const unsigned &width) {
     }
 }
 
+// Game functions
+// ---------------------------------------------
+
 void Game::moveCursor(const int &direction) {
 
     switch (direction) {
