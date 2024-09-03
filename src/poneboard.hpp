@@ -59,7 +59,7 @@ public:
     void remGate(Gate *g);
 
     void load(); // This will use a file
-    void save();
+    void save(); // Save
 
     // Board commands
     // ---------------------------------------------
