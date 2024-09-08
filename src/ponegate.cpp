@@ -1,5 +1,5 @@
 /*  Created: JUN 29 2024
-*   Modified: AUG 9 2024
+*   Modified: SEP 8 2024
 */
 
 #include <utility>
@@ -41,11 +41,11 @@ void Gate::setGate(GATE gate) {
     this->gate = gate;
 }
 
-unsigned Gate::getID() const {
+int Gate::getID() const {
     return id;
 }
 
-void Gate::setID(unsigned id) {
+void Gate::setID(int id) {
     this->id = id;
 }
 

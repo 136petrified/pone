@@ -15,7 +15,7 @@ public:
 
     // Game functions
     // ---------------------------------------------
-    void setup(const unsigned &length, const unsigned &width);
+    void setup(const int &length, const int &width);
 
     void moveCursor(const int &direction);
 

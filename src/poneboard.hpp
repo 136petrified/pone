@@ -16,7 +16,7 @@ public:
     // Board constructors
     // ---------------------------------------------
     Board();
-    Board(const unsigned &length, const unsigned &width);
+    Board(const int &length, const int &width);
 
     // Board getter/setter functions
     // ---------------------------------------------
@@ -27,7 +27,7 @@ public:
     void setWidth(const int &width);
 
     Tile *getTile(const std::string &name) const;
-    Tile *getTile(const unsigned &x, const unsigned &y) const;
+    Tile *getTile(const int &x, const int &y) const;
     Tile *getTile(const Tile *t, const int &direction) const;
 
     Gate *getGate(const std::string &name) const;
@@ -49,8 +49,8 @@ public:
     bool compareByGateName(const Gate *g1, const Gate *g2) const;
     bool compareByGateReference(const Gate *g1, const Gate *g2) const;
 
-    bool hasDupTiles() const;
-    bool hasDupGates() const;
+    void checkDupTiles() const;     // Runtime check of duplicate elements
+    void checkDupGates() const;
 
     void insTile(int pos = -1, Tile *t);
     void remTile(Tile *t);
@@ -74,7 +74,7 @@ public:
     ~Board();
 
 private:
-    unsigned length, width;     // ! - Remember to except this if not unsigned!
+    int length, width;     // ! - Remember to except this if not int!
     TileList tiles;   // A list of n * m tiles is needed for
     GateList gates;
 

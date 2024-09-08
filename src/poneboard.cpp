@@ -10,6 +10,7 @@
 
 #include "poneboard.hpp"
 #include "poneconst.hpp"
+#include "poneexcept.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -19,7 +20,7 @@ Board::Board() :
     length{0}, width{0}, tiles{TileList()}, gates{GateList()}, currentTile{nullptr}
 {}
 
-Board::Board(const unsigned &length, const unsigned &width) :
+Board::Board(const int &length, const int &width) :
     length{length}, width{width}, tiles{TileList()}, gates{GateList()}, currentTile{nullptr}
 {}
 
@@ -73,7 +74,7 @@ Tile *Board::getTile(const std::string &name) const {
     return nullptr; // Return nullptr if not found
 }
 
-Tile *Board::getTile(const unsigned &x, const unsigned &y) const {
+Tile *Board::getTile(const int &x, const int &y) const {
     for (Tile *t : tiles) {
         if (t->getX() == x && t->getY() == y) return t;
     }
@@ -181,15 +182,18 @@ bool Board::compareByGateReference(const Gate *g1, const Gate *g2) const {
     return g1 == g2;
 }
 
-bool Board::hasDupTiles() const {
+void Board::checkDupTiles() const {
     std::deque<Tile*> compare{tiles}; // using copy constructor
-    auto currCompare = compare.begin(); // iterator to compare obj
+    auto currCompare = compare.begin(); // iterator to compare obj;
+    int c1{0}, c2{0};
 
     for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
-        if (compareByTileName(*currCompare, *it));
-    }
+        if (compareByTileName(*currCompare, *it)) c1++;
+        else if (compareByTileCoordinate(*currCompare, *it)) c2++;
 
-   return false;
+        if (c1 > 1) throw TileException("Multiple tiles cannot have the same name.");
+        else if (c2 > 1) throw TileException("Multiple tiles cannot have the same coordinates.");
+    }
 }
 
 void Board::insTile(int pos, Tile *t) {

@@ -28,8 +28,8 @@ public:
     std::string getColor() const;
     void setColor(const std::string &color);
 
-    unsigned getID() const;
-    void setID(unsigned id);
+    int getID() const;
+    void setID(int id);
 
     std::string getName() const;
     void setName(const std::string &name);
@@ -42,7 +42,7 @@ private:
     // ---------------------------------------------
     GATE gate; // Is a gate between two adjacent tiles.
     std::string color;
-    unsigned id;
+    int id;
     std::string name;
 };
 

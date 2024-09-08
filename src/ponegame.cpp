@@ -1,5 +1,5 @@
 /*  Created: JUN 23 2024
-*   Modified: AUG 15 2024
+*   Modified: SEP 8 2024
 */
 
 #include <iostream>
@@ -13,7 +13,7 @@
 Game::Game() : board{nullptr}, cursor{nullptr}
 {}
 
-void Game::setup(const unsigned &length, const unsigned &width) {
+void Game::setup(const int &length, const int &width) {
     if (length > 0 && width > 0) {
         board = & Board(length, width);
         cursor = & Cursor(1, 1);

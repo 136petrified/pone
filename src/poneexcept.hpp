@@ -18,6 +18,11 @@ private:
     const char *msg;
 };
 
+class DuplicateTileNameException : public std::exception {
+public:
+    DuplicateTileNameException(unsigned )
+};
+
 class GateException : public std::exception {
 public:
     GateException(const char msg[]) : msg{msg} {}

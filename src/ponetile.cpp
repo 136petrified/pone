@@ -1,5 +1,5 @@
 /*  Created: JUN 23 2024
-*   Modified: AUG 9 2024
+*   Modified: SEP 8 2024
 */
 
 #include "ponetile.hpp"
@@ -9,26 +9,26 @@
 Tile::Tile() : x{0}, y{0}, color{"none"}, type{"empty"}
 {}
 
-Tile::Tile(const unsigned &x, const unsigned &y, 
+Tile::Tile(const int &x, const int &y, 
            const std::string &color, const std::string &type) :
     x{x}, y{y}, color{color}, type{type}
 {}
 
 // Tile getter/setter functions
 // ---------------------------------------------
-unsigned Tile::getX() const {
+int Tile::getX() const {
     return x;
 }
 
-void Tile::setX(const unsigned &x) {
+void Tile::setX(const int &x) {
     this->x = x;
 }
 
-unsigned Tile::getY() const {
+int Tile::getY() const {
     return y;
 }
 
-void Tile::setY(const unsigned &y) {
+void Tile::setY(const int &y) {
     this->y = y;
 }
 
@@ -52,11 +52,11 @@ void Tile::setCursor(bool c) {
     cursor = c;
 }
 
-unsigned Tile::getID() const {
+int Tile::getID() const {
     return id;
 }
 
-void Tile::setID(unsigned id) {
+void Tile::setID(int id) {
     this->id = id;
 }
 

@@ -9,15 +9,15 @@ public:
     // Cursor constructor
     // ---------------------------------------------  
     Cursor();
-    Cursor(const unsigned &x = 0, const unsigned &y = 0);
+    Cursor(const int &x = 0, const int &y = 0);
 
     // Cursor getter/setter functions
     // ---------------------------------------------
-    unsigned getX() const;
-    void setX(const unsigned &x);
+    int getX() const;
+    void setX(const int &x);
 
-    unsigned getY() const;
-    void setY(const unsigned &y);
+    int getY() const;
+    void setY(const int &y);
 
     Tile *getTile(const Board &b) const;
 
@@ -28,7 +28,7 @@ public:
 private:
     // Cursor attributes
     // ---------------------------------------------
-    unsigned x, y;      // where is the cursor?
+    int x, y;      // where is the cursor?
 };
 
 #endif // PONE_CURSOR_HPP
