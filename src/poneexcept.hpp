@@ -5,7 +5,10 @@
 #ifndef PONE_EXCEPTION_HPP
 #define PONE_EXCEPTION_HPP
 
+#include <cstdio>
 #include <stdexcept>
+
+#define ERR_MSG_LIMIT 150                           // Max char limit for buffered error messages
 
 class TileException : public std::exception {
 public:
@@ -18,9 +21,31 @@ private:
     const char *msg;
 };
 
-class DuplicateTileNameException : public std::exception {
+class DuplicateTileCoordinatesException : public std::exception {
 public:
-    DuplicateTileNameException(unsigned )
+    DuplicateTileCoordinatesException(const int &x, const int& y) {
+        std::sprintf(buf, "Multiple tiles with duplicate coordinates detected with the coordinates: x: %d, y: %d",
+        x, y);
+    }
+    const char *what() const noexcept override {
+        return buf;
+    }
+
+private:
+    char buf[ERR_MSG_LIMIT];
+};
+
+class DuplicateTileCoordinatesException : public std::exception {
+public:
+    DuplicateTileCoordinatesException(const std::string& name) {
+        std::sprintf(buf, "Multiple tiles with duplicate names detected with the name %s", name.c_str());
+    }
+    const char *what() const noexcept override {
+        return buf;
+    }
+
+private:
+    char buf[ERR_MSG_LIMIT];
 };
 
 class GateException : public std::exception {
