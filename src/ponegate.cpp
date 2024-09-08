@@ -8,10 +8,10 @@
 
 // Gate constructors
 // ---------------------------------------------
-Gate::Gate() : gate{std::pair<Tile*, Tile*>{nullptr, nullptr}}
+Gate::Gate() : gate{GATE{nullptr, nullptr}}
 {}
 
-Gate::Gate(Tile *t1, Tile *t2) : gate{std::pair<Tile*, Tile*>{t1, t2}}
+Gate::Gate(Tile *t1, Tile *t2) : gate{GATE{t1, t2}}
 {}
 
 // Gate getter/setter functions

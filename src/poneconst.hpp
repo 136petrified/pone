@@ -19,6 +19,8 @@
 
 // Type definitions
 
+#define GATE std::pair<Tile*, Tile*>
+
 #define TileList std::deque<Tile *>
 #define GateList std::deque<Gate *>
 
