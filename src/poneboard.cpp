@@ -1,5 +1,5 @@
 /*  Created: JUN 23 2024
-*   Modified: AUG 18 2024
+*   Modified: SEP 7 2024
 */
 
 #include <algorithm>
@@ -183,15 +183,11 @@ bool Board::compareByGateReference(const Gate *g1, const Gate *g2) const {
 
 bool Board::hasDupTiles() const {
     std::deque<Tile*> compare{tiles}; // using copy constructor
-    Tile *currCompare;
-    int c1, c2;
-    /*
-    while (compare.size()) {
-        currCompare = compare.front(); 
-        compare.pop_front();
-        c1 = 0, c2 = 0;
-        std::count(compare.cbegin(), compare.cend(), )
-    } */
+    auto currCompare = compare.begin(); // iterator to compare obj
+
+    for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
+        if (compareByTileName(*currCompare, *it));
+    }
 
    return false;
 }
