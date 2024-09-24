@@ -35,9 +35,9 @@ private:
     char buf[ERR_MSG_LIMIT];
 };
 
-class DuplicateTileCoordinatesException : public std::exception {
+class DuplicateTileNamesException : public std::exception {
 public:
-    DuplicateTileCoordinatesException(const std::string& name) {
+    DuplicateTileNamesException(const std::string &name) {
         std::sprintf(buf, "Multiple tiles with duplicate names detected with the name %s", name.c_str());
     }
     const char *what() const noexcept override {
@@ -57,6 +57,33 @@ public:
 
 private:
     const char *msg;
+};
+
+class DuplicateGateTilesException : public std::exception {
+public:
+    DuplicateGateTilesException(const Tile *t1, const Tile *t2) {
+        std::sprintf(buf, "Multiple gates with duplicate tiles detected with the tiles: x: %s, y: %s",
+        t1->getName().c_str(), t2->getName().c_str());
+    }
+    const char *what() const noexcept override {
+        return buf;
+    }
+
+private:
+    char buf[ERR_MSG_LIMIT];
+};
+
+
+class DuplicateGateNamesException : public std::exception {
+public:
+    DuplicateGateNamesException(const std::string &name) {
+        std::sprintf(buf, "Multiple gates with duplicate names detected with the name: %s", name.c_str());
+    }
+    const char *what() const noexcept override {
+        return buf;
+    }
+private:
+    char buf[ERR_MSG_LIMIT];
 };
 
 #endif // PONE_EXCEPTION_HPP

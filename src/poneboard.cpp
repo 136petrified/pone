@@ -196,6 +196,20 @@ void Board::checkDupTiles() const {
     }
 }
 
+void Board::checkDupGates() const {
+    std::deque<Tile*> compare{tiles}; // using copy constructor
+    auto currCompare = compare.begin(); // iterator to compare obj;
+    int c1{0}, c2{0};
+
+    for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
+        if (compareByTileName(*currCompare, *it)) c1++;
+        else if (compareByTileCoordinate(*currCompare, *it)) c2++;
+
+        if (c1 > 1) throw TileException("Multiple tiles cannot have the same name.");
+        else if (c2 > 1) throw TileException("Multiple tiles cannot have the same coordinates.");
+    }
+}
+
 void Board::insTile(int pos, Tile *t) {
     // Leave pos as -1 to insert at last position by default
     if (pos == -1) {
