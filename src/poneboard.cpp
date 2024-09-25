@@ -187,26 +187,32 @@ void Board::checkDupTiles() const {
     auto currCompare = compare.begin(); // iterator to compare obj;
     int c1{0}, c2{0};
 
-    for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
-        if (compareByTileName(*currCompare, *it)) c1++;
-        else if (compareByTileCoordinate(*currCompare, *it)) c2++;
+    while (currCompare != compare.end()) {
+        for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
+            if (compareByTileName(*currCompare, *it)) c1++;
+            else if (compareByTileCoordinate(*currCompare, *it)) c2++;
 
-        if (c1 > 1) throw TileException("Multiple tiles cannot have the same name.");
-        else if (c2 > 1) throw TileException("Multiple tiles cannot have the same coordinates.");
+            if (c1 > 1) throw DuplicateTileNamesException((*currCompare)->getName());
+            else if (c2 > 1) throw DuplicateTileCoordinatesException((*currCompare)->getX(), (*currCompare)->getY());
+        }
+        ++currCompare; // Move to next element
     }
 }
 
 void Board::checkDupGates() const {
-    std::deque<Tile*> compare{tiles}; // using copy constructor
+    std::deque<Gate*> compare{gates}; // using copy constructor
     auto currCompare = compare.begin(); // iterator to compare obj;
     int c1{0}, c2{0};
 
-    for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
-        if (compareByTileName(*currCompare, *it)) c1++;
-        else if (compareByTileCoordinate(*currCompare, *it)) c2++;
+    while (currCompare != compare.end()) {
+        for (auto it = gates.cbegin(); it != gates.cend(); ++it) {
+            if (compareByGateName(*currCompare, *it)) c1++;
+            else if (compareByGateTiles(*currCompare, *it)) c2++;
 
-        if (c1 > 1) throw TileException("Multiple tiles cannot have the same name.");
-        else if (c2 > 1) throw TileException("Multiple tiles cannot have the same coordinates.");
+            if (c1 > 1) throw DuplicateGateNamesException((*currCompare)->getName());
+            else if (c2 > 1) throw DuplicateGateTilesException((*currCompare)->getTile1(), (*currCompare)->getTile2());
+        }
+        ++currCompare; // Move to next element
     }
 }
 
