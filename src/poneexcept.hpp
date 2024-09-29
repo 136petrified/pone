@@ -89,7 +89,9 @@ private:
 class NotANumberException : public std::exception {
 public:
     NotANumberException(const char msg[]) : msg{msg} {}
-    
+    const char *what() const noexcept override {
+        return msg;
+    }
 private:
     const char *msg;
 };
