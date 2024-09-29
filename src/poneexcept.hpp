@@ -86,4 +86,11 @@ private:
     char buf[ERR_MSG_LIMIT];
 };
 
+class NotANumberException : public std::exception {
+public:
+    NotANumberException(const char msg[]) : msg{msg} {}
+    
+private:
+    const char *msg;
+};
 #endif // PONE_EXCEPTION_HPP
