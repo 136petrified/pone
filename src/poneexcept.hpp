@@ -1,5 +1,5 @@
 /*  Created: SEP 8 2024
-*   Modified: SEP 8 2024
+*   Modified: SEP 29 2024
 */
 
 #ifndef PONE_EXCEPTION_HPP
@@ -86,4 +86,13 @@ private:
     char buf[ERR_MSG_LIMIT];
 };
 
+class NotANumberException : public std::exception {
+public:
+    NotANumberException(const char msg[]) : msg{msg} {}
+    const char *what() const noexcept override {
+        return msg;
+    }
+private:
+    const char *msg;
+};
 #endif // PONE_EXCEPTION_HPP

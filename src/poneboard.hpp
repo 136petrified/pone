@@ -58,11 +58,11 @@ public:
     void insGate(int pos = -1, Gate *g);
     void remGate(Gate *g);
 
-    void load(); // This will use a file
+    void load(); // This will use a file - of type .pne preferrably
     void save(); // Save
 
     // Board commands
-    // ---------------------------------------------
+    // ---------------------------------------------  TODO: Create rest of commands
     void moveCursor(Cursor *c, const int &direction);
     bool checkMove(Cursor *c, const int &direction);
 
