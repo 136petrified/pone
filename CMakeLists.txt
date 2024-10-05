@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.30.0)
-set(CMAKE_MAKE_PROGRAM ninja)
+# set(CMAKE_MAKE_PROGRAM ninja)
 project(pone)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-add_subdirectory(${PROJECT_SOURCE_DIR}libs/googletest)
+set(CMAKE_C_COMPILER C:/msys64/ucrt64/bin/gcc.exe)
+
 include(FetchContent)
 
 FetchContent_Declare(
