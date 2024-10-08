@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.30.0)
-# set(CMAKE_MAKE_PROGRAM ninja)
+set(CMAKE_MAKE_PROGRAM $ENV{USERPROFILE}/ninja-win/ninja.exe)
 project(pone)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-set(CMAKE_C_COMPILER C:/msys64/ucrt64/bin/gcc.exe)
+set(CMAKE_C_COMPILER "C:/msys64/ucrt64/bin/gcc.exe")
+set(CMAKE_CXX_COMPILER "C:/msys64/ucrt64/bin/g++.exe")
 
 include(FetchContent)
 
@@ -49,7 +50,8 @@ target_link_libraries(ponetile_tests
                       ponegame_tests
                       ponegui_tests
                       poneboard_tests
-                      Gtest::gtest_main)
+                      Gtest::gtest_main
+)
 
 gtest_discover_tests(ponetile_tests
                      ponecursor_tests
