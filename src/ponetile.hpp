@@ -60,7 +60,8 @@ private:
 
     // Tile constants
     // ---------------------------------------------
-    const std::vector<std::string> types{"empty", "gswitch", "cswitch", "key", "up", "down", "left", "right", "goal", "collision"};
+    const std::vector<std::string> types
+    {"empty", "gswitch", "cswitch", "key", "up", "down", "left", "right", "goal", "collision"};
 };
 
 #endif // PONE_TILE_HPP
