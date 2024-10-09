@@ -1,5 +1,5 @@
-/*  Created: JUN 23 2024
-*   Modified: OCT 9 2024
+/*  Created:  JUN 23 2024
+*   Modified: OCT  9 2024
 */
 
 #include <algorithm>
@@ -84,7 +84,7 @@ Tile *Board::getTile(const int &x, const int &y) const {
 
 Tile *Board::getTile(const Tile *t, const int &direction) const {
     if (!t) {
-        // Throw an exception here
+        // TODO: Create custom exception to replace std::cerr
         std::cerr << "[ERROR]: Tile does not exist." << std::endl;
         return nullptr;
     }
