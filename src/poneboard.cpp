@@ -1,5 +1,5 @@
 /*  Created: JUN 23 2024
-*   Modified: SEP 25 2024
+*   Modified: OCT 9 2024
 */
 
 #include <algorithm>
@@ -253,11 +253,13 @@ void Board::remGate(Gate *g) {
 }
 
 void Board::load() {
+    // This will be attached to ponescript
+    // May use JSON-like formatting to load created boards
 
 }
 
 void Board::save() {
-
+    // Autogenerates a script
 }
 
 // Board commands
