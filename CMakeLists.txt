@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.30.0)
+set (ENV{HOME} ")
 set(CMAKE_MAKE_PROGRAM $ENV{USERPROFILE}/ninja-win/ninja.exe)
 project(pone)
 
