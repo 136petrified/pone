@@ -9,21 +9,21 @@
         {
             "name": "default",
             "displayName": "GCC 13.2.0 x86_64-w64-mingw32 (ucrt64) Default",
-            "description": "Default build using Ninja generator",
+            "description": "Using compilers: C = C:\\msys64\\ucrt64\\bin\\gcc.exe, CXX = C:\\msys64\\ucrt64\\bin\\g++.exe",
             "generator": "Ninja",
             "binaryDir": "binaryDir",
             "cacheVariables": {
                 "type": "BOOL",
                 "value": "OFF",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_MAKE_PROGRAM": "$env{HOME}/ninja-win/ninja.exe",
+                "CMAKE_MAKE_PROGRAM": "${sourceDir}/ninja-win/ninja.exe",
                 "CMAKE_C_COMPILER": "C:/msys64/ucrt64/bin/gcc.exe",
                 "CMAKE_CXX_COMPILER": "C:/msys64/ucrt64/bin/g++.exe",
                 "CMAKE_BUILD_TYPE": "Debug"
             },
             "environment": {
                 "MY_ENVIRONMENT_VARIABLE": "Test",
-                "PATH": "$env{HOME}/ninja-win/ninja.exe"
+                "PATH": "$ENV{HOME}/ninja-win/ninja.exe"
             },
             "cmakeExecutable": "$env{HOME}/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/bin/cmake.exe"
         },

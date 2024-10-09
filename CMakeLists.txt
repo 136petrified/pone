@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 3.30.0)
-set (ENV{HOME} ")
-set(CMAKE_MAKE_PROGRAM $ENV{USERPROFILE}/ninja-win/ninja.exe)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 project(pone)
+
+set(CMAKE_HOME_DIRECTORY $ENV{USERPROFILE})
+set($ENV{HOME} CMAKE_HOME_DIRECTORY)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
+
+
+set(CMAKE_MAKE_PROGRAM ${PROJECT_SOURCE_DIR}/ninja-win/ninja.exe)
 
 set(CMAKE_C_COMPILER "C:/msys64/ucrt64/bin/gcc.exe")
 set(CMAKE_CXX_COMPILER "C:/msys64/ucrt64/bin/g++.exe")
