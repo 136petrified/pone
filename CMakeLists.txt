@@ -12,8 +12,8 @@ set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
 set(CMAKE_MAKE_PROGRAM ${PROJECT_SOURCE_DIR}/ninja-win/ninja.exe)
 
-set(CMAKE_C_COMPILER "C:/msys64/ucrt64/bin/gcc.exe")
-set(CMAKE_CXX_COMPILER "C:/msys64/ucrt64/bin/g++.exe")
+set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
+set(CMAKE_CXX_COMPILER {PROJECT_SOURCE_DIR}/compile/g++.exe)
 
 include(FetchContent)
 

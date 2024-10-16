@@ -7755,3 +7755,1995 @@ events:
         
       exitCode: 1
 ...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      1
+      gcc.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+      gcc.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      1
+      gcc.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+      gcc.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/msys64/ucrt64/bin/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+      gcc.exe: fatal error: no input files
+      compilation terminated.
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+      gcc.exe: fatal error: no input files
+      compilation terminated.
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      1
+      g++.exe: error: unrecognized command-line option '--c++'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      1
+      g++.exe: error: unrecognized command-line option '--ec++'; did you mean '-Weffc++'?
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      1
+      g++.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+      g++.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      1
+      g++.exe: error: unrecognized command-line option '--c++'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      1
+      g++.exe: error: unrecognized command-line option '--ec++'; did you mean '-Weffc++'?
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      1
+      g++.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+      g++.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/msys64/ucrt64/bin/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      1
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+      g++.exe: fatal error: no input files
+      compilation terminated.
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+      g++.exe: fatal error: no input files
+      compilation terminated.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working C compiler: C:/msys64/ucrt64/bin/gcc.exe"
+    directories:
+      source: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-psxfli"
+      binary: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-psxfli"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-psxfli'
+        
+        Run Build Command(s): C:/Users/conne/pone/ninja-win/ninja.exe -v cmTC_1950b
+        [1/2] C:\\msys64\\ucrt64\\bin\\gcc.exe    -o CMakeFiles\\cmTC_1950b.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-psxfli\\testCCompiler.c
+        FAILED: CMakeFiles/cmTC_1950b.dir/testCCompiler.c.obj 
+        C:\\msys64\\ucrt64\\bin\\gcc.exe    -o CMakeFiles\\cmTC_1950b.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-psxfli\\testCCompiler.c
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working C compiler: C:/Users/conne/pone/compile/gcc.exe"
+    directories:
+      source: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-ysluhe"
+      binary: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-ysluhe"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-ysluhe'
+        
+        Run Build Command(s): C:/Users/conne/pone/ninja-win/ninja.exe -v cmTC_825c7
+        [1/2] C:\\Users\\conne\\pone\\compile\\gcc.exe    -o CMakeFiles\\cmTC_825c7.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-ysluhe\\testCCompiler.c
+        FAILED: CMakeFiles/cmTC_825c7.dir/testCCompiler.c.obj 
+        C:\\Users\\conne\\pone\\compile\\gcc.exe    -o CMakeFiles\\cmTC_825c7.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-ysluhe\\testCCompiler.c
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working C compiler: C:/Users/conne/pone/compile/gcc.exe"
+    directories:
+      source: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-t8pkox"
+      binary: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-t8pkox"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-t8pkox'
+        
+        Run Build Command(s): C:/Users/conne/pone/ninja-win/ninja.exe -v cmTC_2553c
+        [1/2] C:\\Users\\conne\\pone\\compile\\gcc.exe    -o CMakeFiles\\cmTC_2553c.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-t8pkox\\testCCompiler.c
+        FAILED: CMakeFiles/cmTC_2553c.dir/testCCompiler.c.obj 
+        C:\\Users\\conne\\pone\\compile\\gcc.exe    -o CMakeFiles\\cmTC_2553c.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-t8pkox\\testCCompiler.c
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -Aa 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -D__CLASSIC_C__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Users/conne/pone/compile/gcc.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --c++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --ec++ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Users/conne/pone/compile/g++.exe 
+      Build flags: 
+      Id flags: -c;-I__does_not_exist__ 
+      
+      The output was:
+      Exit code 0xc0000135
+      
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:1205 (message)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCompilerId.cmake:86 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/conne/cmake-3.30.0-rc4-windows-x86_64/cmake-3.30.0-rc4-windows-x86_64/share/cmake-3.30/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working C compiler: C:/Users/conne/pone/compile/gcc.exe"
+    directories:
+      source: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-fykela"
+      binary: "C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-fykela"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/conne/pone/binaryDir/CMakeFiles/CMakeScratch/TryCompile-fykela'
+        
+        Run Build Command(s): C:/Users/conne/pone/ninja-win/ninja.exe -v cmTC_9088a
+        [1/2] C:\\Users\\conne\\pone\\compile\\gcc.exe    -o CMakeFiles\\cmTC_9088a.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-fykela\\testCCompiler.c
+        FAILED: CMakeFiles/cmTC_9088a.dir/testCCompiler.c.obj 
+        C:\\Users\\conne\\pone\\compile\\gcc.exe    -o CMakeFiles\\cmTC_9088a.dir\\testCCompiler.c.obj -c C:\\Users\\conne\\pone\\binaryDir\\CMakeFiles\\CMakeScratch\\TryCompile-fykela\\testCCompiler.c
+        ninja: build stopped: subcommand failed.
+        
+      exitCode: 1
+...
