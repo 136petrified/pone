@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30.0)
-set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+# set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 project(pone)
 
 set(CMAKE_HOME_DIRECTORY $ENV{USERPROFILE})
@@ -10,10 +10,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
 
-set(CMAKE_MAKE_PROGRAM ${PROJECT_SOURCE_DIR}/ninja-win/ninja.exe)
+# set(CMAKE_MAKE_PROGRAM ${PROJECT_SOURCE_DIR}/ninja-win/ninja.exe)
 
-set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
-set(CMAKE_CXX_COMPILER {PROJECT_SOURCE_DIR}/compile/g++.exe)
+# set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
+# set(CMAKE_CXX_COMPILER {PROJECT_SOURCE_DIR}/compile/g++.exe)
 
 include(FetchContent)
 
@@ -25,6 +25,16 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 enable_testing()
+include(GoogleTest)
+
+add_executable(
+all_tests 
+${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
+${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
+)
 
 add_executable(
 ponetile_tests 
@@ -33,7 +43,7 @@ ${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
 
 add_executable(
 ponecursor_tests
-${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
 )
 
 add_executable(
@@ -51,17 +61,9 @@ poneboard_tests
 ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 )
 
-target_link_libraries(ponetile_tests
-                      ponecursor_tests
-                      ponegame_tests
-                      ponegui_tests
-                      poneboard_tests
-                      Gtest::gtest_main
+target_link_libraries(all_tests
+                      test/gtestmain.cpp
 )
 
-gtest_discover_tests(ponetile_tests
-                     ponecursor_tests
-                     ponegame_tests
-                     ponegui_tests
-                     poneboard_tests 
+gtest_discover_tests(all_tests
 )
