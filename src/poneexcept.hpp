@@ -19,6 +19,7 @@ public:
 
 class DuplicateTileCoordinatesException : public TileException {
 public:
+    DuplicateTileCoordinatesException() = delete;
     DuplicateTileCoordinatesException(const int &x, const int& y) {
         std::sprintf(buf, "Multiple tiles with duplicate coordinates detected with the coordinates: x: %d, y: %d",
         x, y);
@@ -33,6 +34,7 @@ private:
 
 class DuplicateTileNamesException : public TileException {
 public:
+    DuplicateTileNamesException() = delete;
     DuplicateTileNamesException(const std::string &name) {
         std::sprintf(buf, "Multiple tiles with duplicate names detected with the name %s", name.c_str());
     }
@@ -46,6 +48,7 @@ private:
 
 class TileNotFoundException : public TileException {
 public:
+    TileNotFoundException() = delete;
     TileNotFoundException(const char msg[]) : msg{msg} {}
     const char *what() const noexcept override {
         return msg;
@@ -59,17 +62,13 @@ private:
 
 class GateException : public std::exception {
 public:
-    GateException(const char msg[]) : msg{msg} {}
-    const char *what() const noexcept override {
-        return msg;
-    }
-
-private:
-    const char *msg;
+    GateException() = default;
+    virtual const char *what() const noexcept override = 0;
 };
 
-class DuplicateGateTilesException : public std::exception {
+class DuplicateGateTilesException : public GateException {
 public:
+    DuplicateGateTilesException() = delete;
     DuplicateGateTilesException(const Tile *t1, const Tile *t2) {
         std::sprintf(buf, "Multiple gates with duplicate tiles detected with the tiles: x: %s, y: %s",
         t1->getName().c_str(), t2->getName().c_str());
@@ -83,8 +82,9 @@ private:
 };
 
 
-class DuplicateGateNamesException : public std::exception {
+class DuplicateGateNamesException : public GateException {
 public:
+    DuplicateGateNamesException() = delete;
     DuplicateGateNamesException(const std::string &name) {
         std::sprintf(buf, "Multiple gates with duplicate names detected with the name: %s", name.c_str());
     }

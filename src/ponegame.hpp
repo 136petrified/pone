@@ -1,7 +1,10 @@
 #ifndef PONE_GAME_HPP
 #define PONE_GAME_HPP
 
+#include <iostream>
+
 #include "poneboard.hpp"
+#include "poneconst.hpp"
 #include "ponecursor.hpp"
 
 class Game {
@@ -23,8 +26,8 @@ public:
     // ---------------------------------------------
     ~Game();
 private:
-    Board *board;
-    Cursor *cursor;
+    Board board;
+    Cursor cursor;
 };
 
 #endif // PONE_GAME_HPP

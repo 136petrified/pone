@@ -10,7 +10,7 @@ public:
     // Cursor constructor
     // ---------------------------------------------  
     Cursor();
-    Cursor(const int &x = 0, const int &y = 0);
+    Cursor(const int &x, const int &y);
 
     // Cursor getter/setter functions
     // ---------------------------------------------

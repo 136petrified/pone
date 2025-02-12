@@ -1,22 +1,19 @@
-/*  Created: JUN 23 2024
-*   Modified: SEP 8 2024
+/*  Created:  JUN 23 2024
+*   Modified: FEB 12 2025
 */
 
-#include <iostream>
-
-#include "poneconst.hpp"
 #include "ponegame.hpp"
 
 // Game constructor
 // ---------------------------------------------
 
-Game::Game() : board{nullptr}, cursor{nullptr}
+Game::Game() : board{Board()}, cursor{Cursor()}
 {}
 
 void Game::setup(const int &length, const int &width) {
     if (length > 0 && width > 0) {
-        board = & Board(length, width);
-        cursor = & Cursor(1, 1);
+        board = Board(length, width);
+        cursor = Cursor(1, 1);
     } else {
         std::cerr << "[ERROR] Board cannot be empty." << std::endl;
     }
