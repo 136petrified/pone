@@ -13,17 +13,15 @@
 class TileException : public std::exception {
 public:
     TileException(const char msg[]) : msg{msg} {}
-    const char *what() const noexcept override {
-        return msg;
-    }
+    virtual const char *what() const noexcept override = 0;
 
 private:
     const char *msg;
 };
 
-class DuplicateTileCoordinatesException : public std::exception {
+class DuplicateTileCoordinatesException : public TileException {
 public:
-    DuplicateTileCoordinatesException(const int &x, const int& y) {
+    DuplicateTileCoordinatesException(const int &x, const int& y) : TileException{""} {
         std::sprintf(buf, "Multiple tiles with duplicate coordinates detected with the coordinates: x: %d, y: %d",
         x, y);
     }

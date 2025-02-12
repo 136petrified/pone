@@ -67,9 +67,8 @@ Tile *Board::getTile(const int &x, const int &y) const {
 }
 
 Tile *Board::getTile(const Tile *t, const int &direction) const {
-    if (!t) {
-        // TODO: Create custom exception to replace std::cerr
-        std::cerr << "[ERROR]: Tile does not exist." << std::endl;
+    if (t == nullptr) {
+         // << "[ERROR]: Tile does not exist." << std::endl;
         return nullptr;
     }
 
@@ -200,11 +199,11 @@ void Board::checkDupGates() const {
     }
 }
 
-void Board::insTile(int pos, Tile *t) {
-    // Leave pos as -1 to insert at last position by default
-    if (pos == -1) {
+void Board::insTile(size_t pos, Tile *t) {
+    // Leave pos as 0 to insert at last position by default
+    if (pos == 0) {
         tiles.push_back(t);
-    } else if (pos < tiles.size() && pos > -2) {
+    } else if (pos < tiles.size()) {
         auto tilepos = tiles.begin() + pos;
         tiles.insert(tilepos, t);
     } else {
@@ -218,11 +217,11 @@ void Board::remTile(Tile *t) {
     else std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
 }
 
-void Board::insGate(int pos, Gate *g) {
-    // Leave pos as -1 to insert at last position by default
-    if (pos == -1) {
+void Board::insGate(size_t pos, Gate *g) {
+    // Leave pos as 0 to insert at last position by default
+    if (pos == 0) {
         gates.push_back(g);
-    } else if (pos < gates.size() && pos > -2) {
+    } else if (pos < gates.size()) {
         auto gatepos = gates.begin() + pos;
         gates.insert(gatepos, g);
     } else {
