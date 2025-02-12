@@ -1,5 +1,5 @@
-/*  Created: JUN 23 2024
-*   Modified: SEP 8 2024
+/*  Created:  JUN 23 2024
+*   Modified: FEB 11 2025
 */
 
 #include "ponecursor.hpp"
@@ -31,8 +31,8 @@ void Cursor::setY(const int &y) {
     this->y = y;
 }
 
-Tile *Cursor::getTile(const Board &b) const {
-   return b.getCurrentTile();
+std::pair<int, int> Cursor::getPos() const {
+   return std::pair<x, y>
 }
 
 // Cursor destructor

@@ -1,7 +1,8 @@
 #ifndef PONE_CURSOR_HPP
 #define PONE_CURSOR_HPP
 
-#include "poneboard.hpp"
+#include <utility>
+
 #include "ponetile.hpp"
 
 class Cursor {
@@ -19,7 +20,7 @@ public:
     int getY() const;
     void setY(const int &y);
 
-    Tile *getTile(const Board &b) const;
+    std::pair<int, int> getPos() const;
 
     // Cursor destructor
     // ---------------------------------------------
