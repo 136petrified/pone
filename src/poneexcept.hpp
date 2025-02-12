@@ -1,5 +1,5 @@
-/*  Created: SEP 8 2024
-*   Modified: SEP 29 2024
+/*  Created:  SEP  8 2024
+*   Modified: FEB 12 2025
 */
 
 #ifndef PONE_EXCEPTION_HPP
@@ -33,9 +33,9 @@ private:
     char buf[ERR_MSG_LIMIT];
 };
 
-class DuplicateTileNamesException : public std::exception {
+class DuplicateTileNamesException : public TileException {
 public:
-    DuplicateTileNamesException(const std::string &name) {
+    DuplicateTileNamesException(const std::string &name) : TileException{""} {
         std::sprintf(buf, "Multiple tiles with duplicate names detected with the name %s", name.c_str());
     }
     const char *what() const noexcept override {
@@ -44,6 +44,17 @@ public:
 
 private:
     char buf[ERR_MSG_LIMIT];
+};
+
+class TileNotFoundException : public TileException {
+public:
+    TileNotFoundException(const char msg[]) : msg{msg} {}
+    const char *what() const noexcept override {
+        return msg;
+    }
+
+private:
+    const char *msg;
 };
 
 class GateException : public std::exception {
