@@ -9,7 +9,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-# set(CMAKE_MAKE_PROGRAM ${PROJECT_SOURCE_DIR}/ninja-win/ninja.exe)
+set(CXXFLAGS "--std=c++20 -g -Wall -Wfatal-errors -Werror -pedantic")
+set(CMAKE_CXX_FLAGS ${CXXFLAGS})
 
 # set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
 # set(CMAKE_CXX_COMPILER {PROJECT_SOURCE_DIR}/compile/g++.exe)
@@ -73,6 +74,31 @@ include_directories(
 )
 
 target_link_libraries(all_tests
+                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+                      GTest::gtest_main
+)
+
+target_link_libraries(ponetile_tests
+                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+                      GTest::gtest_main
+)
+
+target_link_libraries(ponecursor_tests
+                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+                      GTest::gtest_main
+)
+
+target_link_libraries(ponegame_tests
+                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+                      GTest::gtest_main
+)
+
+target_link_libraries(ponegui_tests
+                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+                      GTest::gtest_main
+)
+
+target_link_libraries(poneboard_tests
                       ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
