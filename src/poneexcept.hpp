@@ -11,17 +11,15 @@
 #define ERR_MSG_LIMIT 150                           // Max char limit for buffered error messages
 
 class TileException : public std::exception {
+// This class is an ABSTRACT BASE CLASS! Do not set any values to it.
 public:
-    TileException(const char msg[]) : msg{msg} {}
+    TileException() = default;
     virtual const char *what() const noexcept override = 0;
-
-private:
-    const char *msg;
 };
 
 class DuplicateTileCoordinatesException : public TileException {
 public:
-    DuplicateTileCoordinatesException(const int &x, const int& y) : TileException{""} {
+    DuplicateTileCoordinatesException(const int &x, const int& y) {
         std::sprintf(buf, "Multiple tiles with duplicate coordinates detected with the coordinates: x: %d, y: %d",
         x, y);
     }
@@ -35,7 +33,7 @@ private:
 
 class DuplicateTileNamesException : public TileException {
 public:
-    DuplicateTileNamesException(const std::string &name) : TileException{""} {
+    DuplicateTileNamesException(const std::string &name) {
         std::sprintf(buf, "Multiple tiles with duplicate names detected with the name %s", name.c_str());
     }
     const char *what() const noexcept override {
@@ -56,6 +54,8 @@ public:
 private:
     const char *msg;
 };
+
+// TODO: Convert these exceptions to virtual excpetion classes
 
 class GateException : public std::exception {
 public:

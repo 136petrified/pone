@@ -2,6 +2,8 @@
 *   Modified: FEB 12 2025
 */
 
+// TODO: Replace all printed errors with proper thrown errors
+
 #include <algorithm>
 #include <deque>
 #include <iostream>
@@ -68,8 +70,8 @@ Tile *Board::getTile(const int &x, const int &y) const {
 
 Tile *Board::getTile(const Tile *t, const int &direction) const {
     if (t == nullptr) {
-         // << "[ERROR]: Tile does not exist." << std::endl;
-        return nullptr;
+        // std::cerr << "[ERROR]: Tile does not exist." << std::endl;
+        throw TileNotFoundException("Tile does not exist.");
     }
 
     switch (direction) {
@@ -132,9 +134,9 @@ Gate *Board::getGate(const Tile *t, const int &direction) const {
             std::cerr << "[ERROR]: Invalid direction: "
                       << direction << std::endl;
             break;
-
-        return nullptr;
     }
+
+    return nullptr;
 }
 
 
