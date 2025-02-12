@@ -1,5 +1,5 @@
 /*  Created:  JUN 23 2024
-*   Modified: FEB 11 2025
+*   Modified: FEB 12 2025
 */
 
 #include "ponecursor.hpp"
@@ -32,7 +32,7 @@ void Cursor::setY(const int &y) {
 }
 
 std::pair<int, int> Cursor::getPos() const {
-   return std::pair<x, y>
+   return std::pair<int, int>{x, y};
 }
 
 // Cursor destructor

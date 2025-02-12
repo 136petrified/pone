@@ -52,10 +52,10 @@ public:
     void checkDupTiles() const;     // Runtime check of duplicate elements
     void checkDupGates() const;
 
-    void insTile(int pos = -1, Tile *t);
+    void insTile(int pos, Tile *t);
     void remTile(Tile *t);
 
-    void insGate(int pos = -1, Gate *g);
+    void insGate(int pos, Gate *g);
     void remGate(Gate *g);
 
     void load(); // This will use a file - of type .pne preferrably
