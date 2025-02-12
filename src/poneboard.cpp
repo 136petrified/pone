@@ -42,22 +42,6 @@ void Board::setWidth(const int &width) {
     this->width = width;
 }
 
-Tile *Board::getTile(const std::string &name) const {
-    for (Tile *tile : tiles) {
-        if (tile->getName() == name) return tile;
-    }
-    
-    return nullptr; // If no Tile* is found
-}
-
-Gate *Board::getGate(const std::string &name) const {
-    for (Gate *gate : gates) { 
-        if (gate->getName() == name) return gate;
-    }
-
-    return nullptr; // If no GATE* is found
-}
-
 Tile *Board::getCurrentTile() const {
     return currentTile;
 }
