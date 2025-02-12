@@ -9,29 +9,30 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-set(GTEST_ROOT ${PROJECT_SOURCE_DIR}/googletest)
-set(GTEST_INCLUDE_DIRS ${GTEST_ROOT}/googletest/include)
-set(GTEST_MAIN_LIBRARIES ${GTEST_ROOT}/src/gtest_main.cc)
-
 # set(CMAKE_MAKE_PROGRAM ${PROJECT_SOURCE_DIR}/ninja-win/ninja.exe)
 
 # set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
 # set(CMAKE_CXX_COMPILER {PROJECT_SOURCE_DIR}/compile/g++.exe)
 
 enable_testing()
-find_package(GTest REQUIRED)
-# include(FetchContent)
+include(FetchContent)
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/googletest)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/googletest)
 
-# FetchContent_Declare(
-    # googletest
-    # URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-# )
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
 
-# set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-# FetchContent_MakeAvailable(googletest)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
+
+set(GTEST_LIBRARY ${PROJECT_SOURCE_DIR}/build/_deps/googletest-src)
+set(GTEST_INCLUDE_DIR ${GTEST_LIBRARY}/googletest/include)
+set(GTEST_MAIN_LIBRARY ${GTEST_LIBRARY}/googletest/lib/libgtest_main.a)
+
+find_package(GTest REQUIRED)
 
 add_executable(
 all_tests 
@@ -73,6 +74,7 @@ include_directories(
 
 target_link_libraries(all_tests
                       ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+                      GTest::gtest_main
 )
 
 gtest_discover_tests(all_tests

@@ -2,3 +2,5 @@
 libs/*
 /compile
 /libs
+/build/_deps
+/build
