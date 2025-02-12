@@ -1,5 +1,11 @@
 #include <gtest/gtest.h>
 
-TEST(poneboard, InitialTest) {
-    EXPECT_TRUE(1);
+#include "poneboard.hpp"
+
+TEST(poneboard, Constructor) {
+    Board b;
+    
+    EXPECT_EQ(b.getLength(), 0);
+    EXPECT_EQ(b.getWidth(), 0);
+    EXPECT_EQ(b.getCurrentTile(), nullptr);
 }

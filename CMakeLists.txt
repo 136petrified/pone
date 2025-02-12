@@ -35,8 +35,28 @@ set(GTEST_MAIN_LIBRARY ${GTEST_LIBRARY}/googletest/lib/libgtest_main.a)
 
 find_package(GTest REQUIRED)
 
+set(ALL_SRC_FILES
+${PROJECT_SOURCE_DIR}/src/poneboard.cpp
+${PROJECT_SOURCE_DIR}/src/poneboard.hpp
+${PROJECT_SOURCE_DIR}/src/poneconst.hpp
+${PROJECT_SOURCE_DIR}/src/ponecursor.cpp
+${PROJECT_SOURCE_DIR}/src/ponecursor.hpp
+${PROJECT_SOURCE_DIR}/src/poneexcept.hpp
+${PROJECT_SOURCE_DIR}/src/ponegame.cpp
+${PROJECT_SOURCE_DIR}/src/ponegame.hpp
+${PROJECT_SOURCE_DIR}/src/ponegate.cpp
+${PROJECT_SOURCE_DIR}/src/ponegate.hpp
+${PROJECT_SOURCE_DIR}/src/ponegui.cpp
+${PROJECT_SOURCE_DIR}/src/ponegui.hpp
+${PROJECT_SOURCE_DIR}/src/ponescript.cpp
+${PROJECT_SOURCE_DIR}/src/ponescript.hpp
+${PROJECT_SOURCE_DIR}/src/ponetile.cpp
+${PROJECT_SOURCE_DIR}/src/ponetile.hpp
+)
+
 add_executable(
-all_tests 
+all_tests
+${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
