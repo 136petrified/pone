@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-set(CXXFLAGS "--std=c++20 -g -Wall -Wfatal-errors -Werror -pedantic")
+set(CXXFLAGS "--std=c++20 -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src")
 set(CMAKE_CXX_FLAGS ${CXXFLAGS})
 
 # set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
@@ -65,27 +65,32 @@ ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 )
 
 add_executable(
-ponetile_tests 
+ponetile_tests
+${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
 )
 
 add_executable(
 ponecursor_tests
+${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
 )
 
 add_executable(
 ponegame_tests
+${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
 )
 
 add_executable(
 ponegui_tests
+${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
 )
 
 add_executable(
 poneboard_tests
+${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 )
 
