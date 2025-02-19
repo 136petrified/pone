@@ -1,14 +1,15 @@
 /*  Created:  SEP  8 2024
-*   Modified: FEB 12 2025
+*   Modified: FEB 18 2025
 */
 
 #ifndef PONE_EXCEPTION_HPP
 #define PONE_EXCEPTION_HPP
 
 #include <cstdio>
+#include <format>
 #include <stdexcept>
 
-#define ERR_MSG_LIMIT 150                           // Max char limit for buffered error messages
+// #define ERR_MSG_LIMIT 150                           // Max char limit for buffered error messages
 
 class TileException : public std::exception {
 // This class is an ABSTRACT BASE CLASS! Do not set any values to it.
@@ -21,16 +22,14 @@ class DuplicateTileCoordinatesException : public TileException {
 public:
     DuplicateTileCoordinatesException() = delete;
     DuplicateTileCoordinatesException(const int &x, const int& y) {
-        std::sprintf(buf, "Multiple tiles with duplicate coordinates detected with the coordinates: x: %d, y: %d",
-        x, y);
+        msg = std::format("Multiple tiles with duplicate coordinates detected with the coordinates: x:{}, y: {}", x, y);
     }
     const char *what() const noexcept override {
-        return buf;
+        return msg;
     }
 
 private:
-    char buf[ERR_MSG_LIMIT];
-};
+    std::string msg;
 
 class DuplicateTileNamesException : public TileException {
 public:
@@ -97,6 +96,7 @@ private:
 
 class NotANumberException : public std::exception {
 public:
+    NotANumberException() = delete;
     NotANumberException(const char msg[]) : msg{msg} {}
     const char *what() const noexcept override {
         return msg;
@@ -104,4 +104,16 @@ public:
 private:
     const char *msg;
 };
+
+class InvalidValueException : public std::exception {
+    public:
+        InvalidValueException() = delete;
+        InvalidValueException(const char msg[]) : msg{msg} {}
+        const char *what() const noexcept override {
+            return msg;
+        }
+        // InvalidValueExcpetion(const int &value, const char msg[])
+    private:
+        const char *msg;
+    };
 #endif // PONE_EXCEPTION_HPP
