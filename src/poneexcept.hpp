@@ -111,9 +111,9 @@ class InvalidValueException : public std::exception {
         InvalidValueException() = delete;
         InvalidValueException(const std::string &msg) : msg{msg} {}
         InvalidValueException(const int &value, const std::string &msg) {
-            msg = std::format
+            this->msg = std::format("{} : {}", value, msg);
         } 
-        const char *what(const int &value, const std::string &msg) const noexcept override {
+        const char *what() const noexcept override {
             return msg.c_str();
         }
     private:
