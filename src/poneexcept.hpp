@@ -22,39 +22,40 @@ class DuplicateTileCoordinatesException : public TileException {
 public:
     DuplicateTileCoordinatesException() = delete;
     DuplicateTileCoordinatesException(const int &x, const int& y) {
-        msg = std::format("Multiple tiles with duplicate coordinates detected with the coordinates: x:{}, y: {}", x, y);
+        msg = std::format("Multiple tiles with duplicate coordinates detected with the coordinates: x: {}, y: {}", x, y);
     }
     const char *what() const noexcept override {
-        return msg;
+        return msg.c_str();
     }
 
 private:
     std::string msg;
+};
 
 class DuplicateTileNamesException : public TileException {
 public:
     DuplicateTileNamesException() = delete;
     DuplicateTileNamesException(const std::string &name) {
-        std::sprintf(buf, "Multiple tiles with duplicate names detected with the name %s", name.c_str());
+        msg = std::format("Multiple tiles with duplicate names detected with the name {}", name);
     }
     const char *what() const noexcept override {
-        return buf;
+        return msg.c_str();
     }
 
 private:
-    char buf[ERR_MSG_LIMIT];
+    std::string msg;
 };
 
 class TileNotFoundException : public TileException {
 public:
     TileNotFoundException() = delete;
-    TileNotFoundException(const char msg[]) : msg{msg} {}
+    TileNotFoundException(const std::string &msg) : msg{msg} {}
     const char *what() const noexcept override {
-        return msg;
+        return msg.c_str();
     }
 
 private:
-    const char *msg;
+    std::string msg;
 };
 
 // TODO: Convert these exceptions to virtual excpetion classes
@@ -69,15 +70,15 @@ class DuplicateGateTilesException : public GateException {
 public:
     DuplicateGateTilesException() = delete;
     DuplicateGateTilesException(const Tile *t1, const Tile *t2) {
-        std::sprintf(buf, "Multiple gates with duplicate tiles detected with the tiles: x: %s, y: %s",
-        t1->getName().c_str(), t2->getName().c_str());
+        msg = std::format("Multiple gates with duplicate tiles detected with the tiles: x: {}, y: {}",
+        t1->getName(), t2->getName());
     }
     const char *what() const noexcept override {
-        return buf;
+        return msg.c_str();
     }
 
 private:
-    char buf[ERR_MSG_LIMIT];
+    std::string msg;
 };
 
 
@@ -85,35 +86,38 @@ class DuplicateGateNamesException : public GateException {
 public:
     DuplicateGateNamesException() = delete;
     DuplicateGateNamesException(const std::string &name) {
-        std::sprintf(buf, "Multiple gates with duplicate names detected with the name: %s", name.c_str());
+        msg = std::format("Multiple gates with duplicate names detected with the name: {}", name);
     }
     const char *what() const noexcept override {
-        return buf;
+        return msg.c_str();
     }
 private:
-    char buf[ERR_MSG_LIMIT];
+    std::string msg;
 };
 
 class NotANumberException : public std::exception {
 public:
     NotANumberException() = delete;
-    NotANumberException(const char msg[]) : msg{msg} {}
+    NotANumberException(const std::string &msg) : msg{msg} {}
     const char *what() const noexcept override {
-        return msg;
+        return msg.c_str();
     }
 private:
-    const char *msg;
+    std::string msg;
 };
 
 class InvalidValueException : public std::exception {
     public:
         InvalidValueException() = delete;
-        InvalidValueException(const char msg[]) : msg{msg} {}
-        const char *what() const noexcept override {
-            return msg;
+        InvalidValueException(const std::string &msg) : msg{msg} {}
+        InvalidValueException(const int &value, const std::string &msg) {
+            msg = std::format
+        } 
+        const char *what(const int &value, const std::string &msg) const noexcept override {
+            return msg.c_str();
         }
-        // InvalidValueExcpetion(const int &value, const char msg[])
     private:
-        const char *msg;
+        std::string msg;
     };
+
 #endif // PONE_EXCEPTION_HPP
