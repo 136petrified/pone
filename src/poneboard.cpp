@@ -1,5 +1,5 @@
 /*  Created:  JUN 23 2024
-*   Modified: FEB 12 2025
+*   Modified: FEB 18 2025
 */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -117,7 +117,7 @@ Gate *Board::getGate(const Tile *t, const int &direction) const {
 
     if (!t) {
         // Throw an exception here
-        std::cerr << "[ERROR]: Tile does not exist." << std::endl;
+        throw TileNotFoundException("Tile does not exist");
         return nullptr;
     }
     
