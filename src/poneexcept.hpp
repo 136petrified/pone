@@ -10,6 +10,7 @@
 #include <stdexcept>
 
 // #define ERR_MSG_LIMIT 150                           // Max char limit for buffered error messages
+// TODO: Maybe use custom exception
 
 class TileException : public std::exception {
 // This class is an ABSTRACT BASE CLASS! Do not set any values to it.

@@ -1,5 +1,5 @@
 /*  Created:  JUN 23 2024
-*   Modified: FEB 18 2025
+*   Modified: APR 15 2025
 */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -282,3 +282,5 @@ bool Board::checkMove(Cursor *c, const int &direction) {
 
     return true; 
 }
+
+Board::~Board() {}
