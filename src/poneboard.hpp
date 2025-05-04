@@ -45,18 +45,18 @@ public:
     bool compareByTileName(const Tile *t1, const Tile *t2) const;
     bool compareByTileReference(const Tile *t1, const Tile *t2) const;
 
-    bool compareByGateTiles(const Gate *g1, const Gate *g2) const;
-    bool compareByGateName(const Gate *g1, const Gate *g2) const;
-    bool compareByGateReference(const Gate *g1, const Gate *g2) const;
+    bool compareByGateTiles(const Gate *g1, const Gate * g2) const;
+    bool compareByGateName(const Gate *g1, const Gate * g2) const;
+    bool compareByGateReference(const Gate * g1, const Gate * g2) const;
 
     void checkDupTiles() const;     // Runtime check of duplicate elements
     void checkDupGates() const;
 
     void insTile(size_t pos, Tile *t);
-    void remTile(Tile *t);
+    void remTile(Tile * t);
 
     void insGate(size_t pos, Gate *g);
-    void remGate(Gate *g);
+    void remGate(Gate * g);
 
     void load(); // This will use a file - of type .pne preferrably
     void save(); // Save
@@ -78,7 +78,7 @@ private:
     TileList tiles;   // A list of n * m tiles is needed for
     GateList gates;
 
-    Tile *currentTile;          // track the current tile being pointed by cursor
+    Tile * currentTile;          // track the current tile being pointed by cursor
 };
 
 #endif // PONE_BOARD_HPP
