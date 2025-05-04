@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.30.0)
 project(pone)
 
 set(CMAKE_HOME_DIRECTORY $ENV{USERPROFILE})
+set(CMAKE_CURRENT_SOURCE_DIR ${PROJECT_SOURCE_DIR})
 set($ENV{HOME} CMAKE_HOME_DIRECTORY)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -62,36 +63,43 @@ ${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
 add_executable(
 ponetile_tests
 ${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
 add_executable(
 ponecursor_tests
 ${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+
 )
 
 add_executable(
 ponegame_tests
 ${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
 add_executable(
 ponegui_tests
 ${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
 add_executable(
 poneboard_tests
 ${ALL_SRC_FILES}
 ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
 include_directories(
@@ -99,35 +107,43 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/src
 )
 
+target_include_directories(
+    all_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ponetile_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ponecursor_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ponegame_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ponegui_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    poneboard_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
 target_link_libraries(all_tests
-                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
 
 target_link_libraries(ponetile_tests
-                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
 
 target_link_libraries(ponecursor_tests
-                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
 
 target_link_libraries(ponegame_tests
-                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
 
 target_link_libraries(ponegui_tests
-                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
 
 target_link_libraries(poneboard_tests
-                      ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
                       GTest::gtest_main
 )
 
 gtest_discover_tests(all_tests
+    poneboard_tests
+    ponetile_tests
+    ponecursor_tests
+    ponegui_tests
+    poneboard_tests
 )
