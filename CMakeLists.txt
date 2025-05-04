@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-set(CXXFLAGS "--std=c++20 -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src")
+set(CXXFLAGS "-g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src")
 set(CMAKE_CXX_FLAGS ${CXXFLAGS})
 
 # set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
@@ -96,6 +96,7 @@ ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 
 include_directories(
     ${GTEST_ROOT}/googletest/include
+    ${PROJECT_SOURCE_DIR}/src
 )
 
 target_link_libraries(all_tests

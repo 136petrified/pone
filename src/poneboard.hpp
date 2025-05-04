@@ -71,7 +71,7 @@ public:
 
     // Board destructor
     // ---------------------------------------------
-    ~Board();
+    ~Board() = default;
 
 private:
     int length, width;     // ! - Remember to except this if not int!
