@@ -3,9 +3,10 @@
 
 #include <utility>
 
+#include "poneconst.hpp" // Types located here
 #include "ponetile.hpp"
 
-#define GATE std::pair<Tile*, Tile*>
+using GATE = std::pair<Tile *, Tile *>;
 
 class Gate {
 public:

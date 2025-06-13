@@ -1,14 +1,8 @@
-/*  Created:  JUN 23 2024
-*   Modified: APR 15 2025
+/*  Created:    06-23-2024
+*   Modified:   06-13-2025
 */
 
 // TODO: Replace all printed errors with proper thrown errors
-
-#include <algorithm>
-#include <deque>
-#include <iostream>
-#include <iterator>
-#include <vector>
 
 #include "poneboard.hpp"
 #include "poneconst.hpp"
@@ -68,7 +62,7 @@ Tile *Board::getTile(const int &x, const int &y) const {
     return nullptr;
 }
 
-Tile *Board::getTile(const Tile *t, const int &direction) const {
+Tile *Board::getTile(const Tile *t, const Direction &direction) const {
     if (t == nullptr) {
         // std::cerr << "[ERROR]: Tile does not exist." << std::endl;
         throw TileNotFoundException("Tile does not exist.");
@@ -101,7 +95,7 @@ Gate *Board::getGate(const std::string &name) const {
 }
 
 Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
-    if (!t1 || !t2) { // Throw exception here
+    if (t1 == nullptr || t2 == nullptr) { // Throw exception here
         std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument." 
                   << std::endl;
     }
@@ -113,7 +107,7 @@ Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
     return nullptr;
 }
 
-Gate *Board::getGate(const Tile *t, const int &direction) const {
+Gate *Board::getGate(const Tile *t, const Direction &direction) const {
 
     if (!t) {
         // Throw an exception here
@@ -168,6 +162,7 @@ bool Board::compareByGateReference(const Gate *g1, const Gate *g2) const {
 }
 
 void Board::checkDupTiles() const {
+    /*
     std::deque<Tile*> compare{tiles}; // using copy constructor
     auto currCompare = compare.begin(); // iterator to compare obj;
     int c1{0}, c2{0};
@@ -182,9 +177,11 @@ void Board::checkDupTiles() const {
         }
         ++currCompare; // Move to next element
     }
+    */
 }
 
 void Board::checkDupGates() const {
+    /*
     std::deque<Gate*> compare{gates}; // using copy constructor
     auto currCompare = compare.begin(); // iterator to compare obj;
     int c1{0}, c2{0};
@@ -199,6 +196,7 @@ void Board::checkDupGates() const {
         }
         ++currCompare; // Move to next element
     }
+    */
 }
 
 void Board::insTile(size_t pos, Tile *t) {
@@ -240,7 +238,6 @@ void Board::remGate(Gate *g) {
 void Board::load() {
     // This will be attached to ponescript
     // May use JSON-like formatting to load created boards
-
 }
 
 void Board::save() {
@@ -250,7 +247,7 @@ void Board::save() {
 // Board commands
 // ---------------------------------------------
 
-void Board::moveCursor(Cursor *c, const int &direction) {
+void Board::moveCursor(Cursor *c, const Direction &direction) {
     currentTile->setCursor(false);
     switch (direction) {
         case UP:
@@ -271,7 +268,7 @@ void Board::moveCursor(Cursor *c, const int &direction) {
     currentTile->setCursor(true);
 }
 
-bool Board::checkMove(Cursor *c, const int &direction) {
+bool Board::checkMove(Cursor *c, const Direction &direction) {
     // Check collision first
     Tile *target = getTile(currentTile, direction);
     if (target->isCollision()) 

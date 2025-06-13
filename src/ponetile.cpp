@@ -1,5 +1,5 @@
-/*  Created:  JUN 23 2024
-*   Modified: OCT  9 2024
+/*  Created:    06-23-2024
+*   Modified:   06-13-2025
 */
 
 #include "ponetile.hpp"
@@ -88,5 +88,4 @@ bool Tile::operator==(const Tile &other) {
 
 // Tile destructor
 // ---------------------------------------------
-Tile::~Tile()
-{}
+Tile::~Tile() {}
