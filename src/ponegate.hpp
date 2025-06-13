@@ -3,7 +3,6 @@
 
 #include <utility>
 
-#include "poneconst.hpp"  // Types located here
 #include "ponetile.hpp"
 
 using GATE = std::pair<Tile *, Tile *>;

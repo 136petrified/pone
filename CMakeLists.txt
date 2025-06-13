@@ -63,6 +63,7 @@ ${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
+${PROJECT_SOURCE_DIR}/test/ponegate_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
@@ -102,6 +103,13 @@ ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
+add_executable(
+ponegate_tests
+${ALL_SRC_FILES}
+${PROJECT_SOURCE_DIR}/test/ponegate_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+)
+
 include_directories(
     ${GTEST_ROOT}/googletest/include
     ${PROJECT_SOURCE_DIR}/src
@@ -114,6 +122,7 @@ target_include_directories(
     ponegame_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     ponegui_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     poneboard_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ponegate_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_link_libraries(all_tests
@@ -137,6 +146,10 @@ target_link_libraries(ponegui_tests
 )
 
 target_link_libraries(poneboard_tests
+                      GTest::gtest_main
+)
+
+target_link_libraries(ponegate_tests
                       GTest::gtest_main
 )
 
