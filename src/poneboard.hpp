@@ -2,9 +2,9 @@
 #define PONE_BOARD_HPP
 
 #include <algorithm>
+#include <deque>
 #include <iostream>
 #include <iterator>
-#include <deque>
 #include <utility>
 #include <vector>
 
@@ -13,12 +13,11 @@
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
-
 using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
 
 class Board {
-public:
+   public:
     // Board constructors
     // ---------------------------------------------
     Board();
@@ -32,18 +31,17 @@ public:
     int getWidth() const;
     void setWidth(const int &width);
 
-    Tile * getTile(const std::string &name) const;
-    Tile * getTile(const int &x, const int &y) const;
-    Tile * getTile(const Tile *t, const Direction &direction) const;
+    Tile *getTile(const std::string &name) const;
+    Tile *getTile(const int &x, const int &y) const;
+    Tile *getTile(const Tile *t, const Direction &direction) const;
 
-    Gate * getGate(const std::string &name) const;
-    Gate * getGate(const Tile *t1, const Tile *t2) const;
-    Gate * getGate(const Tile *t, const Direction &direction) const;
-
+    Gate *getGate(const std::string &name) const;
+    Gate *getGate(const Tile *t1, const Tile *t2) const;
+    Gate *getGate(const Tile *t, const Direction &direction) const;
 
     Tile *getCurrentTile() const;
     void setCurrentTile(Tile *t);
-    
+
     // Board functions
     // ---------------------------------------------
 
@@ -55,7 +53,7 @@ public:
     bool compareByGateName(const Gate *g1, const Gate *g2) const;
     bool compareByGateReference(const Gate *g1, const Gate *g2) const;
 
-    void checkDupTiles() const;     // Runtime check of duplicate elements
+    void checkDupTiles() const;  // Runtime check of duplicate elements
     void checkDupGates() const;
 
     void insTile(size_t pos, Tile *t);
@@ -64,14 +62,15 @@ public:
     void insGate(size_t pos, Gate *g);
     void remGate(Gate *g);
 
-    void load(); // This will use a file - of type .pne preferrably
-    void save(); // Save
+    void load();  // This will use a file - of type .pne preferrably
+    void save();  // Save
 
     bool empty() const;
     bool full() const;
 
     // Board commands
-    // ---------------------------------------------  TODO: Create rest of commands
+    // ---------------------------------------------  TODO: Create rest of
+    // commands
     void moveCursor(Cursor *c, const Direction &direction);
     bool checkMove(Cursor *c, const Direction &direction);
 
@@ -82,12 +81,12 @@ public:
     // ---------------------------------------------
     ~Board();
 
-private:
-    int length, width;     // ! - Remember to except this if not int!
-    TileList tiles;   // A list of n * m tiles is needed for
+   private:
+    int length, width;  // ! - Remember to except this if not int!
+    TileList tiles;     // A list of n * m tiles is needed for
     GateList gates;
 
-    Tile * currentTile;          // track the current tile being pointed by cursor
+    Tile *currentTile;  // track the current tile being pointed by cursor
 };
 
-#endif // PONE_BOARD_HPP
+#endif  // PONE_BOARD_HPP

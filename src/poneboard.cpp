@@ -1,10 +1,11 @@
-/*  Created:    06-23-2024
-*   Modified:   06-13-2025
-*/
+/*   Created:    06-23-2024
+ *   Modified:   06-13-2025
+ */
 
 // TODO: Replace all printed errors with proper thrown errors
 
 #include "poneboard.hpp"
+
 #include "poneconst.hpp"
 #include "poneexcept.hpp"
 #include "ponegate.hpp"
@@ -12,46 +13,40 @@
 
 // Board constructors
 // ---------------------------------------------
-Board::Board() :
-    length{0}, width{0}, tiles{TileList()}, gates{GateList()}, currentTile{nullptr}
-{}
+Board::Board()
+    : length{0},
+      width{0},
+      tiles{TileList()},
+      gates{GateList()},
+      currentTile{nullptr} {}
 
-Board::Board(const int &length, const int &width) :
-    length{length}, width{width}, tiles{TileList()}, gates{GateList()}, currentTile{nullptr}
-{}
+Board::Board(const int &length, const int &width)
+    : length{length},
+      width{width},
+      tiles{TileList()},
+      gates{GateList()},
+      currentTile{nullptr} {}
 
 // Board getter/setter functions
 // ---------------------------------------------
-int Board::getLength() const {
-    return length;
-}
+int Board::getLength() const { return length; }
 
-void Board::setLength(const int &length) {
-    this->length = length;
-}
+void Board::setLength(const int &length) { this->length = length; }
 
-int Board::getWidth() const {
-    return width;
-}
+int Board::getWidth() const { return width; }
 
-void Board::setWidth(const int &width) {
-    this->width = width;
-}
+void Board::setWidth(const int &width) { this->width = width; }
 
-Tile *Board::getCurrentTile() const {
-    return currentTile;
-}
+Tile *Board::getCurrentTile() const { return currentTile; }
 
-void Board::setCurrentTile(Tile *t) {
-    currentTile = t;
-}
+void Board::setCurrentTile(Tile *t) { currentTile = t; }
 
 Tile *Board::getTile(const std::string &name) const {
     for (Tile *t : tiles) {
         if (t->getName() == name) return t;
     }
 
-    return nullptr; // Return nullptr if not found
+    return nullptr;  // Return nullptr if not found
 }
 
 Tile *Board::getTile(const int &x, const int &y) const {
@@ -78,8 +73,8 @@ Tile *Board::getTile(const Tile *t, const Direction &direction) const {
         case RIGHT:
             return getTile(t->getX() - 1, t->getY());
         default:
-            std::cerr << "[ERROR]: Invalid direction: "
-                      << direction << std::endl;
+            std::cerr << "[ERROR]: Invalid direction: " << direction
+                      << std::endl;
             break;
     }
 
@@ -95,8 +90,8 @@ Gate *Board::getGate(const std::string &name) const {
 }
 
 Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
-    if (t1 == nullptr || t2 == nullptr) { // Throw exception here
-        std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument." 
+    if (t1 == nullptr || t2 == nullptr) {  // Throw exception here
+        std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument."
                   << std::endl;
     }
 
@@ -108,13 +103,12 @@ Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
 }
 
 Gate *Board::getGate(const Tile *t, const Direction &direction) const {
-
     if (!t) {
         // Throw an exception here
         throw TileNotFoundException("Tile does not exist");
         return nullptr;
     }
-    
+
     switch (direction) {
         case UP:
             return getGate(currentTile, getTile(currentTile, UP));
@@ -125,14 +119,13 @@ Gate *Board::getGate(const Tile *t, const Direction &direction) const {
         case RIGHT:
             return getGate(currentTile, getTile(currentTile, RIGHT));
         default:
-            std::cerr << "[ERROR]: Invalid direction: "
-                      << direction << std::endl;
+            std::cerr << "[ERROR]: Invalid direction: " << direction
+                      << std::endl;
             break;
     }
 
     return nullptr;
 }
-
 
 // Board functions
 // ---------------------------------------------
@@ -172,8 +165,10 @@ void Board::checkDupTiles() const {
             if (compareByTileName(*currCompare, *it)) c1++;
             else if (compareByTileCoordinate(*currCompare, *it)) c2++;
 
-            if (c1 > 1) throw DuplicateTileNamesException((*currCompare)->getName());
-            else if (c2 > 1) throw DuplicateTileCoordinatesException((*currCompare)->getX(), (*currCompare)->getY());
+            if (c1 > 1) throw
+    DuplicateTileNamesException((*currCompare)->getName()); else if (c2 > 1)
+    throw DuplicateTileCoordinatesException((*currCompare)->getX(),
+    (*currCompare)->getY());
         }
         ++currCompare; // Move to next element
     }
@@ -191,8 +186,10 @@ void Board::checkDupGates() const {
             if (compareByGateName(*currCompare, *it)) c1++;
             else if (compareByGateTiles(*currCompare, *it)) c2++;
 
-            if (c1 > 1) throw DuplicateGateNamesException((*currCompare)->getName());
-            else if (c2 > 1) throw DuplicateGateTilesException((*currCompare)->getTile1(), (*currCompare)->getTile2());
+            if (c1 > 1) throw
+    DuplicateGateNamesException((*currCompare)->getName()); else if (c2 > 1)
+    throw DuplicateGateTilesException((*currCompare)->getTile1(),
+    (*currCompare)->getTile2());
         }
         ++currCompare; // Move to next element
     }
@@ -207,14 +204,18 @@ void Board::insTile(size_t pos, Tile *t) {
         auto tilepos = tiles.begin() + pos;
         tiles.insert(tilepos, t);
     } else {
-        std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
+        std::cerr
+            << "[ERROR] Attempted to insert tile into out-of-bounds position."
+            << std::endl;
     }
 }
 
 void Board::remTile(Tile *t) {
     auto tilepos = std::find(tiles.begin(), tiles.end(), t);
-    if (tilepos != tiles.end()) tiles.erase(tilepos);
-    else std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
+    if (tilepos != tiles.end())
+        tiles.erase(tilepos);
+    else
+        std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
 }
 
 void Board::insGate(size_t pos, Gate *g) {
@@ -225,14 +226,18 @@ void Board::insGate(size_t pos, Gate *g) {
         auto gatepos = gates.begin() + pos;
         gates.insert(gatepos, g);
     } else {
-        std::cerr << "[ERROR] Attempted to insert tile into out-of-bounds position." << std::endl;
+        std::cerr
+            << "[ERROR] Attempted to insert tile into out-of-bounds position."
+            << std::endl;
     }
 }
 
 void Board::remGate(Gate *g) {
     auto gatepos = std::find(gates.begin(), gates.end(), g);
-    if (gatepos != gates.end()) gates.erase(gatepos);
-    else std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
+    if (gatepos != gates.end())
+        gates.erase(gatepos);
+    else
+        std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
 }
 
 void Board::load() {
@@ -251,13 +256,17 @@ void Board::moveCursor(Cursor *c, const Direction &direction) {
     currentTile->setCursor(false);
     switch (direction) {
         case UP:
-            c->setY(c->getY() + 1); break;
+            c->setY(c->getY() + 1);
+            break;
         case DOWN:
-            c->setY(c->getY() - 1); break;
+            c->setY(c->getY() - 1);
+            break;
         case LEFT:
-            c->setX(c->getX() - 1); break;
+            c->setX(c->getX() - 1);
+            break;
         case RIGHT:
-            c->setX(c->getX() + 1); break;
+            c->setX(c->getX() + 1);
+            break;
         default:
             std::cerr << "[ERROR]: Move cursor failed given direction "
                       << direction << std::endl;
@@ -271,13 +280,13 @@ void Board::moveCursor(Cursor *c, const Direction &direction) {
 bool Board::checkMove(Cursor *c, const Direction &direction) {
     // Check collision first
     Tile *target = getTile(currentTile, direction);
-    if (target->isCollision()) 
+    if (target->isCollision())
         return false;
     else if (getGate(currentTile, target)) {
         return false;
     }
 
-    return true; 
+    return true;
 }
 
 Board::~Board() {}
