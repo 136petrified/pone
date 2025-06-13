@@ -159,4 +159,5 @@ gtest_discover_tests(all_tests
     ponecursor_tests
     ponegui_tests
     poneboard_tests
+    ponegate_tests
 )
