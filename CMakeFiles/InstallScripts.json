@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/136petrified/pone/cmake_install.cmake",
+		"/home/136petrified/pone/_deps/googletest-build/cmake_install.cmake",
+		"/home/136petrified/pone/_deps/googletest-build/googlemock/cmake_install.cmake",
+		"/home/136petrified/pone/_deps/googletest-build/googletest/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

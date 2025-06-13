@@ -1,0 +1,374 @@
+[
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/poneboard.cpp.o -c /home/136petrified/pone/src/poneboard.cpp",
+  "file": "/home/136petrified/pone/src/poneboard.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/poneboard.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/ponecursor.cpp.o -c /home/136petrified/pone/src/ponecursor.cpp",
+  "file": "/home/136petrified/pone/src/ponecursor.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/ponecursor.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/ponegame.cpp.o -c /home/136petrified/pone/src/ponegame.cpp",
+  "file": "/home/136petrified/pone/src/ponegame.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/ponegame.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/ponegate.cpp.o -c /home/136petrified/pone/src/ponegate.cpp",
+  "file": "/home/136petrified/pone/src/ponegate.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/ponegate.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/ponegui.cpp.o -c /home/136petrified/pone/src/ponegui.cpp",
+  "file": "/home/136petrified/pone/src/ponegui.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/ponegui.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/ponescript.cpp.o -c /home/136petrified/pone/src/ponescript.cpp",
+  "file": "/home/136petrified/pone/src/ponescript.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/ponescript.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/src/ponetile.cpp.o -c /home/136petrified/pone/src/ponetile.cpp",
+  "file": "/home/136petrified/pone/src/ponetile.cpp",
+  "output": "CMakeFiles/all_tests.dir/src/ponetile.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/test/ponetile_tests.cpp.o -c /home/136petrified/pone/test/ponetile_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponetile_tests.cpp",
+  "output": "CMakeFiles/all_tests.dir/test/ponetile_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/test/ponecursor_tests.cpp.o -c /home/136petrified/pone/test/ponecursor_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponecursor_tests.cpp",
+  "output": "CMakeFiles/all_tests.dir/test/ponecursor_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/test/ponegame_tests.cpp.o -c /home/136petrified/pone/test/ponegame_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponegame_tests.cpp",
+  "output": "CMakeFiles/all_tests.dir/test/ponegame_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/test/ponegui_tests.cpp.o -c /home/136petrified/pone/test/ponegui_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponegui_tests.cpp",
+  "output": "CMakeFiles/all_tests.dir/test/ponegui_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/test/poneboard_tests.cpp.o -c /home/136petrified/pone/test/poneboard_tests.cpp",
+  "file": "/home/136petrified/pone/test/poneboard_tests.cpp",
+  "output": "CMakeFiles/all_tests.dir/test/poneboard_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -I/home/136petrified/pone/ponetile_tests -I/home/136petrified/pone/ponecursor_tests -I/home/136petrified/pone/ponegame_tests -I/home/136petrified/pone/ponegui_tests -I/home/136petrified/pone/poneboard_tests -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/all_tests.dir/test/gtestmain.cpp.o -c /home/136petrified/pone/test/gtestmain.cpp",
+  "file": "/home/136petrified/pone/test/gtestmain.cpp",
+  "output": "CMakeFiles/all_tests.dir/test/gtestmain.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/poneboard.cpp.o -c /home/136petrified/pone/src/poneboard.cpp",
+  "file": "/home/136petrified/pone/src/poneboard.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/poneboard.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/ponecursor.cpp.o -c /home/136petrified/pone/src/ponecursor.cpp",
+  "file": "/home/136petrified/pone/src/ponecursor.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/ponecursor.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/ponegame.cpp.o -c /home/136petrified/pone/src/ponegame.cpp",
+  "file": "/home/136petrified/pone/src/ponegame.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/ponegame.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/ponegate.cpp.o -c /home/136petrified/pone/src/ponegate.cpp",
+  "file": "/home/136petrified/pone/src/ponegate.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/ponegate.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/ponegui.cpp.o -c /home/136petrified/pone/src/ponegui.cpp",
+  "file": "/home/136petrified/pone/src/ponegui.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/ponegui.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/ponescript.cpp.o -c /home/136petrified/pone/src/ponescript.cpp",
+  "file": "/home/136petrified/pone/src/ponescript.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/ponescript.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/src/ponetile.cpp.o -c /home/136petrified/pone/src/ponetile.cpp",
+  "file": "/home/136petrified/pone/src/ponetile.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/src/ponetile.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/test/ponetile_tests.cpp.o -c /home/136petrified/pone/test/ponetile_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponetile_tests.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/test/ponetile_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponetile_tests.dir/test/gtestmain.cpp.o -c /home/136petrified/pone/test/gtestmain.cpp",
+  "file": "/home/136petrified/pone/test/gtestmain.cpp",
+  "output": "CMakeFiles/ponetile_tests.dir/test/gtestmain.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/poneboard.cpp.o -c /home/136petrified/pone/src/poneboard.cpp",
+  "file": "/home/136petrified/pone/src/poneboard.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/poneboard.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/ponecursor.cpp.o -c /home/136petrified/pone/src/ponecursor.cpp",
+  "file": "/home/136petrified/pone/src/ponecursor.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/ponecursor.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/ponegame.cpp.o -c /home/136petrified/pone/src/ponegame.cpp",
+  "file": "/home/136petrified/pone/src/ponegame.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/ponegame.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/ponegate.cpp.o -c /home/136petrified/pone/src/ponegate.cpp",
+  "file": "/home/136petrified/pone/src/ponegate.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/ponegate.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/ponegui.cpp.o -c /home/136petrified/pone/src/ponegui.cpp",
+  "file": "/home/136petrified/pone/src/ponegui.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/ponegui.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/ponescript.cpp.o -c /home/136petrified/pone/src/ponescript.cpp",
+  "file": "/home/136petrified/pone/src/ponescript.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/ponescript.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/src/ponetile.cpp.o -c /home/136petrified/pone/src/ponetile.cpp",
+  "file": "/home/136petrified/pone/src/ponetile.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/src/ponetile.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/test/ponecursor_tests.cpp.o -c /home/136petrified/pone/test/ponecursor_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponecursor_tests.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/test/ponecursor_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponecursor_tests.dir/test/gtestmain.cpp.o -c /home/136petrified/pone/test/gtestmain.cpp",
+  "file": "/home/136petrified/pone/test/gtestmain.cpp",
+  "output": "CMakeFiles/ponecursor_tests.dir/test/gtestmain.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/poneboard.cpp.o -c /home/136petrified/pone/src/poneboard.cpp",
+  "file": "/home/136petrified/pone/src/poneboard.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/poneboard.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/ponecursor.cpp.o -c /home/136petrified/pone/src/ponecursor.cpp",
+  "file": "/home/136petrified/pone/src/ponecursor.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/ponecursor.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/ponegame.cpp.o -c /home/136petrified/pone/src/ponegame.cpp",
+  "file": "/home/136petrified/pone/src/ponegame.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/ponegame.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/ponegate.cpp.o -c /home/136petrified/pone/src/ponegate.cpp",
+  "file": "/home/136petrified/pone/src/ponegate.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/ponegate.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/ponegui.cpp.o -c /home/136petrified/pone/src/ponegui.cpp",
+  "file": "/home/136petrified/pone/src/ponegui.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/ponegui.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/ponescript.cpp.o -c /home/136petrified/pone/src/ponescript.cpp",
+  "file": "/home/136petrified/pone/src/ponescript.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/ponescript.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/src/ponetile.cpp.o -c /home/136petrified/pone/src/ponetile.cpp",
+  "file": "/home/136petrified/pone/src/ponetile.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/src/ponetile.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/test/ponegame_tests.cpp.o -c /home/136petrified/pone/test/ponegame_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponegame_tests.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/test/ponegame_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegame_tests.dir/test/gtestmain.cpp.o -c /home/136petrified/pone/test/gtestmain.cpp",
+  "file": "/home/136petrified/pone/test/gtestmain.cpp",
+  "output": "CMakeFiles/ponegame_tests.dir/test/gtestmain.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/poneboard.cpp.o -c /home/136petrified/pone/src/poneboard.cpp",
+  "file": "/home/136petrified/pone/src/poneboard.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/poneboard.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/ponecursor.cpp.o -c /home/136petrified/pone/src/ponecursor.cpp",
+  "file": "/home/136petrified/pone/src/ponecursor.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/ponecursor.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/ponegame.cpp.o -c /home/136petrified/pone/src/ponegame.cpp",
+  "file": "/home/136petrified/pone/src/ponegame.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/ponegame.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/ponegate.cpp.o -c /home/136petrified/pone/src/ponegate.cpp",
+  "file": "/home/136petrified/pone/src/ponegate.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/ponegate.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/ponegui.cpp.o -c /home/136petrified/pone/src/ponegui.cpp",
+  "file": "/home/136petrified/pone/src/ponegui.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/ponegui.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/ponescript.cpp.o -c /home/136petrified/pone/src/ponescript.cpp",
+  "file": "/home/136petrified/pone/src/ponescript.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/ponescript.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/src/ponetile.cpp.o -c /home/136petrified/pone/src/ponetile.cpp",
+  "file": "/home/136petrified/pone/src/ponetile.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/src/ponetile.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/test/ponegui_tests.cpp.o -c /home/136petrified/pone/test/ponegui_tests.cpp",
+  "file": "/home/136petrified/pone/test/ponegui_tests.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/test/ponegui_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/ponegui_tests.dir/test/gtestmain.cpp.o -c /home/136petrified/pone/test/gtestmain.cpp",
+  "file": "/home/136petrified/pone/test/gtestmain.cpp",
+  "output": "CMakeFiles/ponegui_tests.dir/test/gtestmain.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/poneboard.cpp.o -c /home/136petrified/pone/src/poneboard.cpp",
+  "file": "/home/136petrified/pone/src/poneboard.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/poneboard.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/ponecursor.cpp.o -c /home/136petrified/pone/src/ponecursor.cpp",
+  "file": "/home/136petrified/pone/src/ponecursor.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/ponecursor.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/ponegame.cpp.o -c /home/136petrified/pone/src/ponegame.cpp",
+  "file": "/home/136petrified/pone/src/ponegame.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/ponegame.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/ponegate.cpp.o -c /home/136petrified/pone/src/ponegate.cpp",
+  "file": "/home/136petrified/pone/src/ponegate.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/ponegate.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/ponegui.cpp.o -c /home/136petrified/pone/src/ponegui.cpp",
+  "file": "/home/136petrified/pone/src/ponegui.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/ponegui.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/ponescript.cpp.o -c /home/136petrified/pone/src/ponescript.cpp",
+  "file": "/home/136petrified/pone/src/ponescript.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/ponescript.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/src/ponetile.cpp.o -c /home/136petrified/pone/src/ponetile.cpp",
+  "file": "/home/136petrified/pone/src/ponetile.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/src/ponetile.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/test/poneboard_tests.cpp.o -c /home/136petrified/pone/test/poneboard_tests.cpp",
+  "file": "/home/136petrified/pone/test/poneboard_tests.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/test/poneboard_tests.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone",
+  "command": "/usr/bin/c++  -I/googletest/include -I/home/136petrified/pone/src -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=gnu++20 -o CMakeFiles/poneboard_tests.dir/test/gtestmain.cpp.o -c /home/136petrified/pone/test/gtestmain.cpp",
+  "file": "/home/136petrified/pone/test/gtestmain.cpp",
+  "output": "CMakeFiles/poneboard_tests.dir/test/gtestmain.cpp.o"
+},
+{
+  "directory": "/home/136petrified/pone/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -I/home/136petrified/pone/_deps/googletest-src/googlemock/include -I/home/136petrified/pone/_deps/googletest-src/googlemock -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=c++20 -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/136petrified/pone/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/136petrified/pone/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
+},
+{
+  "directory": "/home/136petrified/pone/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -isystem /home/136petrified/pone/_deps/googletest-src/googlemock/include -isystem /home/136petrified/pone/_deps/googletest-src/googlemock -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=c++20 -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/136petrified/pone/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/136petrified/pone/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
+},
+{
+  "directory": "/home/136petrified/pone/_deps/googletest-build/googletest",
+  "command": "/usr/bin/c++  -I/home/136petrified/pone/_deps/googletest-src/googletest/include -I/home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=c++20 -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/136petrified/pone/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/136petrified/pone/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+},
+{
+  "directory": "/home/136petrified/pone/_deps/googletest-build/googletest",
+  "command": "/usr/bin/c++  -isystem /home/136petrified/pone/_deps/googletest-src/googletest/include -isystem /home/136petrified/pone/_deps/googletest-src/googletest -g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src -std=c++20 -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/136petrified/pone/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/136petrified/pone/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+}
+]
