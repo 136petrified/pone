@@ -5,11 +5,12 @@
 #include <vector>
 
 class Tile {
-public:
+   public:
     // Tile constructors
     // ---------------------------------------------
     Tile();
-    Tile(const int &x, const int &y, const std::string &color, const std::string &type);
+    Tile(const int &x, const int &y, const std::string &color,
+         const std::string &type);
 
     // Tile getter/setter functions
     // ---------------------------------------------
@@ -40,36 +41,27 @@ public:
     bool isEmpty() const;
     bool isType(const std::string &type) const;
 
-    bool operator==(const Tile &other);
+    bool operator==(const Tile &other) const;
 
     // Tile destructor
     // ---------------------------------------------
     ~Tile();
 
-private:
+   private:
     // Tile attributes
     // ---------------------------------------------
-    int x, y;      // coordinates of the tile
+    int x, y;  // coordinates of the tile
     std::string color;
-    std::string type;   // what is the type of this tile?
-    bool cursor;        // is the cursor on this tile?
+    std::string type;  // what is the type of this tile?
+    bool cursor;       // is the cursor on this tile?
     int id;
     std::string name;
 
-
     // Tile constants
     // ---------------------------------------------
-    const std::vector<std::string> types =
-    {"empty", 
-     "gswitch",
-     "cswitch",
-     "key",
-     "up",
-     "down", 
-     "left",
-     "right",
-     "goal",
-     "collision"};
+    const std::vector<std::string> types = {
+        "empty", "gswitch", "cswitch", "key",  "up",
+        "down",  "left",    "right",   "goal", "collision"};
 };
 
-#endif // PONE_TILE_HPP
+#endif  // PONE_TILE_HPP
