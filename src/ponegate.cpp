@@ -4,6 +4,8 @@
 
 #include "ponegate.hpp"
 
+// TODO: Edit constructors
+
 // Gate constructors
 // ---------------------------------------------
 Gate::Gate() : gate{GATE{nullptr, nullptr}} {}

@@ -6,10 +6,10 @@
 #include <iostream>
 #include <iterator>
 #include <utility>
-#include <vector>
 
 #include "poneconst.hpp"
 #include "ponecursor.hpp"
+#include "poneexcept.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -62,8 +62,9 @@ class Board {
     void insGate(size_t pos, Gate *g);
     void remGate(Gate *g);
 
-    void load();  // This will use a file - of type .pne preferrably
-    void save();  // Save
+    void load(const std::string &
+                  filename);  // This will use a file - of type .pne preferrably
+    void save(const std::string &filename);  // Save
 
     bool empty() const;
     bool full() const;
