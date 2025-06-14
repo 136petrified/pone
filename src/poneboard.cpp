@@ -6,11 +6,6 @@
 
 #include "poneboard.hpp"
 
-#include "poneconst.hpp"
-#include "poneexcept.hpp"
-#include "ponegate.hpp"
-#include "ponetile.hpp"
-
 // Board constructors
 // ---------------------------------------------
 Board::Board()

@@ -44,6 +44,7 @@ class Gate {
     std::string color;
     int id;
     std::string name;
+    bool active;
 };
 
 #endif  // PONE_GATE_HPP
