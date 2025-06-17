@@ -2,6 +2,7 @@
 #define PONE_BOARD_HPP
 
 #include <deque>
+#include <unordered_map>
 
 #include "poneconst.hpp"
 #include "ponecursor.hpp"
@@ -71,7 +72,8 @@ class Board {
     void moveCursor(const Direction &direction);
     bool checkMove(const Direction &direction);
     void rotateTile(Tile *t, const Rotation &rotation);
-    void rotateTiles(const Rotation &rotation);  // Rotate all tiles on board
+    void rotateTiles(const std::string &color,
+                     const Rotation &rotation);  // Rotate all tiles on board
     void toggleGate(const Tile *t1, const Tile *t2);
 
     bool isGoal() const;
@@ -91,6 +93,9 @@ class Board {
     int numGates;  // Number of gates
 
     Cursor cursor;  // track the current tile being pointed by cursor
+    static const std::unordered_map<std::string, std::string> clockwiseMap;
+    static const std::unordered_map<std::string, std::string>
+        counterClockwiseMap;
 };
 
 #endif  // PONE_BOARD_HPP

@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <unordered_map>
 
 #include "poneconst.hpp"
 #include "poneexcept.hpp"
@@ -219,7 +220,7 @@ void Board::insTile(int pos, Tile *t) {
     // Leave pos as -1 to insert at last position by default
     if (pos <= -1) {
         tiles.push_back(t);
-    } else if (pos < tiles.size()) {
+    } else if (pos < static_cast<int>(tiles.size())) {
         auto tilepos = tiles.begin() + pos;
         tiles.insert(tilepos, t);
     } else {
@@ -325,36 +326,33 @@ bool Board::checkMove(const Direction &direction) {
 
 void Board::rotateTile(Tile *t, const Rotation &rotation) {
     // ! - DO NOT rotate non-directional tiles!!!
-
     std::string dir = t->getType();
 
-    // Check string here if directional
+    // TODO: Check string here if directional
 
-    if (rotation == CLOCKWISE) {
-        if (dir == "up")
-            t->setType("right");
-        else if (dir == "right")
-            t->setType("down");
-        else if (dir == "down")
-            t->setType("left");
-        else if (dir == "left")
-            t->setType("up");
-    } else if (rotation == COUNTER_CLOCKWISE) {
-        if (dir == "up")
-            t->setType("left");
-        else if (dir == "right")
-            t->setType("up");
-        else if (dir == "down")
-            t->setType("right");
-        else if (dir == "left")
-            t->setType("down");
+    if (rotation == CLOCKWISE)
+        dir = clockwiseMap.at(dir);
+    else if (rotation == COUNTER_CLOCKWISE)
+        dir = counterClockwiseMap.at(dir);
+
+    // TODO: Error
+    t->setType(dir);
+}
+
+void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
+    for (Tile *t : tiles) {
+        if (t->getColor() == color) rotateTiles(t, rotation);
     }
-
-    // Error
 }
 
 bool Board::empty() const { return tiles.empty(); }
 
 bool Board::full() const { return numTiles > length * width; }
+
+const std::unordered_map<std::string, std::string> Board::clockwiseMap = {
+    {"up", "right"}, {"right", "down"}, {"down", "left"}, {"left", "up"}};
+
+const std::unordered_map<std::string, std::string> Board::counterClockwiseMap =
+    {{"up", "left"}, {"left", "down"}, {"down", "right"}, {"right", "up"}};
 
 Board::~Board() {}
