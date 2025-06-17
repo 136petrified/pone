@@ -29,7 +29,7 @@ TEST(poneboard, CurrentTile) {
     Board b;
     Tile t1 = Tile{4, 0, "none", "empty"};
     b.setCurrentTile(&t1);
-    EXPECT_EQ(b.getCurrentTile(), t1);
+    EXPECT_EQ(*b.getCurrentTile(), t1);
 }
 
 TEST(poneboard, GetTile) { Board b; }

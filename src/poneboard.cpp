@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-13-2025
+ *   Modified:   06-14-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -235,12 +235,12 @@ void Board::remGate(Gate *g) {
         std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
 }
 
-void Board::load() {
+void Board::load(const std::string &filename) {
     // This will be attached to ponescript
     // May use JSON-like formatting to load created boards
 }
 
-void Board::save() {
+void Board::save(const std::string &filename) {
     // Autogenerates a script
 }
 

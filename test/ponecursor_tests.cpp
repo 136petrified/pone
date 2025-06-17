@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <cmath>
-
 #include "ponecursor.hpp"
 
 TEST(ponecursor, Constructor) {
@@ -34,4 +32,11 @@ TEST(ponecursor, getPos) {
     std::pair<int, int> coords = c.getPos();
     EXPECT_EQ(coords.first, -3);
     EXPECT_EQ(coords.second, -7);
+}
+
+TEST(ponecursor, getTile) {
+    Cursor c{6, 8};
+    Tile t{c.getX(), c.getY(), "none", "empty"};
+    c.setTile(&t);
+    EXPECT_EQ(*c.getTile(), t);
 }

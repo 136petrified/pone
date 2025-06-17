@@ -6,9 +6,9 @@
 #include "ponetile.hpp"
 
 class Cursor {
-public:
+   public:
     // Cursor constructor
-    // ---------------------------------------------  
+    // ---------------------------------------------
     Cursor();
     Cursor(const int &x, const int &y);
 
@@ -22,14 +22,18 @@ public:
 
     std::pair<int, int> getPos() const;
 
+    void setTile(Tile *t);
+    Tile *getTile() const;
+
     // Cursor destructor
     // ---------------------------------------------
     ~Cursor();
 
-private:
+   private:
     // Cursor attributes
     // ---------------------------------------------
-    int x, y;      // where is the cursor?
+    int x, y;  // where is the cursor?
+    Tile *tile;
 };
 
-#endif // PONE_CURSOR_HPP
+#endif  // PONE_CURSOR_HPP
