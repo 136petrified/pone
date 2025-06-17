@@ -18,14 +18,22 @@ Board::Board()
       width{0},
       tiles{TileList()},
       gates{GateList()},
-      currentTile{nullptr} {}
+      cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width)
     : length{length},
       width{width},
       tiles{TileList()},
       gates{GateList()},
-      currentTile{nullptr} {}
+      cursor{Cursor{0, 0}} {}
+
+Board::Board(const int &length, const int &width, const int &cursor_x,
+             const int &cursor_y)
+    : length{length},
+      width{width},
+      tiles{TileList()},
+      gates{GateList()},
+      cursor{Cursor{cursor_x, cursor_y}} {}
 
 // Board getter/setter functions
 // ---------------------------------------------
@@ -37,9 +45,9 @@ int Board::getWidth() const { return width; }
 
 void Board::setWidth(const int &width) { this->width = width; }
 
-Tile *Board::getCurrentTile() const { return cursor.getTile(); }
+Tile *Board::getCursorTile() const { return cursor.getTile(); }
 
-void Board::setCurrentTile(Tile *t) { cursor.setTile(t); }
+void Board::setCursorTile(Tile *t) { cursor.setTile(t); }
 
 Tile *Board::getTile(const std::string &name) const {
     for (Tile *t : tiles) {
@@ -108,6 +116,8 @@ Gate *Board::getGate(const Tile *t, const Direction &direction) const {
         throw TileNotFoundException("Tile does not exist");
         return nullptr;
     }
+
+    Tile *currentTile = cursor.getTile();
 
     switch (direction) {
         case UP:
@@ -200,14 +210,19 @@ void Board::insTile(size_t pos, Tile *t) {
             << "[ERROR] Attempted to insert tile into out-of-bounds position."
             << std::endl;
     }
+
+    ++numTiles;
 }
 
 void Board::remTile(Tile *t) {
+    // TODO: Add check for empty
     auto tilepos = std::find(tiles.begin(), tiles.end(), t);
     if (tilepos != tiles.end())
         tiles.erase(tilepos);
     else
         std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
+
+    --numTiles;
 }
 
 void Board::insGate(size_t pos, Gate *g) {
@@ -222,6 +237,8 @@ void Board::insGate(size_t pos, Gate *g) {
             << "[ERROR] Attempted to insert tile into out-of-bounds position."
             << std::endl;
     }
+
+    ++numGates;
 }
 
 void Board::remGate(Gate *g) {
@@ -230,6 +247,8 @@ void Board::remGate(Gate *g) {
         gates.erase(gatepos);
     else
         std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
+
+    --numGates;
 }
 
 void Board::load(const std::string &filename) {
@@ -280,5 +299,9 @@ bool Board::checkMove(Cursor *c, const Direction &direction) {
 
     return true;
 }
+
+bool Board::empty() const { return tiles.empty(); }
+
+bool Board::full() { return numTiles > length * width; }
 
 Board::~Board() {}

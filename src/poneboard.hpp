@@ -17,6 +17,8 @@ class Board {
     // ---------------------------------------------
     Board();
     Board(const int &length, const int &width);
+    Board(const int &length, const int &width, const int &cursor_x,
+          const int &cursor_y);
 
     // Board getter/setter functions
     // ---------------------------------------------
@@ -34,8 +36,8 @@ class Board {
     Gate *getGate(const Tile *t1, const Tile *t2) const;
     Gate *getGate(const Tile *t, const Direction &direction) const;
 
-    Tile *getCurrentTile() const;
-    void setCurrentTile(Tile *t);
+    Tile *getCursorTile() const;
+    void setCursorTile(Tile *t);
 
     // Board functions
     // ---------------------------------------------
@@ -79,6 +81,8 @@ class Board {
     int length, width;  // ! - Remember to except this if not int!
     TileList tiles;     // A list of n * m tiles is needed for
     GateList gates;
+    int numTiles;  // Number of tiles
+    int numGates;  // Number of gates
 
     Cursor cursor;  // track the current tile being pointed by cursor
 };

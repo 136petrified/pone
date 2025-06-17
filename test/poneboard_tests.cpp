@@ -6,7 +6,7 @@ TEST(poneboard, Constructor) {
     Board b1;
     EXPECT_EQ(b1.getLength(), 0);
     EXPECT_EQ(b1.getWidth(), 0);
-    EXPECT_EQ(b1.getCurrentTile(), nullptr);
+    EXPECT_EQ(b1.getCursorTile(), nullptr);
 
     Board b2{5, 4};
     EXPECT_EQ(b2.getLength(), 5);
@@ -28,8 +28,12 @@ TEST(poneboard, Width) {
 TEST(poneboard, CurrentTile) {
     Board b;
     Tile t1 = Tile{4, 0, "none", "empty"};
-    b.setCurrentTile(&t1);
-    EXPECT_EQ(*b.getCurrentTile(), t1);
+    b.setCursorTile(&t1);
+    EXPECT_EQ(*b.getCursorTile(), t1);
 }
 
-TEST(poneboard, GetTile) { Board b }
+TEST(poneboard, GetTile) {
+    Board b{4, 4};
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) }
+}
