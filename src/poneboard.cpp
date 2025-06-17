@@ -345,6 +345,15 @@ void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
     }
 }
 
+void Board::toggleGate(const Tile *t1, const Tile *t2) {
+    if (t1->isCollision() || t2->isCollision()) {
+        // TODO: Error here
+    }
+
+    // TODO: Check valid tiles
+    // TODO: Binary search for gates?
+}
+
 bool Board::empty() const { return tiles.empty(); }
 
 bool Board::full() const { return numTiles > length * width; }
