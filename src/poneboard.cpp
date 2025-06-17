@@ -331,9 +331,23 @@ void Board::rotateTile(Tile *t, const Rotation &rotation) {
     // Check string here if directional
 
     if (rotation == CLOCKWISE) {
-        if (dir == "up") {
-        }
+        if (dir == "up")
+            t->setType("right");
+        else if (dir == "right")
+            t->setType("down");
+        else if (dir == "down")
+            t->setType("left");
+        else if (dir == "left")
+            t->setType("up");
     } else if (rotation == COUNTER_CLOCKWISE) {
+        if (dir == "up")
+            t->setType("left");
+        else if (dir == "right")
+            t->setType("up");
+        else if (dir == "down")
+            t->setType("right");
+        else if (dir == "left")
+            t->setType("down");
     }
 
     // Error

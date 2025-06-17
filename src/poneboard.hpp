@@ -70,7 +70,6 @@ class Board {
     // TODO: Create more game functions here
     void moveCursor(const Direction &direction);
     bool checkMove(const Direction &direction);
-    void updateTileDirection(const std::string &dir);
     void rotateTile(Tile *t, const Rotation &rotation);
     void rotateTiles(const Rotation &rotation);  // Rotate all tiles on board
     void toggleGate(const Tile *t1, const Tile *t2);
