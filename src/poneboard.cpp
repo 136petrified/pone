@@ -247,7 +247,7 @@ void Board::insGate(int pos, Gate *g) {
     // Leave pos as 0 to insert at last position by default
     if (pos <= -1) {
         gates.push_back(g);
-    } else if (pos < gates.size()) {
+    } else if (pos < static_cast<int>(gates.size())) {
         auto gatepos = gates.begin() + pos;
         gates.insert(gatepos, g);
     } else {
@@ -341,7 +341,7 @@ void Board::rotateTile(Tile *t, const Rotation &rotation) {
 
 void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
     for (Tile *t : tiles) {
-        if (t->getColor() == color) rotateTiles(t, rotation);
+        if (t->getColor() == color) rotateTile(t, rotation);
     }
 }
 
