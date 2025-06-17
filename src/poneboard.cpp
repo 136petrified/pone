@@ -37,9 +37,9 @@ int Board::getWidth() const { return width; }
 
 void Board::setWidth(const int &width) { this->width = width; }
 
-Tile *Board::getCurrentTile() const { return currentTile; }
+Tile *Board::getCurrentTile() const { return cursor.getTile(); }
 
-void Board::setCurrentTile(Tile *t) { currentTile = t; }
+void Board::setCurrentTile(Tile *t) { cursor.setTile(t); }
 
 Tile *Board::getTile(const std::string &name) const {
     for (Tile *t : tiles) {
