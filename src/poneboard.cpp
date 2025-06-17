@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <iostream>
 
+#include "poneconst.hpp"
 #include "poneexcept.hpp"
 
 // Board constructors
@@ -28,8 +29,8 @@ Board::Board(const int &length, const int &width)
       cursor{Cursor{0, 0}} {
     for (int i = 0; i < length; ++i) {
         for (int j = 0; j < width; ++j) {
-            Tile t = Tile{length, width, "none", "empty"};
-            insTile(length * width, &t);
+            Tile t = Tile{i, j, "none", "empty"};
+            insTile(i * j, &t);
         }
     }
 }
@@ -43,8 +44,8 @@ Board::Board(const int &length, const int &width, const int &cursor_x,
       cursor{Cursor{cursor_x, cursor_y}} {
     for (int i = 0; i < length; ++i) {
         for (int j = 0; j < width; ++j) {
-            Tile t = Tile{length, width, "none", "empty"};
-            insTile(length * width, &t);
+            Tile t = Tile{i, j, "none", "empty"};
+            insTile(i * j, &t);
         }
     }
 }
@@ -320,6 +321,22 @@ bool Board::checkMove(const Direction &direction) {
     }
 
     return true;
+}
+
+void Board::rotateTile(Tile *t, const Rotation &rotation) {
+    // ! - DO NOT rotate non-directional tiles!!!
+
+    std::string dir = t->getType();
+
+    // Check string here if directional
+
+    if (rotation == CLOCKWISE) {
+        if (dir == "up") {
+        }
+    } else if (rotation == COUNTER_CLOCKWISE) {
+    }
+
+    // Error
 }
 
 bool Board::empty() const { return tiles.empty(); }

@@ -1,5 +1,5 @@
 /*   Created:    08-15-2024
- *   Modified:   06-13-2025
+ *   Modified:   06-17-2025
  */
 
 #ifndef PONE_CONSTANTS_HPP
@@ -13,5 +13,6 @@
 // #define RIGHT 3
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
+enum Rotation { CLOCKWISE, COUNTER_CLOCKWISE };
 
 #endif  // PONE_CONSTANTS_HPP
