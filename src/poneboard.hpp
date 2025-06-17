@@ -67,8 +67,8 @@ class Board {
     // Board commands
     // ---------------------------------------------  TODO: Create rest of
     // commands
-    void moveCursor(Cursor *c, const Direction &direction);
-    bool checkMove(Cursor *c, const Direction &direction);
+    void moveCursor(const Direction &direction);
+    bool checkMove(const Direction &direction);
 
     // Board debug functions
     // ---------------------------------------------

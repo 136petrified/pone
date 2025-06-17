@@ -42,19 +42,11 @@ Board::Board(const int &length, const int &width, const int &cursor_x,
       gates{GateList()},
       cursor{Cursor{cursor_x, cursor_y}} {
     for (int i = 0; i < length; ++i) {
-        for (int j = 0; j < width; ++j)
+        for (int j = 0; j < width; ++j) {
             Tile t = Tile{length, width, "none", "empty"};
-        insTile(length * width, &Tile{length, width, "none", "empty"});
+            insTile(length * width, &t);
+        }
     }
-}
-
-Board::Board(const int &length, const int &width, const int &cursor_x,
-             const int &cursor_y)
-    : length{length},
-      width{width},
-      tiles{TileList()},
-      gates{GateList()},
-      cursor{Cursor{cursor_x, cursor_y}} {}
 }
 
 // Board getter/setter functions
@@ -285,20 +277,24 @@ void Board::save(const std::string &filename) {
 // Board commands
 // ---------------------------------------------
 
-void Board::moveCursor(Cursor *c, const Direction &direction) {
-    currentTile->setCursor(false);
+void Board::moveCursor(const Direction &direction) {
+    Tile *prevTile = cursor.getTile();
+    prevTile->setCursor(false);
+
+    int cursorX = cursor.getX(), cursorY = cursor.getY();
+
     switch (direction) {
         case UP:
-            c->setY(c->getY() + 1);
+            cursor.setY(cursorY + 1);
             break;
         case DOWN:
-            c->setY(c->getY() - 1);
+            cursor.setY(cursorY - 1);
             break;
         case LEFT:
-            c->setX(c->getX() - 1);
+            cursor.setX(cursorX - 1);
             break;
         case RIGHT:
-            c->setX(c->getX() + 1);
+            cursor.setX(cursorX + 1);
             break;
         default:
             std::cerr << "[ERROR]: Move cursor failed given direction "
@@ -306,12 +302,14 @@ void Board::moveCursor(Cursor *c, const Direction &direction) {
             break;
     }
 
-    currentTile = getTile(currentTile, direction);
-    currentTile->setCursor(true);
+    cursor.setTile(getTile(prevTile, direction));
+    cursor.getTile()->setCursor(true);
 }
 
-bool Board::checkMove(Cursor *c, const Direction &direction) {
+bool Board::checkMove(const Direction &direction) {
     // Check collision first
+
+    Tile *currentTile = cursor.getTile();
     Tile *target = getTile(currentTile, direction);
     if (target->isCollision())
         return false;
@@ -324,6 +322,6 @@ bool Board::checkMove(Cursor *c, const Direction &direction) {
 
 bool Board::empty() const { return tiles.empty(); }
 
-bool Board::full() { return numTiles > length * width; }
+bool Board::full() const { return numTiles > length * width; }
 
 Board::~Board() {}
