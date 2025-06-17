@@ -25,7 +25,28 @@ Board::Board(const int &length, const int &width)
       width{width},
       tiles{TileList()},
       gates{GateList()},
-      cursor{Cursor{0, 0}} {}
+      cursor{Cursor{0, 0}} {
+    for (int i = 0; i < length; ++i) {
+        for (int j = 0; j < width; ++j) {
+            Tile t = Tile{length, width, "none", "empty"};
+            insTile(length * width, &t);
+        }
+    }
+}
+
+Board::Board(const int &length, const int &width, const int &cursor_x,
+             const int &cursor_y)
+    : length{length},
+      width{width},
+      tiles{TileList()},
+      gates{GateList()},
+      cursor{Cursor{cursor_x, cursor_y}} {
+    for (int i = 0; i < length; ++i) {
+        for (int j = 0; j < width; ++j)
+            Tile t = Tile{length, width, "none", "empty"};
+        insTile(length * width, &Tile{length, width, "none", "empty"});
+    }
+}
 
 Board::Board(const int &length, const int &width, const int &cursor_x,
              const int &cursor_y)
@@ -34,6 +55,7 @@ Board::Board(const int &length, const int &width, const int &cursor_x,
       tiles{TileList()},
       gates{GateList()},
       cursor{Cursor{cursor_x, cursor_y}} {}
+}
 
 // Board getter/setter functions
 // ---------------------------------------------
@@ -198,9 +220,9 @@ void Board::checkDupGates() const {
     */
 }
 
-void Board::insTile(size_t pos, Tile *t) {
-    // Leave pos as 0 to insert at last position by default
-    if (pos == 0) {
+void Board::insTile(int pos, Tile *t) {
+    // Leave pos as -1 to insert at last position by default
+    if (pos <= -1) {
         tiles.push_back(t);
     } else if (pos < tiles.size()) {
         auto tilepos = tiles.begin() + pos;
@@ -225,9 +247,9 @@ void Board::remTile(Tile *t) {
     --numTiles;
 }
 
-void Board::insGate(size_t pos, Gate *g) {
+void Board::insGate(int pos, Gate *g) {
     // Leave pos as 0 to insert at last position by default
-    if (pos == 0) {
+    if (pos <= -1) {
         gates.push_back(g);
     } else if (pos < gates.size()) {
         auto gatepos = gates.begin() + pos;

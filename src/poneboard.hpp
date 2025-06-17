@@ -51,10 +51,10 @@ class Board {
     void checkDupTiles() const;  // Runtime check of duplicate elements
     void checkDupGates() const;
 
-    void insTile(size_t pos, Tile *t);
+    void insTile(int pos, Tile *t);
     void remTile(Tile *t);
 
-    void insGate(size_t pos, Gate *g);
+    void insGate(int pos, Gate *g);
     void remGate(Gate *g);
 
     void load(const std::string &

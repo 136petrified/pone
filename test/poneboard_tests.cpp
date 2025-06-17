@@ -32,8 +32,4 @@ TEST(poneboard, CurrentTile) {
     EXPECT_EQ(*b.getCursorTile(), t1);
 }
 
-TEST(poneboard, GetTile) {
-    Board b{4, 4};
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) }
-}
+TEST(poneboard, GetTile) { Board b{4, 4}; }
