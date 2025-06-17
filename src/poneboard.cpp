@@ -85,15 +85,17 @@ Tile *Board::getTile(const Tile *t, const Direction &direction) const {
         throw TileNotFoundException("Tile does not exist.");
     }
 
+    int tileX = t->getX(), tileY = t->getY();
+
     switch (direction) {
         case UP:
-            return getTile(t->getX(), t->getY() + 1);
+            return getTile(tileX, tileY + 1);
         case DOWN:
-            return getTile(t->getX(), t->getY() - 1);
+            return getTile(tileX, tileY - 1);
         case LEFT:
-            return getTile(t->getX() + 1, t->getY());
+            return getTile(tileX + 1, tileY);
         case RIGHT:
-            return getTile(t->getX() - 1, t->getY());
+            return getTile(tileX - 1, tileY);
         default:
             std::cerr << "[ERROR]: Invalid direction: " << direction
                       << std::endl;
