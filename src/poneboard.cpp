@@ -130,28 +130,20 @@ Gate *Board::getGate(const Tile *t, const Direction &direction) const {
 // Board functions
 // ---------------------------------------------
 
-bool Board::compareByTileCoordinate(const Tile *t1, const Tile *t2) const {
+bool Board::tileCoordEquals(const Tile *t1, const Tile *t2) const {
     return t1->getX() == t2->getX() && t1->getY() == t2->getY();
 }
 
-bool Board::compareByTileName(const Tile *t1, const Tile *t2) const {
+bool Board::tileNameEquals(const Tile *t1, const Tile *t2) const {
     return t1->getName() == t2->getName();
 }
 
-bool Board::compareByTileReference(const Tile *t1, const Tile *t2) const {
-    return t1 == t2;
-}
-
-bool Board::compareByGateTiles(const Gate *g1, const Gate *g2) const {
+bool Board::gateTilesEquals(const Gate *g1, const Gate *g2) const {
     return g1->getTile1() == g2->getTile1() && g1->getTile2() == g2->getTile2();
 }
 
-bool Board::compareByGateName(const Gate *g1, const Gate *g2) const {
+bool Board::gateNameEquals(const Gate *g1, const Gate *g2) const {
     return g1->getName() == g2->getName();
-}
-
-bool Board::compareByGateReference(const Gate *g1, const Gate *g2) const {
-    return g1 == g2;
 }
 
 void Board::checkDupTiles() const {

@@ -40,13 +40,11 @@ class Board {
     // Board functions
     // ---------------------------------------------
 
-    bool compareByTileCoordinate(const Tile *t1, const Tile *t2) const;
-    bool compareByTileName(const Tile *t1, const Tile *t2) const;
-    bool compareByTileReference(const Tile *t1, const Tile *t2) const;
+    bool tileCoordEquals(const Tile *t1, const Tile *t2) const;
+    bool tileNameEquals(const Tile *t1, const Tile *t2) const;
 
-    bool compareByGateTiles(const Gate *g1, const Gate *g2) const;
-    bool compareByGateName(const Gate *g1, const Gate *g2) const;
-    bool compareByGateReference(const Gate *g1, const Gate *g2) const;
+    bool gateTilesEquals(const Gate *g1, const Gate *g2) const;
+    bool gateNameEquals(const Gate *g1, const Gate *g2) const;
 
     void checkDupTiles() const;  // Runtime check of duplicate elements
     void checkDupGates() const;
