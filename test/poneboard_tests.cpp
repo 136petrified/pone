@@ -32,4 +32,4 @@ TEST(poneboard, CurrentTile) {
     EXPECT_EQ(*b.getCurrentTile(), t1);
 }
 
-TEST(poneboard, GetTile) { Board b; }
+TEST(poneboard, GetTile) { Board b }

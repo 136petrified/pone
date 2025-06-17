@@ -1,15 +1,10 @@
 #ifndef PONE_BOARD_HPP
 #define PONE_BOARD_HPP
 
-#include <algorithm>
 #include <deque>
-#include <iostream>
-#include <iterator>
-#include <utility>
 
 #include "poneconst.hpp"
 #include "ponecursor.hpp"
-#include "poneexcept.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -87,7 +82,7 @@ class Board {
     TileList tiles;     // A list of n * m tiles is needed for
     GateList gates;
 
-    Tile *currentTile;  // track the current tile being pointed by cursor
+    Cursor cursor;  // track the current tile being pointed by cursor
 };
 
 #endif  // PONE_BOARD_HPP

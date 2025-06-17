@@ -1,10 +1,15 @@
 /*   Created:    06-23-2024
- *   Modified:   06-14-2025
+ *   Modified:   06-16-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
 
 #include "poneboard.hpp"
+
+#include <algorithm>
+#include <iostream>
+
+#include "poneexcept.hpp"
 
 // Board constructors
 // ---------------------------------------------
