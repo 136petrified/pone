@@ -9,9 +9,26 @@
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
+struct TileHasher {
+    std::size_t operator()(const Tile *t) {
+        return std::hash<std::string>{}(t->getName());
+    }
+};
+
+struct GateHasher {
+    std::size_t operator()(const Gate *g) {
+        Tile *t1 = g->getTile1();
+        Tile *t2 = g->getTile2();
+
+        return std::hash<std::string>{}(g->getName()) ^
+               ((TileHasher()(t1) ^ (TileHasher()(t2) << 1)) << 1);
+    }
+};
+
 using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
-// using GateMap = std::unordered_map<std::string
+using GateMap = std::unordered_map<std::string, Gate *, GateHasher>;
+using TileMap = std::unordered_map<std::string, Tile *, TileHasher>;
 
 class Board {
    public:
@@ -90,6 +107,8 @@ class Board {
     int length, width;  // ! - Remember to except this if not int!
     TileList tiles;     // A list of n * m tiles is needed for
     GateList gates;
+    TileMap tmap;
+    GateMap gmap;
     int numTiles;  // Number of tiles
     int numGates;  // Number of gates
 
@@ -97,19 +116,6 @@ class Board {
     static const std::unordered_map<std::string, std::string> clockwiseMap;
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
-};
-
-template <>
-struct std::hash<Gate> {
-    std::size_t operator()(const Gate &g) const noexcept {
-        Tile *t1 = g.getTile1();
-        Tile *t2 = g.getTile2();
-
-        std::size_t prime = 0x516A0B1D;
-        return (std::hash<std::string>{}(g.getName()) ^ prime) ^
-               (std::hash<std::string>{}(t1->getName()) ^
-                (std::hash<std::string>{}(t2->getName()) << 1) << 1);
-    }
 };
 
 #endif  // PONE_BOARD_HPP

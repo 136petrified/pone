@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-17-2025
+ *   Modified:   06-20-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -351,7 +351,7 @@ void Board::toggleGate(const Tile *t1, const Tile *t2) {
     }
 
     // TODO: Check valid tiles
-    // TODO: 
+    // TODO:
 }
 
 bool Board::empty() const { return tiles.empty(); }
