@@ -227,18 +227,27 @@ void Board::insTile(int pos, Tile *t) {
         std::cerr
             << "[ERROR] Attempted to insert tile into out-of-bounds position."
             << std::endl;
+        return;  // Do NOT increment numTiles if this happens
     }
 
+    tmap[t->getName()] = t;
     ++numTiles;
 }
 
 void Board::remTile(Tile *t) {
-    // TODO: Add check for empty
+    if (tiles.empty()) {
+        // TODO: Some error here
+        return;
+    }
+
     auto tilepos = std::find(tiles.begin(), tiles.end(), t);
-    if (tilepos != tiles.end())
+    if (tilepos != tiles.end()) {
         tiles.erase(tilepos);
-    else
+        tmap.erase(t->getName());
+    } else {
         std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
+        return;
+    }
 
     --numTiles;
 }
@@ -254,17 +263,24 @@ void Board::insGate(int pos, Gate *g) {
         std::cerr
             << "[ERROR] Attempted to insert tile into out-of-bounds position."
             << std::endl;
+        return;
     }
 
     ++numGates;
 }
 
 void Board::remGate(Gate *g) {
+    if (gates.empty()) {
+        // TODO: Error here
+        return;
+    }
     auto gatepos = std::find(gates.begin(), gates.end(), g);
     if (gatepos != gates.end())
         gates.erase(gatepos);
-    else
+    else {
         std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
+        return;
+    }
 
     --numGates;
 }
