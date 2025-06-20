@@ -11,6 +11,7 @@
 
 using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
+// using GateMap = std::unordered_map<std::string
 
 class Board {
    public:
@@ -96,6 +97,19 @@ class Board {
     static const std::unordered_map<std::string, std::string> clockwiseMap;
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
+};
+
+template <>
+struct std::hash<Gate> {
+    std::size_t operator()(const Gate &g) const noexcept {
+        Tile *t1 = g.getTile1();
+        Tile *t2 = g.getTile2();
+
+        std::size_t prime = 0x516A0B1D;
+        return (std::hash<std::string>{}(g.getName()) ^ prime) ^
+               (std::hash<std::string>{}(t1->getName()) ^
+                (std::hash<std::string>{}(t2->getName()) << 1) << 1);
+    }
 };
 
 #endif  // PONE_BOARD_HPP

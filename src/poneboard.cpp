@@ -351,7 +351,7 @@ void Board::toggleGate(const Tile *t1, const Tile *t2) {
     }
 
     // TODO: Check valid tiles
-    // TODO: Binary search for gates?
+    // TODO: 
 }
 
 bool Board::empty() const { return tiles.empty(); }
