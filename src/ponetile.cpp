@@ -48,9 +48,52 @@ bool Tile::isCursor() const { return cursor; }
 
 bool Tile::isEmpty() const { return type == "empty"; }
 
+// Tile comparison
+// ---------------------------------------------
+
 bool Tile::operator==(const Tile &other) const {
     return x == other.x && y == other.y;
 }
+
+bool Tile::operator!=(const Tile &other) const { return !(x == y); }
+
+bool Tile::operator<(const Tile &other) const {
+    int x1 = getX(), x2 = other.getX();
+    int y1 = getY(), y2 = other.getY();
+
+    if (x1 < x2) {
+        return true;
+    } else if (x1 == x2) {
+        if (y1 < y2) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Tile::operator<=(const Tile &other) const {
+    if (*this == other) {
+        return true;
+    }
+
+    int x1 = getX(), x2 = other.getX();
+    int y1 = getY(), y2 = other.getY();
+
+    if (x1 < x2) {
+        return true;
+    } else if (x1 == x2) {
+        if (y1 < y2) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Tile::operator>(const Tile &other) const { return !(*this <= other); }
+
+bool Tile::operator>=(const Tile &other) const { return !(*this < other); }
 
 // Tile destructor
 // ---------------------------------------------

@@ -34,6 +34,14 @@ class Gate {
     std::string getName() const;
     void setName(const std::string &name);
 
+    // Gate comparison
+    bool operator==(const Gate &other) const;
+    bool operator!=(const Gate &other) const;
+    bool operator<(const Gate &other) const;
+    bool operator<=(const Gate &other) const;
+    bool operator>(const Gate &other) const;
+    bool operator>=(const Gate &other) const;
+
     // Gate destructor
     ~Gate();
 

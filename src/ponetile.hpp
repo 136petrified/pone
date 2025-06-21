@@ -42,6 +42,11 @@ class Tile {
     bool isType(const std::string &type) const;
 
     bool operator==(const Tile &other) const;
+    bool operator!=(const Tile &other) const;
+    bool operator<(const Tile &other) const;
+    bool operator<=(const Tile &other) const;
+    bool operator>(const Tile &other) const;
+    bool operator>=(const Tile &other) const;
 
     // Tile destructor
     // ---------------------------------------------
