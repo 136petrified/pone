@@ -107,13 +107,7 @@ Tile *Board::getTile(const Tile *t, const Direction &direction) const {
     return nullptr;
 }
 
-Gate *Board::getGate(const std::string &name) const {
-    for (Gate *g : gates) {
-        if (g->getName() == name) return g;
-    }
-
-    return nullptr;
-}
+Gate *Board::getGate(const std::string &name) const { return gmap.at(name); }
 
 Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
     if (t1 == nullptr || t2 == nullptr) {  // Throw exception here

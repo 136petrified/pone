@@ -10,12 +10,14 @@
 #include "ponetile.hpp"
 
 struct TileHasher {
+    // Hashes a tile by name
     std::size_t operator()(const Tile *t) {
         return std::hash<std::string>{}(t->getName());
     }
 };
 
 struct GateHasher {
+    // Hashes a gate by using its name and its tiles' names
     std::size_t operator()(const Gate *g) {
         Tile *t1 = g->getTile1();
         Tile *t2 = g->getTile2();
@@ -29,6 +31,7 @@ using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
 using GateMap = std::unordered_map<std::string, Gate *, GateHasher>;
 using TileMap = std::unordered_map<std::string, Tile *, TileHasher>;
+using GateTilesMap = std::unordered_map<GATE, Gate *>;  // TODO: Need to make
 
 class Board {
    public:
