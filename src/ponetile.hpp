@@ -41,6 +41,9 @@ class Tile {
     bool isEmpty() const;
     bool isType(const std::string &type) const;
 
+    // Tile comparison
+    // ---------------------------------------------
+
     bool operator==(const Tile &other) const;
     bool operator!=(const Tile &other) const;
     bool operator<(const Tile &other) const;

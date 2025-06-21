@@ -73,22 +73,7 @@ bool Tile::operator<(const Tile &other) const {
 }
 
 bool Tile::operator<=(const Tile &other) const {
-    if (*this == other) {
-        return true;
-    }
-
-    int x1 = getX(), x2 = other.getX();
-    int y1 = getY(), y2 = other.getY();
-
-    if (x1 < x2) {
-        return true;
-    } else if (x1 == x2) {
-        if (y1 < y2) {
-            return true;
-        }
-    }
-
-    return false;
+    return *this < other || *this == other;
 }
 
 bool Tile::operator>(const Tile &other) const { return !(*this <= other); }

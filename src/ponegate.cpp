@@ -38,5 +38,36 @@ void Gate::setColor(const std::string &color) { this->color = color; }
 std::string Gate::getName() const { return name; }
 
 void Gate::setName(const std::string &name) { this->name = name; }
+
+// Gate comparison
+// ---------------------------------------------
+
+bool Gate::operator==(const Gate &other) const {
+    GATE g1 = getGate(), g2 = other.getGate();
+    Tile *g1t1 = g1.first, *g1t2 = g1.second;
+    Tile *g2t1 = g2.first, *g2t2 = g2.second;
+
+    return *g1t1 == *g2t1 && *g1t2 == *g2t2;
+}
+
+bool Gate::operator!=(const Gate &other) const { return !(*this == other); }
+
+bool Gate::operator<(const Gate &other) const {
+    GATE g1 = getGate(), g2 = other.getGate();
+    Tile *g1t1 = g1.first, *g1t2 = g1.second;
+    Tile *g2t1 = g2.first, *g2t2 = g2.second;
+
+    return *g1t1 < *g2t1 && *g1t2 < *g2t2;
+}
+
+bool Gate::operator<=(const Gate &other) const {
+    return *this < other || *this == other;
+}
+
+bool Gate::operator>(const Gate &other) const { return !(*this <= other); }
+
+bool Gate::operator>=(const Gate &other) const { return !(*this < other); }
+
 // Gate destructor
+// ---------------------------------------------
 Gate::~Gate() {}
