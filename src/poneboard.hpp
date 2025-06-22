@@ -29,8 +29,8 @@ struct GateHasher {
 
 using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
-using GateMap = std::unordered_map<std::string, Gate *, GateHasher>;
-using TileMap = std::unordered_map<std::string, Tile *, TileHasher>;
+using GateMap = std::unordered_map<std::string, Gate *>;
+using TileMap = std::unordered_map<std::string, Tile *>;
 using GateTilesMap = std::unordered_map<GATE, Gate *>;  // TODO: Need to make
 
 class Board {
