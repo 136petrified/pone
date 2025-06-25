@@ -16,9 +16,9 @@ struct TileHasher {
     }
 };
 
-struct GateHasher {
+struct TilePairHasher {
     // Hashes a gate by using its name and its tiles' names
-    std::size_t operator()(const GATE &g) {
+    std::size_t operator()(const TilePair &g) {
         Tile *t1 = g.first;
         Tile *t2 = g.second;
 
@@ -30,8 +30,7 @@ using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
 using GateMap = std::unordered_map<std::string, Gate *>;
 using TileMap = std::unordered_map<std::string, Tile *>;
-using GateTilesMap =
-    std::unordered_map<GATE, Gate *, GateHasher>;  // TODO: Need to make
+using GateTilesMap = std::unordered_map<TilePair, Gate *, TilePairHasher>;
 
 class Board {
    public:
@@ -112,6 +111,7 @@ class Board {
     GateList gates;
     TileMap tmap;
     GateMap gmap;
+    std::unordered_map<TilePair, Gate *> gtmap;
     int numTiles;  // Number of tiles
     int numGates;  // Number of gates
 

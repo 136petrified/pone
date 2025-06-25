@@ -11,6 +11,7 @@ class Tile {
     Tile();
     Tile(const int &x, const int &y, const std::string &color,
          const std::string &type);
+    Tile(const Tile &other);
 
     // Tile getter/setter functions
     // ---------------------------------------------

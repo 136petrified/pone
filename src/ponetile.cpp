@@ -1,5 +1,5 @@
 /*  Created:    06-23-2024
- *  Modified:   06-13-2025
+ *  Modified:   06-23-2025
  */
 
 #include "ponetile.hpp"
@@ -11,6 +11,9 @@ Tile::Tile() : x{0}, y{0}, color{"none"}, type{"empty"} {}
 Tile::Tile(const int &x, const int &y, const std::string &color,
            const std::string &type)
     : x{x}, y{y}, color{color}, type{type} {}
+
+Tile::Tile(const Tile &other)
+    : x{other.x}, y{other.y}, color{other.color}, type{other.type} {}
 
 // Tile getter/setter functions
 // ---------------------------------------------

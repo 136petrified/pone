@@ -5,14 +5,20 @@
 
 #include "ponetile.hpp"
 
-using GATE = std::pair<Tile *, Tile *>;
+using TilePair = std::pair<Tile *, Tile *>;
 
 class Gate {
    public:
     // Gate constructors
     // ---------------------------------------------
     Gate();
-    Gate(Tile *t1, Tile *t2);
+    Gate(Tile *t1, Tile *t2, const std::string &name, const std::string &color,
+         bool active = false);
+    Gate(const Gate &other);
+
+    // Gate assignment
+    // ---------------------------------------------
+    Gate &operator=(const Gate &other);
 
     // Gate getter/setter functions
     // ---------------------------------------------
@@ -22,8 +28,8 @@ class Gate {
     Tile *getTile2() const;
     void setTile2(Tile *t2);
 
-    GATE getGate() const;
-    void setGate(GATE gate);
+    TilePair getTilePair() const;
+    void setTilePair(TilePair tp);
 
     std::string getColor() const;
     void setColor(const std::string &color);
@@ -33,6 +39,9 @@ class Gate {
 
     std::string getName() const;
     void setName(const std::string &name);
+
+    inline void setInactive() { active = false; }
+    inline void setActive() { active = true; }
 
     // Gate comparison
     // ---------------------------------------------
@@ -49,10 +58,10 @@ class Gate {
    private:
     // Gate attributes
     // ---------------------------------------------
-    GATE gate;  // Is a gate between two adjacent tiles.
-    std::string color;
-    int id;
+    TilePair tp;  // Is a gate between two adjacent tiles.
     std::string name;
+    int id;
+    std::string color;
     bool active;
 };
 

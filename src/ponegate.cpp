@@ -1,31 +1,54 @@
 /*   Created:    06-29-2024
- *   Modified:   06-13-2025
+ *   Modified:   06-24-2025
  */
 
 #include "ponegate.hpp"
 
-// TODO: Edit constructors
-
 // Gate constructors
 // ---------------------------------------------
-Gate::Gate() : gate{GATE{nullptr, nullptr}} {}
+Gate::Gate()
+    : tp{TilePair{nullptr, nullptr}},
+      name{""},
+      id{-1},
+      color{"none"},
+      active{false} {}
 
-Gate::Gate(Tile *t1, Tile *t2) : gate{GATE{t1, t2}} {}
+Gate::Gate(Tile *t1, Tile *t2, const std::string &name,
+           const std::string &color, bool active)
+    : tp{TilePair{t1, t2}}, name{name}, id{-1}, color{color}, active{active} {}
+
+Gate::Gate(const Gate &other)
+    : tp{other.tp},
+      name{other.name},
+      id{other.id},
+      color{other.color},
+      active{other.active} {}
+
+// Gate assignment
+// ---------------------------------------------
+Gate &Gate::operator=(const Gate &other) {
+    tp = other.tp;
+    name = other.name;
+    id = other.id;
+    color = other.color;
+    active = other.active;
+    return *this;
+}
 
 // Gate getter/setter functions
 // ---------------------------------------------
 
-Tile *Gate::getTile1() const { return gate.first; }
+Tile *Gate::getTile1() const { return tp.first; }
 
-void Gate::setTile1(Tile *t1) { gate.first = t1; }
+void Gate::setTile1(Tile *t1) { tp.first = t1; }
 
-Tile *Gate::getTile2() const { return gate.second; }
+Tile *Gate::getTile2() const { return tp.second; }
 
-void Gate::setTile2(Tile *t2) { gate.second = t2; }
+void Gate::setTile2(Tile *t2) { tp.second = t2; }
 
-GATE Gate::getGate() const { return gate; }
+TilePair Gate::getTilePair() const { return tp; }
 
-void Gate::setGate(GATE gate) { this->gate = gate; }
+void Gate::setTilePair(TilePair tp) { this->tp = tp; }
 
 int Gate::getID() const { return id; }
 
@@ -43,7 +66,7 @@ void Gate::setName(const std::string &name) { this->name = name; }
 // ---------------------------------------------
 
 bool Gate::operator==(const Gate &other) const {
-    GATE g1 = getGate(), g2 = other.getGate();
+    TilePair g1 = getTilePair(), g2 = other.getTilePair();
     Tile *g1t1 = g1.first, *g1t2 = g1.second;
     Tile *g2t1 = g2.first, *g2t2 = g2.second;
 
@@ -53,7 +76,7 @@ bool Gate::operator==(const Gate &other) const {
 bool Gate::operator!=(const Gate &other) const { return !(*this == other); }
 
 bool Gate::operator<(const Gate &other) const {
-    GATE g1 = getGate(), g2 = other.getGate();
+    TilePair g1 = getTilePair(), g2 = other.getTilePair();
     Tile *g1t1 = g1.first, *g1t2 = g1.second;
     Tile *g2t1 = g2.first, *g2t2 = g2.second;
 

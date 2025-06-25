@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-21-2025
+ *   Modified:   06-23-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -360,8 +360,8 @@ void Board::toggleGate(const Tile *t1, const Tile *t2) {
         // TODO: Error here
     }
 
-    // TODO: Check valid tiles
-    // TODO:
+    Gate *gate = gtmap.at();
+    gate->set
 }
 
 bool Board::empty() const { return tiles.empty(); }
