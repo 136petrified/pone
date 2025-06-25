@@ -43,8 +43,12 @@ class Tile {
     // ---------------------------------------------
     bool isCollision() const;
     bool isCursor() const;
+    bool isDirection() const;
+    bool isGateSwitch() const;
     bool isEmpty() const;
-    bool isType(const std::string &type) const;
+    bool isGoal() const;
+    bool isTileSwitch() const;
+    bool isType(const std::string &str) const;
 
     // Tile comparison
     // ---------------------------------------------
@@ -73,7 +77,7 @@ class Tile {
     // Tile constants
     // ---------------------------------------------
     const std::vector<std::string> types = {
-        "empty", "gswitch", "cswitch", "key",  "up",
+        "empty", "gswitch", "tswitch", "key",  "up",
         "down",  "left",    "right",   "goal", "collision"};
 };
 

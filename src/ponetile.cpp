@@ -1,5 +1,5 @@
 /*  Created:    06-23-2024
- *  Modified:   06-24-2025
+ *  Modified:   06-25-2025
  */
 
 #include "ponetile.hpp"
@@ -59,7 +59,15 @@ bool Tile::isCollision() const { return type == "collision"; }
 
 bool Tile::isCursor() const { return cursor; }
 
+bool Tile::isDirection() const {
+    return type == "left" || type == "right" || type == "up" || type == "down";
+}
+
 bool Tile::isEmpty() const { return type == "empty"; }
+
+// TODO: Complete more bool funcs
+
+bool Tile::isGoal() const { return type == "goal"; }
 
 // Tile comparison
 // ---------------------------------------------

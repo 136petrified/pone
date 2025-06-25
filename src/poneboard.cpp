@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-24-2025
+ *   Modified:   06-25-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -365,6 +365,8 @@ void Board::toggleGate(Tile *t1, Tile *t2) {
     Gate *gate = gtmap.at(tp);
     gate->isActive() ? gate->setInactive() : gate->setActive();
 }
+
+bool Board::isGoal() const { return cursor.getTile()->isGoal(); }
 
 bool Board::empty() const { return tiles.empty(); }
 
