@@ -43,6 +43,10 @@ class Gate {
     inline void setInactive() { active = false; }
     inline void setActive() { active = true; }
 
+    // Gate functions
+    // ---------------------------------------------
+    bool isActive();
+
     // Gate comparison
     // ---------------------------------------------
     bool operator==(const Gate &other) const;

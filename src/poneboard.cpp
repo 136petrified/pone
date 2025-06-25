@@ -355,13 +355,15 @@ void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
     }
 }
 
-void Board::toggleGate(const Tile *t1, const Tile *t2) {
+void Board::toggleGate(Tile *t1, Tile *t2) {
     if (t1->isCollision() || t2->isCollision()) {
         // TODO: Error here
     }
 
-    Gate *gate = gtmap.at();
-    gate->set
+    TilePair tp{t1, t2};
+
+    Gate *gate = gtmap.at(tp);
+    gate->isActive() ? gate->setInactive() : gate->setActive();
 }
 
 bool Board::empty() const { return tiles.empty(); }

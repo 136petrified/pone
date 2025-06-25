@@ -30,7 +30,7 @@ using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
 using GateMap = std::unordered_map<std::string, Gate *>;
 using TileMap = std::unordered_map<std::string, Tile *>;
-using GateTilesMap = std::unordered_map<TilePair, Gate *, TilePairHasher>;
+using TilePairGateMap = std::unordered_map<TilePair, Gate *, TilePairHasher>;
 
 class Board {
    public:
@@ -94,7 +94,7 @@ class Board {
     void rotateTile(Tile *t, const Rotation &rotation);
     void rotateTiles(const std::string &color,
                      const Rotation &rotation);  // Rotate all tiles on board
-    void toggleGate(const Tile *t1, const Tile *t2);
+    void toggleGate(Tile *t1, Tile *t2);
 
     bool isGoal() const;
 
@@ -111,7 +111,7 @@ class Board {
     GateList gates;
     TileMap tmap;
     GateMap gmap;
-    std::unordered_map<TilePair, Gate *> gtmap;
+    TilePairGateMap gtmap;
     int numTiles;  // Number of tiles
     int numGates;  // Number of gates
 

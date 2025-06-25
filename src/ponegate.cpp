@@ -62,6 +62,11 @@ std::string Gate::getName() const { return name; }
 
 void Gate::setName(const std::string &name) { this->name = name; }
 
+// Gate functions
+// ---------------------------------------------
+
+bool Gate::isActive() { return active; }
+
 // Gate comparison
 // ---------------------------------------------
 
