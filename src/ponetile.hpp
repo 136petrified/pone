@@ -13,6 +13,10 @@ class Tile {
          const std::string &type);
     Tile(const Tile &other);
 
+    // Tile assignment
+    // ---------------------------------------------
+    Tile &operator=(const Tile &other);
+
     // Tile getter/setter functions
     // ---------------------------------------------
     int getX() const;

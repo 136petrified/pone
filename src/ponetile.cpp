@@ -15,6 +15,16 @@ Tile::Tile(const int &x, const int &y, const std::string &color,
 Tile::Tile(const Tile &other)
     : x{other.x}, y{other.y}, color{other.color}, type{other.type} {}
 
+// Tile assignment
+// ---------------------------------------------
+Tile &Tile::operator=(const Tile &other) {
+    x = other.x;
+    y = other.y;
+    color = other.color;
+    type = other.type;
+    return *this;
+}
+
 // Tile getter/setter functions
 // ---------------------------------------------
 int Tile::getX() const { return x; }
