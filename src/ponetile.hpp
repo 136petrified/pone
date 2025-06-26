@@ -44,8 +44,8 @@ class Tile {
     bool isCollision() const;
     bool isCursor() const;
     bool isDirection() const;
-    bool isGateSwitch() const;
     bool isEmpty() const;
+    bool isGateSwitch() const;
     bool isGoal() const;
     bool isTileSwitch() const;
     bool isType(const std::string &str) const;

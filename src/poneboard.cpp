@@ -260,6 +260,7 @@ void Board::insGate(int pos, Gate *g) {
         return;
     }
 
+    gtmap[g->getTilePair()] = g;
     ++numGates;
 }
 

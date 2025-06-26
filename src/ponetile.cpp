@@ -65,9 +65,13 @@ bool Tile::isDirection() const {
 
 bool Tile::isEmpty() const { return type == "empty"; }
 
-// TODO: Complete more bool funcs
+bool Tile::isGateSwitch() const { return type == "gswitch"; }
 
 bool Tile::isGoal() const { return type == "goal"; }
+
+bool Tile::isTileSwitch() const { return type == "tswitch"; }
+
+bool Tile::isType(const std::string &str) const { return type == str; }
 
 // Tile comparison
 // ---------------------------------------------
