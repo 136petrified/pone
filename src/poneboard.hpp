@@ -51,11 +51,11 @@ class Board {
 
     Tile *getTile(const std::string &name) const;
     Tile *getTile(const int &x, const int &y) const;
-    Tile *getTile(const Tile *t, const Direction &direction) const;
+    Tile *getTile(Tile *t, const Direction &direction) const;
 
     Gate *getGate(const std::string &name) const;
-    Gate *getGate(const Tile *t1, const Tile *t2) const;
-    Gate *getGate(const Tile *t, const Direction &direction) const;
+    Gate *getGate(Tile *t1, Tile *t2) const;
+    Gate *getGate(Tile *t, const Direction &direction) const;
 
     Tile *getCursorTile() const;
     void setCursorTile(Tile *t);
@@ -68,9 +68,6 @@ class Board {
 
     bool gateTilesEquals(const Gate *g1, const Gate *g2) const;
     bool gateNameEquals(const Gate *g1, const Gate *g2) const;
-
-    void checkDupTiles() const;  // Runtime check of duplicate elements
-    void checkDupGates() const;
 
     void insTile(int pos, Tile *t);
     void remTile(Tile *t);

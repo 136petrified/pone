@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-25-2025
+ *   Modified:   06-27-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <stdexcept>
 #include <unordered_map>
 
 #include "poneconst.hpp"
@@ -81,7 +82,7 @@ Tile *Board::getTile(const int &x, const int &y) const {
     return nullptr;
 }
 
-Tile *Board::getTile(const Tile *t, const Direction &direction) const {
+Tile *Board::getTile(Tile *t, const Direction &direction) const {
     if (t == nullptr) {
         // std::cerr << "[ERROR]: Tile does not exist." << std::endl;
         throw TileNotFoundException("Tile does not exist.");
@@ -109,20 +110,25 @@ Tile *Board::getTile(const Tile *t, const Direction &direction) const {
 
 Gate *Board::getGate(const std::string &name) const { return gmap.at(name); }
 
-Gate *Board::getGate(const Tile *t1, const Tile *t2) const {
+Gate *Board::getGate(Tile *t1, Tile *t2) const {
     if (t1 == nullptr || t2 == nullptr) {  // Throw exception here
         std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument."
                   << std::endl;
     }
 
-    for (Gate *g : gates) {
-        if (g->getTile1() == t1 && g->getTile2() == t2) return g;
+    Gate *g;
+
+    try {
+        TilePair tp{t1, t2};
+        g = gtmap.at(tp);
+    } catch (const std::out_of_range &) {
+        return nullptr;
     }
 
-    return nullptr;
+    return g;
 }
 
-Gate *Board::getGate(const Tile *t, const Direction &direction) const {
+Gate *Board::getGate(Tile *t, const Direction &direction) const {
     if (!t) {
         // Throw an exception here
         throw TileNotFoundException("Tile does not exist");
@@ -166,48 +172,6 @@ bool Board::gateTilesEquals(const Gate *g1, const Gate *g2) const {
 
 bool Board::gateNameEquals(const Gate *g1, const Gate *g2) const {
     return g1->getName() == g2->getName();
-}
-
-void Board::checkDupTiles() const {
-    /*
-    std::deque<Tile*> compare{tiles}; // using copy constructor
-    auto currCompare = compare.begin(); // iterator to compare obj;
-    int c1{0}, c2{0};
-
-    while (currCompare != compare.end()) {
-        for (auto it = tiles.cbegin(); it != tiles.cend(); ++it) {
-            if (compareByTileName(*currCompare, *it)) c1++;
-            else if (compareByTileCoordinate(*currCompare, *it)) c2++;
-
-            if (c1 > 1) throw
-    DuplicateTileNamesException((*currCompare)->getName()); else if (c2 > 1)
-    throw DuplicateTileCoordinatesException((*currCompare)->getX(),
-    (*currCompare)->getY());
-        }
-        ++currCompare; // Move to next element
-    }
-    */
-}
-
-void Board::checkDupGates() const {
-    /*
-    std::deque<Gate*> compare{gates}; // using copy constructor
-    auto currCompare = compare.begin(); // iterator to compare obj;
-    int c1{0}, c2{0};
-
-    while (currCompare != compare.end()) {
-        for (auto it = gates.cbegin(); it != gates.cend(); ++it) {
-            if (compareByGateName(*currCompare, *it)) c1++;
-            else if (compareByGateTiles(*currCompare, *it)) c2++;
-
-            if (c1 > 1) throw
-    DuplicateGateNamesException((*currCompare)->getName()); else if (c2 > 1)
-    throw DuplicateGateTilesException((*currCompare)->getTile1(),
-    (*currCompare)->getTile2());
-        }
-        ++currCompare; // Move to next element
-    }
-    */
 }
 
 void Board::insTile(int pos, Tile *t) {
@@ -337,16 +301,15 @@ bool Board::checkMove(const Direction &direction) {
 
 void Board::rotateTile(Tile *t, const Rotation &rotation) {
     // ! - DO NOT rotate non-directional tiles!!!
-    std::string dir = t->getType();
+    if (!t->isDirection()) return;  // Do nothing
 
-    // TODO: Check string here if directional
+    std::string dir = t->getType();
 
     if (rotation == CLOCKWISE)
         dir = clockwiseMap.at(dir);
     else if (rotation == COUNTER_CLOCKWISE)
         dir = counterClockwiseMap.at(dir);
 
-    // TODO: Error
     t->setType(dir);
 }
 
@@ -363,8 +326,15 @@ void Board::toggleGate(Tile *t1, Tile *t2) {
 
     TilePair tp{t1, t2};
 
-    Gate *gate = gtmap.at(tp);
-    gate->isActive() ? gate->setInactive() : gate->setActive();
+    Gate *g;
+    try {
+        g = gtmap.at(tp);
+    } catch (const std::out_of_range &) {
+        return;
+        // TODO: Error here
+    }
+
+    g->isActive() ? g->setInactive() : g->setActive();
 }
 
 bool Board::isGoal() const { return cursor.getTile()->isGoal(); }
