@@ -11,14 +11,14 @@
 
 struct TileHasher {
     // Hashes a tile by name
-    std::size_t operator()(const Tile *t) {
+    std::size_t operator()(const Tile *t) const {
         return std::hash<std::string>{}(t->getName());
     }
 };
 
 struct TilePairHasher {
     // Hashes a gate by using its name and its tiles' names
-    std::size_t operator()(const TilePair &g) {
+    std::size_t operator()(const TilePair &g) const {
         Tile *t1 = g.first;
         Tile *t2 = g.second;
 
@@ -27,7 +27,7 @@ struct TilePairHasher {
 };
 
 struct TilePairEquals {
-    bool operator()(const TilePair &lhs, const TilePair &rhs) {
+    bool operator()(const TilePair &lhs, const TilePair &rhs) const {
         return *lhs.first == *rhs.first && *lhs.second == *rhs.second;
     }
 };
@@ -36,7 +36,8 @@ using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
 using GateMap = std::unordered_map<std::string, Gate *>;
 using TileMap = std::unordered_map<std::string, Tile *>;
-using TilePairGateMap = std::unordered_map<TilePair, Gate *, TilePairHasher>;
+using TilePairGateMap =
+    std::unordered_map<TilePair, Gate *, TilePairHasher, TilePairEquals>;
 
 class Board {
    public:
