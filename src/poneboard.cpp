@@ -194,7 +194,7 @@ void Board::insTile(int pos, Tile *t) {
 
 void Board::remTile(Tile *t) {
     if (tiles.empty()) {
-        // TODO: Some error here
+        // TODO: Error here
         return;
     }
 
