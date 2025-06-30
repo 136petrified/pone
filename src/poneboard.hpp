@@ -26,6 +26,12 @@ struct TilePairHasher {
     }
 };
 
+struct TilePairEquals {
+    bool operator()(const TilePair &lhs, const TilePair &rhs) {
+        return *lhs.first == *rhs.first && *lhs.second == *rhs.second;
+    }
+};
+
 using GateList = std::deque<Gate *>;
 using TileList = std::deque<Tile *>;
 using GateMap = std::unordered_map<std::string, Gate *>;
