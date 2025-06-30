@@ -1,11 +1,16 @@
 /*   Created:  09-08-2024
- *   Modified: 06-13-2025
+ *   Modified: 06-29-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
 #define PONE_EXCEPTION_HPP
 
 #include <format>
+
+#include "ponegate.hpp"
+#include "ponetile.hpp"
+
+constexpr std::string ERR_FILE = "./errlog.txt";
 
 // #define ERR_MSG_LIMIT 150                           // Max char limit for
 // buffered error messages
@@ -63,12 +68,15 @@ class GateException : public std::exception {
    public:
     GateException() = default;
     virtual const char *what() const noexcept override = 0;
+
+   private:
+    std::string name;
 };
 
 class DuplicateGateTilesException : public GateException {
    public:
     DuplicateGateTilesException() = delete;
-    DuplicateGateTilesException(const Tile *t1, const Tile *t2) {
+    DuplicateGateTilesException(Tile *t1, Tile *t2) {
         msg = std::format(
             "Multiple gates with duplicate tiles detected with the tiles: x: "
             "{}, y: {}",
@@ -87,6 +95,32 @@ class DuplicateGateNamesException : public GateException {
         msg = std::format(
             "Multiple gates with duplicate names detected with the name: {}",
             name);
+    }
+    const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+
+class GateCollisionException : public GateException {
+   public:
+    GateCollisionException() = delete;
+    GateCollisionException(Tile *t) {
+        msg =
+            std::format("Attempted to create a gate with a collision tile: {}",
+                        t->getName());
+    }
+    const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+
+class GateEmptyException : public GateException {
+   public:
+    GateEmptyException() = delete;
+    GateEmptyException(Gate *g) {
+        msg = std::format("Gate {} has no tiles to remove!", g->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
 

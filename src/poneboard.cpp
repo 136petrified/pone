@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-27-2025
+ *   Modified:   06-29-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -230,8 +230,7 @@ void Board::insGate(int pos, Gate *g) {
 
 void Board::remGate(Gate *g) {
     if (gates.empty()) {
-        // TODO: Error here
-        return;
+        throw GateEmptyException(g);
     }
     auto gatepos = std::find(gates.begin(), gates.end(), g);
     if (gatepos != gates.end())
@@ -301,7 +300,9 @@ bool Board::checkMove(const Direction &direction) {
 
 void Board::rotateTile(Tile *t, const Rotation &rotation) {
     // ! - DO NOT rotate non-directional tiles!!!
-    if (!t->isDirection()) return;  // Do nothing
+    if (!t->isDirection()) {
+        return;  // Do nothing
+    }
 
     std::string dir = t->getType();
 
@@ -321,7 +322,7 @@ void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
 
 void Board::toggleGate(Tile *t1, Tile *t2) {
     if (t1->isCollision() || t2->isCollision()) {
-        // TODO: Error here
+        throw GateCollisionException(t1);
     }
 
     TilePair tp{t1, t2};
