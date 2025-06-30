@@ -47,11 +47,26 @@ class AVL {
 
 template <typename T>
 Node<T> *Node<T>::insert(Node *root, const T &key) {
-    if (root == nullptr) return root = new Node{key};
+    if (root == nullptr) return new Node{key};
 
-    if (key < root->data) return root->left = insert(root->left, key);
+    if (key < root->data)
+        root->left = insert(root->left, key);
+    else
+        root->right = insert(root->right, key);
 
-    return root->right = insert(root->right, key);
+    return root;
+}
+
+template <typename T>
+Node<T> *Node<T>::find(Node *root, const T &key) {
+    if (root == nullptr) return nullptr;
+
+    if (key == root->data)
+        return root;
+    else if (key < root->data)
+        return find(root->left, key);
+
+    return find(root->right, key);
 }
 
 #endif  // PONE_AVL_HPP

@@ -210,6 +210,8 @@ void Board::remTile(Tile *t) {
     --numTiles;
 }
 
+// TODO: What if a tile is missing from a gate?
+
 void Board::insGate(int pos, Gate *g) {
     // Leave pos as 0 to insert at last position by default
     if (pos <= -1) {
