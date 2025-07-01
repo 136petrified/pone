@@ -23,6 +23,7 @@ struct Node {
     static Node *leftRotate(Node *root);
     static Node *rightRotate(Node *root);
     static Node *getHeight(Node *root);
+    static int numberChildNodes(Node *root);
 
     static void print(Node *root);
     static std::vector<T> preorder();
@@ -67,6 +68,17 @@ Node<T> *Node<T>::find(Node *root, const T &key) {
         return find(root->left, key);
 
     return find(root->right, key);
+}
+
+template <typename T>
+Node<T> *Node<T>::remove(Node *root, const T &key) {
+    Node *parent = nullptr;
+    Node *target = root;
+
+    for (; target != nullptr; parent = target) {
+        if (key == target->data) break;
+        target = (key < target->data) ? target->left : target->right;
+    }
 }
 
 #endif  // PONE_AVL_HPP
