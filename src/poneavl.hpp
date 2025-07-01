@@ -25,6 +25,9 @@ struct Node {
     static Node *getHeight(Node *root);
     static int numberChildNodes(Node *root);
 
+    static Node *findSuccessor(Node *target);
+    static Node *findLeftSuccessor(Node *parent, Node *target);
+    static Node *findRightSuccessor(Node *parent, Node *target);
     static Node *removeWithOne(Node *root);
     static Node *removeWithTwo(Node *root, const T &key);
 
@@ -81,7 +84,8 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
     if (root == nullptr) return nullptr;
 
     if (key == root->data) {
-        root = return root;
+        // TODO: Handle root case
+        return root;
     }
 
     Node *parent = nullptr;
@@ -104,9 +108,13 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
                             delete target;
                             return root;
                         case 2:
-                            Node *succ;
-                            if (target->right != nullptr) succ = leftmost(root);
-                            if (target == parent->right) }
+                            Node *succ = findSuccessor(succ);
+                            if (succ == nullptr) {  // successor is nullptr if
+                                                    // target->right is nullptr
+                            }
+                        default:
+                            break;
+                    }
                 }
             }
         } else {
@@ -121,6 +129,17 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
         }
     }
     return root;
+}
+
+template <typename T>
+Node<T> *Node<T>::findSuccessor(Node<T> *target) {
+    if ()
+
+        if (target->right != nullptr) {
+            return leftmost(target->right);
+        }
+
+    return nullptr;
 }
 
 template <typename T>
