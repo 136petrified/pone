@@ -25,10 +25,16 @@ struct Node {
     static Node *getHeight(Node *root);
     static int numberChildNodes(Node *root);
 
+    static Node *removeWithOne(Node *root);
+    static Node *removeWithTwo(Node *root, const T &key);
+
     static void print(Node *root);
-    static std::vector<T> preorder();
-    static std::vector<T> inorder();
-    static std::vector<T> postorder();
+    static std::vector<T> preorder(Node *root);
+    static std::vector<T> inorder(Node *root);
+    static std::vector<T> postorder(Node *root);
+    static void printPreorder(Node *root);
+    static void printInorder(Node *root);
+    static void printPostorder(Node *root);
 };
 
 template <typename T>
@@ -59,7 +65,7 @@ Node<T> *Node<T>::insert(Node *root, const T &key) {
 }
 
 template <typename T>
-Node<T> *Node<T>::find(Node *root, const T &key) {
+Node<T> *Node<T>::find(Node<T> *root, const T &key) {
     if (root == nullptr) return nullptr;
 
     if (key == root->data)
@@ -71,14 +77,53 @@ Node<T> *Node<T>::find(Node *root, const T &key) {
 }
 
 template <typename T>
-Node<T> *Node<T>::remove(Node *root, const T &key) {
+Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
+    if (root == nullptr) return nullptr;
+
+    if (key == root->data) {
+        root = return root;
+    }
+
     Node *parent = nullptr;
     Node *target = root;
 
-    for (; target != nullptr; parent = target) {
-        if (key == target->data) break;
-        target = (key < target->data) ? target->left : target->right;
+    while (target != nullptr) {
+        if (key < target->data) {
+            if (parent->left != nullptr) {
+                target = parent->left;
+                if (key == parent->left) {
+                    switch (numberChildNodes(target)) {
+                        case 0:
+                            delete target;
+                            parent->left = nullptr;
+                            return root;
+                        case 1:
+                            parent->left = (target->left == nullptr)
+                                               ? target->right
+                                               : target->left;
+                            delete target;
+                            return root;
+                        case 2:
+                            Node *succ;
+                            if (target->right != nullptr) succ = leftmost(root);
+                            if (target == parent->right) }
+                }
+            }
+        } else {
+            if (parent->right != nullptr) {
+                target = parent->right;
+                if (key == parent->right) {
+                    switch (numberChildNodes(target) {
+
+                    }
+                }
+            }
+        }
     }
+    return root;
 }
+
+template <typename T>
+Node<T> *Node<T>::removeWithOne(Node<T> *root) {}
 
 #endif  // PONE_AVL_HPP
