@@ -28,8 +28,7 @@ struct Node {
     static Node *findSuccessor(Node *target);
     static Node *findLeftSuccessor(Node *parent, Node *target);
     static Node *findRightSuccessor(Node *parent, Node *target);
-    static Node *removeWithOne(Node *root);
-    static Node *removeWithTwo(Node *root, const T &key);
+    static Node *removeWithTwo(Node *root, Node *target);
 
     static void print(Node *root);
     static std::vector<T> preorder(Node *root);
@@ -50,6 +49,8 @@ class AVL {
     void insert(const T &key);
     bool find(const T &key) const;
     void remove(const T &key);
+
+    void rebalance();
 
    private:
     Node<T> *root;
@@ -108,12 +109,7 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
                             delete target;
                             return root;
                         case 2:
-                            Node *succ = findSuccessor(target);
-                            T succData = succ->data;
-                            remove(root, succ->data);
-                            target->data = succData;
-                        default:
-                            break;
+                            return removeWithTwo(root, target);
                     }
                 }
             }
@@ -121,14 +117,32 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
             if (parent->right != nullptr) {
                 target = parent->right;
                 if (key == parent->right->data) {
-                    switch (numberChildNodes(target) {
-
+                    switch (numberChildNodes(target)) {
+                        case 0:
+                            delete target;
+                            parent->right = nullptr;
+                            return root;
+                        case 1:
+                            parent->right = (target->left == nullptr)
+                                                ? target->right
+                                                : target->left;
+                            delete target;
+                            return root;
+                        case 2:
+                            return removeWithTwo(root, target);
                     }
                 }
             }
         }
     }
     return root;
+}
+
+template <typename T>
+Node<T> *Node<T>::leftmost(Node<T> *root) {
+    Node *target = root;
+    while (target != nullptr) target = target->left;
+    return target;
 }
 
 template <typename T>
@@ -143,6 +157,12 @@ Node<T> *Node<T>::findSuccessor(Node<T> *target) {
 }
 
 template <typename T>
-Node<T> *Node<T>::removeWithOne(Node<T> *root) {}
+Node<T> *Node<T>::removeWithTwo(Node<T> *root, Node<T> *target) {
+    Node *succ;
+    T succData = succ->data;
+    remove(root, succ->data);
+    target->data = succData;
+    return root;
+}
 
 #endif  // PONE_AVL_HPP
