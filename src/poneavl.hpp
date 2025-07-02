@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   07-01-2025
+ *    Modified:   07-02-2025
  */
 
 #ifndef PONE_AVL_HPP
@@ -11,23 +11,21 @@ template <typename T>
 struct Node {
     T data;
     Node *left, *right;
-    int height = 0;
+    int height;
 
-    Node(const T &key) : data{key}, left{nullptr}, right{nullptr} {}
+    Node(const T &key) : data{key}, left{nullptr}, right{nullptr}, height{0} {}
 
     static Node *insert(Node *root, const T &key);
     static Node *find(Node *root, const T &key);
     static Node *remove(Node *root, const T &key);
 
     static Node *leftmost(Node *root);
-    static Node *leftRotate(Node *root);
-    static Node *rightRotate(Node *root);
+    static Node *leftRotate(Node *x);
+    static Node *rightRotate(Node *y);
     static Node *getHeight(Node *root);
     static int numberChildNodes(Node *root);
 
     static Node *findSuccessor(Node *target);
-    static Node *findLeftSuccessor(Node *parent, Node *target);
-    static Node *findRightSuccessor(Node *parent, Node *target);
     static Node *removeWithTwo(Node *root, Node *target);
 
     static void print(Node *root);
@@ -58,7 +56,7 @@ class AVL {
 
 template <typename T>
 Node<T> *Node<T>::insert(Node *root, const T &key) {
-    if (root == nullptr) return new Node{key};
+    if (root == nullptr) return new Node<T>{key};
 
     if (key < root->data)
         root->left = insert(root->left, key);
@@ -89,8 +87,8 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
         return root;
     }
 
-    Node *parent = nullptr;
-    Node *target = root;
+    Node<T> *parent = nullptr;
+    Node<T> *target = root;
 
     while (target != nullptr) {
         if (key < target->data) {
@@ -140,9 +138,25 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
 
 template <typename T>
 Node<T> *Node<T>::leftmost(Node<T> *root) {
-    Node *target = root;
+    Node<T> *target = root;
     while (target != nullptr) target = target->left;
     return target;
+}
+
+template <typename T>
+Node<T> *Node<T>::leftRotate(Node<T> *x) {
+    Node<T> *y = x->right;
+    x->right = y->left;
+    y->left = x;
+    return y;  // parent of x will be assigned y;
+}
+
+template <typename T>
+Node<T> *Node<T>::rightRotate(Node<T> *y) {
+    Node<T> *x = y->left;
+    y->left = x->right;
+    x->right = y;
+    return x;  // parent of x will be assigned y;
 }
 
 template <typename T>
@@ -158,7 +172,7 @@ Node<T> *Node<T>::findSuccessor(Node<T> *target) {
 
 template <typename T>
 Node<T> *Node<T>::removeWithTwo(Node<T> *root, Node<T> *target) {
-    Node *succ;
+    Node<T> *succ;
     T succData = succ->data;
     remove(root, succ->data);
     target->data = succData;
