@@ -95,7 +95,7 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
         if (key < target->data) {
             if (parent->left != nullptr) {
                 target = parent->left;
-                if (key == parent->left) {
+                if (key == parent->left->data) {
                     switch (numberChildNodes(target)) {
                         case 0:
                             delete target;
@@ -109,10 +109,8 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
                             return root;
                         case 2:
                             Node *succ = findSuccessor(target);
-                            if (succ == nullptr) {  // successor is nullptr if
-                                                    // target->right is nullptr
-                                succ = findSuccessor(parent);
-                            }
+                            target->data = succ;
+                            remove(succ);
                         default:
                             break;
                     }
@@ -121,7 +119,7 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
         } else {
             if (parent->right != nullptr) {
                 target = parent->right;
-                if (key == parent->right) {
+                if (key == parent->right->data) {
                     switch (numberChildNodes(target) {
 
                     }
