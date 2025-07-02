@@ -109,8 +109,9 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
                             return root;
                         case 2:
                             Node *succ = findSuccessor(target);
-                            target->data = succ;
-                            remove(succ);
+                            T succData = succ->data;
+                            remove(root, succ->data);
+                            target->data = succData;
                         default:
                             break;
                     }
