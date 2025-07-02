@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   06-30-2025
+ *    Modified:   07-01-2025
  */
 
 #ifndef PONE_AVL_HPP
@@ -108,9 +108,10 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
                             delete target;
                             return root;
                         case 2:
-                            Node *succ = findSuccessor(succ);
+                            Node *succ = findSuccessor(target);
                             if (succ == nullptr) {  // successor is nullptr if
                                                     // target->right is nullptr
+                                succ = findSuccessor(parent);
                             }
                         default:
                             break;
@@ -133,11 +134,11 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
 
 template <typename T>
 Node<T> *Node<T>::findSuccessor(Node<T> *target) {
-    if ()
+    if (target == nullptr) return nullptr;
 
-        if (target->right != nullptr) {
-            return leftmost(target->right);
-        }
+    if (target->right != nullptr) {
+        return leftmost(target->right);
+    }
 
     return nullptr;
 }
