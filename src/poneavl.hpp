@@ -6,6 +6,7 @@
 #define PONE_AVL_HPP
 
 #include <algorithm>  // std::max
+// #include <cmath>
 #include <vector>
 
 template <typename T>
@@ -34,10 +35,9 @@ struct AVLNode {
     static AVLNode *removeWithTwo(AVLNode *root, AVLNode *target);
 
     static void print(AVLNode *root);
-    static bool empty(AVLNode *root);
-    static std::vector<T> preorder(AVLNode *root);
-    static std::vector<T> inorder(AVLNode *root);
-    static std::vector<T> postorder(AVLNode *root);
+    static void preorder(AVLNode *root, std::vector<T> &vec);
+    static void inorder(AVLNode *root, std::vector<T> &vec);
+    static void postorder(AVLNode *root, std::vector<T> &vec);
     static void printPreorder(AVLNode *root);
     static void printInorder(AVLNode *root);
     static void printPostorder(AVLNode *root);
@@ -194,7 +194,34 @@ int AVLNode<T>::numberChildNodes(AVLNode<T> *root) {
 
 template <typename T>
 bool AVLNode<T>::isLeaf(AVLNode<T> *root) {
-    return numberChildNodes(root) == 0;
+    return numberChildNodes(root) <= 0;
+}
+
+template <typename T>
+int AVLNode<T>::balanceFactor(AVLNode<T> *root) {
+    return getHeight(root->left) - getHeight(root->right);
+}
+
+template <typename T>
+void AVLNode<T>::preorder(AVLNode<T> *root, std::vector<T> &vec) {
+    if (root == nullptr) {
+        return;
+    }
+    vec.push_back(root->data);
+    preorder(root->left, vec);
+    preorder(root->right, vec);
+}
+
+template <typename T>
+void AVLNode<T>::inorder(AVLNode<T> *root, std::vector<T> &vec) {
+    if (root == nullptr) {
+        return;
+    }
+    if (!isLeaf(root->left)) inorder(root->left);
+    vec.push_back(root->left->data);
+    vec.push_back(root->data);
+    if (!isLeaf(root->right)) inorder(root->right);
+    vec.push_back(root->right);
 }
 
 template <typename T>
