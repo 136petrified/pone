@@ -54,6 +54,7 @@ class AVL {
     void insert(const T &key);
     bool find(const T &key) const;
     void remove(const T &key);
+    void removeAll();
 
     void rebalance();
     bool empty() const;
@@ -274,6 +275,27 @@ void AVLNode<T>::printPostorder(AVLNode<T> *root) {
     std::vector<T> vec(10);
     postorder(root, vec);
     for (const auto &item : vec) std::cout << item << std::endl;
+}
+
+template <typename T>
+AVL<T>::AVL() : root{nullptr} {}
+
+template <typename T>
+AVL<T>::AVL(const AVL &other) {
+    std::vector<T> vec(10);
+    preorder(other.root, vec);
+    for (const auto &item : vec) insert(item);
+}
+
+template <typename T>
+AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
+    removeAll();
+
+    std::vector<T> vec(10);
+    preorder(other.root, vec);
+    for (const auto &item : vec) insert(item);
+
+    return *this;
 }
 
 #endif  // PONE_AVL_HPP
