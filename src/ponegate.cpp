@@ -1,8 +1,10 @@
 /*   Created:    06-29-2024
- *   Modified:   06-24-2025
+ *   Modified:   07-03-2025
  */
 
 #include "ponegate.hpp"
+
+#include <iostream>
 
 // Gate constructors
 // ---------------------------------------------
@@ -27,11 +29,14 @@ Gate::Gate(const Gate &other)
 // Gate assignment
 // ---------------------------------------------
 Gate &Gate::operator=(const Gate &other) {
+    if (this == &other) return *this;
+
     tp = other.tp;
     name = other.name;
     id = other.id;
     color = other.color;
     active = other.active;
+
     return *this;
 }
 
@@ -67,11 +72,23 @@ void Gate::setName(const std::string &name) { this->name = name; }
 
 bool Gate::isActive() { return active; }
 
+void Gate::print(std::ostream &out) const {
+    Tile *t1 = tp.first, *t2 = tp.second;
+    out << "{name: " << name << ", id: " << id << ", t1: {" << t1->getX()
+        << ", " << t1->getY() << "}, t2: {" << t2->getX() << ", " << t2->getY()
+        << "}, color: " << color << "}" << std::endl;
+}
+
+std::ostream &operator<<(std::ostream &out, const Gate &g) {
+    g.print(out);
+    return out;
+}
+
 // Gate comparison
 // ---------------------------------------------
 
 bool Gate::operator==(const Gate &other) const {
-    TilePair g1 = getTilePair(), g2 = other.getTilePair();
+    TilePair g1 = tp, g2 = other.tp;
     Tile *g1t1 = g1.first, *g1t2 = g1.second;
     Tile *g2t1 = g2.first, *g2t2 = g2.second;
 
@@ -81,7 +98,7 @@ bool Gate::operator==(const Gate &other) const {
 bool Gate::operator!=(const Gate &other) const { return !(*this == other); }
 
 bool Gate::operator<(const Gate &other) const {
-    TilePair g1 = getTilePair(), g2 = other.getTilePair();
+    TilePair g1 = tp, g2 = other.tp;
     Tile *g1t1 = g1.first, *g1t2 = g1.second;
     Tile *g2t1 = g2.first, *g2t2 = g2.second;
 

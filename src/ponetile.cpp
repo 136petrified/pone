@@ -1,5 +1,5 @@
 /*  Created:    06-23-2024
- *  Modified:   07-02-2025
+ *  Modified:   07-03-2025
  */
 
 #include "ponetile.hpp"
@@ -76,7 +76,7 @@ bool Tile::isTileSwitch() const { return type == "tswitch"; }
 bool Tile::isType(const std::string &str) const { return type == str; }
 
 void Tile::print(std::ostream &out) const {
-    out << "{name: " << name << ", x: " << x << ", y:" << y
+    out << "{name: " << name << ", id: " << id << ", x: " << x << ", y:" << y
         << ", color:" << color << ", type: " << type << "}" << std::endl;
 }
 
@@ -95,8 +95,8 @@ bool Tile::operator==(const Tile &other) const {
 bool Tile::operator!=(const Tile &other) const { return !(x == y); }
 
 bool Tile::operator<(const Tile &other) const {
-    int x1 = x, x2 = other.getX();
-    int y1 = y, y2 = other.getY();
+    int x1 = x, x2 = other.x;
+    int y1 = y, y2 = other.y;
 
     if (x1 < x2) {
         return true;

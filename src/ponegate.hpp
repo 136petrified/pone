@@ -46,6 +46,8 @@ class Gate {
     // Gate functions
     // ---------------------------------------------
     bool isActive();
+    void print(std::ostream &out) const;
+    friend std::ostream &operator<<(std::ostream &out, const Gate &g);
 
     // Gate comparison
     // ---------------------------------------------
