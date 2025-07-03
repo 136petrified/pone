@@ -224,6 +224,17 @@ void AVLNode<T>::inorder(AVLNode<T> *root, std::vector<T> &vec) {
 }
 
 template <typename T>
+void AVLNode<T>::postorder(AVLNode<T> *root, std::vector<T> &vec) {
+    if (root == nullptr) {
+        return;
+    }
+
+    vec.push_back(root->data);
+    postorder(root->right, vec);
+    postorder(root->left, vec);
+}
+
+template <typename T>
 AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
     if (target == nullptr) return nullptr;
 
