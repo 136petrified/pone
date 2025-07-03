@@ -218,9 +218,9 @@ void AVLNode<T>::inorder(AVLNode<T> *root, std::vector<T> &vec) {
         return;
     }
 
-    inorder(root->left);
+    inorder(root->left, vec);
     vec.push_back(root->data);
-    inorder(root->right);
+    inorder(root->right, vec);
 }
 
 template <typename T>
