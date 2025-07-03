@@ -289,6 +289,8 @@ AVL<T>::AVL(const AVL &other) {
 
 template <typename T>
 AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
+    if (this == &other) return *this;
+
     removeAll();
 
     std::vector<T> vec(10);
