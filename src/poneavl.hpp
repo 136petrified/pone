@@ -9,37 +9,38 @@
 #include <vector>
 
 template <typename T>
-struct Node {
+struct AVLNode {
     T data;
-    Node *left, *right;
+    AVLNode *left, *right;
     int height;
 
-    Node(const T &key) : data{key}, left{nullptr}, right{nullptr}, height{0} {}
+    AVLNode(const T &key)
+        : data{key}, left{nullptr}, right{nullptr}, height{0} {}
 
-    static Node *insert(Node *root, const T &key);
-    static Node *find(Node *root, const T &key);
-    static Node *remove(Node *root, const T &key);
+    static AVLNode *insert(AVLNode *root, const T &key);
+    static AVLNode *find(AVLNode *root, const T &key);
+    static AVLNode *remove(AVLNode *root, const T &key);
 
-    static Node *leftmost(Node *root);
-    static Node *leftRotate(Node *x);
-    static Node *rightRotate(Node *y);
-    static int setHeight(Node *root, const int &height);
-    static int getHeight(Node *root);
-    static int numberChildNodes(Node *root);
-    static bool isLeaf(Node *root);
-    static int balanceFactor(Node *root);
+    static AVLNode *leftmost(AVLNode *root);
+    static AVLNode *leftRotate(AVLNode *x);
+    static AVLNode *rightRotate(AVLNode *y);
+    static int setHeight(AVLNode *root, const int &height);
+    static int getHeight(AVLNode *root);
+    static int numberChildAVLNodes(AVLNode *root);
+    static bool isLeaf(AVLNode *root);
+    static int balanceFactor(AVLNode *root);
 
-    static Node *findSuccessor(Node *target);
-    static Node *removeWithTwo(Node *root, Node *target);
+    static AVLNode *findSuccessor(AVLNode *target);
+    static AVLNode *removeWithTwo(AVLNode *root, AVLNode *target);
 
-    static void print(Node *root);
-    static bool empty(Node *root);
-    static std::vector<T> preorder(Node *root);
-    static std::vector<T> inorder(Node *root);
-    static std::vector<T> postorder(Node *root);
-    static void printPreorder(Node *root);
-    static void printInorder(Node *root);
-    static void printPostorder(Node *root);
+    static void print(AVLNode *root);
+    static bool empty(AVLNode *root);
+    static std::vector<T> preorder(AVLNode *root);
+    static std::vector<T> inorder(AVLNode *root);
+    static std::vector<T> postorder(AVLNode *root);
+    static void printPreorder(AVLNode *root);
+    static void printInorder(AVLNode *root);
+    static void printPostorder(AVLNode *root);
 };
 
 template <typename T>
@@ -57,12 +58,12 @@ class AVL {
     bool empty() const;
 
    private:
-    Node<T> *root;
+    AVLNode<T> *root;
 };
 
 template <typename T>
-Node<T> *Node<T>::insert(Node *root, const T &key) {
-    if (root == nullptr) return new Node<T>{key};
+AVLNode<T> *AVLNode<T>::insert(AVLNode *root, const T &key) {
+    if (root == nullptr) return new AVLNode<T>{key};
 
     if (key < root->data)
         root->left = insert(root->left, key);
@@ -73,7 +74,7 @@ Node<T> *Node<T>::insert(Node *root, const T &key) {
 }
 
 template <typename T>
-Node<T> *Node<T>::find(Node<T> *root, const T &key) {
+AVLNode<T> *AVLNode<T>::find(AVLNode<T> *root, const T &key) {
     if (root == nullptr) return nullptr;
 
     if (key == root->data)
@@ -85,7 +86,7 @@ Node<T> *Node<T>::find(Node<T> *root, const T &key) {
 }
 
 template <typename T>
-Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
+AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
     if (root == nullptr) return nullptr;
 
     if (key == root->data) {
@@ -93,15 +94,15 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
         return root;
     }
 
-    Node<T> *parent = nullptr;
-    Node<T> *target = root;
+    AVLNode<T> *parent = nullptr;
+    AVLNode<T> *target = root;
 
     while (target != nullptr) {
         if (key < target->data) {
             if (parent->left != nullptr) {
                 target = parent->left;
                 if (key == parent->left->data) {
-                    switch (numberChildNodes(target)) {
+                    switch (numberChildAVLNodes(target)) {
                         case 0:
                             delete target;
                             parent->left = nullptr;
@@ -121,7 +122,7 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
             if (parent->right != nullptr) {
                 target = parent->right;
                 if (key == parent->right->data) {
-                    switch (numberChildNodes(target)) {
+                    switch (numberChildAVLNodes(target)) {
                         case 0:
                             delete target;
                             parent->right = nullptr;
@@ -143,36 +144,36 @@ Node<T> *Node<T>::remove(Node<T> *root, const T &key) {
 }
 
 template <typename T>
-Node<T> *Node<T>::leftmost(Node<T> *root) {
-    Node<T> *target = root;
+AVLNode<T> *AVLNode<T>::leftmost(AVLNode<T> *root) {
+    AVLNode<T> *target = root;
     while (target != nullptr) target = target->left;
     return target;
 }
 
 template <typename T>
-Node<T> *Node<T>::leftRotate(Node<T> *x) {
-    Node<T> *y = x->right;
+AVLNode<T> *AVLNode<T>::leftRotate(AVLNode<T> *x) {
+    AVLNode<T> *y = x->right;
     x->right = y->left;
     y->left = x;
     return y;  // parent of x will be assigned y;
 }
 
 template <typename T>
-Node<T> *Node<T>::rightRotate(Node<T> *y) {
-    Node<T> *x = y->left;
+AVLNode<T> *AVLNode<T>::rightRotate(AVLNode<T> *y) {
+    AVLNode<T> *x = y->left;
     y->left = x->right;
     x->right = y;
     return x;  // parent of y will be assigned x;
 }
 
 template <typename T>
-int Node<T>::setHeight(Node<T> *root, const int &height) {
+int AVLNode<T>::setHeight(AVLNode<T> *root, const int &height) {
     root->height = height;
     return height;
 }
 
 template <typename T>
-int Node<T>::numberChildNodes(Node<T> *root) {
+int AVLNode<T>::numberChildAVLNodes(AVLNode<T> *root) {
     if (root->left == nullptr && root->right == nullptr) {
         return 0;
     } else if (root->left != nullptr && root->right != nullptr) {
@@ -183,7 +184,7 @@ int Node<T>::numberChildNodes(Node<T> *root) {
 }
 
 template <typename T>
-int Node<T>::getHeight(Node<T> *root) {
+int AVLNode<T>::getHeight(AVLNode<T> *root) {
     if (isLeaf(root)) {
         return 0;
     }
@@ -192,7 +193,7 @@ int Node<T>::getHeight(Node<T> *root) {
 }
 
 template <typename T>
-Node<T> *Node<T>::findSuccessor(Node<T> *target) {
+AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
     if (target == nullptr) return nullptr;
 
     if (target->right != nullptr) {
@@ -203,8 +204,8 @@ Node<T> *Node<T>::findSuccessor(Node<T> *target) {
 }
 
 template <typename T>
-Node<T> *Node<T>::removeWithTwo(Node<T> *root, Node<T> *target) {
-    Node<T> *succ;
+AVLNode<T> *AVLNode<T>::removeWithTwo(AVLNode<T> *root, AVLNode<T> *target) {
+    AVLNode<T> *succ;
     T succData = succ->data;
     remove(root, succ->data);
     target->data = succData;
