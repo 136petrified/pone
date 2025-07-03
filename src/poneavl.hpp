@@ -229,8 +229,8 @@ void AVLNode<T>::postorder(AVLNode<T> *root, std::vector<T> &vec) {
         return;
     }
 
-    inorder(root->left, vec);
-    inorder(root->right, vec);
+    postorder(root->left, vec);
+    postorder(root->right, vec);
     vec.push_back(root->data);
 }
 
