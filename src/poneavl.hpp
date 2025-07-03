@@ -7,6 +7,7 @@
 
 #include <algorithm>  // std::max
 // #include <cmath>
+#include <iostream>
 #include <vector>
 
 template <typename T>
@@ -252,6 +253,27 @@ AVLNode<T> *AVLNode<T>::removeWithTwo(AVLNode<T> *root, AVLNode<T> *target) {
     remove(root, succ->data);
     target->data = succData;
     return root;
+}
+
+template <typename T>
+void AVLNode<T>::printPreorder(AVLNode<T> *root) {
+    std::vector<T> vec(10);
+    preorder(root, vec);
+    for (const auto &item : vec) std::cout << item << std::endl;
+}
+
+template <typename T>
+void AVLNode<T>::printInorder(AVLNode<T> *root) {
+    std::vector<T> vec(10);
+    inorder(root, vec);
+    for (const auto &item : vec) std::cout << item << std::endl;
+}
+
+template <typename T>
+void AVLNode<T>::printPostorder(AVLNode<T> *root) {
+    std::vector<T> vec(10);
+    postorder(root, vec);
+    for (const auto &item : vec) std::cout << item << std::endl;
 }
 
 #endif  // PONE_AVL_HPP
