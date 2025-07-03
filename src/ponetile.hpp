@@ -49,6 +49,8 @@ class Tile {
     bool isGoal() const;
     bool isTileSwitch() const;
     bool isType(const std::string &str) const;
+    void print(std::ostream &out) const;
+    friend std::ostream &operator<<(std::ostream &out, const Tile &t);
 
     // Tile comparison
     // ---------------------------------------------
