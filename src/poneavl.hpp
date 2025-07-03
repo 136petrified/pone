@@ -283,7 +283,7 @@ AVL<T>::AVL() : root{nullptr} {}
 template <typename T>
 AVL<T>::AVL(const AVL &other) {
     std::vector<T> vec(10);
-    preorder(other.root, vec);
+    AVLNode<T>::preorder(other.root, vec);
     for (const auto &item : vec) insert(item);
 }
 
@@ -292,7 +292,7 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
     removeAll();
 
     std::vector<T> vec(10);
-    preorder(other.root, vec);
+    AVLNode<T>::preorder(other.root, vec);
     for (const auto &item : vec) insert(item);
 
     return *this;
