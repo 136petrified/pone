@@ -33,6 +33,7 @@ struct Node {
     static Node *removeWithTwo(Node *root, Node *target);
 
     static void print(Node *root);
+    static bool empty(Node *root);
     static std::vector<T> preorder(Node *root);
     static std::vector<T> inorder(Node *root);
     static std::vector<T> postorder(Node *root);
@@ -53,6 +54,7 @@ class AVL {
     void remove(const T &key);
 
     void rebalance();
+    bool empty() const;
 
    private:
     Node<T> *root;
@@ -167,6 +169,17 @@ template <typename T>
 int Node<T>::setHeight(Node<T> *root, const int &height) {
     root->height = height;
     return height;
+}
+
+template <typename T>
+int Node<T>::numberChildNodes(Node<T> *root) {
+    if (root->left == nullptr && root->right == nullptr) {
+        return 0;
+    } else if (root->left != nullptr && root->right != nullptr) {
+        return 2;
+    }
+
+    return 1;
 }
 
 template <typename T>
