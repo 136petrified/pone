@@ -5,6 +5,7 @@
 #ifndef PONE_AVL_HPP
 #define PONE_AVL_HPP
 
+#include <algorithm>  // std::max
 #include <vector>
 
 template <typename T>
@@ -22,8 +23,11 @@ struct Node {
     static Node *leftmost(Node *root);
     static Node *leftRotate(Node *x);
     static Node *rightRotate(Node *y);
-    static Node *getHeight(Node *root);
+    static int setHeight(Node *root, const int &height);
+    static int getHeight(Node *root);
     static int numberChildNodes(Node *root);
+    static bool isLeaf(Node *root);
+    static int balanceFactor(Node *root);
 
     static Node *findSuccessor(Node *target);
     static Node *removeWithTwo(Node *root, Node *target);
@@ -156,7 +160,22 @@ Node<T> *Node<T>::rightRotate(Node<T> *y) {
     Node<T> *x = y->left;
     y->left = x->right;
     x->right = y;
-    return x;  // parent of x will be assigned y;
+    return x;  // parent of y will be assigned x;
+}
+
+template <typename T>
+int Node<T>::setHeight(Node<T> *root, const int &height) {
+    root->height = height;
+    return height;
+}
+
+template <typename T>
+int Node<T>::getHeight(Node<T> *root) {
+    if (isLeaf(root)) {
+        return 0;
+    }
+    return setHeight(
+        root, 1 + std::max(getHeight(root->left), getHeight(root->right)));
 }
 
 template <typename T>
