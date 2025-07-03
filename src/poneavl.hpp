@@ -217,11 +217,10 @@ void AVLNode<T>::inorder(AVLNode<T> *root, std::vector<T> &vec) {
     if (root == nullptr) {
         return;
     }
-    if (!isLeaf(root->left)) inorder(root->left);
-    if (root->left != nullptr) vec.push_back(root->left->data);
+
+    inorder(root->left);
     vec.push_back(root->data);
-    if (!isLeaf(root->right)) inorder(root->right);
-    if (root->right != nullptr) vec.push_back(root->right->data);
+    inorder(root->right);
 }
 
 template <typename T>
