@@ -323,9 +323,13 @@ void AVL<T>::removeAll() {
 template <typename T>
 void AVL<T>::rebalance() {
     int bf = AVLNode<T>::balanceFactor(root);
+    int bfr = AVLNode<T>::balanceFactor(root);
+    int bfl = AVLNode<T>::balanceFactor(root);
+
     if (bf == 0) {
         return;
     } else if (bf > 1) {  // right-heavy tree
+        if (
     }
 }
 
