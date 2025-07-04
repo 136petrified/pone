@@ -240,11 +240,7 @@ template <typename T>
 AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
     if (target == nullptr) return nullptr;
 
-    if (target->right != nullptr) {
-        return leftmost(target->right);
-    }
-
-    return nullptr;
+    return leftmost(target->right);
 }
 
 template <typename T>
