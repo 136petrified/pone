@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   07-02-2025
+ *    Modified:   07-04-2025
  */
 
 #ifndef PONE_AVL_HPP
@@ -201,7 +201,7 @@ bool AVLNode<T>::isLeaf(AVLNode<T> *root) {
 
 template <typename T>
 int AVLNode<T>::balanceFactor(AVLNode<T> *root) {
-    return getHeight(root->left) - getHeight(root->right);
+    return getHeight(root->right) - getHeight(root->left);
 }
 
 template <typename T>
