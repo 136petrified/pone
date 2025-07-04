@@ -52,7 +52,7 @@ class AVL {
     AVL &operator=(const AVL &other);
 
     void insert(const T &key);
-    bool find(const T &key) const;
+    AVLNode<T> *find(const T &key);
     void remove(const T &key);
     void removeAll();
 
@@ -298,6 +298,40 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
     for (const auto &item : vec) insert(item);
 
     return *this;
+}
+
+template <typename T>
+void AVL<T>::insert(const T &key) {
+    AVLNode<T>::insert(root, key);
+}
+
+template <typename T>
+AVLNode<T> *AVL<T>::find(const T &key) {
+    return AVLNode<T>::find(root, key);
+}
+
+template <typename T>
+void AVL<T>::remove(const T &key) {
+    AVLNode<T>::remove(root, key);
+}
+
+template <typename T>
+void AVL<T>::removeAll() {
+    while (!empty()) remove(root->data);
+}
+
+template <typename T>
+void AVL<T>::rebalance() {
+    int bf = AVLNode<T>::balanceFactor(root);
+    if (bf == 0) {
+        return;
+    } else if (bf > 1) {  // right-heavy tree
+    }
+}
+
+template <typename T>
+bool AVL<T>::empty() const {
+    return root == nullptr;
 }
 
 #endif  // PONE_AVL_HPP
