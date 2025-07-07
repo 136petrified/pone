@@ -299,6 +299,7 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
 template <typename T>
 void AVL<T>::insert(const T &key) {
     AVLNode<T>::insert(root, key);
+    rebalance(root);
 }
 
 template <typename T>
@@ -332,13 +333,13 @@ void AVL<T>::rebalance() {
     if (bf < -1 || bf > 1) {
         if (hr - hl < 0) {  // This means that the left subtree is higher
             // Do right rotation
-            if (bfl < 0) {
+            if (bfl > 0) {
                 AVLNode<T>::leftRotate(root->left);
             }
 
             AVLNode<T>::rightRotate(root);
         } else {
-            if (bfr > 0) {
+            if (bfr < 0) {
                 AVLNode<T>::rightRotate(root->right);
             }
 
