@@ -319,13 +319,31 @@ void AVL<T>::removeAll() {
 template <typename T>
 void AVL<T>::rebalance() {
     int bf = AVLNode<T>::balanceFactor(root);
-    int bfr = AVLNode<T>::balanceFactor(root);
-    int bfl = AVLNode<T>::balanceFactor(root);
+    int bfl = AVLNode<T>::balanceFactor(root->left);
+    int bfr = AVLNode<T>::balanceFactor(root->right);
+
+    int hr = AVLNode<T>::getHeight(root->right);
+    int hl = AVLNode<T>::getHeight(root->left);
 
     if (bf == 0) {
         return;
-    } else if (bf > 1) {  // right-heavy tree
-        if (
+    }
+
+    if (bf < -1 || bf > 1) {
+        if (hr - hl < 0) {  // This means that the left subtree is higher
+            // Do right rotation
+            if (bfl < 0) {
+                AVLNode<T>::leftRotate(root->left);
+            }
+
+            AVLNode<T>::rightRotate(root);
+        } else {
+            if (bfr > 0) {
+                AVLNode<T>::rightRotate(root->right);
+            }
+
+            AVLNode<T>::leftRotate(root);
+        }
     }
 }
 
