@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   07-06-2025
+ *    Modified:   07-08-2025
  */
 
 #ifndef PONE_AVL_HPP
@@ -31,6 +31,7 @@ struct AVLNode {
     static int numberChildNodes(AVLNode *root);
     static bool isLeaf(AVLNode *root);
     static int balanceFactor(AVLNode *root);
+    static void rebalance(AVLNode *root);
 
     static AVLNode *findSuccessor(AVLNode *target);
     static AVLNode *removeWithTwo(AVLNode *root, AVLNode *target);
@@ -56,7 +57,6 @@ class AVL {
     void remove(const T &key);
     void removeAll();
 
-    void rebalance();
     bool empty() const;
 
    private:
@@ -92,56 +92,30 @@ AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
     if (root == nullptr) return nullptr;
 
     if (key == root->data) {
-        // TODO: Handle root case
-        return root;
-    }
-
-    AVLNode<T> *parent = nullptr;
-    AVLNode<T> *target = root;
-
-    while (target != nullptr) {
-        if (key < target->data) {
-            if (parent->left != nullptr) {
-                target = parent->left;
-                if (key == parent->left->data) {
-                    switch (numberChildAVLNodes(target)) {
-                        case 0:
-                            delete target;
-                            parent->left = nullptr;
-                            return root;
-                        case 1:
-                            parent->left = (target->left == nullptr)
-                                               ? target->right
-                                               : target->left;
-                            delete target;
-                            return root;
-                        case 2:
-                            return removeWithTwo(root, target);
-                    }
-                }
-            }
-        } else {
-            if (parent->right != nullptr) {
-                target = parent->right;
-                if (key == parent->right->data) {
-                    switch (numberChildAVLNodes(target)) {
-                        case 0:
-                            delete target;
-                            parent->right = nullptr;
-                            return root;
-                        case 1:
-                            parent->right = (target->left == nullptr)
-                                                ? target->right
-                                                : target->left;
-                            delete target;
-                            return root;
-                        case 2:
-                            return removeWithTwo(root, target);
-                    }
-                }
-            }
+        AVLNode<T> *newRoot, *succ;
+        switch (numberChildNodes(root)) {
+            case 0:
+                delete root;
+                return nullptr;
+            case 1:
+                newRoot = (root->left != nullptr) ? root->left : root->right;
+                delete root;
+                root = newRoot;
+                break;
+            case 2:
+                succ = leftmost(root->right);
+                T succData = succ->data;
+                remove(root->right, succData);
+                root->data = succData;
+                break;
         }
+    } else if (key < root->data) {
+        root->left = remove(root->left, key);
+    } else {
+        root->right = remove(root->right, key);
     }
+
+    rebalance(root);
     return root;
 }
 
@@ -244,15 +218,6 @@ AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
 }
 
 template <typename T>
-AVLNode<T> *AVLNode<T>::removeWithTwo(AVLNode<T> *root, AVLNode<T> *target) {
-    AVLNode<T> *succ;
-    T succData = succ->data;
-    remove(root, succ->data);
-    target->data = succData;
-    return root;
-}
-
-template <typename T>
 void AVLNode<T>::printPreorder(AVLNode<T> *root) {
     std::vector<T> vec(10);
     preorder(root, vec);
@@ -298,8 +263,7 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
 
 template <typename T>
 void AVL<T>::insert(const T &key) {
-    AVLNode<T>::insert(root, key);
-    rebalance(root);
+    root = AVLNode<T>::insert(root, key);
 }
 
 template <typename T>
@@ -309,7 +273,7 @@ AVLNode<T> *AVL<T>::find(const T &key) {
 
 template <typename T>
 void AVL<T>::remove(const T &key) {
-    AVLNode<T>::remove(root, key);
+    root = AVLNode<T>::remove(root, key);
 }
 
 template <typename T>
@@ -318,7 +282,7 @@ void AVL<T>::removeAll() {
 }
 
 template <typename T>
-void AVL<T>::rebalance() {
+void AVLNode<T>::rebalance(AVLNode<T> *root) {
     int bf = AVLNode<T>::balanceFactor(root);
     int bfl = AVLNode<T>::balanceFactor(root->left);
     int bfr = AVLNode<T>::balanceFactor(root->right);
