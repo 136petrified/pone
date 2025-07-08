@@ -30,10 +30,8 @@ struct AVLNode {
     static int numberChildNodes(AVLNode *root);
     static bool isLeaf(AVLNode *root);
     static int balanceFactor(AVLNode *root);
-    static void rebalance(AVLNode *root);
-
+    static AVLNode *rebalance(AVLNode *root);
     static AVLNode *findSuccessor(AVLNode *target);
-    static AVLNode *removeWithTwo(AVLNode *root, AVLNode *target);
 
     static void print(AVLNode *root);
     static void preorder(AVLNode *root, std::vector<T> &vec);
@@ -114,8 +112,7 @@ AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
         root->right = remove(root->right, key);
     }
 
-    rebalance(root);
-    return root;
+    return rebalance(root);
 }
 
 template <typename T>
@@ -272,7 +269,7 @@ void AVL<T>::removeAll() {
 }
 
 template <typename T>
-void AVLNode<T>::rebalance(AVLNode<T> *root) {
+AVLNode<T> *AVLNode<T>::rebalance(AVLNode<T> *root) {
     int bf = AVLNode<T>::balanceFactor(root);
     int bfl = AVLNode<T>::balanceFactor(root->left);
     int bfr = AVLNode<T>::balanceFactor(root->right);
@@ -281,25 +278,25 @@ void AVLNode<T>::rebalance(AVLNode<T> *root) {
     int hl = AVLNode<T>::getHeight(root->left);
 
     if (bf == 0) {
-        return;
-    }
-
-    if (bf < -1 || bf > 1) {
+        return root;
+    } else if (bf < -1 || bf > 1) {
         if (hr - hl < 0) {  // This means that the left subtree is higher
             // Do right rotation
             if (bfl > 0) {
-                AVLNode<T>::leftRotate(root->left);
+                root->left = AVLNode<T>::leftRotate(root->left);
             }
 
-            AVLNode<T>::rightRotate(root);
+            root = AVLNode<T>::rightRotate(root);
         } else {
             if (bfr < 0) {
-                AVLNode<T>::rightRotate(root->right);
+                root->right = AVLNode<T>::rightRotate(root->right);
             }
 
-            AVLNode<T>::leftRotate(root);
+            root = AVLNode<T>::leftRotate(root);
         }
     }
+
+    return root;
 }
 
 template <typename T>
