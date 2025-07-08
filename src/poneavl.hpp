@@ -25,7 +25,7 @@ struct AVLNode {
     static AVLNode *leftmost(AVLNode *root);
     static AVLNode *leftRotate(AVLNode *x);
     static AVLNode *rightRotate(AVLNode *y);
-    static int setHeight(AVLNode *root, const int &height);
+    static void setHeight(AVLNode *root);
     static int getHeight(AVLNode *root);
     static int numberChildNodes(AVLNode *root);
     static bool isLeaf(AVLNode *root);
@@ -64,9 +64,11 @@ template <typename T>
 AVLNode<T> *AVLNode<T>::insert(AVLNode *root, const T &key) {
     if (root == nullptr) return new AVLNode<T>{key};
 
-    if (key < root->data)
+    setHeight(root);
+
+    if (key < root->data) {
         root->left = insert(root->left, key);
-    else
+    } else
         root->right = insert(root->right, key);
 
     return root;
@@ -112,6 +114,7 @@ AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
         root->right = remove(root->right, key);
     }
 
+    setHeight(root);
     return rebalance(root);
 }
 
@@ -139,18 +142,14 @@ AVLNode<T> *AVLNode<T>::rightRotate(AVLNode<T> *y) {
 }
 
 template <typename T>
-int AVLNode<T>::setHeight(AVLNode<T> *root, const int &height) {
-    root->height = height;
-    return height;
+void AVLNode<T>::setHeight(AVLNode<T> *root) {
+    if (root == nullptr) return;
+    root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
 }
 
 template <typename T>
 int AVLNode<T>::getHeight(AVLNode<T> *root) {
-    if (isLeaf(root)) {
-        return 0;
-    }
-    return setHeight(
-        root, 1 + std::max(getHeight(root->left), getHeight(root->right)));
+    return root->height;
 }
 
 template <typename T>
@@ -171,7 +170,7 @@ bool AVLNode<T>::isLeaf(AVLNode<T> *root) {
 
 template <typename T>
 int AVLNode<T>::balanceFactor(AVLNode<T> *root) {
-    return getHeight(root->right) - getHeight(root->left);
+    return root->right->height - root->left->height;
 }
 
 template <typename T>
