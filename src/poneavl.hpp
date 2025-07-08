@@ -6,7 +6,6 @@
 #define PONE_AVL_HPP
 
 #include <algorithm>  // std::max
-// #include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -105,7 +104,7 @@ AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
             case 2:
                 succ = leftmost(root->right);
                 T succData = succ->data;
-                remove(root->right, succData);
+                root->right = remove(root->right, succData);
                 root->data = succData;
                 break;
         }
@@ -180,9 +179,7 @@ int AVLNode<T>::balanceFactor(AVLNode<T> *root) {
 
 template <typename T>
 void AVLNode<T>::preorder(AVLNode<T> *root, std::vector<T> &vec) {
-    if (root == nullptr) {
-        return;
-    }
+    if (root == nullptr) return;
     vec.push_back(root->data);
     preorder(root->left, vec);
     preorder(root->right, vec);
@@ -190,10 +187,7 @@ void AVLNode<T>::preorder(AVLNode<T> *root, std::vector<T> &vec) {
 
 template <typename T>
 void AVLNode<T>::inorder(AVLNode<T> *root, std::vector<T> &vec) {
-    if (root == nullptr) {
-        return;
-    }
-
+    if (root == nullptr) return;
     inorder(root->left, vec);
     vec.push_back(root->data);
     inorder(root->right, vec);
@@ -201,10 +195,7 @@ void AVLNode<T>::inorder(AVLNode<T> *root, std::vector<T> &vec) {
 
 template <typename T>
 void AVLNode<T>::postorder(AVLNode<T> *root, std::vector<T> &vec) {
-    if (root == nullptr) {
-        return;
-    }
-
+    if (root == nullptr) return;
     postorder(root->left, vec);
     postorder(root->right, vec);
     vec.push_back(root->data);
@@ -213,7 +204,6 @@ void AVLNode<T>::postorder(AVLNode<T> *root, std::vector<T> &vec) {
 template <typename T>
 AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
     if (target == nullptr) return nullptr;
-
     return leftmost(target->right);
 }
 
