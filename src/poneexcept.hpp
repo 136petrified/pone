@@ -1,5 +1,5 @@
 /*   Created:  09-08-2024
- *   Modified: 06-30-2025
+ *   Modified: 07-08-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
@@ -71,7 +71,7 @@ class TileNotFoundException : public TileException {
     std::string msg;
 };
 
-// TODO: Convert these exceptions to virtual excpetion classes
+// TODO: You cannot have a board without a goal
 
 class GateException : public std::exception {
    public:

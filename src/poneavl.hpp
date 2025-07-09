@@ -57,8 +57,12 @@ class AVL {
     std::vector<T> preorder();
     std::vector<T> inorder();
     std::vector<T> postorder();
+    void printPreorder();
+    void printInorder();
+    void printPostorder();
 
     bool empty() const;
+    ~AVL();
 
    private:
     AVLNode<T> *root;
@@ -124,7 +128,7 @@ AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
 template <typename T>
 AVLNode<T> *AVLNode<T>::leftmost(AVLNode<T> *root) {
     AVLNode<T> *target = root;
-    while (target != nullptr) target = target->left;
+    while (target->left != nullptr) target = target->left;
     return target;
 }
 
@@ -152,9 +156,7 @@ void AVLNode<T>::setHeight(AVLNode<T> *root) {
 
 template <typename T>
 int AVLNode<T>::getHeight(AVLNode<T> *root) {
-    if (root == nullptr) return -1;
-    // TODO: Could use exception here
-
+    if (root == nullptr) return 0;
     return root->height;
 }
 
@@ -176,7 +178,8 @@ bool AVLNode<T>::isLeaf(AVLNode<T> *root) {
 
 template <typename T>
 int AVLNode<T>::balanceFactor(AVLNode<T> *root) {
-    return root->right->height - root->left->height;
+    if (root == nullptr) return 0;
+    return getHeight(root->right) - getHeight(root->left);
 }
 
 template <typename T>
@@ -211,21 +214,21 @@ AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
 
 template <typename T>
 void AVLNode<T>::printPreorder(AVLNode<T> *root) {
-    std::vector<T> vec(10);
+    std::vector<T> vec;
     preorder(root, vec);
     for (const auto &item : vec) std::cout << item << std::endl;
 }
 
 template <typename T>
 void AVLNode<T>::printInorder(AVLNode<T> *root) {
-    std::vector<T> vec(10);
+    std::vector<T> vec;
     inorder(root, vec);
     for (const auto &item : vec) std::cout << item << std::endl;
 }
 
 template <typename T>
 void AVLNode<T>::printPostorder(AVLNode<T> *root) {
-    std::vector<T> vec(10);
+    std::vector<T> vec;
     postorder(root, vec);
     for (const auto &item : vec) std::cout << item << std::endl;
 }
@@ -235,7 +238,7 @@ AVL<T>::AVL() : root{nullptr} {}
 
 template <typename T>
 AVL<T>::AVL(const AVL &other) {
-    std::vector<T> vec(10);
+    std::vector<T> vec;
     AVLNode<T>::preorder(other.root, vec);
     for (const auto &item : vec) insert(item);
 }
@@ -246,7 +249,7 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
 
     removeAll();
 
-    std::vector<T> vec(10);
+    std::vector<T> vec;
     AVLNode<T>::preorder(other.root, vec);
     for (const auto &item : vec) insert(item);
 
@@ -275,23 +278,38 @@ void AVL<T>::removeAll() {
 
 template <typename T>
 std::vector<T> AVL<T>::preorder() {
-    std::vector<T> vec{10};
+    std::vector<T> vec;
     AVLNode<T>::preorder(root, vec);
     return vec;
 }
 
 template <typename T>
 std::vector<T> AVL<T>::inorder() {
-    std::vector<T> vec{10};
+    std::vector<T> vec;
     AVLNode<T>::inorder(root, vec);
     return vec;
 }
 
 template <typename T>
 std::vector<T> AVL<T>::postorder() {
-    std::vector<T> vec{10};
+    std::vector<T> vec;
     AVLNode<T>::preorder(root, vec);
     return vec;
+}
+
+template <typename T>
+void AVL<T>::printPreorder() {
+    AVLNode<T>::printPreorder(root);
+}
+
+template <typename T>
+void AVL<T>::printInorder() {
+    AVLNode<T>::printInorder(root);
+}
+
+template <typename T>
+void AVL<T>::printPostorder() {
+    AVLNode<T>::printPostorder(root);
 }
 
 template <typename T>
@@ -328,6 +346,11 @@ AVLNode<T> *AVLNode<T>::rebalance(AVLNode<T> *root) {
 template <typename T>
 bool AVL<T>::empty() const {
     return root == nullptr;
+}
+
+template <typename T>
+AVL<T>::~AVL() {
+    removeAll();
 }
 
 #endif  // PONE_AVL_HPP
