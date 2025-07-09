@@ -64,14 +64,13 @@ template <typename T>
 AVLNode<T> *AVLNode<T>::insert(AVLNode *root, const T &key) {
     if (root == nullptr) return new AVLNode<T>{key};
 
-    setHeight(root);
-
     if (key < root->data) {
         root->left = insert(root->left, key);
     } else
         root->right = insert(root->right, key);
 
-    return root;
+    setHeight(root);
+    return rebalance(root);
 }
 
 template <typename T>
@@ -130,7 +129,7 @@ AVLNode<T> *AVLNode<T>::leftRotate(AVLNode<T> *x) {
     AVLNode<T> *y = x->right;
     x->right = y->left;
     y->left = x;
-    return y;  // parent of x will be assigned y;
+    return y;  // parent of x will be assigned y
 }
 
 template <typename T>
@@ -138,7 +137,7 @@ AVLNode<T> *AVLNode<T>::rightRotate(AVLNode<T> *y) {
     AVLNode<T> *x = y->left;
     y->left = x->right;
     x->right = y;
-    return x;  // parent of y will be assigned x;
+    return x;  // parent of y will be assigned x
 }
 
 template <typename T>
@@ -149,6 +148,9 @@ void AVLNode<T>::setHeight(AVLNode<T> *root) {
 
 template <typename T>
 int AVLNode<T>::getHeight(AVLNode<T> *root) {
+    if (root == nullptr) return -1;
+    // TODO: Could use exception here
+
     return root->height;
 }
 
