@@ -37,6 +37,8 @@ set(GTEST_MAIN_LIBRARY ${GTEST_LIBRARY}/googletest/lib/libgtest_main.a)
 find_package(GTest REQUIRED)
 
 set(ALL_SRC_FILES
+${PROJECT_SOURCE_DIR}/src/poneavl.cpp
+${PROJECT_SOURCE_DIR}/src/poneavl.hpp
 ${PROJECT_SOURCE_DIR}/src/poneboard.cpp
 ${PROJECT_SOURCE_DIR}/src/poneboard.hpp
 ${PROJECT_SOURCE_DIR}/src/poneconst.hpp
@@ -58,12 +60,20 @@ ${PROJECT_SOURCE_DIR}/src/ponetile.hpp
 add_executable(
 all_tests
 ${ALL_SRC_FILES}
+${PROJECT_SOURCE_DIR}/test/poneavl_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/ponegate_tests.cpp
+${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+)
+
+add_executable(
+avl_tests
+${ALL_SRC_FILES}
+${PROJECT_SOURCE_DIR}/test/poneavl_tests.cpp
 ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 )
 
@@ -117,6 +127,7 @@ include_directories(
 
 target_include_directories(
     all_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    poneavl_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     ponetile_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     ponecursor_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     ponegame_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -126,6 +137,10 @@ target_include_directories(
 )
 
 target_link_libraries(all_tests
+                      GTest::gtest_main
+)
+
+target_link_libraries(avl_tests
                       GTest::gtest_main
 )
 
