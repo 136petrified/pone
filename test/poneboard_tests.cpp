@@ -2,7 +2,6 @@
 
 #include "poneboard.hpp"
 
-/*
 TEST(poneboard, Constructor) {
     Board b1;
     EXPECT_EQ(b1.getLength(), 0);
@@ -28,10 +27,9 @@ TEST(poneboard, Width) {
 
 TEST(poneboard, CurrentTile) {
     Board b;
-    Tile t1 = Tile{4, 0, "none", "empty"};
+    Tile t1 = Tile{"t1", 1, 4, 0, "none", "empty", false};
     b.setCursorTile(&t1);
     EXPECT_EQ(*b.getCursorTile(), t1);
 }
 
 TEST(poneboard, GetTile) { Board b{4, 4}; }
-*/

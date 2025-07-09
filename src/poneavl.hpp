@@ -129,6 +129,7 @@ AVLNode<T> *AVLNode<T>::remove(AVLNode<T> *root, const T &key) {
 
 template <typename T>
 AVLNode<T> *AVLNode<T>::leftmost(AVLNode<T> *root) {
+    if (root == nullptr) return nullptr;
     AVLNode<T> *target = root;
     while (target->left != nullptr) target = target->left;
     return target;
