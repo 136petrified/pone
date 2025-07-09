@@ -29,13 +29,13 @@ TEST(AVL, Insert) {
 
     AVL<Tile> tileTree;
 
-    Tile t1{5, 4, "purple", "collision"};
-    Tile t2{1, 9, "green", "empty"};
-    Tile t3{13, 1, "none", "tswitch"};
-    Tile t4{2, 30, "red", "gswitch"};
-    Tile t5{5, 0, "none", "key"};
-    Tile t6{3, 3, "gray", "collision"};
-    Tile t7{46, 4, "none", "goal"};
+    Tile t1{"t1", 1, 5, 4, "purple", "collision", false};
+    Tile t2{"t2", 2, 1, 9, "green", "empty", true};
+    Tile t3{"t3", 3, 13, 1, "none", "tswitch", false};
+    Tile t4{"t4", 4, 2, 30, "red", "gswitch", false};
+    Tile t5{"t5", 5, 5, 0, "none", "key", false};
+    Tile t6{"t6", 6, 3, 3, "gray", "collision", false};
+    Tile t7{"t7", 7, 46, 4, "none", "goal", false};
 
     tileTree.insert(t1);
     tileTree.insert(t2);

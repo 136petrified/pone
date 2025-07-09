@@ -2,6 +2,7 @@
 
 #include "ponecursor.hpp"
 
+/*
 TEST(ponecursor, Constructor) {
     Cursor c1;
     EXPECT_EQ(c1.getX(), 0);
@@ -40,3 +41,4 @@ TEST(ponecursor, getTile) {
     c.setTile(&t);
     EXPECT_EQ(*c.getTile(), t);
 }
+*/

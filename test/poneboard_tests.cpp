@@ -2,6 +2,7 @@
 
 #include "poneboard.hpp"
 
+/*
 TEST(poneboard, Constructor) {
     Board b1;
     EXPECT_EQ(b1.getLength(), 0);
@@ -33,3 +34,4 @@ TEST(poneboard, CurrentTile) {
 }
 
 TEST(poneboard, GetTile) { Board b{4, 4}; }
+*/

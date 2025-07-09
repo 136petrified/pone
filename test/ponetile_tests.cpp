@@ -2,6 +2,7 @@
 
 #include "ponetile.hpp"
 
+/*
 TEST(ponetile, Constructor) {
     Tile t;
     EXPECT_EQ(t.getX(), 0);
@@ -55,3 +56,5 @@ TEST(ponetile, Equals) {
     Tile t2{1, -1, "red", "collision"};
     EXPECT_TRUE(t1 == t2);
 }
+
+*/

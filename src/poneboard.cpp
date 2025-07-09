@@ -28,14 +28,7 @@ Board::Board(const int &length, const int &width)
       width{width},
       tiles{TileList()},
       gates{GateList()},
-      cursor{Cursor{0, 0}} {
-    for (int i = 0; i < length; ++i) {
-        for (int j = 0; j < width; ++j) {
-            Tile t = Tile{i, j, "none", "empty"};
-            insTile(i * j, &t);
-        }
-    }
-}
+      cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width, const int &cursor_x,
              const int &cursor_y)
@@ -43,14 +36,7 @@ Board::Board(const int &length, const int &width, const int &cursor_x,
       width{width},
       tiles{TileList()},
       gates{GateList()},
-      cursor{Cursor{cursor_x, cursor_y}} {
-    for (int i = 0; i < length; ++i) {
-        for (int j = 0; j < width; ++j) {
-            Tile t = Tile{i, j, "none", "empty"};
-            insTile(i * j, &t);
-        }
-    }
-}
+      cursor{Cursor{cursor_x, cursor_y}} {}
 
 // Board getter/setter functions
 // ---------------------------------------------
