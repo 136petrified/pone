@@ -54,6 +54,10 @@ class AVL {
     void remove(const T &key);
     void removeAll();
 
+    std::vector<T> preorder();
+    std::vector<T> inorder();
+    std::vector<T> postorder();
+
     bool empty() const;
 
    private:
@@ -267,6 +271,27 @@ void AVL<T>::remove(const T &key) {
 template <typename T>
 void AVL<T>::removeAll() {
     while (!empty()) remove(root->data);
+}
+
+template <typename T>
+std::vector<T> AVL<T>::preorder() {
+    std::vector<T> vec{10};
+    AVLNode<T>::preorder(root, vec);
+    return vec;
+}
+
+template <typename T>
+std::vector<T> AVL<T>::inorder() {
+    std::vector<T> vec{10};
+    AVLNode<T>::inorder(root, vec);
+    return vec;
+}
+
+template <typename T>
+std::vector<T> AVL<T>::postorder() {
+    std::vector<T> vec{10};
+    AVLNode<T>::preorder(root, vec);
+    return vec;
 }
 
 template <typename T>

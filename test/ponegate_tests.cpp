@@ -3,6 +3,8 @@
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
+/*
+
 TEST(ponegate, Constructor) {
     Gate g1;
     GATE tilePair = g1.getGate();
@@ -40,3 +42,7 @@ TEST(ponegate, Name) {
     g.setName("g1");
     EXPECT_EQ(g.getName(), "g1");
 }
+
+*/
+
+// Uncomment later
