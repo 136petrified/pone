@@ -137,3 +137,65 @@ TEST(AVL, Find) {
     EXPECT_NE(nullptr, tileTree.find(t7));
     EXPECT_NE(nullptr, tileTree.find(t3));
 }
+
+TEST(AVL, Preorder) {
+    AVL<int> tree;
+
+    tree.insert(20);
+    tree.insert(-5);
+    tree.insert(92);
+    tree.insert(43);
+    tree.insert(-17);
+    tree.insert(58);
+    tree.insert(-29);
+
+    std::vector<int> expected = {20, -17, -29, -5, 58, 43, 92};
+    EXPECT_EQ(expected, tree.preorder());
+}
+
+TEST(AVL, Inorder) {
+    AVL<int> tree;
+
+    tree.insert(20);
+    tree.insert(-5);
+    tree.insert(92);
+    tree.insert(43);
+    tree.insert(-17);
+    tree.insert(58);
+    tree.insert(-29);
+
+    std::vector<int> expected = {-29, -17, -5, 20, 43, 58, 92};
+    EXPECT_EQ(expected, tree.inorder());
+}
+
+TEST(AVL, Postorder) {
+    AVL<int> tree;
+
+    tree.insert(20);
+    tree.insert(-5);
+    tree.insert(92);
+    tree.insert(43);
+    tree.insert(-17);
+    tree.insert(58);
+    tree.insert(-29);
+
+    std::vector<int> expected = {-29, -5, -17, 43, 92, 58, 20};
+    EXPECT_EQ(expected, tree.postorder());
+}
+
+TEST(AVL, Size) {
+    AVL<int> tree;
+
+    EXPECT_EQ(0, tree.size());
+    EXPECT_TRUE(tree.empty());
+
+    tree.insert(20);
+    tree.insert(-5);
+    tree.insert(92);
+    tree.insert(43);
+    tree.insert(-17);
+    tree.insert(58);
+    tree.insert(-29);
+
+    EXPECT_EQ(7, tree.size());
+}

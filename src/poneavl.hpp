@@ -25,7 +25,7 @@ struct AVLNode {
     static AVLNode *leftmost(AVLNode *root);
     static AVLNode *leftRotate(AVLNode *x);
     static AVLNode *rightRotate(AVLNode *y);
-    static void setHeight(AVLNode *root);
+    static int setHeight(AVLNode *root);
     static int getHeight(AVLNode *root);
     static int numberChildNodes(AVLNode *root);
     static bool isLeaf(AVLNode *root);
@@ -139,6 +139,9 @@ AVLNode<T> *AVLNode<T>::leftRotate(AVLNode<T> *x) {
     AVLNode<T> *y = x->right;
     x->right = y->left;
     y->left = x;
+
+    setHeight(x);
+    setHeight(y);
     return y;  // parent of x will be assigned y
 }
 
@@ -147,19 +150,22 @@ AVLNode<T> *AVLNode<T>::rightRotate(AVLNode<T> *y) {
     AVLNode<T> *x = y->left;
     y->left = x->right;
     x->right = y;
+
+    setHeight(y);
+    setHeight(x);
     return x;  // parent of y will be assigned x
 }
 
 template <typename T>
-void AVLNode<T>::setHeight(AVLNode<T> *root) {
-    if (root == nullptr) return;
+int AVLNode<T>::setHeight(AVLNode<T> *root) {
+    if (root == nullptr) return 0;
     root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
+    return root->height;
 }
 
 template <typename T>
 int AVLNode<T>::getHeight(AVLNode<T> *root) {
-    if (root == nullptr) return 0;
-    return root->height;
+    return (root == nullptr) ? 0 : setHeight(root);
 }
 
 template <typename T>
@@ -328,7 +334,7 @@ std::vector<T> AVL<T>::inorder() {
 template <typename T>
 std::vector<T> AVL<T>::postorder() {
     std::vector<T> vec;
-    AVLNode<T>::preorder(root, vec);
+    AVLNode<T>::postorder(root, vec);
     return vec;
 }
 
