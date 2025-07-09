@@ -113,7 +113,7 @@ TEST(AVL, Find) {
     EXPECT_NE(nullptr, tree.find(92));
     EXPECT_NE(nullptr, tree.find(-5));
     EXPECT_NE(nullptr, tree.find(20));
-    EXPECT_EQ(nullptr, tree find(21));
+    EXPECT_EQ(nullptr, tree.find(21));
 
     AVL<Tile> tileTree;
 
