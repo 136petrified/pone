@@ -271,6 +271,8 @@ void AVL<T>::removeAll() {
 
 template <typename T>
 AVLNode<T> *AVLNode<T>::rebalance(AVLNode<T> *root) {
+    if (root == nullptr) return nullptr;
+
     int bf = AVLNode<T>::balanceFactor(root);
     int bfl = AVLNode<T>::balanceFactor(root->left);
     int bfr = AVLNode<T>::balanceFactor(root->right);
