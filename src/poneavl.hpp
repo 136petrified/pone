@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   07-08-2025
+ *    Modified:   07-09-2025
  */
 
 #ifndef PONE_AVL_HPP
@@ -62,10 +62,12 @@ class AVL {
     void printPostorder();
 
     bool empty() const;
+    int size() const;
     ~AVL();
 
    private:
     AVLNode<T> *root;
+    int m_size;
 };
 
 template <typename T>
@@ -207,6 +209,37 @@ void AVLNode<T>::postorder(AVLNode<T> *root, std::vector<T> &vec) {
 }
 
 template <typename T>
+AVLNode<T> *AVLNode<T>::rebalance(AVLNode<T> *root) {
+    if (root == nullptr) return nullptr;
+
+    int bf = AVLNode<T>::balanceFactor(root);
+    int bfl = AVLNode<T>::balanceFactor(root->left);
+    int bfr = AVLNode<T>::balanceFactor(root->right);
+    // bf = height(right) - height(left)
+
+    if (bf == 0) {
+        return root;
+    } else if (bf < -1 || bf > 1) {
+        if (bf < -1) {  // This means that the left subtree is higher
+            // Do right rotation
+            if (bfl > 0) {
+                root->left = AVLNode<T>::leftRotate(root->left);
+            }
+
+            root = AVLNode<T>::rightRotate(root);
+        } else {
+            if (bfr < 0) {
+                root->right = AVLNode<T>::rightRotate(root->right);
+            }
+
+            root = AVLNode<T>::leftRotate(root);
+        }
+    }
+
+    return root;
+}
+
+template <typename T>
 AVLNode<T> *AVLNode<T>::findSuccessor(AVLNode<T> *target) {
     if (target == nullptr) return nullptr;
     return leftmost(target->right);
@@ -234,10 +267,10 @@ void AVLNode<T>::printPostorder(AVLNode<T> *root) {
 }
 
 template <typename T>
-AVL<T>::AVL() : root{nullptr} {}
+AVL<T>::AVL() : root{nullptr}, m_size{0} {}
 
 template <typename T>
-AVL<T>::AVL(const AVL &other) {
+AVL<T>::AVL(const AVL &other) : m_size{0} {
     std::vector<T> vec;
     AVLNode<T>::preorder(other.root, vec);
     for (const auto &item : vec) insert(item);
@@ -259,6 +292,7 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
 template <typename T>
 void AVL<T>::insert(const T &key) {
     root = AVLNode<T>::insert(root, key);
+    ++m_size;
 }
 
 template <typename T>
@@ -269,6 +303,7 @@ AVLNode<T> *AVL<T>::find(const T &key) {
 template <typename T>
 void AVL<T>::remove(const T &key) {
     root = AVLNode<T>::remove(root, key);
+    --m_size;
 }
 
 template <typename T>
@@ -313,39 +348,13 @@ void AVL<T>::printPostorder() {
 }
 
 template <typename T>
-AVLNode<T> *AVLNode<T>::rebalance(AVLNode<T> *root) {
-    if (root == nullptr) return nullptr;
-
-    int bf = AVLNode<T>::balanceFactor(root);
-    int bfl = AVLNode<T>::balanceFactor(root->left);
-    int bfr = AVLNode<T>::balanceFactor(root->right);
-    // bf = height(right) - height(left)
-
-    if (bf == 0) {
-        return root;
-    } else if (bf < -1 || bf > 1) {
-        if (bf < -1) {  // This means that the left subtree is higher
-            // Do right rotation
-            if (bfl > 0) {
-                root->left = AVLNode<T>::leftRotate(root->left);
-            }
-
-            root = AVLNode<T>::rightRotate(root);
-        } else {
-            if (bfr < 0) {
-                root->right = AVLNode<T>::rightRotate(root->right);
-            }
-
-            root = AVLNode<T>::leftRotate(root);
-        }
-    }
-
-    return root;
+bool AVL<T>::empty() const {
+    return root == nullptr;
 }
 
 template <typename T>
-bool AVL<T>::empty() const {
-    return root == nullptr;
+int AVL<T>::size() const {
+    return m_size;
 }
 
 template <typename T>

@@ -1,5 +1,5 @@
 /*  Created:    06-23-2024
- *  Modified:   07-08-2025
+ *  Modified:   07-09-2025
  */
 
 #include "ponetile.hpp"
@@ -28,15 +28,24 @@ Tile::Tile(const std::string &name, const int &id, const int &x, const int &y,
       cursor{cursor} {}
 
 Tile::Tile(const Tile &other)
-    : x{other.x}, y{other.y}, color{other.color}, type{other.type} {}
+    : name{other.name},
+      id{other.id},
+      x{other.x},
+      y{other.y},
+      color{other.color},
+      type{other.type},
+      cursor{other.cursor} {}
 
 // Tile assignment
 // ---------------------------------------------
 Tile &Tile::operator=(const Tile &other) {
+    name = other.name;
+    id = other.id;
     x = other.x;
     y = other.y;
     color = other.color;
     type = other.type;
+    cursor = other.cursor;
     return *this;
 }
 
@@ -90,7 +99,8 @@ bool Tile::isType(const std::string &str) const { return type == str; }
 
 void Tile::print(std::ostream &out) const {
     out << "{name: " << name << ", id: " << id << ", x: " << x << ", y: " << y
-        << ", color: " << color << ", type: " << type << "}";
+        << ", color: " << color << ", type: " << type << ", cursor: " << cursor
+        << "}";
 }
 
 std::ostream &operator<<(std::ostream &out, const Tile &t) {
