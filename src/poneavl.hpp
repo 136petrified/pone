@@ -276,14 +276,12 @@ AVLNode<T> *AVLNode<T>::rebalance(AVLNode<T> *root) {
     int bf = AVLNode<T>::balanceFactor(root);
     int bfl = AVLNode<T>::balanceFactor(root->left);
     int bfr = AVLNode<T>::balanceFactor(root->right);
-
-    int hr = AVLNode<T>::getHeight(root->right);
-    int hl = AVLNode<T>::getHeight(root->left);
+    // bf = height(right) - height(left)
 
     if (bf == 0) {
         return root;
     } else if (bf < -1 || bf > 1) {
-        if (hr - hl < 0) {  // This means that the left subtree is higher
+        if (bf < -1) {  // This means that the left subtree is higher
             // Do right rotation
             if (bfl > 0) {
                 root->left = AVLNode<T>::leftRotate(root->left);
