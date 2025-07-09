@@ -9,8 +9,9 @@ class Tile {
     // Tile constructors
     // ---------------------------------------------
     Tile();
-    Tile(const int &x, const int &y, const std::string &color,
-         const std::string &type);
+    Tile(const std::string &name, const int &id, const int &x, const int &y,
+         const std::string &color, const std::string &type,
+         bool cursor);  // Full constructor
     Tile(const Tile &other);
 
     // Tile assignment
@@ -69,12 +70,12 @@ class Tile {
    private:
     // Tile attributes
     // ---------------------------------------------
+    std::string name;
+    int id;    // starting from 1
     int x, y;  // coordinates of the tile
     std::string color;
     std::string type;  // what is the type of this tile?
     bool cursor;       // is the cursor on this tile?
-    int id;
-    std::string name;
 
     // Tile constants
     // ---------------------------------------------

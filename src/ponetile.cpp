@@ -1,5 +1,5 @@
 /*  Created:    06-23-2024
- *  Modified:   07-03-2025
+ *  Modified:   07-08-2025
  */
 
 #include "ponetile.hpp"
@@ -8,11 +8,24 @@
 
 // Tile constructors
 // ---------------------------------------------
-Tile::Tile() : x{0}, y{0}, color{"none"}, type{"empty"} {}
+Tile::Tile()
+    : name{""},
+      id{0},
+      x{0},
+      y{0},
+      color{"none"},
+      type{"empty"},
+      cursor{false} {}
 
-Tile::Tile(const int &x, const int &y, const std::string &color,
-           const std::string &type)
-    : x{x}, y{y}, color{color}, type{type} {}
+Tile::Tile(const std::string &name, const int &id, const int &x, const int &y,
+           const std::string &color, const std::string &type, bool cursor)
+    : name{name},
+      id{id},
+      x{x},
+      y{y},
+      color{color},
+      type{type},
+      cursor{cursor} {}
 
 Tile::Tile(const Tile &other)
     : x{other.x}, y{other.y}, color{other.color}, type{other.type} {}
@@ -76,8 +89,8 @@ bool Tile::isTileSwitch() const { return type == "tswitch"; }
 bool Tile::isType(const std::string &str) const { return type == str; }
 
 void Tile::print(std::ostream &out) const {
-    out << "{name: " << name << ", id: " << id << ", x: " << x << ", y:" << y
-        << ", color:" << color << ", type: " << type << "}" << std::endl;
+    out << "{name: " << name << ", id: " << id << ", x: " << x << ", y: " << y
+        << ", color: " << color << ", type: " << type << "}";
 }
 
 std::ostream &operator<<(std::ostream &out, const Tile &t) {
