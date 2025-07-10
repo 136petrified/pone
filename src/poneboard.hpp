@@ -1,6 +1,8 @@
 #ifndef PONE_BOARD_HPP
 #define PONE_BOARD_HPP
 
+#include <compare>
+#include <memory>
 #include <unordered_map>
 
 #include "poneavl.hpp"
@@ -9,9 +11,12 @@
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
+using TilePtr = std::shared_ptr<Tile>;
+using GatePtr = std::shared_ptr<Gate>;
+
 struct TileHasher {
     // Hashes a tile by name
-    std::size_t operator()(const Tile *t) const {
+    std::size_t operator()(const TilePtr t) const {
         return std::hash<std::string>{}(t->getName());
     }
 };
@@ -56,11 +61,11 @@ class Board {
 
     Tile *getTile(const std::string &name) const;
     Tile *getTile(const int &x, const int &y) const;
-    Tile *getTile(Tile *t, const Direction &direction) const;
+    Tile *getTile(TilePtr t, const Direction &direction) const;
 
     Gate *getGate(const std::string &name) const;
-    Gate *getGate(Tile *t1, Tile *t2) const;
-    Gate *getGate(Tile *t, const Direction &direction) const;
+    Gate *getGate(TilePtr t1, Tile *t2) const;
+    Gate *getGate(TilePtr t, const Direction &direction) const;
 
     Tile *getCursorTile() const;
     void setCursorTile(Tile *t);
@@ -68,17 +73,17 @@ class Board {
     // Board functions
     // ---------------------------------------------
 
-    bool tileCoordEquals(const Tile *t1, const Tile *t2) const;
-    bool tileNameEquals(const Tile *t1, const Tile *t2) const;
+    bool tileCoordEquals(const TilePtr t1, const TilePtr t2) const;
+    bool tileNameEquals(const TilePtr t1, const TilePtr t2) const;
 
-    bool gateTilesEquals(const Gate *g1, const Gate *g2) const;
-    bool gateNameEquals(const Gate *g1, const Gate *g2) const;
+    bool gateTilesEquals(const GatePtr g1, const GatePtr g2) const;
+    bool gateNameEquals(const GatePtr g1, const GatePtr g2) const;
 
-    void insTile(int pos, Tile *t);
-    void remTile(Tile *t);
+    void insTile(int pos, TilePtr t);
+    void remTile(TilePtr t);
 
-    void insGate(int pos, Gate *g);
-    void remGate(Gate *g);
+    void insGate(int pos, GatePtr g);
+    void remGate(GatePtr g);
 
     void load(const std::string &
                   filename);  // This will use a file - of type .pne preferrably
@@ -122,5 +127,30 @@ class Board {
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
 };
+
+constexpr auto compareTileByCoords =
+    [](const TilePtr t1, const TilePtr t2) -> std::strong_ordering {
+    auto cmp = t1->getX() <=> t2->getX();
+    if (cmp != 0) return cmp;
+    return t1->getY() <=> t2->getY();
+};
+
+constexpr auto compareTileByName =
+    [](const TilePtr t1, const TilePtr t2) -> std::strong_ordering {
+    return t1->getName() <=> t2->getName();
+};
+
+constexpr auto compareGateByTilePair =
+    [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
+    // TODO: Convert all to TilePtr
+    auto cmp = compareTileByCoords(g1->first, g2->first);
+    if (cmp != 0) return cmp;
+    return compareTileByCoords(g1->second), g2->second);
+};
+
+constexpr auto compareGateByName =
+    [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
+    return g1->getName() <=> g2->getName();
+}
 
 #endif  // PONE_BOARD_HPP

@@ -26,9 +26,9 @@ struct AVLNode {
     T data;
     AVLNode *left, *right;
     int height;
+    static Compare m_compare;
 
-    AVLNode(const T &key)
-        : data{key}, left{nullptr}, right{nullptr}, height{0} {}
+    AVLNode(const T &key, Compare compare = Compare());
 
     static AVLNode *insert(AVLNode *root, const T &key);
     static AVLNode *find(AVLNode *root, const T &key);
@@ -87,6 +87,15 @@ class AVL {
     Compare m_compare;
     int m_size;
 };
+
+template <typename T, typename Compare>
+Compare AVLNode<T, Compare>::m_compare;
+
+template <typename T, typename Compare>
+AVLNode<T, Compare>::AVLNode(const T &key, Compare compare)
+    : data{key}, left{nullptr}, right{nullptr}, height{0} {
+    m_compare = compare;
+}
 
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::insert(AVLNode *root, const T &key) {
@@ -295,6 +304,21 @@ void AVLNode<T, Compare>::printPostorder(AVLNode<T, Compare> *root) {
     std::vector<T> vec;
     postorder(root, vec);
     for (const auto &item : vec) std::cout << item << std::endl;
+}
+
+template <typename T, typename Compare>
+bool AVLNode<T, Compare>::less(const T &lhs, const T &rhs) {
+    return m_compare < 0;
+}
+
+template <typename T, typename Compare>
+bool AVLNode<T, Compare>::equal(const T &lhs, const T &rhs) {
+    return m_compare == 0;
+}
+
+template <typename T, typename Compare>
+bool AVLNode<T, Compare>::greater(const T &lhs, const T &rhs) {
+    return m_compare > 0;
 }
 
 template <typename T, typename Compare>

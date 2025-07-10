@@ -1,11 +1,13 @@
 #ifndef PONE_GATE_HPP
 #define PONE_GATE_HPP
 
+#include <memory>
 #include <utility>
 
 #include "ponetile.hpp"
 
-using TilePair = std::pair<Tile *, Tile *>;
+using TilePtr = std::shared_ptr<Tile>;
+using TilePair = std::pair<TilePtr, TilePtr>;
 
 class Gate {
    public:

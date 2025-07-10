@@ -1,8 +1,6 @@
 #ifndef PONE_TILE_HPP
 #define PONE_TILE_HPP
 
-#include <compare>
-#include <functional>
 #include <string>
 #include <vector>
 
