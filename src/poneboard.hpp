@@ -4,6 +4,7 @@
 #include <deque>
 #include <unordered_map>
 
+#include "poneavl.hpp"
 #include "poneconst.hpp"
 #include "ponecursor.hpp"
 #include "ponegate.hpp"
@@ -32,8 +33,6 @@ struct TilePairEquals {
     }
 };
 
-using GateList = std::deque<Gate *>;
-using TileList = std::deque<Tile *>;
 using GateMap = std::unordered_map<std::string, Gate *>;
 using TileMap = std::unordered_map<std::string, Tile *>;
 using TilePairGateMap =
@@ -111,8 +110,8 @@ class Board {
 
    private:
     int length, width;  // ! - Remember to except this if not int!
-    TileList tiles;     // A list of n * m tiles is needed for
-    GateList gates;
+    AVL<Tile> tiles;    // A list of n * m tiles is needed for
+    AVL<Gate> gates;
     TileMap tmap;
     GateMap gmap;
     TilePairGateMap gtmap;

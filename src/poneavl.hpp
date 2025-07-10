@@ -6,6 +6,8 @@
 #define PONE_AVL_HPP
 
 #include <algorithm>  // std::max
+#include <compare>
+#include <functional>
 #include <iostream>
 #include <vector>
 
@@ -45,7 +47,8 @@ struct AVLNode {
 template <typename T>
 class AVL {
    public:
-    AVL();
+    AVL(std::function<std::strong_ordering(const T &, const T &)> compare =
+            std::less<T>());
     AVL(const AVL &other);
     AVL &operator=(const AVL &other);
 
@@ -63,10 +66,16 @@ class AVL {
 
     bool empty() const;
     int size() const;
+
+    bool less(const T &lhs, const T &rhs) const;
+    bool equal(const T &lhs, const T &rhs) const;
+    bool greater(const T &lhs, const T &rhs) const;
+
     ~AVL();
 
    private:
     AVLNode<T> *root;
+    std::function<std::strong_ordering(const T &, const T &)> m_compare;
     int m_size;
 };
 
@@ -274,10 +283,12 @@ void AVLNode<T>::printPostorder(AVLNode<T> *root) {
 }
 
 template <typename T>
-AVL<T>::AVL() : root{nullptr}, m_size{0} {}
+AVL<T>::AVL(std::function<std::strong_ordering(const T &, const T &)> compare)
+    : root{nullptr}, m_compare{compare}, m_size{0} {}
 
 template <typename T>
-AVL<T>::AVL(const AVL &other) : m_size{0} {
+AVL<T>::AVL(const AVL &other)
+    : root{nullptr}, m_compare{other.m_compare}, m_size{0} {
     std::vector<T> vec;
     AVLNode<T>::preorder(other.root, vec);
     for (const auto &item : vec) insert(item);
@@ -288,6 +299,8 @@ AVL<T> &AVL<T>::operator=(const AVL<T> &other) {
     if (this == &other) return *this;
 
     removeAll();
+
+    m_compare = other.m_compare;
 
     std::vector<T> vec;
     AVLNode<T>::preorder(other.root, vec);
@@ -362,6 +375,21 @@ bool AVL<T>::empty() const {
 template <typename T>
 int AVL<T>::size() const {
     return m_size;
+}
+
+template <typename T>
+bool AVL<T>::less(const T &lhs, const T &rhs) const {
+    return m_compare(lhs, rhs) < 0;
+}
+
+template <typename T>
+bool AVL<T>::equal(const T &lhs, const T &rhs) const {
+    return m_compare(lhs, rhs) == 0;
+}
+
+template <typename T>
+bool AVL<T>::greater(const T &lhs, const T &rhs) const {
+    return m_compare(lhs, rhs) > 0;
 }
 
 template <typename T>

@@ -19,23 +19,23 @@
 Board::Board()
     : length{0},
       width{0},
-      tiles{TileList()},
-      gates{GateList()},
+      tiles{AVL<Tile>()},
+      gates{AVL<Gate>()},
       cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width)
     : length{length},
       width{width},
-      tiles{TileList()},
-      gates{GateList()},
+      tiles{AVL<Tile>()},
+      gates{AVL<Gate>()},
       cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width, const int &cursor_x,
              const int &cursor_y)
     : length{length},
       width{width},
-      tiles{TileList()},
-      gates{GateList()},
+      tiles{AVL<Tile>()},
+      gates{AVL<Gate>()},
       cursor{Cursor{cursor_x, cursor_y}} {}
 
 // Board getter/setter functions
@@ -61,11 +61,9 @@ Tile *Board::getTile(const std::string &name) const {
 }
 
 Tile *Board::getTile(const int &x, const int &y) const {
-    for (Tile *t : tiles) {
-        if (t->getX() == x && t->getY() == y) return t;
-    }
+    Tile
 
-    return nullptr;
+        return nullptr;
 }
 
 Tile *Board::getTile(Tile *t, const Direction &direction) const {
