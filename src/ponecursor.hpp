@@ -1,9 +1,12 @@
 #ifndef PONE_CURSOR_HPP
 #define PONE_CURSOR_HPP
 
+#include <memory>
 #include <utility>
 
 #include "ponetile.hpp"
+
+using TilePtr = std::shared_ptr<Tile>;
 
 class Cursor {
    public:
@@ -22,8 +25,8 @@ class Cursor {
 
     std::pair<int, int> getPos() const;
 
-    void setTile(Tile *t);
-    Tile *getTile() const;
+    void setTile(TilePtr t);
+    TilePtr getTile() const;
 
     // Cursor destructor
     // ---------------------------------------------
@@ -33,7 +36,7 @@ class Cursor {
     // Cursor attributes
     // ---------------------------------------------
     int x, y;  // where is the cursor?
-    Tile *tile;
+    TilePtr tile;
 };
 
 #endif  // PONE_CURSOR_HPP

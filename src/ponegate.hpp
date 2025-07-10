@@ -14,8 +14,8 @@ class Gate {
     // Gate constructors
     // ---------------------------------------------
     Gate();
-    Gate(Tile *t1, Tile *t2, const std::string &name, const std::string &color,
-         bool active = false);
+    Gate(TilePtr t1, TilePtr t2, const std::string &name,
+         const std::string &color, bool active = false);
     Gate(const Gate &other);
 
     // Gate assignment
@@ -24,11 +24,11 @@ class Gate {
 
     // Gate getter/setter functions
     // ---------------------------------------------
-    Tile *getTile1() const;
-    void setTile1(Tile *t1);
+    TilePtr getTile1() const;
+    void setTile1(TilePtr t1);
 
-    Tile *getTile2() const;
-    void setTile2(Tile *t2);
+    TilePtr getTile2() const;
+    void setTile2(TilePtr t2);
 
     TilePair getTilePair() const;
     void setTilePair(TilePair tp);

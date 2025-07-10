@@ -24,8 +24,8 @@ struct TileHasher {
 struct TilePairHasher {
     // Hashes a gate by using its name and its tiles' names
     std::size_t operator()(const TilePair &g) const {
-        Tile *t1 = g.first;
-        Tile *t2 = g.second;
+        TilePtr t1 = g.first;
+        TilePtr t2 = g.second;
 
         return TileHasher()(t1) ^ (TileHasher()(t2) << 1);
     }
@@ -59,16 +59,16 @@ class Board {
     int getWidth() const;
     void setWidth(const int &width);
 
-    Tile *getTile(const std::string &name) const;
-    Tile *getTile(const int &x, const int &y) const;
-    Tile *getTile(TilePtr t, const Direction &direction) const;
+    TilePtr getTile(const std::string &name) const;
+    TilePtr getTile(const int &x, const int &y) const;
+    TilePtr getTile(TilePtr t, const Direction &direction) const;
 
-    Gate *getGate(const std::string &name) const;
-    Gate *getGate(TilePtr t1, Tile *t2) const;
-    Gate *getGate(TilePtr t, const Direction &direction) const;
+    GatePtr getGate(const std::string &name) const;
+    GatePtr getGate(TilePtr t1, TilePtr t2) const;
+    GatePtr getGate(TilePtr t, const Direction &direction) const;
 
-    Tile *getCursorTile() const;
-    void setCursorTile(Tile *t);
+    TilePtr getCursorTile() const;
+    void setCursorTile(TilePtr t);
 
     // Board functions
     // ---------------------------------------------
@@ -113,9 +113,11 @@ class Board {
     ~Board();
 
    private:
-    int length, width;  // ! - Remember to except this if not int!
-    AVL<Tile> tiles;    // A list of n * m tiles is needed for
-    AVL<Gate> gates;
+    int length, width;            // ! - Remember to except this if not int!
+    AVL<TilePtr> tileCoordsTree;  // A list of n * m tiles is needed for
+    AVL<TilePtr> tileNamesTree;
+    AVL<GatePtr> gateNamesTree;
+    AVL<GatePtr> gateTilesTree;
     TileMap tmap;
     GateMap gmap;
     TilePairGateMap gtmap;
@@ -142,10 +144,11 @@ constexpr auto compareTileByName =
 
 constexpr auto compareGateByTilePair =
     [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
-    // TODO: Convert all to TilePtr
-    auto cmp = compareTileByCoords(g1->first, g2->first);
+    TilePair tp1 = g1->getTilePair(), tp2 = g2->getTilePair();
+
+    auto cmp = compareTileByCoords(tp1.first, tp2.first);
     if (cmp != 0) return cmp;
-    return compareTileByCoords(g1->second), g2->second);
+    return compareTileByCoords(tp1.second, tp2.second);
 };
 
 constexpr auto compareGateByName =

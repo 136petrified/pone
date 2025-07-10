@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   06-30-2025
+ *   Modified:   07-10-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
-#include <unordered_map>
 
 #include "poneconst.hpp"
 #include "poneexcept.hpp"
@@ -53,7 +52,7 @@ Tile *Board::getCursorTile() const { return cursor.getTile(); }
 void Board::setCursorTile(Tile *t) { cursor.setTile(t); }
 
 Tile *Board::getTile(const std::string &name) const {
-    for (Tile *t : tiles) {
+    for (TilePtr t : tiles) {
         if (t->getName() == name) return t;
     }
 
