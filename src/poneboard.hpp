@@ -1,7 +1,6 @@
 #ifndef PONE_BOARD_HPP
 #define PONE_BOARD_HPP
 
-#include <deque>
 #include <unordered_map>
 
 #include "poneavl.hpp"
