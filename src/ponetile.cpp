@@ -140,20 +140,6 @@ bool Tile::operator>(const Tile &other) const { return !(*this <= other); }
 
 bool Tile::operator>=(const Tile &other) const { return !(*this < other); }
 
-std::function<std::strong_ordering(const Tile *, const Tile *)>
-getTileCoordsComparator() {
-    return [](const Tile *t1, const Tile *t2) {
-        auto cmp_x = t1->x <=> t2->x;
-        if (cmp_x != 0) return cmp_x;
-        return t1->y <=> t2->y;
-    };
-}
-
-std::function<std::strong_ordering(const Tile *, const Tile *)>
-getTileNameComparator() {
-    return [](const Tile *t1, const Tile *t2) { return t1->name <=> t2->name; };
-}
-
 // Tile destructor
 // ---------------------------------------------
 Tile::~Tile() {}

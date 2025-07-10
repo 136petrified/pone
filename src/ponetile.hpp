@@ -65,11 +65,6 @@ class Tile {
     bool operator>(const Tile &other) const;
     bool operator>=(const Tile &other) const;
 
-    friend std::function<std::strong_ordering(const Tile *, const Tile *)>
-    getTileNameComparator();
-    friend std::function<std::strong_ordering(const Tile *, const Tile *)>
-    getTileCoordsComparator();
-
     // Tile destructor
     // ---------------------------------------------
     ~Tile();
