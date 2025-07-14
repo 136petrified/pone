@@ -35,8 +35,8 @@ class Cursor {
    private:
     // Cursor attributes
     // ---------------------------------------------
-    int x, y;  // where is the cursor?
-    TilePtr tile;
+    int x, y;      // where is the cursor?
+    TilePtr tile;  // This is a shared_ptr to a tile!
 };
 
 #endif  // PONE_CURSOR_HPP

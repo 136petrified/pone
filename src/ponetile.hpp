@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+using CoordPair = std::pair<int, int>;
+
 class Tile {
    public:
     // Tile constructors
@@ -25,6 +27,8 @@ class Tile {
 
     int getY() const;
     void setY(const int &y);
+
+    CoordPair getCoordPair() const;
 
     std::string getColor() const;
     void setColor(const std::string &color);
@@ -70,12 +74,12 @@ class Tile {
    private:
     // Tile attributes
     // ---------------------------------------------
-    std::string name;
-    int id;    // starting from 1
-    int x, y;  // coordinates of the tile
-    std::string color;
-    std::string type;  // what is the type of this tile?
-    bool cursor;       // is the cursor on this tile?
+    std::string m_name;
+    int m_id;      // starting from 1
+    int m_x, m_y;  // coordinates of the tile
+    std::string m_color;
+    std::string m_type;  // what is the type of this tile?
+    bool m_cursor;       // is the cursor on this tile?
 
     // Tile constants
     // ---------------------------------------------

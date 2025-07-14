@@ -18,23 +18,29 @@
 Board::Board()
     : length{0},
       width{0},
-      tiles{AVL<Tile>()},
-      gates{AVL<Gate>()},
+      tileCoordsTree{AVL<TilePtr>()},
+      tileNamesTree{AVL<TilePtr>()},
+      gateNamesTree{AVL<GatePtr>()},
+      gateTilesTree{AVL<GatePtr>()},
       cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width)
     : length{length},
       width{width},
-      tiles{AVL<Tile>()},
-      gates{AVL<Gate>()},
+      tileCoordsTree{AVL<TilePtr>()},
+      tileNamesTree{AVL<TilePtr>()},
+      gateNamesTree{AVL<GatePtr>()},
+      gateTilesTree{AVL<GatePtr>()},
       cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width, const int &cursor_x,
              const int &cursor_y)
     : length{length},
       width{width},
-      tiles{AVL<Tile>()},
-      gates{AVL<Gate>()},
+      tileCoordsTree{AVL<TilePtr>()},
+      tileNamesTree{AVL<TilePtr>()},
+      gateNamesTree{AVL<GatePtr>()},
+      gateTilesTree{AVL<GatePtr>()},
       cursor{Cursor{cursor_x, cursor_y}} {}
 
 // Board getter/setter functions
@@ -47,25 +53,25 @@ int Board::getWidth() const { return width; }
 
 void Board::setWidth(const int &width) { this->width = width; }
 
-Tile *Board::getCursorTile() const { return cursor.getTile(); }
+TilePtr Board::getCursorTile() const { return cursor.getTile(); }
 
-void Board::setCursorTile(Tile *t) { cursor.setTile(t); }
+void Board::setCursorTile(TilePtr t) { cursor.setTile(t); }
 
-Tile *Board::getTile(const std::string &name) const {
-    for (TilePtr t : tiles) {
-        if (t->getName() == name) return t;
+TilePtr Board::getTile(const std::string &name) const {
+    TilePtr tptr;
+
+    try {
+        tptr = tmap.at(name);
+    } catch (const std::out_of_range &e) {
+        tptr = nullptr;
     }
 
-    return nullptr;  // Return nullptr if not found
+    return tptr;
 }
 
-Tile *Board::getTile(const int &x, const int &y) const {
-    Tile
+TilePtr Board::getTile(const int &x, const int &y) const {return tmap.at()}
 
-        return nullptr;
-}
-
-Tile *Board::getTile(Tile *t, const Direction &direction) const {
+TilePtr Board::getTile(TilePtr t, const Direction &direction) const {
     if (t == nullptr) {
         // std::cerr << "[ERROR]: Tile does not exist." << std::endl;
         throw TileNotFoundException("Tile does not exist.");
@@ -91,15 +97,15 @@ Tile *Board::getTile(Tile *t, const Direction &direction) const {
     return nullptr;
 }
 
-Gate *Board::getGate(const std::string &name) const { return gmap.at(name); }
+GatePtr Board::getGate(const std::string &name) const { return gmap.at(name); }
 
-Gate *Board::getGate(Tile *t1, Tile *t2) const {
+GatePtr Board::getGate(Tile *t1, Tile *t2) const {
     if (t1 == nullptr || t2 == nullptr) {  // Throw exception here
         std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument."
                   << std::endl;
     }
 
-    Gate *g;
+    GatePtr g;
 
     try {
         TilePair tp{t1, t2};
@@ -111,14 +117,14 @@ Gate *Board::getGate(Tile *t1, Tile *t2) const {
     return g;
 }
 
-Gate *Board::getGate(Tile *t, const Direction &direction) const {
+GatePtr Board::getGate(TilePtr t, const Direction &direction) const {
     if (!t) {
         // Throw an exception here
         throw TileNotFoundException("Tile does not exist");
         return nullptr;
     }
 
-    Tile *currentTile = cursor.getTile();
+    TilePtr currentTile = cursor.getTile();
 
     switch (direction) {
         case UP:
@@ -141,23 +147,23 @@ Gate *Board::getGate(Tile *t, const Direction &direction) const {
 // Board functions
 // ---------------------------------------------
 
-bool Board::tileCoordEquals(const Tile *t1, const Tile *t2) const {
+bool Board::tileCoordEquals(const TilePtr t1, const TilePtr t2) const {
     return t1->getX() == t2->getX() && t1->getY() == t2->getY();
 }
 
-bool Board::tileNameEquals(const Tile *t1, const Tile *t2) const {
+bool Board::tileNameEquals(const TilePtr t1, const TilePtr t2) const {
     return t1->getName() == t2->getName();
 }
 
-bool Board::gateTilesEquals(const Gate *g1, const Gate *g2) const {
+bool Board::gateTilesEquals(const GatePtr g1, const GatePtr g2) const {
     return g1->getTile1() == g2->getTile1() && g1->getTile2() == g2->getTile2();
 }
 
-bool Board::gateNameEquals(const Gate *g1, const Gate *g2) const {
+bool Board::gateNameEquals(const GatePtr g1, const GatePtr g2) const {
     return g1->getName() == g2->getName();
 }
 
-void Board::insTile(int pos, Tile *t) {
+void Board::insTile(int pos, TilePtr t) {
     // Leave pos as -1 to insert at last position by default
     if (pos <= -1) {
         tiles.push_back(t);
@@ -175,7 +181,7 @@ void Board::insTile(int pos, Tile *t) {
     ++numTiles;
 }
 
-void Board::remTile(Tile *t) {
+void Board::remTile(TilePtr t) {
     if (tiles.empty()) {
         // TODO: Error here
         return;
@@ -195,7 +201,7 @@ void Board::remTile(Tile *t) {
 
 // TODO: What if a tile is missing from a gate?
 
-void Board::insGate(int pos, Gate *g) {
+void Board::insGate(int pos, GatePtr g) {
     // Leave pos as 0 to insert at last position by default
     if (pos <= -1) {
         gates.push_back(g);
@@ -213,7 +219,7 @@ void Board::insGate(int pos, Gate *g) {
     ++numGates;
 }
 
-void Board::remGate(Gate *g) {
+void Board::remGate(GatePtr g) {
     if (gates.empty()) {
         throw GateEmptyException(g);
     }
@@ -241,7 +247,7 @@ void Board::save(const std::string &filename) {
 // ---------------------------------------------
 
 void Board::moveCursor(const Direction &direction) {
-    Tile *prevTile = cursor.getTile();
+    TilePtr prevTile = cursor.getTile();
     prevTile->setCursor(false);
 
     int cursorX = cursor.getX(), cursorY = cursor.getY();
@@ -272,8 +278,8 @@ void Board::moveCursor(const Direction &direction) {
 bool Board::checkMove(const Direction &direction) {
     // Check collision first
 
-    Tile *currentTile = cursor.getTile();
-    Tile *target = getTile(currentTile, direction);
+    TilePtr currentTile = cursor.getTile();
+    TilePtr target = getTile(currentTile, direction);
     if (target->isCollision())
         return false;
     else if (getGate(currentTile, target)) {

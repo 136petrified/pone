@@ -37,10 +37,36 @@ struct TilePairEquals {
     }
 };
 
-using GateMap = std::unordered_map<std::string, Gate *>;
-using TileMap = std::unordered_map<std::string, Tile *>;
+using GateMap = std::unordered_map<std::string, GatePtr>;
+using TileMap = std::unordered_map<std::string, TilePtr>;
 using TilePairGateMap =
-    std::unordered_map<TilePair, Gate *, TilePairHasher, TilePairEquals>;
+    std::unordered_map<TilePair, GatePtr, TilePairHasher, TilePairEquals>;
+
+constexpr auto compareTileByCoords =
+    [](const TilePtr t1, const TilePtr t2) -> std::strong_ordering {
+    auto cmp = t1->getX() <=> t2->getX();
+    if (cmp != 0) return cmp;
+    return t1->getY() <=> t2->getY();
+};
+
+constexpr auto compareTileByName =
+    [](const TilePtr t1, const TilePtr t2) -> std::strong_ordering {
+    return t1->getName() <=> t2->getName();
+};
+
+constexpr auto compareGateByTilePair =
+    [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
+    TilePair tp1 = g1->getTilePair(), tp2 = g2->getTilePair();
+
+    auto cmp = compareTileByCoords(tp1.first, tp2.first);
+    if (cmp != 0) return cmp;
+    return compareTileByCoords(tp1.second, tp2.second);
+};
+
+constexpr auto compareGateByName =
+    [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
+    return g1->getName() <=> g2->getName();
+};
 
 class Board {
    public:
@@ -98,10 +124,10 @@ class Board {
     // TODO: Create more game functions here
     void moveCursor(const Direction &direction);
     bool checkMove(const Direction &direction);
-    void rotateTile(Tile *t, const Rotation &rotation);
+    void rotateTile(TilePtr, const Rotation &rotation);
     void rotateTiles(const std::string &color,
                      const Rotation &rotation);  // Rotate all tiles on board
-    void toggleGate(Tile *t1, Tile *t2);
+    void toggleGate(TilePtr t1, TilePtr t2);
 
     bool isGoal() const;
 
@@ -113,11 +139,12 @@ class Board {
     ~Board();
 
    private:
-    int length, width;            // ! - Remember to except this if not int!
-    AVL<TilePtr> tileCoordsTree;  // A list of n * m tiles is needed for
-    AVL<TilePtr> tileNamesTree;
-    AVL<GatePtr> gateNamesTree;
-    AVL<GatePtr> gateTilesTree;
+    int length, width;  // ! - Remember to except this if not int!
+    AVL<TilePtr, compareTileByCoords>
+        tileCoordsTree;  // A list of n * m tiles is needed for
+    AVL<TilePtr, compareTileByName> tileNamesTree;
+    AVL<GatePtr, compareGateByName> gateNamesTree;
+    AVL<GatePtr, compareGateByTilePair> gateTilesTree;
     TileMap tmap;
     GateMap gmap;
     TilePairGateMap gtmap;
@@ -129,31 +156,5 @@ class Board {
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
 };
-
-constexpr auto compareTileByCoords =
-    [](const TilePtr t1, const TilePtr t2) -> std::strong_ordering {
-    auto cmp = t1->getX() <=> t2->getX();
-    if (cmp != 0) return cmp;
-    return t1->getY() <=> t2->getY();
-};
-
-constexpr auto compareTileByName =
-    [](const TilePtr t1, const TilePtr t2) -> std::strong_ordering {
-    return t1->getName() <=> t2->getName();
-};
-
-constexpr auto compareGateByTilePair =
-    [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
-    TilePair tp1 = g1->getTilePair(), tp2 = g2->getTilePair();
-
-    auto cmp = compareTileByCoords(tp1.first, tp2.first);
-    if (cmp != 0) return cmp;
-    return compareTileByCoords(tp1.second, tp2.second);
-};
-
-constexpr auto compareGateByName =
-    [](const GatePtr g1, const GatePtr g2) -> std::strong_ordering {
-    return g1->getName() <=> g2->getName();
-}
 
 #endif  // PONE_BOARD_HPP

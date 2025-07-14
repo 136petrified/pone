@@ -1,5 +1,5 @@
 /*  Created:    06-23-2024
- *  Modified:   07-09-2025
+ *  Modified:   07-13-2025
  */
 
 #include "ponetile.hpp"
@@ -9,98 +9,101 @@
 // Tile constructors
 // ---------------------------------------------
 Tile::Tile()
-    : name{""},
-      id{0},
-      x{0},
-      y{0},
-      color{"none"},
-      type{"empty"},
-      cursor{false} {}
+    : m_name{""},
+      m_id{0},
+      m_x{0},
+      m_y{0},
+      m_color{"none"},
+      m_type{"empty"},
+      m_cursor{false} {}
 
 Tile::Tile(const std::string &name, const int &id, const int &x, const int &y,
            const std::string &color, const std::string &type, bool cursor)
-    : name{name},
-      id{id},
-      x{x},
-      y{y},
-      color{color},
-      type{type},
-      cursor{cursor} {}
+    : m_name{name},
+      m_id{id},
+      m_x{x},
+      m_y{y},
+      m_color{color},
+      m_type{type},
+      m_cursor{cursor} {}
 
 Tile::Tile(const Tile &other)
-    : name{other.name},
-      id{other.id},
-      x{other.x},
-      y{other.y},
-      color{other.color},
-      type{other.type},
-      cursor{other.cursor} {}
+    : m_name{other.m_name},
+      m_id{other.m_id},
+      m_x{other.m_x},
+      m_y{other.m_y},
+      m_color{other.m_color},
+      m_type{other.m_type},
+      m_cursor{other.m_cursor} {}
 
 // Tile assignment
 // ---------------------------------------------
 Tile &Tile::operator=(const Tile &other) {
-    name = other.name;
-    id = other.id;
-    x = other.x;
-    y = other.y;
-    color = other.color;
-    type = other.type;
-    cursor = other.cursor;
+    m_name = other.m_name;
+    m_id = other.m_id;
+    m_x = other.m_x;
+    m_y = other.m_y;
+    m_color = other.m_color;
+    m_type = other.m_type;
+    m_cursor = other.m_cursor;
     return *this;
 }
 
 // Tile getter/setter functions
 // ---------------------------------------------
-int Tile::getX() const { return x; }
+int Tile::getX() const { return m_x; }
 
-void Tile::setX(const int &x) { this->x = x; }
+void Tile::setX(const int &x) { m_x = x; }
 
-int Tile::getY() const { return y; }
+int Tile::getY() const { return m_y; }
 
-void Tile::setY(const int &y) { this->y = y; }
+void Tile::setY(const int &y) { m_y = y; }
 
-std::string Tile::getColor() const { return color; }
+CoordPair Tile::getCoordPair() const { return CoordPair{m_x, m_y}; }
 
-void Tile::setColor(const std::string &color) { this->color = color; }
+std::string Tile::getColor() const { return m_color; }
 
-std::string Tile::getType() const { return type; }
+void Tile::setColor(const std::string &color) { m_color = color; }
 
-void Tile::setType(const std::string &type) { this->type = type; }
+std::string Tile::getType() const { return m_type; }
 
-void Tile::setCursor(bool c) { cursor = c; }
+void Tile::setType(const std::string &type) { m_type = type; }
 
-int Tile::getID() const { return id; }
+void Tile::setCursor(bool is_cursor) { m_cursor = is_cursor; }
 
-void Tile::setID(int id) { this->id = id; }
+int Tile::getID() const { return m_id; }
 
-std::string Tile::getName() const { return name; }
+void Tile::setID(int id) { m_id = id; }
 
-void Tile::setName(const std::string &name) { this->name = name; }
+std::string Tile::getName() const { return m_name; }
+
+void Tile::setName(const std::string &name) { m_name = name; }
 
 // Tile functions
 // ---------------------------------------------
-bool Tile::isCollision() const { return type == "collision"; }
+bool Tile::isCollision() const { return m_type == "collision"; }
 
-bool Tile::isCursor() const { return cursor; }
+bool Tile::isCursor() const { return m_cursor; }
 
 bool Tile::isDirection() const {
-    return type == "left" || type == "right" || type == "up" || type == "down";
+    return m_type == "left" || m_type == "right" || m_type == "up" ||
+           m_type == "down";
 }
 
-bool Tile::isEmpty() const { return type == "empty"; }
+bool Tile::isEmpty() const { return m_type == "empty"; }
 
-bool Tile::isGateSwitch() const { return type == "gswitch"; }
+bool Tile::isGateSwitch() const { return m_type == "gswitch"; }
 
-bool Tile::isGoal() const { return type == "goal"; }
+bool Tile::isGoal() const { return m_type == "goal"; }
 
-bool Tile::isTileSwitch() const { return type == "tswitch"; }
+bool Tile::isTileSwitch() const { return m_type == "tswitch"; }
 
-bool Tile::isType(const std::string &str) const { return type == str; }
+bool Tile::isType(const std::string &type) const { return m_type == type; }
 
 void Tile::print(std::ostream &out) const {
-    out << "{name: " << name << ", id: " << id << ", x: " << x << ", y: " << y
-        << ", color: " << color << ", type: " << type << ", cursor: " << cursor
-        << "}";
+    out << "{name: " << m_name << ", id: " << m_id << ", x: " << m_x
+        << ", y: " << m_y << ", color: " << m_color << ", type: " << m_type
+        << ", cursor: " << m_cursor << "}";
 }
 
 std::ostream &operator<<(std::ostream &out, const Tile &t) {
@@ -112,14 +115,14 @@ std::ostream &operator<<(std::ostream &out, const Tile &t) {
 // ---------------------------------------------
 
 bool Tile::operator==(const Tile &other) const {
-    return x == other.x && y == other.y;
+    return m_x == other.m_x && m_y == other.m_y;
 }
 
-bool Tile::operator!=(const Tile &other) const { return !(x == y); }
+bool Tile::operator!=(const Tile &other) const { return !(m_x == m_y); }
 
 bool Tile::operator<(const Tile &other) const {
-    int x1 = x, x2 = other.x;
-    int y1 = y, y2 = other.y;
+    int x1 = m_x, x2 = other.m_x;
+    int y1 = m_y, y2 = other.m_y;
 
     if (x1 < x2) {
         return true;
