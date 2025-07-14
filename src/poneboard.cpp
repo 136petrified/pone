@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   07-10-2025
+ *   Modified:   07-13-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -16,52 +16,46 @@
 // Board constructors
 // ---------------------------------------------
 Board::Board()
-    : length{0},
-      width{0},
-      tileCoordsTree{AVL<TilePtr>()},
-      tileNamesTree{AVL<TilePtr>()},
-      gateNamesTree{AVL<GatePtr>()},
-      gateTilesTree{AVL<GatePtr>()},
-      cursor{Cursor{0, 0}} {}
+    : m_length{0},
+      m_width{0},
+      m_numGates{0},
+      m_numTiles{0},
+      m_cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width)
-    : length{length},
-      width{width},
-      tileCoordsTree{AVL<TilePtr>()},
-      tileNamesTree{AVL<TilePtr>()},
-      gateNamesTree{AVL<GatePtr>()},
-      gateTilesTree{AVL<GatePtr>()},
-      cursor{Cursor{0, 0}} {}
+    : m_length{length},
+      m_width{width},
+      m_numGates{0},
+      m_numTiles{0},
+      m_cursor{Cursor{0, 0}} {}
 
 Board::Board(const int &length, const int &width, const int &cursor_x,
              const int &cursor_y)
-    : length{length},
-      width{width},
-      tileCoordsTree{AVL<TilePtr>()},
-      tileNamesTree{AVL<TilePtr>()},
-      gateNamesTree{AVL<GatePtr>()},
-      gateTilesTree{AVL<GatePtr>()},
-      cursor{Cursor{cursor_x, cursor_y}} {}
+    : m_length{length},
+      m_width{width},
+      m_numGates{0},
+      m_numTiles{0},
+      m_cursor{Cursor{cursor_x, cursor_y}} {}
 
 // Board getter/setter functions
 // ---------------------------------------------
-int Board::getLength() const { return length; }
+int Board::getLength() const { return m_length; }
 
-void Board::setLength(const int &length) { this->length = length; }
+void Board::setLength(const int &length) { m_length = length; }
 
-int Board::getWidth() const { return width; }
+int Board::getWidth() const { return m_width; }
 
-void Board::setWidth(const int &width) { this->width = width; }
+void Board::setWidth(const int &width) { m_width = width; }
 
-TilePtr Board::getCursorTile() const { return cursor.getTile(); }
+TilePtr Board::getCursorTile() const { return m_cursor.getTile(); }
 
-void Board::setCursorTile(TilePtr t) { cursor.setTile(t); }
+void Board::setCursorTile(TilePtr t) { m_cursor.setTile(t); }
 
 TilePtr Board::getTile(const std::string &name) const {
     TilePtr tptr;
 
     try {
-        tptr = tmap.at(name);
+        tptr = m_tileNamesMap.at(name);
     } catch (const std::out_of_range &e) {
         tptr = nullptr;
     }
@@ -69,15 +63,24 @@ TilePtr Board::getTile(const std::string &name) const {
     return tptr;
 }
 
-TilePtr Board::getTile(const int &x, const int &y) const {return tmap.at()}
+TilePtr Board::getTile(const int &x, const int &y) const {
+    TilePtr tptr;
 
-TilePtr Board::getTile(TilePtr t, const Direction &direction) const {
-    if (t == nullptr) {
-        // std::cerr << "[ERROR]: Tile does not exist." << std::endl;
-        throw TileNotFoundException("Tile does not exist.");
+    try {
+        tptr = m_tileCoordPairsMap.at(CoordPair{x, y});
+    } catch (const std::out_of_range &e) {
+        tptr = nullptr;
     }
 
-    int tileX = t->getX(), tileY = t->getY();
+    return tptr;
+}
+
+TilePtr Board::getTile(TilePtr tptr, const Direction &direction) const {
+    if (tptr == nullptr) {
+        throw TileNotFoundException(tptr->getName());
+    }
+
+    int tileX = tptr->getX(), tileY = tptr->getY();
 
     switch (direction) {
         case UP:
@@ -97,34 +100,44 @@ TilePtr Board::getTile(TilePtr t, const Direction &direction) const {
     return nullptr;
 }
 
-GatePtr Board::getGate(const std::string &name) const { return gmap.at(name); }
+GatePtr Board::getGate(const std::string &name) const {
+    GatePtr gptr;
 
-GatePtr Board::getGate(Tile *t1, Tile *t2) const {
-    if (t1 == nullptr || t2 == nullptr) {  // Throw exception here
+    try {
+        gptr = m_gateNamesMap.at(name);
+    } catch (const std::out_of_range &e) {
+        gptr = nullptr;
+    }
+
+    return gptr;
+}
+
+GatePtr Board::getGate(TilePtr tptr1, TilePtr tptr2) const {
+    if (tptr1 == nullptr || tptr2 == nullptr) {  // Throw exception here
+                                                 // TODO: TileNoteFound for Gate
         std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument."
                   << std::endl;
     }
 
-    GatePtr g;
+    GatePtr gptr;
 
     try {
-        TilePair tp{t1, t2};
-        g = gtmap.at(tp);
+        TilePair tp{tptr1, tptr2};
+        gptr = m_gateTilePairsMap.at(tp);
     } catch (const std::out_of_range &) {
-        return nullptr;
+        gptr = nullptr;
     }
 
-    return g;
+    return gptr;
 }
 
-GatePtr Board::getGate(TilePtr t, const Direction &direction) const {
-    if (!t) {
+GatePtr Board::getGate(TilePtr tptr, const Direction &direction) const {
+    if (tptr == nullptr) {
         // Throw an exception here
-        throw TileNotFoundException("Tile does not exist");
-        return nullptr;
+        // throw TileNotFoundException(tptr);
     }
 
-    TilePtr currentTile = cursor.getTile();
+    TilePtr currentTile = m_cursor.getTile();
 
     switch (direction) {
         case UP:
@@ -147,56 +160,38 @@ GatePtr Board::getGate(TilePtr t, const Direction &direction) const {
 // Board functions
 // ---------------------------------------------
 
-bool Board::tileCoordEquals(const TilePtr t1, const TilePtr t2) const {
-    return t1->getX() == t2->getX() && t1->getY() == t2->getY();
+bool Board::tileCoordEquals(const TilePtr tptr1, const TilePtr tptr2) const {
+    return compareTileByCoords()(tptr1, tptr2) == 0;
 }
 
-bool Board::tileNameEquals(const TilePtr t1, const TilePtr t2) const {
-    return t1->getName() == t2->getName();
+bool Board::tileNameEquals(const TilePtr tptr1, const TilePtr tptr2) const {
+    return compareTileByName()(tptr1, tptr2) == 0;
 }
 
-bool Board::gateTilesEquals(const GatePtr g1, const GatePtr g2) const {
-    return g1->getTile1() == g2->getTile1() && g1->getTile2() == g2->getTile2();
+bool Board::gateTilePairEquals(const GatePtr gptr1, const GatePtr gptr2) const {
+    return compareGateByTilePair()(gptr1, gptr2) == 0;
 }
 
-bool Board::gateNameEquals(const GatePtr g1, const GatePtr g2) const {
-    return g1->getName() == g2->getName();
+bool Board::gateNameEquals(const GatePtr gptr1, const GatePtr gptr2) const {
+    return compareGateByName()(gptr1, gptr2) == 0;
 }
 
-void Board::insTile(int pos, TilePtr t) {
-    // Leave pos as -1 to insert at last position by default
-    if (pos <= -1) {
-        tiles.push_back(t);
-    } else if (pos < static_cast<int>(tiles.size())) {
-        auto tilepos = tiles.begin() + pos;
-        tiles.insert(tilepos, t);
-    } else {
-        std::cerr
-            << "[ERROR] Attempted to insert tile into out-of-bounds position."
-            << std::endl;
-        return;  // Do NOT increment numTiles if this happens
+void Board::insTile(TilePtr tptr) {
+    m_tileNamesTree.insert(tptr);
+    m_tileNamesMap[tptr->getName()] = tptr;
+
+    m_tileCoordPairsTree.insert(tptr);
+    m_tileCoordPairsMap[tptr->getCoordPair()] = tptr;
+    ++m_numTiles;
+}
+
+void Board::remTile(TilePtr tptr) {
+    m_tileNamesTree.remove(tptr);
+    try {
+        m_tileNamesMap.erase(tptr->getName());
+    } catch (const std::out_of_range &e) {
+        // TODO: TileNotFoundException
     }
-
-    tmap[t->getName()] = t;
-    ++numTiles;
-}
-
-void Board::remTile(TilePtr t) {
-    if (tiles.empty()) {
-        // TODO: Error here
-        return;
-    }
-
-    auto tilepos = std::find(tiles.begin(), tiles.end(), t);
-    if (tilepos != tiles.end()) {
-        tiles.erase(tilepos);
-        tmap.erase(t->getName());
-    } else {
-        std::cerr << "[ERROR] Cannot find tile to remove." << std::endl;
-        return;
-    }
-
-    --numTiles;
 }
 
 // TODO: What if a tile is missing from a gate?
