@@ -42,8 +42,8 @@ class Gate {
     std::string getName() const;
     void setName(const std::string &name);
 
-    inline void setInactive() { active = false; }
-    inline void setActive() { active = true; }
+    void setInactive();
+    void setActive();
 
     // Gate functions
     // ---------------------------------------------
@@ -66,11 +66,11 @@ class Gate {
    private:
     // Gate attributes
     // ---------------------------------------------
-    TilePair tp;  // Is a gate between two adjacent tiles.
-    std::string name;
-    int id;
-    std::string color;
-    bool active;
+    std::string m_name;
+    int m_id;
+    TilePair m_tp;  // Is a gate between two adjacent tiles.
+    std::string m_color;
+    bool m_active;  // Is the gate on or off?
 };
 
 #endif  // PONE_GATE_HPP
