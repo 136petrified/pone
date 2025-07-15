@@ -162,7 +162,7 @@ class Board {
         m_tileCoordPairsTree;  // A list of n * m tiles is needed for
     AVL<TilePtr, compareTileByName> m_tileNamesTree;
     AVL<GatePtr, compareGateByName> m_gateNamesTree;
-    AVL<GatePtr, compareGateByTilePair> m_gateTilesTree;
+    AVL<GatePtr, compareGateByTilePair> m_gateTilePairsTree;
 
     std::unordered_map<std::string, GatePtr> m_gateNamesMap;
     std::unordered_map<TilePair, GatePtr, TilePairHasher, TilePairEquals>

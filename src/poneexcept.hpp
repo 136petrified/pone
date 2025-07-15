@@ -1,14 +1,19 @@
 /*   Created:  09-08-2024
- *   Modified: 07-08-2025
+ *   Modified: 07-14-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
 #define PONE_EXCEPTION_HPP
 
 #include <format>
+#include <memory>
 
+#include "poneconst.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
+
+using GatePtr = std::shared_ptr<Gate>;
+using TilePtr = std::shared_ptr<Tile>;
 
 constexpr std::string ERR_FILE = "./errlog.txt";
 
@@ -86,12 +91,12 @@ class GateException : public std::exception {
 class DuplicateGateTilesException : public GateException {
    public:
     DuplicateGateTilesException() = delete;
-    DuplicateGateTilesException(Tile *t1, Tile *t2)
+    DuplicateGateTilesException(TilePtr tptr1, TilePtr tptr2)
         : GateException("DuplicateGateTilesException") {
         msg = std::format(
             "Multiple gates with duplicate tiles detected with the tiles: x: "
             "{}, y: {}",
-            t1->getName(), t2->getName());
+            tptr1->getName(), tptr2->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
 
@@ -117,10 +122,11 @@ class DuplicateGateNamesException : public GateException {
 class GateCollisionException : public GateException {
    public:
     GateCollisionException() = delete;
-    GateCollisionException(Tile *t) : GateException("GateCollisionException") {
+    GateCollisionException(TilePtr tptr)
+        : GateException("GateCollisionException") {
         msg =
             std::format("Attempted to create a gate with a collision tile: {}",
-                        t->getName());
+                        tptr->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
 
@@ -131,8 +137,8 @@ class GateCollisionException : public GateException {
 class GateEmptyException : public GateException {
    public:
     GateEmptyException() = delete;
-    GateEmptyException(Gate *g) : GateException("GateEmptyException") {
-        msg = std::format("Gate {} has no tiles to remove!", g->getName());
+    GateEmptyException(GatePtr gptr) : GateException("GateEmptyException") {
+        msg = std::format("Gate {} has no tiles to remove!", gptr->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
 
@@ -144,6 +150,15 @@ class NotANumberException : public std::exception {
    public:
     NotANumberException() = delete;
     NotANumberException(const std::string &msg) : msg{msg} {}
+    const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+
+class InvalidDirectionException : public std::exception {
+   public:
+    InvalidDirectionException() : msg{"Invalid direction!"} {}
     const char *what() const noexcept override { return msg.c_str(); }
 
    private:

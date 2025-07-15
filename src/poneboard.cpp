@@ -1,12 +1,11 @@
 /*   Created:    06-23-2024
- *   Modified:   07-13-2025
+ *   Modified:   07-14-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
 
 #include "poneboard.hpp"
 
-#include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
@@ -186,47 +185,38 @@ void Board::insTile(TilePtr tptr) {
 }
 
 void Board::remTile(TilePtr tptr) {
-    m_tileNamesTree.remove(tptr);
     try {
+        m_tileNamesTree.remove(tptr);
         m_tileNamesMap.erase(tptr->getName());
+
+        m_tileCoordPairsTree.remove(tptr);
+        m_tileCoordPairsMap.erase(tptr->getCoordPair());
     } catch (const std::out_of_range &e) {
         // TODO: TileNotFoundException
     }
 }
 
 // TODO: What if a tile is missing from a gate?
+// TODO: What if a tile is gone from a pair or gate?
 
-void Board::insGate(int pos, GatePtr g) {
-    // Leave pos as 0 to insert at last position by default
-    if (pos <= -1) {
-        gates.push_back(g);
-    } else if (pos < static_cast<int>(gates.size())) {
-        auto gatepos = gates.begin() + pos;
-        gates.insert(gatepos, g);
-    } else {
-        std::cerr
-            << "[ERROR] Attempted to insert tile into out-of-bounds position."
-            << std::endl;
-        return;
-    }
+void Board::insGate(GatePtr gptr) {
+    m_gateNamesTree.insert(gptr);
+    m_gateNamesMap[gptr->getName()] = gptr;
 
-    gtmap[g->getTilePair()] = g;
-    ++numGates;
+    m_gateTilePairsTree.insert(gptr);
+    m_gateTilePairsMap[gptr->getTilePair()] = gptr;
 }
 
-void Board::remGate(GatePtr g) {
-    if (gates.empty()) {
-        throw GateEmptyException(g);
-    }
-    auto gatepos = std::find(gates.begin(), gates.end(), g);
-    if (gatepos != gates.end())
-        gates.erase(gatepos);
-    else {
-        std::cerr << "[ERROR] Cannot find gate to remove." << std::endl;
-        return;
-    }
+void Board::remGate(GatePtr gptr) {
+    try {
+        m_gateNamesTree.remove(gptr);
+        m_gateNamesMap.erase(gptr->getName());
 
-    --numGates;
+        m_gateTilePairsTree.remove(gptr);
+        m_gateTilePairsMap.erase(gptr->getTilePair());
+    } catch (const std::out_of_range &e) {
+        // TODO: GateNotFoundException
+    }
 }
 
 void Board::load(const std::string &filename) {
@@ -242,38 +232,39 @@ void Board::save(const std::string &filename) {
 // ---------------------------------------------
 
 void Board::moveCursor(const Direction &direction) {
-    TilePtr prevTile = cursor.getTile();
+    TilePtr prevTile = m_cursor.getTile();
     prevTile->setCursor(false);
 
-    int cursorX = cursor.getX(), cursorY = cursor.getY();
+    int cursorX = m_cursor.getX(), cursorY = m_cursor.getY();
 
     switch (direction) {
         case UP:
-            cursor.setY(cursorY + 1);
+            m_cursor.setY(cursorY + 1);
             break;
         case DOWN:
-            cursor.setY(cursorY - 1);
+            m_cursor.setY(cursorY - 1);
             break;
         case LEFT:
-            cursor.setX(cursorX - 1);
+            m_cursor.setX(cursorX - 1);
             break;
         case RIGHT:
-            cursor.setX(cursorX + 1);
+            m_cursor.setX(cursorX + 1);
             break;
         default:
             std::cerr << "[ERROR]: Move cursor failed given direction "
                       << direction << std::endl;
+            // TODO: InvalidDirectionException
             break;
     }
 
-    cursor.setTile(getTile(prevTile, direction));
-    cursor.getTile()->setCursor(true);
+    m_cursor.setTile(getTile(prevTile, direction));
+    m_cursor.getTile()->setCursor(true);
 }
 
 bool Board::checkMove(const Direction &direction) {
     // Check collision first
 
-    TilePtr currentTile = cursor.getTile();
+    TilePtr currentTile = m_cursor.getTile();
     TilePtr target = getTile(currentTile, direction);
     if (target->isCollision())
         return false;
@@ -284,51 +275,48 @@ bool Board::checkMove(const Direction &direction) {
     return true;
 }
 
-void Board::rotateTile(Tile *t, const Rotation &rotation) {
+void Board::rotateTile(TilePtr tptr, const Rotation &rotation) {
     // ! - DO NOT rotate non-directional tiles!!!
-    if (!t->isDirection()) {
-        return;  // Do nothing
+    if (!tptr->isDirection()) {
+        throw InvalidDirectionException();
     }
 
-    std::string dir = t->getType();
+    std::string dir = tptr->getType();
 
     if (rotation == CLOCKWISE)
         dir = clockwiseMap.at(dir);
     else if (rotation == COUNTER_CLOCKWISE)
         dir = counterClockwiseMap.at(dir);
 
-    t->setType(dir);
+    tptr->setType(dir);
 }
 
 void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
-    for (Tile *t : tiles) {
-        if (t->getColor() == color) rotateTile(t, rotation);
+    for (TilePtr &tptr : m_tileNamesTree.inorder()) {
+        if (tptr->getColor() == color) rotateTile(tptr, rotation);
     }
 }
 
-void Board::toggleGate(Tile *t1, Tile *t2) {
-    if (t1->isCollision() || t2->isCollision()) {
-        throw GateCollisionException(t1);
+void Board::toggleGate(TilePtr tptr1, TilePtr tptr2) {
+    if (tptr1->isCollision() || tptr2->isCollision()) {
+        throw GateCollisionException(tptr1);
     }
 
-    TilePair tp{t1, t2};
-
-    Gate *g;
+    GatePtr gptr;
     try {
-        g = gtmap.at(tp);
-    } catch (const std::out_of_range &) {
+        gptr = m_gateTilePairsMap.at(TilePair{tptr1, tptr2});
+    } catch (std::out_of_range &e) {
         return;
-        // TODO: Error here
     }
 
-    g->isActive() ? g->setInactive() : g->setActive();
+    gptr->isActive() ? gptr->setInactive() : gptr->setActive();
 }
 
-bool Board::isGoal() const { return cursor.getTile()->isGoal(); }
+bool Board::isGoal() const { return m_cursor.getTile()->isGoal(); }
 
-bool Board::empty() const { return tiles.empty(); }
+bool Board::empty() const { return m_numTiles <= 0; }
 
-bool Board::full() const { return numTiles > length * width; }
+bool Board::full() const { return m_numTiles > m_length * m_width; }
 
 const std::unordered_map<std::string, std::string> Board::clockwiseMap = {
     {"up", "right"}, {"right", "down"}, {"down", "left"}, {"left", "up"}};
