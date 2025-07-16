@@ -153,14 +153,17 @@ class GateEmptyException : public GateException {
     std::string msg;
 };
 
-class InvalidTileException : public GateException {
+class InvalidTileException : std::exception {
    public:
     InvalidTileException()
-        : GateException("InvalidTileException"),
-          msg{"InvalidTileException: Null Tile (a nonexistent Tile) is passed "
-              "as a Gate argument!"} {}
-    InvalidTileException(TilePtr tptr, GatePtr gptr)
-        : GateException("InvalidTileException") {
+        : msg{"InvalidTileException: Null Tile (a nonexistent Tile) is passed "
+              "as a argument!"} {}
+    InvalidTileException(const std::string &to_where)
+        : msg{std::format(
+              "InvalidTileException: Null Tile (a nonexistent Tile) is passed "
+              "as a argument to {}!",
+              to_where)} {}
+    InvalidTileException(TilePtr tptr, GatePtr gptr) {
         // Assume gptr is never nullptr
 
         msg = (tptr == nullptr)

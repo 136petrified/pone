@@ -6,6 +6,7 @@
 
 #include "ponetile.hpp"
 
+using CoordPair = std::pair<int, int>;
 using TilePtr = std::shared_ptr<Tile>;
 
 class Cursor {
@@ -14,6 +15,8 @@ class Cursor {
     // ---------------------------------------------
     Cursor();
     Cursor(const int &x, const int &y);
+    Cursor(const CoordPair &crds);
+    Cursor(const TilePtr &tptr);
 
     // Cursor getter/setter functions
     // ---------------------------------------------
@@ -23,7 +26,7 @@ class Cursor {
     int getY() const;
     void setY(const int &y);
 
-    std::pair<int, int> getPos() const;
+    std::pair<int, int> getCoordPair() const;
 
     void setTile(TilePtr t);
     TilePtr getTile() const;
@@ -35,8 +38,8 @@ class Cursor {
    private:
     // Cursor attributes
     // ---------------------------------------------
-    int x, y;      // where is the cursor?
-    TilePtr tile;  // This is a shared_ptr to a tile!
+    int m_x, m_y;    // where is the cursor?
+    TilePtr m_tile;  // This is a shared_ptr to a tile!
 };
 
 #endif  // PONE_CURSOR_HPP

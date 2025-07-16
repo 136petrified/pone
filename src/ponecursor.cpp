@@ -1,30 +1,43 @@
 /*   Created:  06-23-2024
- *   Modified: 07-09-2025
+ *   Modified: 07-16-2025
  */
 
 #include "ponecursor.hpp"
 
+#include "poneexcept.hpp"
+
 // Cursor constructor
 // ---------------------------------------------
-Cursor::Cursor() : x{0}, y{0}, tile{nullptr} {}
+Cursor::Cursor() : m_x{0}, m_y{0}, m_tile{nullptr} {}
 
-Cursor::Cursor(const int &x, const int &y) : x{x}, y{y}, tile{nullptr} {}
+Cursor::Cursor(const int &x, const int &y) : m_x{x}, m_y{y}, m_tile{nullptr} {}
+
+Cursor::Cursor(const CoordPair &crds)
+    : m_x{crds.first}, m_y{crds.second}, m_tile{nullptr} {}
+
+Cursor::Cursor(const TilePtr &tptr) {
+    if (tptr == nullptr) throw InvalidTileException("a Cursor object");
+
+    m_x = tptr->getX();
+    m_y = tptr->getY();
+    m_tile = nullptr;
+}
 
 // Cursor setter/getter functions
 // ---------------------------------------------
-int Cursor::getX() const { return x; }
+int Cursor::getX() const { return m_x; }
 
-void Cursor::setX(const int &x) { this->x = x; }
+void Cursor::setX(const int &x) { m_x = x; }
 
-int Cursor::getY() const { return y; }
+int Cursor::getY() const { return m_y; }
 
-void Cursor::setY(const int &y) { this->y = y; }
+void Cursor::setY(const int &y) { m_y = y; }
 
-std::pair<int, int> Cursor::getPos() const { return std::pair<int, int>{x, y}; }
+CoordPair Cursor::getCoordPair() const { return CoordPair{m_x, m_y}; }
 
-void Cursor::setTile(Tile *t) { tile = t; }
+void Cursor::setTile(TilePtr tptr) { m_tile = tptr; }
 
-Tile *Cursor::getTile() const { return tile; }
+TilePtr Cursor::getTile() const { return m_tile; }
 
 // Cursor destructor
 // ---------------------------------------------
