@@ -1,11 +1,12 @@
 /*   Created:  09-08-2024
- *   Modified: 07-15-2025
+ *   Modified: 07-16-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
 #define PONE_EXCEPTION_HPP
 
 #include <format>
+#include <fstream>
 #include <memory>
 
 #include "poneboard.hpp"
@@ -26,6 +27,7 @@ class TileException : public std::exception {
     TileException() = delete;
     TileException(const std::string &name) : name{name} {}
     virtual const char *what() const noexcept override = 0;
+    virtual void logToFile() const noexcept = 0;
 
    private:
     std::string name;
@@ -42,6 +44,11 @@ class DuplicateTileCoordinatesException : public TileException {
             x, y);
     }
     const char *what() const noexcept override { return msg.c_str(); }
+    void logToFile() const noexcept override {
+        std::ofstream ofs{ERR_FILE};
+        ofs << what();
+        ofs.close();
+    }
 
    private:
     std::string msg;
@@ -57,6 +64,11 @@ class DuplicateTileNamesException : public TileException {
             name);
     }
     const char *what() const noexcept override { return msg.c_str(); }
+    void logToFile() const noexcept override {
+        std::ofstream ofs{ERR_FILE};
+        ofs << what();
+        ofs.close();
+    }
 
    private:
     std::string msg;
@@ -78,6 +90,11 @@ class TileNotFoundException : public TileException {
             x, y);
     }
     const char *what() const noexcept override { return msg.c_str(); }
+    void logToFile() const noexcept override {
+        std::ofstream ofs{ERR_FILE};
+        ofs << what();
+        ofs.close();
+    }
 
    private:
     std::string msg;
