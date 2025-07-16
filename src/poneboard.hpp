@@ -30,18 +30,18 @@ struct CoordPairEquals {
 
 struct TileHasher {
     // Hashes a tile by name
-    std::size_t operator()(const TilePtr t) const {
-        return std::hash<std::string>{}(t->getName());
+    std::size_t operator()(const TilePtr tptr) const {
+        return std::hash<std::string>{}(tptr->getName());
     }
 };
 
 struct TilePairHasher {
     // Hashes a gate by using its name and its tiles' names
-    std::size_t operator()(const TilePair &g) const {
-        TilePtr t1 = g.first;
-        TilePtr t2 = g.second;
+    std::size_t operator()(const TilePair &tp) const {
+        TilePtr tptr1 = tp.first;
+        TilePtr tptr2 = tp.second;
 
-        return TileHasher()(t1) ^ (TileHasher()(t2) << 1);
+        return TileHasher()(tptr1) ^ (TileHasher()(tptr2) << 1);
     }
 };
 
@@ -57,22 +57,22 @@ using TilePairGateMap =
     std::unordered_map<TilePair, GatePtr, TilePairHasher, TilePairEquals>;
 
 struct compareTileByCoords {
-    std::strong_ordering operator()(const TilePtr t1, const TilePtr t2) {
-        auto cmp = t1->getX() <=> t2->getX();
+    std::strong_ordering operator()(const TilePtr tptr1, const TilePtr tptr2) {
+        auto cmp = tptr1->getX() <=> tptr2->getX();
         if (cmp != 0) return cmp;
-        return t1->getY() <=> t2->getY();
+        return tptr1->getY() <=> tptr2->getY();
     }
 };
 
 struct compareTileByName {
-    std::strong_ordering operator()(const TilePtr t1, const TilePtr t2) {
-        return t1->getName() <=> t2->getName();
+    std::strong_ordering operator()(const TilePtr tptr1, const TilePtr tptr2) {
+        return tptr1->getName() <=> tptr2->getName();
     }
 };
 
 struct compareGateByTilePair {
-    std::strong_ordering operator()(const GatePtr g1, const GatePtr g2) {
-        TilePair tp1 = g1->getTilePair(), tp2 = g2->getTilePair();
+    std::strong_ordering operator()(const GatePtr gptr1, const GatePtr gptr2) {
+        TilePair tp1 = gptr1->getTilePair(), tp2 = gptr2->getTilePair();
 
         auto cmp = compareTileByCoords()(tp1.first, tp2.first);
         if (cmp != 0) return cmp;
@@ -81,8 +81,8 @@ struct compareGateByTilePair {
 };
 
 struct compareGateByName {
-    std::strong_ordering operator()(const GatePtr g1, const GatePtr g2) {
-        return g1->getName() <=> g2->getName();
+    std::strong_ordering operator()(const GatePtr gptr1, const GatePtr gptr2) {
+        return gptr1->getName() <=> gptr2->getName();
     }
 };
 

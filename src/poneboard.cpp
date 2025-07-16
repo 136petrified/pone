@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   07-14-2025
+ *   Modified:   07-15-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -91,9 +91,7 @@ TilePtr Board::getTile(TilePtr tptr, const Direction &direction) const {
         case RIGHT:
             return getTile(tileX - 1, tileY);
         default:
-            std::cerr << "[ERROR]: Invalid direction: " << direction
-                      << std::endl;
-            break;
+            throw InvalidDirectionException();
     }
 
     return nullptr;
@@ -112,10 +110,8 @@ GatePtr Board::getGate(const std::string &name) const {
 }
 
 GatePtr Board::getGate(TilePtr tptr1, TilePtr tptr2) const {
-    if (tptr1 == nullptr || tptr2 == nullptr) {  // Throw exception here
-                                                 // TODO: TileNoteFound for Gate
-        std::cerr << "[ERROR]: Nonexistent tile cannot be used as an argument."
-                  << std::endl;
+    if (tptr1 == nullptr || tptr2 == nullptr) {
+        throw InvalidTileException();  // From GateException
     }
 
     GatePtr gptr;
@@ -132,8 +128,7 @@ GatePtr Board::getGate(TilePtr tptr1, TilePtr tptr2) const {
 
 GatePtr Board::getGate(TilePtr tptr, const Direction &direction) const {
     if (tptr == nullptr) {
-        // Throw an exception here
-        // throw TileNotFoundException(tptr);
+        throw InvalidTileException();
     }
 
     TilePtr currentTile = m_cursor.getTile();
@@ -251,10 +246,7 @@ void Board::moveCursor(const Direction &direction) {
             m_cursor.setX(cursorX + 1);
             break;
         default:
-            std::cerr << "[ERROR]: Move cursor failed given direction "
-                      << direction << std::endl;
-            // TODO: InvalidDirectionException
-            break;
+            throw InvalidDirectionException();
     }
 
     m_cursor.setTile(getTile(prevTile, direction));
@@ -296,7 +288,6 @@ void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
         if (tptr->getColor() == color) rotateTile(tptr, rotation);
     }
 }
-
 void Board::toggleGate(TilePtr tptr1, TilePtr tptr2) {
     if (tptr1->isCollision() || tptr2->isCollision()) {
         throw GateCollisionException(tptr1);

@@ -1,5 +1,5 @@
 /*   Created:  09-08-2024
- *   Modified: 07-14-2025
+ *   Modified: 07-15-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
@@ -8,7 +8,6 @@
 #include <format>
 #include <memory>
 
-#include "poneconst.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -17,9 +16,7 @@ using TilePtr = std::shared_ptr<Tile>;
 
 constexpr std::string ERR_FILE = "./errlog.txt";
 
-// #define ERR_MSG_LIMIT 150                           // Max char limit for
-// buffered error messages
-// TODO: Maybe use custom exception
+// TODO: Include exception name into exceptions for all exceptions
 
 class TileException : public std::exception {
     // This class is an ABSTRACT BASE CLASS! Do not set any values to it.
@@ -68,7 +65,15 @@ class TileNotFoundException : public TileException {
     TileNotFoundException() = delete;
     TileNotFoundException(const std::string &tile_name)
         : TileException("TileNotFoundException") {
-        msg = std::format("Tile {} was not found!", tile_name);
+        msg = std::format("TileNotFoundException: Tile \"{}\" was not found!",
+                          tile_name);
+    }
+    TileNotFoundException(const int &x, const int &y)
+        : TileException("TileNotFoundException") {
+        msg = std::format(
+            "TileNotFoundException: Tile with coordinates ({}, {}) was not "
+            "found!",
+            x, y);
     }
     const char *what() const noexcept override { return msg.c_str(); }
 
@@ -139,6 +144,32 @@ class GateEmptyException : public GateException {
     GateEmptyException() = delete;
     GateEmptyException(GatePtr gptr) : GateException("GateEmptyException") {
         msg = std::format("Gate {} has no tiles to remove!", gptr->getName());
+    }
+    const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+
+class InvalidTileException : public GateException {
+   public:
+    InvalidTileException()
+        : GateException("InvalidTileException"),
+          msg{"InvalidTileException: Null Tile (a nonexistent Tile) is passed "
+              "as a Gate argument!"} {}
+    InvalidTileException(TilePtr tptr, GatePtr gptr)
+        : GateException("InvalidTileException") {
+        // Assume gptr is never nullptr
+
+        msg = (tptr == nullptr)
+                  ? std::format(
+                        "InvalidTileException: Null Tile (a nonexistent Tile "
+                        "object) is within the Gate \"{}\"",
+                        gptr->getName())
+                  : std::format(
+                        "InvalidTileException: Invalid Tile \"{}\" within Gate "
+                        "\"{}\"",
+                        tptr->getName(), gptr->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
 
