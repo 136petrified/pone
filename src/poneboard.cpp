@@ -15,22 +15,25 @@
 // Board constructors
 // ---------------------------------------------
 Board::Board()
-    : m_length{0},
+    : m_name{""},
+      m_length{0},
       m_width{0},
       m_numGates{0},
       m_numTiles{0},
       m_cursor{Cursor{0, 0}} {}
 
-Board::Board(const int &length, const int &width)
-    : m_length{length},
+Board::Board(const std::string &name, const int &length, const int &width)
+    : m_name{name},
+      m_length{length},
       m_width{width},
       m_numGates{0},
       m_numTiles{0},
       m_cursor{Cursor{0, 0}} {}
 
-Board::Board(const int &length, const int &width, const int &cursor_x,
-             const int &cursor_y)
-    : m_length{length},
+Board::Board(const std::string &name, const int &length, const int &width,
+             const int &cursor_x, const int &cursor_y)
+    : m_name{name},
+      m_length{length},
       m_width{width},
       m_numGates{0},
       m_numTiles{0},
@@ -38,9 +41,14 @@ Board::Board(const int &length, const int &width, const int &cursor_x,
 
 // Board getter/setter functions
 // ---------------------------------------------
+
 int Board::getLength() const { return m_length; }
 
 void Board::setLength(const int &length) { m_length = length; }
+
+std::string Board::getName() const { return m_name; }
+
+void Board::setName(const std::string &name) { m_name = name; }
 
 int Board::getWidth() const { return m_width; }
 

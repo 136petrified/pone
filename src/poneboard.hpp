@@ -91,14 +91,17 @@ class Board {
     // Board constructors
     // ---------------------------------------------
     Board();
-    Board(const int &length, const int &width);
-    Board(const int &length, const int &width, const int &cursor_x,
-          const int &cursor_y);
+    Board(const std::string &name, const int &length, const int &width);
+    Board(const std::string &name, const int &length, const int &width,
+          const int &cursor_x, const int &cursor_y);
 
     // Board getter/setter functions
     // ---------------------------------------------
     int getLength() const;
     void setLength(const int &length);
+
+    std::string getName() const;
+    void setName(const std::string &name);
 
     int getWidth() const;
     void setWidth(const int &width);
@@ -157,6 +160,7 @@ class Board {
     ~Board();
 
    private:
+    std::string m_name;
     int m_length, m_width;  // ! - Remember to except this if not int!
     AVL<TilePtr, compareTileByCoords>
         m_tileCoordPairsTree;  // A list of n * m tiles is needed for

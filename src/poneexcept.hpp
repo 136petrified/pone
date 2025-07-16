@@ -8,6 +8,7 @@
 #include <format>
 #include <memory>
 
+#include "poneboard.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
@@ -17,6 +18,7 @@ using TilePtr = std::shared_ptr<Tile>;
 constexpr std::string ERR_FILE = "./errlog.txt";
 
 // TODO: Include exception name into exceptions for all exceptions
+// TODO: Create a function in each exception to log the exception into a file!
 
 class TileException : public std::exception {
     // This class is an ABSTRACT BASE CLASS! Do not set any values to it.
@@ -204,6 +206,32 @@ class InvalidValueException : public std::exception {
         this->msg = std::format("{} : {}", value, msg);
     }
     const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+
+class BoardException : public std::exception {
+   public:
+    BoardException() = delete;
+    BoardException(const std::string &name) : name{name} {}
+    virtual const char *what() const noexcept override = 0;
+
+   private:
+    std::string name;
+};
+
+class GoalNotFoundException : public BoardException {
+   public:
+    GoalNotFoundException() = delete;
+    GoalNotFoundException(const Board &b)
+        : BoardException("GoalNotFoundException") {
+        msg = std::format(
+            "GoalNotFoundException: No Tile with type \"goal\" found in Board "
+            "\"{}\"! A Tile with type \"goal\" is required inside of a Board "
+            "with more than 1 Tile!",
+            b.getName());
+    }
 
    private:
     std::string msg;
