@@ -85,8 +85,6 @@ class TileNotFoundException : public TileException {
     std::string msg;
 };
 
-// TODO: You cannot have a board without a goal
-
 class GateException : public std::exception {
    public:
     GateException() = delete;
@@ -100,7 +98,7 @@ class GateException : public std::exception {
 class DuplicateGateTilesException : public GateException {
    public:
     DuplicateGateTilesException() = delete;
-    DuplicateGateTilesException(TilePtr tptr1, TilePtr tptr2)
+    DuplicateGateTilesException(const TilePtr &tptr1, const TilePtr &tptr2)
         : GateException("DuplicateGateTilesException") {
         msg = std::format(
             "Multiple gates with duplicate tiles detected with the tiles: x: "
@@ -131,7 +129,7 @@ class DuplicateGateNamesException : public GateException {
 class GateCollisionException : public GateException {
    public:
     GateCollisionException() = delete;
-    GateCollisionException(TilePtr tptr)
+    GateCollisionException(const TilePtr &tptr)
         : GateException("GateCollisionException") {
         msg =
             std::format("Attempted to create a gate with a collision tile: {}",
@@ -146,7 +144,8 @@ class GateCollisionException : public GateException {
 class GateEmptyException : public GateException {
    public:
     GateEmptyException() = delete;
-    GateEmptyException(GatePtr gptr) : GateException("GateEmptyException") {
+    GateEmptyException(const GatePtr &gptr)
+        : GateException("GateEmptyException") {
         msg = std::format("Gate {} has no tiles to remove!", gptr->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
@@ -165,7 +164,7 @@ class InvalidTileException : std::exception {
               "InvalidTileException: Null Tile (a nonexistent Tile) is passed "
               "as a argument to {}!",
               to_where)} {}
-    InvalidTileException(TilePtr tptr, GatePtr gptr) {
+    InvalidTileException(const TilePtr &tptr, const GatePtr &gptr) {
         // Assume gptr is never nullptr
 
         msg = (tptr == nullptr)
