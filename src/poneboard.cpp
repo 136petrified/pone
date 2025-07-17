@@ -6,7 +6,6 @@
 
 #include "poneboard.hpp"
 
-#include <iostream>
 #include <stdexcept>
 
 #include "poneconst.hpp"
@@ -151,9 +150,7 @@ GatePtr Board::getGate(TilePtr tptr, const Direction &direction) const {
         case RIGHT:
             return getGate(currentTile, getTile(currentTile, RIGHT));
         default:
-            std::cerr << "[ERROR]: Invalid direction: " << direction
-                      << std::endl;
-            break;
+            throw InvalidDirectionException();
     }
 
     return nullptr;

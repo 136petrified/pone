@@ -6,7 +6,6 @@
 #define PONE_EXCEPTION_HPP
 
 #include <format>
-#include <fstream>
 #include <memory>
 
 #include "poneboard.hpp"
