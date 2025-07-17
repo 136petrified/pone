@@ -21,13 +21,14 @@ constexpr std::string ERR_FILE = "./errlog.txt";
 // TODO: Include exception name into exceptions for all exceptions
 // TODO: Create a function in each exception to log the exception into a file!
 
+void logToFile(const std::string &msg);
+
 class TileException : public std::exception {
     // This class is an ABSTRACT BASE CLASS! Do not set any values to it.
    public:
     TileException() = delete;
     TileException(const std::string &name) : name{name} {}
     virtual const char *what() const noexcept override = 0;
-    virtual void logToFile() const noexcept = 0;
 
    private:
     std::string name;
@@ -44,11 +45,6 @@ class DuplicateTileCoordinatesException : public TileException {
             x, y);
     }
     const char *what() const noexcept override { return msg.c_str(); }
-    void logToFile() const noexcept override {
-        std::ofstream ofs{ERR_FILE};
-        ofs << what();
-        ofs.close();
-    }
 
    private:
     std::string msg;
@@ -64,11 +60,6 @@ class DuplicateTileNamesException : public TileException {
             name);
     }
     const char *what() const noexcept override { return msg.c_str(); }
-    void logToFile() const noexcept override {
-        std::ofstream ofs{ERR_FILE};
-        ofs << what();
-        ofs.close();
-    }
 
    private:
     std::string msg;
@@ -90,11 +81,6 @@ class TileNotFoundException : public TileException {
             x, y);
     }
     const char *what() const noexcept override { return msg.c_str(); }
-    void logToFile() const noexcept override {
-        std::ofstream ofs{ERR_FILE};
-        ofs << what();
-        ofs.close();
-    }
 
    private:
     std::string msg;

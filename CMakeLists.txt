@@ -44,6 +44,7 @@ ${PROJECT_SOURCE_DIR}/src/poneboard.hpp
 ${PROJECT_SOURCE_DIR}/src/poneconst.hpp
 ${PROJECT_SOURCE_DIR}/src/ponecursor.cpp
 ${PROJECT_SOURCE_DIR}/src/ponecursor.hpp
+${PROJECT_SOURCE_DIR}/src/poneexcept.cpp
 ${PROJECT_SOURCE_DIR}/src/poneexcept.hpp
 ${PROJECT_SOURCE_DIR}/src/ponegame.cpp
 ${PROJECT_SOURCE_DIR}/src/ponegame.hpp
