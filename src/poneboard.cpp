@@ -2,8 +2,6 @@
  *   Modified:   07-17-2025
  */
 
-// TODO: Replace all printed errors with proper thrown errors
-
 #include "poneboard.hpp"
 
 #include <stdexcept>
