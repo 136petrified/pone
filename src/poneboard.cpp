@@ -1,5 +1,5 @@
 /*   Created:    06-23-2024
- *   Modified:   07-15-2025
+ *   Modified:   07-17-2025
  */
 
 // TODO: Replace all printed errors with proper thrown errors
@@ -55,7 +55,7 @@ void Board::setWidth(const int &width) { m_width = width; }
 
 TilePtr Board::getCursorTile() const { return m_cursor.getTile(); }
 
-void Board::setCursorTile(const TilePtr &t) { m_cursor.setTile(t); }
+void Board::setCursorTile(const TilePtr &tptr) { m_cursor.setTile(tptr); }
 
 TilePtr Board::getTile(const std::string &name) const {
     TilePtr tptr;
@@ -193,12 +193,10 @@ void Board::remTile(const TilePtr &tptr) {
         m_tileCoordPairsTree.remove(tptr);
         m_tileCoordPairsMap.erase(tptr->getCoordPair());
     } catch (const std::out_of_range &e) {
-        // TODO: TileNotFoundException
+        throw(tptr == nullptr) ? TileNotFoundException()
+                               : TileNotFoundException(tptr->getName());
     }
 }
-
-// TODO: What if a tile is missing from a gate?
-// TODO: What if a tile is gone from a pair or gate?
 
 void Board::insGate(const GatePtr &gptr) {
     m_gateNamesTree.insert(gptr);
@@ -216,7 +214,8 @@ void Board::remGate(const GatePtr &gptr) {
         m_gateTilePairsTree.remove(gptr);
         m_gateTilePairsMap.erase(gptr->getTilePair());
     } catch (const std::out_of_range &e) {
-        // TODO: GateNotFoundException
+        throw(gptr == nullptr) ? GateNotFoundException()
+                               : GateNotFoundException(gptr->getName());
     }
 }
 
@@ -273,7 +272,7 @@ bool Board::checkMove(const Direction &direction) {
     return true;
 }
 
-void Board::rotateTile(TilePtr tptr, const Rotation &rotation) {
+void Board::rotateTile(const TilePtr &tptr, const Rotation &rotation) {
     // ! - DO NOT rotate non-directional tiles!!!
     if (!tptr->isDirection()) {
         throw InvalidDirectionException();

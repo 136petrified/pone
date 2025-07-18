@@ -1,5 +1,5 @@
 /*   Created:  09-08-2024
- *   Modified: 07-16-2025
+ *   Modified: 07-17-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
@@ -66,7 +66,10 @@ class DuplicateTileNamesException : public TileException {
 
 class TileNotFoundException : public TileException {
    public:
-    TileNotFoundException() = delete;
+    TileNotFoundException()
+        : TileException("TileNotFoundException"),
+          msg{"TileNotFoundException: Null Tile (a nonexistent Tile) has been "
+              "passed as an argument!"} {}
     TileNotFoundException(const std::string &tile_name)
         : TileException("TileNotFoundException") {
         msg = std::format("TileNotFoundException: Tile \"{}\" was not found!",
@@ -147,6 +150,30 @@ class GateEmptyException : public GateException {
     GateEmptyException(const GatePtr &gptr)
         : GateException("GateEmptyException") {
         msg = std::format("Gate {} has no tiles to remove!", gptr->getName());
+    }
+    const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+
+class GateNotFoundException : public GateException {
+   public:
+    GateNotFoundException()
+        : GateException("GateNotFoundException"),
+          msg{"GateNotFoundException: A Null Gate (a nonexistent Gate) was "
+              "passed as an argument!"} {}
+    GateNotFoundException(const std::string &gate_name)
+        : GateException("GateNotFoundException") {
+        msg = std::format("GateNotFoundException: Gate \"{}\" was not found!",
+                          gate_name);
+    }
+    GateNotFoundException(const TilePair &tp)
+        : GateException("GateNotFoundException") {
+        msg = std::format(
+            "GateNotFoundException: Gate with Tiles \"{}\" and \"{}\" was not "
+            "found!",
+            tp.first->getName(), tp.second->getName());
     }
     const char *what() const noexcept override { return msg.c_str(); }
 

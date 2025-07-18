@@ -108,29 +108,29 @@ class Board {
 
     TilePtr getTile(const std::string &name) const;
     TilePtr getTile(const int &x, const int &y) const;
-    TilePtr getTile(TilePtr tptr, const Direction &direction) const;
+    TilePtr getTile(const TilePtr &tptr, const Direction &direction) const;
 
     GatePtr getGate(const std::string &name) const;
-    GatePtr getGate(TilePtr tptr1, TilePtr tptr2) const;
-    GatePtr getGate(TilePtr tptr, const Direction &direction) const;
+    GatePtr getGate(const TilePtr &tptr1, const TilePtr &tptr2) const;
+    GatePtr getGate(const TilePtr &tptr, const Direction &direction) const;
 
     TilePtr getCursorTile() const;
-    void setCursorTile(TilePtr tptr);
+    void setCursorTile(const TilePtr &tptr);
 
     // Board functions
     // ---------------------------------------------
 
-    bool tileCoordEquals(const TilePtr tptr1, const TilePtr tptr2) const;
-    bool tileNameEquals(const TilePtr tptr1, const TilePtr tptr2) const;
+    bool tileCoordEquals(const TilePtr &tptr1, const TilePtr &tptr2) const;
+    bool tileNameEquals(const TilePtr &tptr1, const TilePtr &tptr2) const;
 
-    bool gateTilePairEquals(const GatePtr gptr1, const GatePtr gptr2) const;
-    bool gateNameEquals(const GatePtr gptr1, const GatePtr gptr2) const;
+    bool gateTilePairEquals(const GatePtr &gptr1, const GatePtr &gptr2) const;
+    bool gateNameEquals(const GatePtr &gptr1, const GatePtr &gptr2) const;
 
-    void insTile(TilePtr tptr);
-    void remTile(TilePtr tptr);
+    void insTile(const TilePtr &tptr);
+    void remTile(const TilePtr &tptr);
 
-    void insGate(GatePtr gptr);
-    void remGate(GatePtr gptr);
+    void insGate(const GatePtr &gptr);
+    void remGate(const GatePtr &gptr);
 
     void load(const std::string &filename);  // This will use a file - of type
                                              // .json preferrably
@@ -145,10 +145,10 @@ class Board {
     // TODO: Create more game functions here
     void moveCursor(const Direction &direction);
     bool checkMove(const Direction &direction);
-    void rotateTile(TilePtr, const Rotation &rotation);
+    void rotateTile(const TilePtr &tptr, const Rotation &rotation);
     void rotateTiles(const std::string &color,
                      const Rotation &rotation);  // Rotate all tiles on board
-    void toggleGate(TilePtr tptr1, TilePtr tptr2);
+    void toggleGate(const TilePtr &tptr1, const TilePtr &tptr2);
 
     bool isGoal() const;
 
