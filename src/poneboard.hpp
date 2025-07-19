@@ -132,9 +132,9 @@ class Board {
     void insGate(const GatePtr &gptr);
     void remGate(const GatePtr &gptr);
 
-    void load(const std::string &filename);  // This will use a file - of type
-                                             // .json preferrably
-    void save(const std::string &filename);  // Save
+    void load(const std::string &file_name);  // This will use a file - of type
+                                              // .json preferrably
+    void save(const std::string &file_name);  // Save
 
     bool empty() const;
     bool full() const;

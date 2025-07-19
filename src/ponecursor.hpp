@@ -26,9 +26,9 @@ class Cursor {
     int getY() const;
     void setY(const int &y);
 
-    std::pair<int, int> getCoordPair() const;
+    CoordPair getCoordPair() const;
 
-    void setTile(TilePtr t);
+    void setTile(TilePtr tptr);
     TilePtr getTile() const;
 
     // Cursor destructor

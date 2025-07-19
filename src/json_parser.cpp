@@ -1,5 +1,5 @@
 /*   Created:  07-17-2025
- *   Modified: 07-17-2025
+ *   Modified: 07-18-2025
  */
 
 #include "json_parser.hpp"
@@ -15,7 +15,10 @@ Parser::Parser(const Tokenizer &tokenizer)
     m_currentToken = (m_tokens.empty()) ? "" : m_tokens[0];
 }
 
-void Parser::expr() {}
+void Parser::expr() {
+    if (m_currentToken == "board") {
+    }
+}
 
 void Parser::next() {
     try {
@@ -27,6 +30,11 @@ void Parser::next() {
 
 void Parser::parse() {
     while (!m_stop) {
+        if (isSymbol(m_currentToken)) {
+            symbol();
+        } else if (isAlnum(m_currentToken)) {
+            expr();
+        }
     }
 }
 
@@ -43,12 +51,12 @@ void Parser::symbol() {
         }
     } else if (m_currentToken == "{") {
         next();
-        while (m_currentToken == "}") {
+        while (m_currentToken != "}") {
             curlyBracket();
         }
     } else if (m_currentToken == ":") {
         next();
-    } else if (m_currentToken == ",") {
+    } else if (m_currentToken != ",") {
         next();
     }
 }

@@ -17,9 +17,6 @@ using TilePtr = std::shared_ptr<Tile>;
 
 constexpr std::string ERR_FILE = "./errlog.txt";
 
-// TODO: Include exception name into exceptions for all exceptions
-// TODO: Create a function in each exception to log the exception into a file!
-
 void logToFile(const std::string &msg);
 
 class TileException : public std::exception {
@@ -232,14 +229,14 @@ class InvalidDirectionException : public std::exception {
 class InvalidValueException : public std::exception {
    public:
     InvalidValueException() = delete;
-    InvalidValueException(const std::string &msg) : msg{msg} {}
+    InvalidValueException(const std::string &msg) : m_msg{msg} {}
     InvalidValueException(const int &value, const std::string &msg) {
-        this->msg = std::format("{} : {}", value, msg);
+        m_msg = std::format("{} : {}", value, msg);
     }
-    const char *what() const noexcept override { return msg.c_str(); }
+    const char *what() const noexcept override { return m_msg.c_str(); }
 
    private:
-    std::string msg;
+    std::string m_msg;
 };
 
 class BoardException : public std::exception {
