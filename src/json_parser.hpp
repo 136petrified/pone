@@ -1,5 +1,5 @@
 /*   Created:  07-17-2025
- *   Modified: 07-17-2025
+ *   Modified: 07-19-2025
  */
 
 #ifndef PONE_JSON_PARSER_HPP
@@ -29,8 +29,8 @@ class Parser {
     ~Parser();
 
    private:
-    bool m_stop;
-    int m_tc;
+    bool m_endOfTokens;
+    int m_tokenIndex;
     std::string m_currentToken;
     std::vector<std::string> m_tokens;
     std::stack<std::string> m_parenStack;
