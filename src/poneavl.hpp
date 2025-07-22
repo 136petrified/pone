@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   07-10-2025
+ *    Modified:   07-19-2025
  */
 
 #ifndef PONE_AVL_HPP
@@ -308,17 +308,17 @@ void AVLNode<T, Compare>::printPostorder(AVLNode<T, Compare> *root) {
 
 template <typename T, typename Compare>
 bool AVLNode<T, Compare>::less(const T &lhs, const T &rhs) {
-    return m_compare < 0;
+    return m_compare(lhs, rhs) < 0;
 }
 
 template <typename T, typename Compare>
 bool AVLNode<T, Compare>::equal(const T &lhs, const T &rhs) {
-    return m_compare == 0;
+    return m_compare(lhs, rhs) == 0;
 }
 
 template <typename T, typename Compare>
 bool AVLNode<T, Compare>::greater(const T &lhs, const T &rhs) {
-    return m_compare > 0;
+    return m_compare(lhs, rhs) > 0;
 }
 
 template <typename T, typename Compare>

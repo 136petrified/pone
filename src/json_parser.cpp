@@ -1,5 +1,5 @@
 /*   Created:  07-17-2025
- *   Modified: 07-19-2025
+ *   Modified: 07-21-2025
  */
 
 #include "json_parser.hpp"
@@ -10,14 +10,57 @@
 namespace JSON {
 Parser::Parser() {}
 
-Parser::Parser(const Tokenizer &tokenizer)
+Parser::Parser(const Tokenizer &tokenizer, const std::string &file_name)
     : m_endOfTokens{false}, m_tokenIndex{1}, m_tokens{tokenizer.getTokens()} {
     m_currentToken = (m_tokens.empty()) ? "" : m_tokens[0];
 }
 
 void Parser::expr() {
-    if (m_currentToken == "board") {
+    if (m_currentToken == "boards") {
+        next();  // Consume "boards"
+        symbol();
+    } else if (m_currentToken == "board") {
+        next();  // Consume "board"
+        symbol();
+    } else if (m_currentToken == "tiles") {
+        next();
+        symbol();
+    } else if (m_currentToken == "gates") {
+        next();
+        symbol();
     }
+}
+
+bool Parser::isAlnum(std::string &s) {
+    for (char &c : s) {
+        if (!std::isalnum(c)) return false;
+    }
+
+    return true;
+}
+
+bool Parser::isAlpha(std::string &s) {
+    for (char &c : s) {
+        if (!std::isalpha(c)) return false;
+    }
+
+    return true;
+}
+
+bool Parser::isDigit(std::string &s) {
+    for (char &c : s) {
+        if (!std::isdigit(c)) return false;
+    }
+
+    return true;
+}
+
+bool Parser::isSymbol(std::string &s) {
+    for (char &c : s) {
+        if (!std::ispunct(c)) return false;
+    }
+
+    return true;
 }
 
 void Parser::next() {
@@ -59,38 +102,6 @@ void Parser::symbol() {
     } else if (m_currentToken != ",") {
         next();
     }
-}
-
-bool Parser::isAlnum(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalnum(c)) return false;
-    }
-
-    return true;
-}
-
-bool Parser::isAlpha(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalpha(c)) return false;
-    }
-
-    return true;
-}
-
-bool Parser::isDigit(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalpha(c)) return false;
-    }
-
-    return true;
-}
-
-bool Parser::isSymbol(std::string &s) {
-    for (char &c : s) {
-        if (!std::ispunct(c)) return false;
-    }
-
-    return true;
 }
 
 }  // namespace JSON
