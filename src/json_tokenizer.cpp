@@ -6,46 +6,22 @@
 
 #include <fstream>
 
+#include "json_utils.hpp"
+
 namespace JSON {
 Tokenizer::Tokenizer() {}
 
 Tokenizer::Tokenizer(const std::string &file_name) : m_file_name{file_name} {}
 
-bool Tokenizer::isAlnum(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalnum(c)) return false;
-    }
-
-    return true;
-}
-
-bool Tokenizer::isAlpha(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalpha(c)) return false;
-    }
-
-    return true;
-}
-
-bool Tokenizer::isDigit(std::string &s) {
-    for (char &c : s) {
-        if (!std::isdigit(c)) return false;
-    }
-
-    return true;
-}
-
-bool Tokenizer::isSymbol(std::string &s) {
-    for (char &c : s) {
-        if (!std::ispunct(c)) return false;
-    }
-
-    return true;
-}
-
 std::vector<std::string> Tokenizer::getTokens() const { return m_tokens; }
 
-void
+void Tokenizer::tokenize() {
+    std::ifstream ifs{m_file_name};
+    std::string buf;
 
-    Tokenizer::~Tokenizer() {}
+    for (char c; ifs >> c;) {
+    }
+}
+
+Tokenizer::~Tokenizer() {}
 }  // namespace JSON

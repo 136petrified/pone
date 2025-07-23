@@ -24,10 +24,6 @@ class Parser {
     void symbol();
     void value();
 
-    bool isAlnum(std::string &s);
-    bool isAlpha(std::string &s);
-    bool isDigit(std::string &s);
-    bool isSymbol(std::string &s);
     ~Parser();
 
    private:

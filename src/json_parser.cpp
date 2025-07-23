@@ -4,8 +4,9 @@
 
 #include "json_parser.hpp"
 
-#include <cctype>
 #include <stdexcept>
+
+#include "json_utils.hpp"
 
 namespace JSON {
 Parser::Parser() {}
@@ -29,38 +30,6 @@ void Parser::expr() {
         next();
         symbol();
     }
-}
-
-bool Parser::isAlnum(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalnum(c)) return false;
-    }
-
-    return true;
-}
-
-bool Parser::isAlpha(std::string &s) {
-    for (char &c : s) {
-        if (!std::isalpha(c)) return false;
-    }
-
-    return true;
-}
-
-bool Parser::isDigit(std::string &s) {
-    for (char &c : s) {
-        if (!std::isdigit(c)) return false;
-    }
-
-    return true;
-}
-
-bool Parser::isSymbol(std::string &s) {
-    for (char &c : s) {
-        if (!std::ispunct(c)) return false;
-    }
-
-    return true;
 }
 
 void Parser::next() {
