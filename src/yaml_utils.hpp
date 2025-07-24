@@ -1,10 +1,10 @@
 /*   Created:  07-21-2025
- *   Modified: 07-21-2025
+ *   Modified: 07-23-2025
  */
 
 #include <string>
 
-namespace JSON {
+namespace YAML {
 bool isAlnum(char &c);
 bool isAlnum(std::string &s);
 bool isAlpha(char &c);
