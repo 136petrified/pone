@@ -8,10 +8,10 @@
 #include <utility>
 
 namespace YAML {
-Tokenizer::Tokenizer() : m_buf{""} {}
+Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
-    : m_file_name{file_name}, m_buf{""} {}
+    : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
 
 void Tokenizer::clearBuf() {
     if (m_buf.empty()) return;
@@ -23,7 +23,10 @@ std::vector<std::string> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::next(std::ifstream &ifs) {
     ifs >> m_char;
-    if (!ifs) throw EndOfIfstreamException();
+    if (!ifs) {
+        m_endOfFile = true;
+        throw EndOfIfstreamException();
+    }
 }
 
 void Tokenizer::scalar(std::ifstream &ifs) {
@@ -32,10 +35,11 @@ void Tokenizer::scalar(std::ifstream &ifs) {
         try {
             next(ifs);
         } catch (const EndOfIfstreamException &) {
-            clearBuf();
             return;
         }
     }
+
+    clearBuf();
 }
 
 void Tokenizer::sym(std::ifstream &ifs) {
@@ -44,12 +48,11 @@ void Tokenizer::sym(std::ifstream &ifs) {
         try {
             next(ifs);
         } catch (const EndOfIfstreamException &) {
-            clearBuf();
             return;
         }
-
-        clearBuf();
     }
+
+    clearBuf();
 }
 
 void Tokenizer::tokenize() {
@@ -58,6 +61,11 @@ void Tokenizer::tokenize() {
         next(ifs);  // Start with first token
     } catch (const EndOfIfstreamException &) {
         return;  // Means empty file
+    }
+
+    while (!m_endOfFile) {
+        scalar(ifs);
+        sym(ifs);
     }
 }
 }  // namespace YAML

@@ -28,6 +28,7 @@ class Tokenizer {
     std::vector<std::string> m_tokens;
     std::string m_buf;
     char m_char;
+    bool m_endOfFile;
 };
 }  // namespace YAML
 
