@@ -1,10 +1,11 @@
 /*   Created:  09-08-2024
- *   Modified: 07-17-2025
+ *   Modified: 07-24-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
 #define PONE_EXCEPTION_HPP
 
+#include <exception>
 #include <format>
 #include <memory>
 

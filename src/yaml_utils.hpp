@@ -1,7 +1,8 @@
 /*   Created:  07-21-2025
- *   Modified: 07-23-2025
+ *   Modified: 07-24-2025
  */
 
+#include <exception>
 #include <string>
 
 namespace YAML {
@@ -13,4 +14,14 @@ bool isDigit(char &c);
 bool isDigit(std::string &s);
 bool isSymbol(char &c);
 bool isSymbol(std::string &s);
-}  // namespace JSON
+
+class EndOfIfstreamException : std::exception {
+   public:
+    EndOfIfstreamException()
+        : msg{"EndOfIstreamException: Reached end of file"} {}
+    const char *what() const noexcept override { return msg.c_str(); }
+
+   private:
+    std::string msg;
+};
+}  // namespace YAML
