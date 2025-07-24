@@ -2,11 +2,11 @@
  *   Modified: 07-21-2025
  */
 
-#include "json_utils.hpp"
+#include "yaml_utils.hpp"
 
 #include <cctype>
 
-namespace JSON {
+namespace YAML {
 bool isAlnum(std::string &s) {
     for (char &c : s) {
         if (!std::isalnum(c)) return false;
@@ -38,4 +38,4 @@ bool isSymbol(std::string &s) {
 
     return true;
 }
-}  // namespace JSON
+}  // namespace YAML
