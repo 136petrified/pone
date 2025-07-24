@@ -23,7 +23,7 @@ std::vector<std::string> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::next(std::ifstream &ifs) {
     ifs >> m_char;
-    if (!ifs) {
+    if (ifs.eof()) {
         m_endOfFile = true;
         throw EndOfIfstreamException();
     }
