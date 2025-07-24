@@ -15,7 +15,7 @@ class Tokenizer {
    public:
     Tokenizer();
     Tokenizer(const std::string &file_name);
-    void clearToken();
+    void clearBuf();
     std::vector<std::string> getTokens() const;
     void next(std::ifstream &ifs);
     void scalar(std::ifstream &ifs);

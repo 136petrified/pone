@@ -5,6 +5,7 @@
 #include "yaml_tokenizer.hpp"
 
 #include <fstream>
+#include <utility>
 
 namespace YAML {
 Tokenizer::Tokenizer() : m_buf{""} {}
@@ -12,9 +13,9 @@ Tokenizer::Tokenizer() : m_buf{""} {}
 Tokenizer::Tokenizer(const std::string &file_name)
     : m_file_name{file_name}, m_buf{""} {}
 
-void Tokenizer::clearToken() {
+void Tokenizer::clearBuf() {
     if (m_buf.empty()) return;
-    m_tokens.push_back(m_buf);
+    m_tokens.push_back(std::move(m_buf));
     m_buf.clear();
 }
 
@@ -31,13 +32,25 @@ void Tokenizer::scalar(std::ifstream &ifs) {
         try {
             next(ifs);
         } catch (const EndOfIfstreamException &) {
-            clearToken();
+            clearBuf();
             return;
         }
     }
 }
 
-void Tokenizer::sym(std::ifstream &ifs) {}
+void Tokenizer::sym(std::ifstream &ifs) {
+    if (isSymbol(m_char)) {
+        m_buf += m_char;
+        try {
+            next(ifs);
+        } catch (const EndOfIfstreamException &) {
+            clearBuf();
+            return;
+        }
+
+        clearBuf();
+    }
+}
 
 void Tokenizer::tokenize() {
     std::ifstream ifs{m_file_name};
