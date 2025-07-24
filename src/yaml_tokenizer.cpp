@@ -13,6 +13,7 @@ Tokenizer::Tokenizer(const std::string &file_name)
     : m_file_name{file_name}, m_buf{""} {}
 
 void Tokenizer::clearToken() {
+    if (m_buf.empty()) return;
     m_tokens.push_back(m_buf);
     m_buf.clear();
 }
