@@ -8,18 +8,26 @@
 #include <utility>
 
 namespace YAML {
+
+Token::Token(const TokenType &type, std::string &&data)
+    : m_type{type}, m_data{std::move(data)} {}
+
+std::string &&Token::getData() { return std::move(m_data); }
+
+void Token::setData(const std::string &data) { m_data = data; }
+
 Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
     : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
 
-void Tokenizer::clearBuf() {
+void Tokenizer::clearBuf(const TokenType &tokenType) {
     if (m_buf.empty()) return;
-    m_tokens.push_back(std::move(m_buf));
+    m_tokens.push_back(Token{tokenType, std::move(m_buf)});
     m_buf.clear();
 }
 
-std::vector<std::string> Tokenizer::getTokens() const { return m_tokens; }
+std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::next(std::ifstream &ifs) {
     ifs >> m_char;
@@ -39,7 +47,7 @@ void Tokenizer::scalar(std::ifstream &ifs) {
         }
     }
 
-    clearBuf();
+    clearBuf(TokenType::Scalar);
 }
 
 void Tokenizer::sym(std::ifstream &ifs) {
@@ -52,7 +60,7 @@ void Tokenizer::sym(std::ifstream &ifs) {
         }
     }
 
-    clearBuf();
+    clearBuf(TokenType::Symbol);
 }
 
 void Tokenizer::tokenize() {
@@ -68,4 +76,6 @@ void Tokenizer::tokenize() {
         sym(ifs);
     }
 }
+
+Tokenizer::~Tokenizer() {}
 }  // namespace YAML

@@ -11,12 +11,24 @@
 #include "yaml_utils.hpp"
 
 namespace YAML {
+enum class TokenType { Scalar, Symbol };
+class Token {
+   public:
+    Token(const TokenType &type, std::string &&data);
+    TokenType m_type;
+    std::string &&getData();  // This will move the data out! Only call once
+    void setData(const std::string &data);
+
+   private:
+    std::string m_data;
+};
+
 class Tokenizer {
    public:
     Tokenizer();
     Tokenizer(const std::string &file_name);
-    void clearBuf();
-    std::vector<std::string> getTokens() const;
+    void clearBuf(const TokenType &tokenType);
+    std::vector<Token> getTokens() const;
     void next(std::ifstream &ifs);
     void scalar(std::ifstream &ifs);
     void sym(std::ifstream &ifs);
@@ -25,7 +37,7 @@ class Tokenizer {
 
    private:
     std::string m_file_name;
-    std::vector<std::string> m_tokens;
+    std::vector<Token> m_tokens;
     std::string m_buf;
     char m_char;
     bool m_endOfFile;
