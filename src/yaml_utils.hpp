@@ -1,5 +1,5 @@
 /*   Created:  07-21-2025
- *   Modified: 07-24-2025
+ *   Modified: 07-28-2025
  */
 
 #include <exception>
@@ -14,6 +14,8 @@ bool isDigit(char &c);
 bool isDigit(std::string &s);
 bool isSymbol(char &c);
 bool isSymbol(std::string &s);
+bool isSpace(char &c);
+bool isSpace(std::string &s);
 
 class EndOfIfstreamException : std::exception {
    public:

@@ -10,7 +10,7 @@ namespace CSV {
 CSV::CSV(const std::string &file_name) {}
 
 void CSV::insertLine(const std::vector<std::string> &args) const {
-    std::ofstream ofs{m_file_name};
+    std::ofstream ofs{m_file_name, std::ios::app};
     size_t numArgs = args.size();
 
     if (numArgs == 0) {
