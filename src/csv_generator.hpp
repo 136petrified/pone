@@ -11,7 +11,7 @@
 namespace CSV {
 class CSV {
    public:
-    CSV();
+    CSV(const std::string &file_name);
     void insertLine(const std::vector<std::string> &args) const;
     ~CSV();
 

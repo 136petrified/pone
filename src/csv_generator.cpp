@@ -7,6 +7,8 @@
 #include <fstream>
 
 namespace CSV {
+CSV::CSV(const std::string &file_name) {}
+
 void CSV::insertLine(const std::vector<std::string> &args) const {
     std::ofstream ofs{m_file_name};
     size_t numArgs = args.size();
@@ -23,4 +25,6 @@ void CSV::insertLine(const std::vector<std::string> &args) const {
     ofs << args.back() << '\n';
     ofs.close();
 }
+
+CSV::~CSV() {}
 }  // namespace CSV
