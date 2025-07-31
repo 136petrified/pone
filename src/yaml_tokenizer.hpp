@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 07-24-2025
+ *   Modified: 07-30-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -11,16 +11,44 @@
 #include "yaml_utils.hpp"
 
 namespace YAML {
-enum class TokenType { Scalar, Symbol };
+enum class TokenType {
+    Colon,
+    Comma,
+    Dash,
+    DoubleQuote,
+    LeftSquareBracket,
+    Newline,
+    NumSign,
+    RightSquareBracket,
+    Scalar,
+    SingleQuote,
+    Symbol,
+    Space,
+    Tab
+};
+
+constexpr TokenType allTokenSymTypes[] = {TokenType::Colon,
+                                          TokenType::Comma,
+                                          TokenType::Dash,
+                                          TokenType::DoubleQuote,
+                                          TokenType::LeftSquareBracket,
+                                          TokenType::NumSign,
+                                          TokenType::RightSquareBracket,
+                                          TokenType::SingleQuote,
+                                          TokenType::Symbol};
+
 class Token {
    public:
+    Token();
     Token(const TokenType &type, std::string &&data);
     TokenType m_type;
     std::string &&getData();  // This will move the data out! Only call once
+    static bool isSymbol(const Token &token);
     void setData(const std::string &data);
 
    private:
     std::string m_data;
+    bool m_inQuotes;
 };
 
 class Tokenizer {
@@ -32,6 +60,7 @@ class Tokenizer {
     void next(std::ifstream &ifs);
     void scalar(std::ifstream &ifs);
     void sym(std::ifstream &ifs);
+    void whitespace(std::ifstream &ifs);
     void tokenize();
     ~Tokenizer();
 

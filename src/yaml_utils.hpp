@@ -1,9 +1,12 @@
 /*   Created:  07-21-2025
- *   Modified: 07-28-2025
+ *   Modified: 07-30-2025
  */
 
 #include <exception>
 #include <string>
+
+#ifndef PONE_YAML_UTIL_HPP
+#define PONE_YAML_UTIL_HPP
 
 namespace YAML {
 bool isAlnum(char &c);
@@ -27,3 +30,5 @@ class EndOfIfstreamException : std::exception {
     std::string msg;
 };
 }  // namespace YAML
+
+#endif  // PONE_YAML_UTIL_HPP

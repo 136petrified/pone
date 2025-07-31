@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 07-24-2025
+ *   Modified: 07-30-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -9,10 +9,21 @@
 
 namespace YAML {
 
+Token::Token() {}
+
 Token::Token(const TokenType &type, std::string &&data)
-    : m_type{type}, m_data{std::move(data)} {}
+    : m_type{type}, m_data{std::move(data)}, m_inQuotes{false} {}
 
 std::string &&Token::getData() { return std::move(m_data); }
+
+bool isSymbol(const Token &token) {
+    TokenType tokenType = token.m_type;
+    for (int i = 0; i < 8; ++i) {
+        if (tokenType == allTokenSymTypes[i]) return true;
+    }
+
+    return false;
+}
 
 void Token::setData(const std::string &data) { m_data = data; }
 
@@ -30,7 +41,7 @@ void Tokenizer::clearBuf(const TokenType &tokenType) {
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::next(std::ifstream &ifs) {
-    ifs >> m_char;
+    ifs.get(m_char);
     if (ifs.eof()) {
         m_endOfFile = true;
         throw EndOfIfstreamException();
@@ -38,6 +49,7 @@ void Tokenizer::next(std::ifstream &ifs) {
 }
 
 void Tokenizer::scalar(std::ifstream &ifs) {
+    if (!isAlnum(m_char)) return;
     while (isAlnum(m_char)) {
         m_buf += m_char;
         try {
@@ -51,16 +63,44 @@ void Tokenizer::scalar(std::ifstream &ifs) {
 }
 
 void Tokenizer::sym(std::ifstream &ifs) {
-    if (isSymbol(m_char)) {
-        m_buf += m_char;
-        try {
-            next(ifs);
-        } catch (const EndOfIfstreamException &) {
-            return;
-        }
+    if (!isSymbol(m_char)) return;
+    m_buf += m_char;
+
+    switch (m_char) {
+        case ':':
+            clearBuf(TokenType::Colon);
+            break;
+        case ',':
+            clearBuf(TokenType::Comma);
+            break;
+        case '-':
+            clearBuf(TokenType::Dash);
+            break;
+        case '"':
+            clearBuf(TokenType::DoubleQuote);
+            break;
+        case '[':
+            clearBuf(TokenType::LeftSquareBracket);
+            break;
+        case '#':
+            clearBuf(TokenType::NumSign);
+            break;
+        case ']':
+            clearBuf(TokenType::RightSquareBracket);
+            break;
+        case '\'':
+            clearBuf(TokenType::SingleQuote);
+            break;
+        default:
+            clearBuf(TokenType::Symbol);
+            break;
     }
 
-    clearBuf(TokenType::Symbol);
+    try {
+        next(ifs);
+    } catch (const EndOfIfstreamException &) {
+        return;
+    }
 }
 
 void Tokenizer::tokenize() {
@@ -74,6 +114,30 @@ void Tokenizer::tokenize() {
     while (!m_endOfFile) {
         scalar(ifs);
         sym(ifs);
+        whitespace(ifs);
+    }
+}
+
+void Tokenizer::whitespace(std::ifstream &ifs) {
+    if (!isSpace(m_char)) return;
+    m_buf += m_char;
+
+    switch (m_char) {
+        case '\n':
+            clearBuf(TokenType::Newline);
+            break;
+        case ' ':
+            clearBuf(TokenType::Space);
+            break;
+        case '\t':
+            clearBuf(TokenType::Tab);
+            break;
+    }
+
+    try {
+        next(ifs);
+    } catch (const EndOfIfstreamException &) {
+        return;
     }
 }
 
