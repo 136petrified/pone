@@ -22,8 +22,8 @@ enum class TokenType {
     RightSquareBracket,
     Scalar,
     SingleQuote,
-    Symbol,
     Space,
+    Symbol,
     Tab
 };
 
@@ -32,10 +32,14 @@ constexpr TokenType allTokenSymTypes[] = {TokenType::Colon,
                                           TokenType::Dash,
                                           TokenType::DoubleQuote,
                                           TokenType::LeftSquareBracket,
+                                          TokenType::Newline,
                                           TokenType::NumSign,
                                           TokenType::RightSquareBracket,
+                                          TokenType::Scalar,
                                           TokenType::SingleQuote,
-                                          TokenType::Symbol};
+                                          TokenType::Space,
+                                          TokenType::Symbol,
+                                          TokenType::Tab};
 
 class Token {
    public:

@@ -18,7 +18,7 @@ std::string &&Token::getData() { return std::move(m_data); }
 
 bool isSymbol(const Token &token) {
     TokenType tokenType = token.m_type;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 13; ++i) {
         if (tokenType == allTokenSymTypes[i]) return true;
     }
 
