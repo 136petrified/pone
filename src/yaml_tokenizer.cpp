@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 07-30-2025
+ *   Modified: 07-31-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -15,6 +15,8 @@ Token::Token(const TokenType &type, std::string &&data)
     : m_type{type}, m_data{std::move(data)}, m_inQuotes{false} {}
 
 std::string &&Token::getData() { return std::move(m_data); }
+
+bool Token::inQuotes() const { return m_inQuotes; }
 
 bool isSymbol(const Token &token) {
     TokenType tokenType = token.m_type;

@@ -8,7 +8,9 @@
 #include "yaml_tokenizer.hpp"
 
 namespace YAML {
-class Parser {
+constexpr std::string reservedKeys[]
+
+    class Parser {
    public:
     Parser();
     Parser(const Tokenizer &tokenizer, const std::string &file_name);

@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 07-30-2025
+ *   Modified: 07-31-2025
  */
 
 #include "yaml_parser.hpp"
@@ -16,17 +16,28 @@ Parser::Parser(const Tokenizer &tokenizer, const std::string &file_name)
       m_endOfFile{false},
       m_file_name{file_name} {}
 
-void Parser::next() {
-    try {
-        m_token = m_tokens.at(m_tokenIndex++);
-    } catch (const std::out_of_range &) {
-        m_endOfFile = true;
+void Parser::colon() {
+    next();
+    if (!m_token.inQuotes()) {
+        value();
     }
 }
 
 void Parser::comment() {
     while (m_token.m_type != TokenType::Newline) {
         next();  // Ignore every token until you get to a newline
+    }
+}
+
+void Parser::key() {
+    next();  // Consume key name
+}
+
+void Parser::next() {
+    try {
+        m_token = m_tokens.at(m_tokenIndex++);
+    } catch (const std::out_of_range &) {
+        m_endOfFile = true;
     }
 }
 

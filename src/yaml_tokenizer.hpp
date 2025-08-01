@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 07-30-2025
+ *   Modified: 07-31-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -47,6 +47,7 @@ class Token {
     Token(const TokenType &type, std::string &&data);
     TokenType m_type;
     std::string &&getData();  // This will move the data out! Only call once
+    bool inQuotes() const;
     static bool isSymbol(const Token &token);
     void setData(const std::string &data);
 
