@@ -44,12 +44,12 @@ std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
 const char Tokenizer::lookahead(std::ifstream &ifs) const {
     // Looks ahead of the current character from ifstream
-    char nextChar = ifs.peek();
+    int nextChar = ifs.peek();
     if (nextChar == std::char_traits<char>::eof()) {
         throw EndOfIfstreamException();
     }
 
-    return nextChar;
+    return static_cast<char>(nextChar);
 }
 
 void Tokenizer::next(std::ifstream &ifs) {
