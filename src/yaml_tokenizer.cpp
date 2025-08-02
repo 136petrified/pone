@@ -4,7 +4,6 @@
 
 #include "yaml_tokenizer.hpp"
 
-#include <fstream>
 #include <utility>
 
 namespace YAML {
