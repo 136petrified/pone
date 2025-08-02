@@ -65,15 +65,14 @@ void Tokenizer::scalar(std::ifstream &ifs) {
     if (!isAlnum(m_char)) return;
     while (isAlnum(m_char)) {
         m_buf += m_char;
+        try {
+            next(ifs);
+        } catch (const EndOfIfstreamException) {
+            return;
+        }
     }
 
     Token &tokenBuf = clearBuf(TokenType::Key);
-
-    try {
-        next(ifs);
-    } catch (const EndOfIfstreamException &) {
-        return;
-    }
 
     while (!isSpace(m_char)) {
         whitespace(ifs);
