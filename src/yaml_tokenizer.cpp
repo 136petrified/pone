@@ -33,18 +33,20 @@ Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false} {}
 Tokenizer::Tokenizer(const std::string &file_name)
     : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
 
-void Tokenizer::clearBuf(const TokenType &tokenType) {
-    if (m_buf.empty()) return;
-    m_tokens.push_back(Token{tokenType, std::move(m_buf)});
+Token &Tokenizer::clearBuf(const TokenType &tokenType) {
+    Token token = Token{tokenType, std::move(m_buf)};
+    m_tokens.push_back(token);
     m_buf.clear();
+    return m_tokens.back();
 }
 
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
-const char Tokenizer::lookahead(std::ifstream &ifs) const {
+const char Tokenizer::lookahead(std::ifstream &ifs) {
     // Looks ahead of the current character from ifstream
     int nextChar = ifs.peek();
     if (nextChar == std::char_traits<char>::eof()) {
+        m_endOfFile = true;
         throw EndOfIfstreamException();
     }
 
@@ -63,11 +65,22 @@ void Tokenizer::scalar(std::ifstream &ifs) {
     if (!isAlnum(m_char)) return;
     while (isAlnum(m_char)) {
         m_buf += m_char;
-        try {
-            next(ifs);
-        } catch (const EndOfIfstreamException &) {
-            return;
-        }
+    }
+
+    Token &tokenBuf = clearBuf(TokenType::Key);
+
+    try {
+        next(ifs);
+    } catch (const EndOfIfstreamException &) {
+        return;
+    }
+
+    while (!isSpace(m_char)) {
+        whitespace(ifs);
+    }
+
+    if (m_char != ':') {
+        tokenBuf.m_type = TokenType::Value;
     }
 }
 
