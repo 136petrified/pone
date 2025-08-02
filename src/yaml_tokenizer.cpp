@@ -74,7 +74,7 @@ void Tokenizer::scalar(std::ifstream &ifs) {
 
     Token &tokenBuf = clearBuf(TokenType::Key);
 
-    while (!isSpace(m_char)) {
+    while (isSpace(m_char)) {
         whitespace(ifs);
     }
 
