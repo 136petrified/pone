@@ -20,8 +20,8 @@ bool Token::inQuotes() const { return m_inQuotes; }
 
 bool isSymbol(const Token &token) {
     TokenType tokenType = token.m_type;
-    for (int i = 0; i < 13; ++i) {
-        if (tokenType == allTokenSymTypes[i]) return true;
+    for (int i = 0; i < ALL_TOKEN_SYM_TYPES_SIZE; ++i) {
+        if (tokenType == ALL_TOKEN_SYM_TYPES[i]) return true;
     }
 
     return false;
@@ -45,7 +45,7 @@ std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 const char Tokenizer::lookahead(std::ifstream &ifs) const {
     // Looks ahead of the current character from ifstream
     char nextChar;
-    if (!(nextChar = ifs.peek())) {
+    if ((nextChar = ifs.peek()) == ifs.eof()) {
         throw EndOfIfstreamException();
     }
 

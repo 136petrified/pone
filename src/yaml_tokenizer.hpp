@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-01-2025
+ *   Modified: 08-02-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -30,21 +30,22 @@ enum class TokenType {
     Value
 };
 
-constexpr TokenType allTokenSymTypes[] = {TokenType::Backslash,
-                                          TokenType::Colon,
-                                          TokenType::Comma,
-                                          TokenType::Dash,
-                                          TokenType::DoubleQuote,
-                                          TokenType::Key,
-                                          TokenType::LeftSquareBracket,
-                                          TokenType::Newline,
-                                          TokenType::NumSign,
-                                          TokenType::RightSquareBracket,
-                                          TokenType::SingleQuote,
-                                          TokenType::Space,
-                                          TokenType::Symbol,
-                                          TokenType::Tab,
-                                          TokenType::Value};
+constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {TokenType::Backslash,
+                                             TokenType::Colon,
+                                             TokenType::Comma,
+                                             TokenType::Dash,
+                                             TokenType::DoubleQuote,
+                                             TokenType::Key,
+                                             TokenType::LeftSquareBracket,
+                                             TokenType::Newline,
+                                             TokenType::NumSign,
+                                             TokenType::RightSquareBracket,
+                                             TokenType::SingleQuote,
+                                             TokenType::Space,
+                                             TokenType::Symbol,
+                                             TokenType::Tab,
+                                             TokenType::Value};
+constexpr int ALL_TOKEN_SYM_TYPES_SIZE = 15;
 
 class Token {
    public:

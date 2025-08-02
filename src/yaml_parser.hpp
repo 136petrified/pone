@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-01-2025
+ *   Modified: 08-02-2025
  */
 
 #include <string>
@@ -8,10 +8,10 @@
 #include "yaml_tokenizer.hpp"
 
 namespace YAML {
-constexpr int PONE_RESERVED_KEYS_SIZE = 7;
 constexpr std::string PONE_RESERVED_KEYS[] = {
     "board", "boards", "cursor", "gates", "gate", "tile", "tiles",
 };
+constexpr int PONE_RESERVED_KEYS_SIZE = 7;
 
 class Parser {
    public:
