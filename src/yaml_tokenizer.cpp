@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 07-31-2025
+ *   Modified: 08-02-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -42,6 +42,16 @@ void Tokenizer::clearBuf(const TokenType &tokenType) {
 
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
+const char Tokenizer::lookahead(std::ifstream &ifs) const {
+    // Looks ahead of the current character from ifstream
+    char nextChar;
+    if (!(nextChar = ifs.peek())) {
+        throw EndOfIfstreamException();
+    }
+
+    return nextChar;
+}
+
 void Tokenizer::next(std::ifstream &ifs) {
     ifs.get(m_char);
     if (ifs.eof()) {
@@ -60,8 +70,6 @@ void Tokenizer::scalar(std::ifstream &ifs) {
             return;
         }
     }
-
-    clearBuf(TokenType::Scalar);
 }
 
 void Tokenizer::sym(std::ifstream &ifs) {
@@ -69,6 +77,9 @@ void Tokenizer::sym(std::ifstream &ifs) {
     m_buf += m_char;
 
     switch (m_char) {
+        case '\\':
+            clearBuf(TokenType::Backslash);
+            break;
         case ':':
             clearBuf(TokenType::Colon);
             break;

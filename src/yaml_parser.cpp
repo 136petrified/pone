@@ -44,16 +44,10 @@ void Parser::next() {
 void Parser::parse() {
     next();
     while (!m_endOfFile) {
-        scalar();
     }
 }
 
 void Parser::newline() { next(); }
-
-void Parser::scalar() {
-    if (m_token.m_type != TokenType::Scalar) return;
-    key();  // Check if it is a key
-}
 
 void Parser::symbol() {
     if (!Token::isSymbol(m_token)) return;

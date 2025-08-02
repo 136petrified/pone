@@ -1,10 +1,11 @@
 /*   Created:  07-23-2025
- *   Modified: 07-31-2025
+ *   Modified: 08-01-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
 #define PONE_YAML_TOKENIZER_HPP
 
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -12,34 +13,38 @@
 
 namespace YAML {
 enum class TokenType {
+    Backslash,
     Colon,
     Comma,
     Dash,
     DoubleQuote,
+    Key,
     LeftSquareBracket,
     Newline,
     NumSign,
     RightSquareBracket,
-    Scalar,
     SingleQuote,
     Space,
     Symbol,
-    Tab
+    Tab,
+    Value
 };
 
-constexpr TokenType allTokenSymTypes[] = {TokenType::Colon,
+constexpr TokenType allTokenSymTypes[] = {TokenType::Backslash,
+                                          TokenType::Colon,
                                           TokenType::Comma,
                                           TokenType::Dash,
                                           TokenType::DoubleQuote,
+                                          TokenType::Key,
                                           TokenType::LeftSquareBracket,
                                           TokenType::Newline,
                                           TokenType::NumSign,
                                           TokenType::RightSquareBracket,
-                                          TokenType::Scalar,
                                           TokenType::SingleQuote,
                                           TokenType::Space,
                                           TokenType::Symbol,
-                                          TokenType::Tab};
+                                          TokenType::Tab,
+                                          TokenType::Value};
 
 class Token {
    public:
@@ -62,6 +67,7 @@ class Tokenizer {
     Tokenizer(const std::string &file_name);
     void clearBuf(const TokenType &tokenType);
     std::vector<Token> getTokens() const;
+    const char lookahead(std::ifstream &ifs) const;
     void next(std::ifstream &ifs);
     void scalar(std::ifstream &ifs);
     void sym(std::ifstream &ifs);
