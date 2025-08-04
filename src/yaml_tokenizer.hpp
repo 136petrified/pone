@@ -82,6 +82,7 @@ class Tokenizer {
     std::string m_buf;
     char m_char;
     bool m_endOfFile;
+    bool m_isQuoted;
 };
 }  // namespace YAML
 

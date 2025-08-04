@@ -28,10 +28,13 @@ bool isSymbol(const Token &token) {
 
 void Token::setData(const std::string &data) { m_data = data; }
 
-Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false} {}
+Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false}, m_isQuoted{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
-    : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
+    : m_file_name{file_name},
+      m_buf{""},
+      m_endOfFile{false},
+      m_isQuoted{false} {}
 
 Token &Tokenizer::clearBuf(const TokenType &tokenType) {
     Token token = Token{tokenType, std::move(m_buf)};
@@ -67,7 +70,7 @@ void Tokenizer::scalar(std::ifstream &ifs) {
         m_buf += m_char;
         try {
             next(ifs);
-        } catch (const EndOfIfstreamException) {
+        } catch (const EndOfIfstreamException &) {
             return;
         }
     }
@@ -102,6 +105,7 @@ void Tokenizer::sym(std::ifstream &ifs) {
             break;
         case '"':
             clearBuf(TokenType::DoubleQuote);
+            m_isQuoted = !m_isQuoted;
             break;
         case '[':
             clearBuf(TokenType::LeftSquareBracket);
