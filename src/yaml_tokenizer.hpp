@@ -20,10 +20,10 @@ enum class TokenType {
     Dash,
     DoubleQuote,
     Key,
-    LeftSquareBracket,
+    LeftBracket,
     Newline,
     NumSign,
-    RightSquareBracket,
+    RightBracket,
     SingleQuote,
     Space,
     Symbol,
@@ -31,22 +31,13 @@ enum class TokenType {
     Value
 };
 
-constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {TokenType::Backslash,
-                                             TokenType::Colon,
-                                             TokenType::Comma,
-                                             TokenType::Comment,
-                                             TokenType::Dash,
-                                             TokenType::DoubleQuote,
-                                             TokenType::Key,
-                                             TokenType::LeftSquareBracket,
-                                             TokenType::Newline,
-                                             TokenType::NumSign,
-                                             TokenType::RightSquareBracket,
-                                             TokenType::SingleQuote,
-                                             TokenType::Space,
-                                             TokenType::Symbol,
-                                             TokenType::Tab,
-                                             TokenType::Value};
+constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {
+    TokenType::Backslash, TokenType::Colon,        TokenType::Comma,
+    TokenType::Comment,   TokenType::Dash,         TokenType::DoubleQuote,
+    TokenType::Key,       TokenType::LeftBracket,  TokenType::Newline,
+    TokenType::NumSign,   TokenType::RightBracket, TokenType::SingleQuote,
+    TokenType::Space,     TokenType::Symbol,       TokenType::Tab,
+    TokenType::Value};
 constexpr int ALL_TOKEN_SYM_TYPES_SIZE = 16;
 
 class Token {
@@ -65,13 +56,18 @@ class Token {
     bool m_isEscaped;
 };
 
-class Tokenizer {
+class Tokenizer {  // TODO: Add Key(), Value(), etc.
    public:
     Tokenizer();
     Tokenizer(const std::string &file_name);
+    void backslash(std::ifstream &ifs);
     Token &clearBuf(const TokenType &tokenType);
+    void colon(std::ifstream &ifs);
     void comment(std::ifstream &ifs);
+    void dash(std::ifstream &ifs);
+    void doubleQuote(std::ifstream &ifs);
     std::vector<Token> getTokens() const;
+    void key(std::ifstream &ifs);
     const char lookahead(std::ifstream &ifs);
     void next(std::ifstream &ifs);
     void scalar(std::ifstream &ifs);

@@ -4,7 +4,6 @@
 
 #include "yaml_tokenizer.hpp"
 
-#include <type_traits>
 #include <utility>
 
 namespace YAML {
@@ -14,7 +13,9 @@ Token::Token() {}
 Token::Token(const TokenType &type, std::string &&data)
     : m_type{type}, m_data{std::move(data)}, m_inQuotes{false} {}
 
-std::string &&Token::getData() { return std::move(m_data); }
+std::string &&Token::getData() {
+    return std::move(m_data);
+}  // NOTE: You can only do this once!
 
 bool Token::inQuotes() const { return m_inQuotes; }
 
@@ -50,6 +51,7 @@ void Tokenizer::comment(std::ifstream &ifs) {
         try {
             next(ifs);
         } catch (const EndOfIfstreamException &) {
+            clearBuf(TokenType::Comment);
             return;
         }
     }
@@ -123,13 +125,13 @@ void Tokenizer::sym(std::ifstream &ifs) {
                              // quoted statement.
             break;
         case '[':
-            clearBuf(TokenType::LeftSquareBracket);
+            clearBuf(TokenType::LeftBracket);
             break;
         case '#':
             clearBuf(TokenType::NumSign);
             break;
         case ']':
-            clearBuf(TokenType::RightSquareBracket);
+            clearBuf(TokenType::RightBracket);
             break;
         case '\'':
             clearBuf(TokenType::SingleQuote);
