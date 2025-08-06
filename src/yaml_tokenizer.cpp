@@ -53,6 +53,8 @@ void Tokenizer::comment(std::ifstream &ifs) {
             return;
         }
     }
+
+    clearBuf(TokenType::Comment);
 }
 
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
