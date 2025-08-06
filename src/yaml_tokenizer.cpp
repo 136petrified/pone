@@ -1,9 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 08-02-2025
+ *   Modified: 08-06-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
+#include <type_traits>
 #include <utility>
 
 namespace YAML {
@@ -41,6 +42,17 @@ Token &Tokenizer::clearBuf(const TokenType &tokenType) {
     m_tokens.push_back(token);
     m_buf.clear();
     return m_tokens.back();
+}
+
+void Tokenizer::comment(std::ifstream &ifs) {
+    while (m_char != '\n') {
+        m_buf += m_char;  // Until the stream hits the newline, add to buffer
+        try {
+            next(ifs);
+        } catch (const EndOfIfstreamException &) {
+            return;
+        }
+    }
 }
 
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
@@ -105,7 +117,8 @@ void Tokenizer::sym(std::ifstream &ifs) {
             break;
         case '"':
             clearBuf(TokenType::DoubleQuote);
-            m_isQuoted = !m_isQuoted;
+            toggleQuoted();  // Toggle m_isQuoted in Tokenizer, true if under
+                             // quoted statement.
             break;
         case '[':
             clearBuf(TokenType::LeftSquareBracket);
@@ -145,6 +158,8 @@ void Tokenizer::tokenize() {
         whitespace(ifs);
     }
 }
+
+void Tokenizer::toggleQuoted() { m_isQuoted = !m_isQuoted; }
 
 void Tokenizer::whitespace(std::ifstream &ifs) {
     if (!isSpace(m_char)) return;

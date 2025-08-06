@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-02-2025
+ *   Modified: 08-06-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -16,6 +16,7 @@ enum class TokenType {
     Backslash,
     Colon,
     Comma,
+    Comment,
     Dash,
     DoubleQuote,
     Key,
@@ -33,6 +34,7 @@ enum class TokenType {
 constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {TokenType::Backslash,
                                              TokenType::Colon,
                                              TokenType::Comma,
+                                             TokenType::Comment,
                                              TokenType::Dash,
                                              TokenType::DoubleQuote,
                                              TokenType::Key,
@@ -45,7 +47,7 @@ constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {TokenType::Backslash,
                                              TokenType::Symbol,
                                              TokenType::Tab,
                                              TokenType::Value};
-constexpr int ALL_TOKEN_SYM_TYPES_SIZE = 15;
+constexpr int ALL_TOKEN_SYM_TYPES_SIZE = 16;
 
 class Token {
    public:
@@ -60,6 +62,7 @@ class Token {
    private:
     std::string m_data;
     bool m_inQuotes;
+    bool m_isEscaped;
 };
 
 class Tokenizer {
@@ -67,6 +70,7 @@ class Tokenizer {
     Tokenizer();
     Tokenizer(const std::string &file_name);
     Token &clearBuf(const TokenType &tokenType);
+    void comment(std::ifstream &ifs);
     std::vector<Token> getTokens() const;
     const char lookahead(std::ifstream &ifs);
     void next(std::ifstream &ifs);
@@ -74,6 +78,7 @@ class Tokenizer {
     void sym(std::ifstream &ifs);
     void whitespace(std::ifstream &ifs);
     void tokenize();
+    void toggleQuoted();
     ~Tokenizer();
 
    private:
