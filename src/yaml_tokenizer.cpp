@@ -1,9 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 08-06-2025
+ *   Modified: 08-07-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
+#include <fstream>
 #include <utility>
 
 namespace YAML {
@@ -11,38 +12,36 @@ namespace YAML {
 Token::Token() {}
 
 Token::Token(const TokenType &type, std::string &&data)
-    : m_type{type}, m_data{std::move(data)}, m_inQuotes{false} {}
+    : m_type{type}, m_data{std::move(data)}, m_isEscaped{false} {}
 
 std::string &&Token::getData() {
     return std::move(m_data);
 }  // NOTE: You can only do this once!
 
-bool Token::inQuotes() const { return m_inQuotes; }
-
-bool isSymbol(const Token &token) {
-    TokenType tokenType = token.m_type;
-    for (int i = 0; i < ALL_TOKEN_SYM_TYPES_SIZE; ++i) {
-        if (tokenType == ALL_TOKEN_SYM_TYPES[i]) return true;
-    }
-
-    return false;
-}
-
 void Token::setData(const std::string &data) { m_data = data; }
 
-Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false}, m_isQuoted{false} {}
+Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
-    : m_file_name{file_name},
-      m_buf{""},
-      m_endOfFile{false},
-      m_isQuoted{false} {}
+    : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
+
+void Tokenizer::backslash(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Backslash);
+}
 
 Token &Tokenizer::clearBuf(const TokenType &tokenType) {
     Token token = Token{tokenType, std::move(m_buf)};
     m_tokens.push_back(token);
     m_buf.clear();
     return m_tokens.back();
+}
+
+void Tokenizer::colon(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Colon);
+}
+
+void Tokenizer::comma(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Comma);
 }
 
 void Tokenizer::comment(std::ifstream &ifs) {
@@ -59,7 +58,23 @@ void Tokenizer::comment(std::ifstream &ifs) {
     clearBuf(TokenType::Comment);
 }
 
+void Tokenizer::dash(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Dash);
+}
+
+void Tokenizer::doubleQuote(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::DoubleQuote);
+}
+
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
+
+void Tokenizer::leftBrace(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::LeftBrace);
+}
+
+void Tokenizer::leftBracket(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::LeftBracket);
+}
 
 const char Tokenizer::lookahead(std::ifstream &ifs) {
     // Looks ahead of the current character from ifstream
@@ -72,12 +87,36 @@ const char Tokenizer::lookahead(std::ifstream &ifs) {
     return static_cast<char>(nextChar);
 }
 
+void Tokenizer::rightBrace(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::RightBrace);
+}
+
+void Tokenizer::rightBracket(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::RightBracket);
+}
+
+void Tokenizer::newline(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Newline);
+}
+
 void Tokenizer::next(std::ifstream &ifs) {
     ifs.get(m_char);
     if (ifs.eof()) {
         m_endOfFile = true;
         throw EndOfIfstreamException();
     }
+}
+
+void Tokenizer::numSign(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::NumSign);
+}
+
+void Tokenizer::otherSymbols(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Symbol);
+}
+
+void Tokenizer::singleQuote(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::SingleQuote);
 }
 
 void Tokenizer::scalar(std::ifstream &ifs) {
@@ -108,36 +147,39 @@ void Tokenizer::sym(std::ifstream &ifs) {
 
     switch (m_char) {
         case '\\':
-            clearBuf(TokenType::Backslash);
+            backslash(ifs);
             break;
         case ':':
-            clearBuf(TokenType::Colon);
+            colon(ifs);
             break;
         case ',':
-            clearBuf(TokenType::Comma);
+            comma(ifs);
             break;
         case '-':
-            clearBuf(TokenType::Dash);
+            dash(ifs);
             break;
         case '"':
-            clearBuf(TokenType::DoubleQuote);
-            toggleQuoted();  // Toggle m_isQuoted in Tokenizer, true if under
-                             // quoted statement.
+            doubleQuote(ifs);
+            break;
+        case '{':
+            leftBrace(ifs);
             break;
         case '[':
-            clearBuf(TokenType::LeftBracket);
+            leftBracket(ifs);
             break;
         case '#':
-            clearBuf(TokenType::NumSign);
+            numSign(ifs);
             break;
+        case '}':
+            rightBrace(ifs);
         case ']':
-            clearBuf(TokenType::RightBracket);
+            rightBracket(ifs);
             break;
         case '\'':
-            clearBuf(TokenType::SingleQuote);
+            singleQuote(ifs);
             break;
         default:
-            clearBuf(TokenType::Symbol);
+            otherSymbols(ifs);
             break;
     }
 
@@ -163,7 +205,25 @@ void Tokenizer::tokenize() {
     }
 }
 
-void Tokenizer::toggleQuoted() { m_isQuoted = !m_isQuoted; }
+void Tokenizer::tokenizeSpecialChar(std::ifstream &ifs,
+                                    const TokenType &tokenType) {
+    try {
+        next(ifs);
+    } catch (const EndOfIfstreamException) {
+        clearBuf(tokenType);
+        return;
+    }
+
+    clearBuf(tokenType);
+}
+
+void Tokenizer::space(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Space);
+}
+
+void Tokenizer::tab(std::ifstream &ifs) {
+    tokenizeSpecialChar(ifs, TokenType::Tab);
+}
 
 void Tokenizer::whitespace(std::ifstream &ifs) {
     if (!isSpace(m_char)) return;
