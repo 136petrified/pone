@@ -231,13 +231,13 @@ void Tokenizer::whitespace(std::ifstream &ifs) {
 
     switch (m_char) {
         case '\n':
-            clearBuf(TokenType::Newline);
+            newline(ifs);
             break;
         case ' ':
-            clearBuf(TokenType::Space);
+            space(ifs);
             break;
         case '\t':
-            clearBuf(TokenType::Tab);
+            tab(ifs);
             break;
     }
 
