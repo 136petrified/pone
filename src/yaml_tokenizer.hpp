@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-07-2025
+ *   Modified: 08-11-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -35,7 +35,6 @@ enum class TokenType {
     Symbol,
     Tab,
     Value,
-    END
 };
 
 constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {TokenType::Backslash,
@@ -97,8 +96,8 @@ class Tokenizer {
     const char lookahead(std::ifstream &ifs);
     void rightBrace(std::ifstream &ifs);
     void rightBracket(std::ifstream &ifs);
-    void next(std::ifstream &ifs);
     void newline(std::ifstream &ifs);
+    void next(std::ifstream &ifs);
     void numSign(std::ifstream &ifs);
     void otherSymbols(std::ifstream &ifs);
     void scalar(std::ifstream &ifs);

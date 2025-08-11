@@ -1,10 +1,11 @@
 /*   Created:  07-23-2025
- *   Modified: 08-07-2025
+ *   Modified: 08-11-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
 #include <fstream>
+#include <type_traits>
 #include <utility>
 
 namespace YAML {
@@ -66,6 +67,7 @@ void Tokenizer::doubleQuote(std::ifstream &ifs) {
     tokenizeSpecialChar(ifs, TokenType::DoubleQuote);
 }
 
+void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {}
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::leftBrace(std::ifstream &ifs) {
@@ -172,6 +174,7 @@ void Tokenizer::sym(std::ifstream &ifs) {
             break;
         case '}':
             rightBrace(ifs);
+            break;
         case ']':
             rightBracket(ifs);
             break;
