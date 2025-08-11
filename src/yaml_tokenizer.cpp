@@ -5,7 +5,6 @@
 #include "yaml_tokenizer.hpp"
 
 #include <fstream>
-#include <type_traits>
 #include <utility>
 
 namespace YAML {
@@ -13,7 +12,7 @@ namespace YAML {
 Token::Token() {}
 
 Token::Token(const TokenType &type, std::string &&data)
-    : m_type{type}, m_data{std::move(data)}, m_isEscaped{false} {}
+    : m_type{type}, m_data{std::move(data)} {}
 
 std::string &&Token::getData() {
     return std::move(m_data);
@@ -21,10 +20,13 @@ std::string &&Token::getData() {
 
 void Token::setData(const std::string &data) { m_data = data; }
 
-Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false} {}
+Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false}, m_isEscaped{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
-    : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
+    : m_file_name{file_name},
+      m_buf{""},
+      m_endOfFile{false},
+      m_isEscaped{false} {}
 
 void Tokenizer::backslash(std::ifstream &ifs) {
     tokenizeSpecialChar(ifs, TokenType::Backslash);
@@ -67,7 +69,22 @@ void Tokenizer::doubleQuote(std::ifstream &ifs) {
     tokenizeSpecialChar(ifs, TokenType::DoubleQuote);
 }
 
-void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {}
+void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {
+    while (m_char != '"' && m_isEscaped) {
+        if (m_char == '\\') {
+            // Do not call backslash(), this wil cause buf to clear
+        }
+
+        m_buf += m_char;  // Assume that first quote is consumed
+        try {
+            next(ifs);
+        } catch (const EndOfIfstreamException &) {
+            clearBuf(TokenType::DoubleQuotedKey);
+            return;
+        }
+    }
+}
+
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::leftBrace(std::ifstream &ifs) {
@@ -192,6 +209,8 @@ void Tokenizer::sym(std::ifstream &ifs) {
         return;
     }
 }
+
+void Tokenizer::toggleEscape() { m_isEscaped = !m_isEscaped; }
 
 void Tokenizer::tokenize() {
     std::ifstream ifs{m_file_name};

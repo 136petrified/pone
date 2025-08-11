@@ -73,13 +73,17 @@ class Token {
 
    private:
     std::string m_data;
-    bool m_isEscaped;
 };
 
 class Tokenizer {
    public:
     Tokenizer();
     Tokenizer(const std::string &file_name);
+    std::vector<Token> getTokens() const;
+    void tokenize();
+    ~Tokenizer();
+
+   private:
     void backslash(std::ifstream &ifs);
     Token &clearBuf(const TokenType &tokenType);
     void colon(std::ifstream &ifs);
@@ -89,7 +93,6 @@ class Tokenizer {
     void doubleQuote(std::ifstream &ifs);
     void doubleQuotedKey(std::ifstream &ifs);
     void doubleQuotedValue(std::ifstream &ifs);
-    std::vector<Token> getTokens() const;
     void key(std::ifstream &ifs);
     void leftBrace(std::ifstream &ifs);
     void leftBracket(std::ifstream &ifs);
@@ -107,19 +110,18 @@ class Tokenizer {
     void space(std::ifstream &ifs);
     void sym(std::ifstream &ifs);
     void tab(std::ifstream &ifs);
-    void tokenize();
+    void toggleEscape();
     void tokenizeSpecialChar(
         std::ifstream &ifs,
         const TokenType &tokenType);  // Tokenize a single character
     void whitespace(std::ifstream &ifs);
-    ~Tokenizer();
 
-   private:
     std::string m_file_name;
     std::vector<Token> m_tokens;
     std::string m_buf;
     char m_char;
     bool m_endOfFile;
+    bool m_isEscaped;  // This means that the next m_char will be escaped
 };
 }  // namespace YAML
 
