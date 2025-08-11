@@ -121,7 +121,6 @@ class Tokenizer {
     std::string m_buf;
     char m_char;
     bool m_endOfFile;
-    bool m_isEscaped;  // This means that the next m_char will be escaped
 };
 }  // namespace YAML
 

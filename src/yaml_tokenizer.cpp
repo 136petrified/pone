@@ -20,13 +20,10 @@ std::string &&Token::getData() {
 
 void Token::setData(const std::string &data) { m_data = data; }
 
-Tokenizer::Tokenizer() : m_buf{""}, m_endOfFile{false}, m_isEscaped{false} {}
+Tokenizer::Tokenizer() : m_file_name{""}, m_buf{""}, m_endOfFile{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
-    : m_file_name{file_name},
-      m_buf{""},
-      m_endOfFile{false},
-      m_isEscaped{false} {}
+    : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
 
 void Tokenizer::backslash(std::ifstream &ifs) {
     tokenizeSpecialChar(ifs, TokenType::Backslash);
@@ -70,9 +67,15 @@ void Tokenizer::doubleQuote(std::ifstream &ifs) {
 }
 
 void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {
-    while (m_char != '"' && m_isEscaped) {
+    while (m_char != '"') {
         if (m_char == '\\') {
-            // Do not call backslash(), this wil cause buf to clear
+            // Do not call backslash(), this will cause buf to clear
+            // Backslash is not part of token data
+            try {
+                next(ifs);
+            } catch (const EndOfIfstreamException &) {
+                clearBuf(TokenType::DoubleQuotedKey);
+            }
         }
 
         m_buf += m_char;  // Assume that first quote is consumed
