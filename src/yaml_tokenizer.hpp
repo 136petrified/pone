@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-11-2025
+ *   Modified: 08-15-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -43,7 +43,7 @@ constexpr TokenType ALL_TOKEN_SYM_TYPES[] = {TokenType::Backslash,
                                              TokenType::Comment,
                                              TokenType::Dash,
                                              TokenType::DoubleQuote,
-                                             TokenType::DoubleQuotedKey,
+                                             TokenType::DoubleQuotedKey, // TODO: Find way to separate this
                                              TokenType::DoubleQuotedValue,
                                              TokenType::Key,
                                              TokenType::LeftBracket,
