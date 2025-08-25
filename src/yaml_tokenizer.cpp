@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-11-2025
+ *   Modified: 08-25-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -11,7 +11,7 @@ namespace YAML {
 
 Token::Token() {}
 
-Token::Token(const TokenType &type, std::string &&data)
+Token::Token(const Token::Type &type, std::string &&data)
     : m_type{type}, m_data{std::move(data)} {}
 
 std::string &&Token::getData() {
@@ -26,10 +26,10 @@ Tokenizer::Tokenizer(const std::string &file_name)
     : m_file_name{file_name}, m_buf{""}, m_endOfFile{false} {}
 
 void Tokenizer::backslash(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Backslash);
+    tokenizeSpecialChar(ifs, Token::Type::Backslash);
 }
 
-Token &Tokenizer::clearBuf(const TokenType &tokenType) {
+Token &Tokenizer::clearBuf(const Token::Type &tokenType) {
     Token token = Token{tokenType, std::move(m_buf)};
     m_tokens.push_back(token);
     m_buf.clear();
@@ -37,11 +37,11 @@ Token &Tokenizer::clearBuf(const TokenType &tokenType) {
 }
 
 void Tokenizer::colon(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Colon);
+    tokenizeSpecialChar(ifs, Token::Type::Colon);
 }
 
 void Tokenizer::comma(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Comma);
+    tokenizeSpecialChar(ifs, Token::Type::Comma);
 }
 
 void Tokenizer::comment(std::ifstream &ifs) {
@@ -50,20 +50,20 @@ void Tokenizer::comment(std::ifstream &ifs) {
         try {
             next(ifs);
         } catch (const EndOfIfstreamException &) {
-            clearBuf(TokenType::Comment);
+            clearBuf(Token::Type::Comment);
             return;
         }
     }
 
-    clearBuf(TokenType::Comment);
+    clearBuf(Token::Type::Comment);
 }
 
 void Tokenizer::dash(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Dash);
+    tokenizeSpecialChar(ifs, Token::Type::Dash);
 }
 
 void Tokenizer::doubleQuote(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::DoubleQuote);
+    tokenizeSpecialChar(ifs, Token::Type::DoubleQuote);
 }
 
 void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {
@@ -74,7 +74,8 @@ void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {
             try {
                 next(ifs);
             } catch (const EndOfIfstreamException &) {
-                clearBuf(TokenType::DoubleQuotedKey);
+                clearBuf(Token::Type::DoubleQuotedKey);
+                return;
             }
         }
 
@@ -82,8 +83,42 @@ void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {
         try {
             next(ifs);
         } catch (const EndOfIfstreamException &) {
-            clearBuf(TokenType::DoubleQuotedKey);
+            clearBuf(Token::Type::DoubleQuotedKey);
             return;
+        }
+    }
+
+    clearBuf(Token::Type::DoubleQuotedKey);
+}
+
+void Tokenizer::doubleQuotedValue(std::ifstream &ifs) {
+    while (m_char != '"') {
+        if (m_char == '\\') {
+            try {
+                next(ifs);
+            } catch (const EndOfIfstreamException &) {
+                clearBuf(Token::Type::Backslash);
+                return;
+            }
+
+            switch (m_char) {
+                case '\\':
+                    m_buf += '\\';
+                    break;
+                case '\"':
+                    m_buf += '"';
+                    break;
+                case '\n':
+                    m_buf += '\n';
+                    break;
+            }
+
+            try {
+                next(ifs);
+            } catch (const EndOfIfstreamException &) {
+                clearBuf(Token::Type::DoubleQuotedValue);
+                return;
+            }
         }
     }
 }
@@ -91,11 +126,11 @@ void Tokenizer::doubleQuotedKey(std::ifstream &ifs) {
 std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
 
 void Tokenizer::leftBrace(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::LeftBrace);
+    tokenizeSpecialChar(ifs, Token::Type::LeftBrace);
 }
 
 void Tokenizer::leftBracket(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::LeftBracket);
+    tokenizeSpecialChar(ifs, Token::Type::LeftBracket);
 }
 
 const char Tokenizer::lookahead(std::ifstream &ifs) {
@@ -110,15 +145,15 @@ const char Tokenizer::lookahead(std::ifstream &ifs) {
 }
 
 void Tokenizer::rightBrace(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::RightBrace);
+    tokenizeSpecialChar(ifs, Token::Type::RightBrace);
 }
 
 void Tokenizer::rightBracket(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::RightBracket);
+    tokenizeSpecialChar(ifs, Token::Type::RightBracket);
 }
 
 void Tokenizer::newline(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Newline);
+    tokenizeSpecialChar(ifs, Token::Type::Newline);
 }
 
 void Tokenizer::next(std::ifstream &ifs) {
@@ -130,15 +165,15 @@ void Tokenizer::next(std::ifstream &ifs) {
 }
 
 void Tokenizer::numSign(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::NumSign);
+    tokenizeSpecialChar(ifs, Token::Type::NumSign);
 }
 
 void Tokenizer::otherSymbols(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Symbol);
+    tokenizeSpecialChar(ifs, Token::Type::Symbol);
 }
 
 void Tokenizer::singleQuote(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::SingleQuote);
+    tokenizeSpecialChar(ifs, Token::Type::SingleQuote);
 }
 
 void Tokenizer::scalar(std::ifstream &ifs) {
@@ -152,14 +187,14 @@ void Tokenizer::scalar(std::ifstream &ifs) {
         }
     }
 
-    Token &tokenBuf = clearBuf(TokenType::Key);
+    Token &tokenBuf = clearBuf(Token::Type::Key);
 
     while (isSpace(m_char)) {
         whitespace(ifs);
     }
 
     if (m_char != ':') {
-        tokenBuf.m_type = TokenType::Value;
+        tokenBuf.m_type = Token::Type::Value;
     }
 }
 
@@ -213,8 +248,6 @@ void Tokenizer::sym(std::ifstream &ifs) {
     }
 }
 
-void Tokenizer::toggleEscape() { m_isEscaped = !m_isEscaped; }
-
 void Tokenizer::tokenize() {
     std::ifstream ifs{m_file_name};
     try {
@@ -231,7 +264,7 @@ void Tokenizer::tokenize() {
 }
 
 void Tokenizer::tokenizeSpecialChar(std::ifstream &ifs,
-                                    const TokenType &tokenType) {
+                                    const Token::Type &tokenType) {
     try {
         next(ifs);
     } catch (const EndOfIfstreamException) {
@@ -243,11 +276,11 @@ void Tokenizer::tokenizeSpecialChar(std::ifstream &ifs,
 }
 
 void Tokenizer::space(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Space);
+    tokenizeSpecialChar(ifs, Token::Type::Space);
 }
 
 void Tokenizer::tab(std::ifstream &ifs) {
-    tokenizeSpecialChar(ifs, TokenType::Tab);
+    tokenizeSpecialChar(ifs, Token::Type::Tab);
 }
 
 void Tokenizer::whitespace(std::ifstream &ifs) {
