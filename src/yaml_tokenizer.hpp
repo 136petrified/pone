@@ -69,7 +69,8 @@ class Token {
     Token();
     Token(const Type &type, std::string &&data);
     Type m_type;
-    std::string &&getData();  // This will move the data out! Only call once
+    std::string &&
+    getData();  // This will move the data out of m_data! Only call once
     bool inQuotes() const;
     static bool isSymbol(const Token &token);
     void setData(const std::string &data);
@@ -86,40 +87,41 @@ class Tokenizer {
     void tokenize();
     ~Tokenizer();
 
-   private:
-    void backslash(std::ifstream &ifs);
+   protected:
+    void backslash();
     Token &clearBuf(const Token::Type &tokenType);
-    void colon(std::ifstream &ifs);
-    void comma(std::ifstream &ifs);
-    void comment(std::ifstream &ifs);
-    void dash(std::ifstream &ifs);
-    void doubleQuote(std::ifstream &ifs);
-    void doubleQuotedKey(std::ifstream &ifs);
-    void doubleQuotedValue(std::ifstream &ifs);
-    void key(std::ifstream &ifs);
-    void leftBrace(std::ifstream &ifs);
-    void leftBracket(std::ifstream &ifs);
-    const char lookahead(std::ifstream &ifs);
-    void rightBrace(std::ifstream &ifs);
-    void rightBracket(std::ifstream &ifs);
-    void newline(std::ifstream &ifs);
-    void next(std::ifstream &ifs);
-    void numSign(std::ifstream &ifs);
-    void otherSymbols(std::ifstream &ifs);
-    void scalar(std::ifstream &ifs);
-    void singleQuote(std::ifstream &ifs);
-    void singleQuotedKey(std::ifstream &ifs);
-    void singleQuotedValue(std::ifstream &ifs);
-    void space(std::ifstream &ifs);
-    void sym(std::ifstream &ifs);
-    void tab(std::ifstream &ifs);
+    void colon();
+    void comma();
+    void comment();
+    void dash();
+    void doubleQuote();
+    void doubleQuotedKey();
+    void doubleQuotedValue();
+    void key();
+    void leftBrace();
+    void leftBracket();
+    const char lookahead();
+    void rightBrace();
+    void rightBracket();
+    void newline();
+    void next();
+    void numSign();
+    void otherSymbols();
+    void scalar();
+    void singleQuote();
+    void singleQuotedKey();
+    void singleQuotedValue();
+    void space();
+    void sym();
+    void tab();
     void toggleEscape();
     void tokenizeSpecialChar(
-        std::ifstream &ifs,
         const Token::Type &tokenType);  // Tokenize a single character
-    void whitespace(std::ifstream &ifs);
+    void whitespace();
 
+   private:
     std::string m_file_name;
+    std::ifstream m_ifs;
     std::vector<Token> m_tokens;
     std::string m_buf;
     char m_char;
