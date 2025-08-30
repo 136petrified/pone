@@ -40,6 +40,12 @@ class Token {
         Value,
     };
 
+    enum class Class {
+        // This is a "type" to differentiate derived classes
+        Group,
+        Single
+    };
+
     static const int ALL_TOKEN_SYM_TYPES_SIZE = 22;
     const std::array<Type, ALL_TOKEN_SYM_TYPES_SIZE> ALL_TOKEN_SYM_TYPES = {
         Type::Backslash,
@@ -65,33 +71,75 @@ class Token {
         Type::Tab,
         Type::Value};
 
+    using TokenGroup = std::vector<Token>;
+
+   protected:
     Token();
     Token(const Type &type);
     Token(const Type &type, std::string &&data);
-    Type m_type;
-    std::string &&
-    getData();  // This will move the data out of m_data! Only call once
-    static bool isSymbol(const Token &token);
-    void setData(const std::string &data);
+
+    // Start of basic Token functions
+    virtual Class getClass() const = 0;
+    virtual Type getType() const = 0;
+    virtual void setType(const Type &type) = 0;
+    // End of basic Token functions
+
+    // Start of SingleToken functions
+    // This will move the data out of m_data! Only call once
+    virtual std::string &&getData();
+    virtual void setData(const std::string &data);
+    // End of SingleToken functions
+
+    // Start of GroupToken functions
+    virtual void clearTokenGroup();
+    virtual void insertToTokenGroup(const Token &token);
+    virtual bool isTokenGroupEmpty() const;
+    virtual size_t sizeOfTokenGroup() const;
+    // End of GroupToken functions
+
+    virtual ~Token() = 0;
+};
+
+class SingleToken : public Token {
+   public:
+    SingleToken();
+    // This will move the data out of m_data! Only call once
+    std::string &&getData() override;
+    void setData(const std::string &data) override;
+    ~SingleToken();
+
+    // Pure virtual functions from Token
+    Token::Class getClass() const override;
+    Token::Type getType() const override;
+    void setType(const Token::Type &type) override;
 
    private:
-    using TokenGroup = std::vector<Token>;
+    Token::Class m_class;
     std::string m_data;
+    Token::Type m_type;
 };
 
 class GroupToken : public Token {
+    // NOTE: This allows for a Token to be made up of Tokens
    public:
     GroupToken();
     GroupToken(const Token::Type &type);
-    void clearTokenGroup();
-    void insertToTokenGroup(const Token &token);
-    bool isTokenGroupEmpty() const;
-    size_t sizeOfTokenGroup() const;
+    void clearTokenGroup() override;
+    void insertToTokenGroup(const Token &token) override;
+    bool isTokenGroupEmpty() const override;
+    size_t sizeOfTokenGroup() const override;
     ~GroupToken();
 
+    // Pure virtual functions from Token
+    Token::Class getClass() const override;
+    Token::Type getType() const override;
+    void setType(const Token::Type &type) override;
+
    private:
-    std::vector<Token> m_tokenGroup;
+    Token::Class m_class;
+    TokenGroup m_tokenGroup;
     size_t m_tokenGroupSize;
+    Token::Type m_type;
 };
 
 class Tokenizer {
