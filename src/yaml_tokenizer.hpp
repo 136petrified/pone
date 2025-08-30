@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-24-2025
+ *   Modified: 08-30-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -13,7 +13,6 @@
 #include "yaml_utils.hpp"
 
 namespace YAML {
-
 class Token {
    public:
     enum class Type {
@@ -67,16 +66,32 @@ class Token {
         Type::Value};
 
     Token();
+    Token(const Type &type);
     Token(const Type &type, std::string &&data);
     Type m_type;
     std::string &&
     getData();  // This will move the data out of m_data! Only call once
-    bool inQuotes() const;
     static bool isSymbol(const Token &token);
     void setData(const std::string &data);
 
    private:
+    using TokenGroup = std::vector<Token>;
     std::string m_data;
+};
+
+class GroupToken : public Token {
+   public:
+    GroupToken();
+    GroupToken(const Token::Type &type);
+    void clearTokenGroup();
+    void insertToTokenGroup(const Token &token);
+    bool isTokenGroupEmpty() const;
+    size_t sizeOfTokenGroup() const;
+    ~GroupToken();
+
+   private:
+    std::vector<Token> m_tokenGroup;
+    size_t m_tokenGroupSize;
 };
 
 class Tokenizer {

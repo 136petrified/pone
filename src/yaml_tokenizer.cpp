@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-28-2025
+ *   Modified: 08-30-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -11,6 +11,8 @@ namespace YAML {
 
 Token::Token() {}
 
+Token::Token(const Token::Type &type) : m_type{type} {}
+
 Token::Token(const Token::Type &type, std::string &&data)
     : m_type{type}, m_data{std::move(data)} {}
 
@@ -19,6 +21,27 @@ std::string &&Token::getData() {
 }  // NOTE: You can only do this once!
 
 void Token::setData(const std::string &data) { m_data = data; }
+
+GroupToken::GroupToken() {}
+
+GroupToken::GroupToken(const Token::Type &type)
+    : Token(type), m_tokenGroupSize{0} {}
+
+void GroupToken::clearTokenGroup() {
+    m_tokenGroup.clear();
+    m_tokenGroupSize = 0;
+}
+
+void GroupToken::insertToTokenGroup(const Token &token) {
+    m_tokenGroup.push_back(token);
+    ++m_tokenGroupSize;
+}
+
+bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
+
+size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
+
+GroupToken::~GroupToken() {}
 
 Tokenizer::Tokenizer()
     : m_file_name{""}, m_ifs{""}, m_buf{""}, m_endOfFile{false} {}
