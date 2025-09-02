@@ -1,40 +1,80 @@
 /*   Created:  07-23-2025
- *   Modified: 08-30-2025
+ *   Modified: 09-02-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
-#include <fstream>
 #include <utility>
 
 namespace YAML {
 
 Token::Token() {}
 
-Token::Token(const Token::Type &type) : m_type{type} {}
+SingleToken::SingleToken() : m_class{Token::Class::Single} {}
 
-Token::Token(const Token::Type &type, std::string &&data)
-    : m_type{type}, m_data{std::move(data)} {}
+SingleToken::SingleToken(const Token::Type &type)
+    : m_class{Token::Class::Single}, m_data{""}, m_type{type} {}
 
-std::string &&Token::getData() {
-    return std::move(m_data);
-}  // NOTE: You can only do this once!
+SingleToken::SingleToken(const Token::Type &type, const std::string &data)
+    : m_class{Token::Class::Single}, m_data{data}, m_type{type} {}
 
-void Token::setData(const std::string &data) { m_data = data; }
+SingleToken::SingleToken(const Token::Type &type, std::string &&data)
+    : m_class{Token::Class::Single}, m_data{std::move(data)}, m_type{type} {}
 
-GroupToken::GroupToken() {}
+SingleToken::SingleToken(const SingleToken &other)
+    : m_class{Token::Class::Single},
+      m_data{other.m_data},
+      m_type{other.m_type} {}
+
+SingleToken &SingleToken::operator=(const SingleToken &other) {
+    if (this != &other) {
+        m_class = Token::Class::Single;  // might not be necessary
+        m_data = other.m_data;
+        m_type = other.m_type;
+    }
+
+    return *this;
+}
+
+std::string &&SingleToken::getData() { return std::move(m_data); }
+
+void SingleToken::setData(const std::string &data) { m_data = data; }
+
+Token::Class SingleToken::getClass() const { return m_class; }
+
+Token::Type SingleToken::getType() const { return m_type; }
+
+void SingleToken::setType(const Token::Type &type) { m_type = type; }
+
+SingleToken::~SingleToken() {}
+
+GroupToken::GroupToken() : m_class{Token::Class::Group} {}
 
 GroupToken::GroupToken(const Token::Type &type)
-    : Token(type), m_tokenGroupSize{0} {}
+    : m_class{Token::Class::Group}, m_type{type} {}
+
+GroupToken::GroupToken(const GroupToken &other) {
+    for (auto token : other.m_tokenGroup) {
+        if (token != nullptr) {
+            Token *newToken =
+                (token->getClass() == Token::Class::Single)
+                    ? new SingleToken(*dynamic_cast<SingleToken *>(token))
+                    : new GroupToken(*dynamic_cast<GroupToken *>(token));
+            insertToTokenGroup(newToken);
+        }
+    }
+}
 
 void GroupToken::clearTokenGroup() {
     m_tokenGroup.clear();
     m_tokenGroupSize = 0;
 }
 
-void GroupToken::insertToTokenGroup(const Token &token) {
-    m_tokenGroup.push_back(token);
-    ++m_tokenGroupSize;
+void GroupToken::insertToTokenGroup(Token *token) {
+    if (token != nullptr) {
+        m_tokenGroup.push_back(token);
+        ++m_tokenGroupSize;
+    }
 }
 
 bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
@@ -42,7 +82,6 @@ bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
 GroupToken::~GroupToken() {}
-
 Tokenizer::Tokenizer()
     : m_file_name{""}, m_ifs{""}, m_buf{""}, m_endOfFile{false} {}
 

@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-30-2025
+ *   Modified: 09-02-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -71,41 +71,28 @@ class Token {
         Type::Tab,
         Type::Value};
 
-    using TokenGroup = std::vector<Token>;
+    Token();
+    virtual ~Token() = 0;
 
    protected:
-    Token();
-    Token(const Type &type);
-    Token(const Type &type, std::string &&data);
-
     // Start of basic Token functions
     virtual Class getClass() const = 0;
     virtual Type getType() const = 0;
     virtual void setType(const Type &type) = 0;
     // End of basic Token functions
-
-    // Start of SingleToken functions
-    // This will move the data out of m_data! Only call once
-    virtual std::string &&getData();
-    virtual void setData(const std::string &data);
-    // End of SingleToken functions
-
-    // Start of GroupToken functions
-    virtual void clearTokenGroup();
-    virtual void insertToTokenGroup(const Token &token);
-    virtual bool isTokenGroupEmpty() const;
-    virtual size_t sizeOfTokenGroup() const;
-    // End of GroupToken functions
-
-    virtual ~Token() = 0;
 };
 
 class SingleToken : public Token {
    public:
     SingleToken();
+    SingleToken(const Token::Type &type);
+    SingleToken(const Token::Type &type, const std::string &data);
+    SingleToken(const Token::Type &type, std::string &&data);
+    SingleToken(const SingleToken &other);
+    SingleToken &operator=(const SingleToken &other);
     // This will move the data out of m_data! Only call once
-    std::string &&getData() override;
-    void setData(const std::string &data) override;
+    std::string &&getData();
+    void setData(const std::string &data);
     ~SingleToken();
 
     // Pure virtual functions from Token
@@ -124,10 +111,14 @@ class GroupToken : public Token {
    public:
     GroupToken();
     GroupToken(const Token::Type &type);
-    void clearTokenGroup() override;
-    void insertToTokenGroup(const Token &token) override;
-    bool isTokenGroupEmpty() const override;
-    size_t sizeOfTokenGroup() const override;
+    GroupToken(const GroupToken &other);
+    GroupToken(GroupToken &&other);
+    GroupToken &operator=(const GroupToken &other);
+    GroupToken &operator=(GroupToken &&other);
+    void clearTokenGroup();
+    void insertToTokenGroup(Token *token);
+    bool isTokenGroupEmpty() const;
+    size_t sizeOfTokenGroup() const;
     ~GroupToken();
 
     // Pure virtual functions from Token
@@ -137,7 +128,7 @@ class GroupToken : public Token {
 
    private:
     Token::Class m_class;
-    TokenGroup m_tokenGroup;
+    std::vector<Token *> m_tokenGroup;
     size_t m_tokenGroupSize;
     Token::Type m_type;
 };
