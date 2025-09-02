@@ -10,6 +10,8 @@ namespace YAML {
 
 Token::Token() {}
 
+Token::~Token() {}
+
 SingleToken::SingleToken() : m_class{Token::Class::Single} {}
 
 SingleToken::SingleToken(const Token::Type &type)
@@ -38,6 +40,8 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
 
 std::string &&SingleToken::getData() { return std::move(m_data); }
 
+SingleToken *SingleToken::clone() const { return new SingleToken(*this); }
+
 void SingleToken::setData(const std::string &data) { m_data = data; }
 
 Token::Class SingleToken::getClass() const { return m_class; }
@@ -56,19 +60,25 @@ GroupToken::GroupToken(const Token::Type &type)
 GroupToken::GroupToken(const GroupToken &other) {
     for (auto token : other.m_tokenGroup) {
         if (token != nullptr) {
-            Token *newToken =
-                (token->getClass() == Token::Class::Single)
-                    ? new SingleToken(*dynamic_cast<SingleToken *>(token))
-                    : new GroupToken(*dynamic_cast<GroupToken *>(token));
-            insertToTokenGroup(newToken);
+            insertToTokenGroup(token->clone());
         }
     }
 }
 
-void GroupToken::clearTokenGroup() {
-    m_tokenGroup.clear();
-    m_tokenGroupSize = 0;
+GroupToken &GroupToken::operator=(const GroupToken &other) {
+    if (this != &other) {
+        clearTokenGroup();
+        for (auto token : other.m_tokenGroup) {
+            if (token != nullptr) {
+                insertToTokenGroup(token->clone());
+            }
+        }
+    }
+
+    return *this;
 }
+
+void GroupToken::clearTokenGroup() {}
 
 void GroupToken::insertToTokenGroup(Token *token) {
     if (token != nullptr) {
@@ -80,6 +90,8 @@ void GroupToken::insertToTokenGroup(Token *token) {
 bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
+
+GroupToken *GroupToken::clone() const { return new GroupToken(*this); }
 
 GroupToken::~GroupToken() {}
 Tokenizer::Tokenizer()

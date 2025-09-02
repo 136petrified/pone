@@ -74,8 +74,8 @@ class Token {
     Token();
     virtual ~Token() = 0;
 
-   protected:
     // Start of basic Token functions
+    virtual Token *clone() const = 0;
     virtual Class getClass() const = 0;
     virtual Type getType() const = 0;
     virtual void setType(const Type &type) = 0;
@@ -96,6 +96,7 @@ class SingleToken : public Token {
     ~SingleToken();
 
     // Pure virtual functions from Token
+    SingleToken *clone() const override;
     Token::Class getClass() const override;
     Token::Type getType() const override;
     void setType(const Token::Type &type) override;
@@ -122,6 +123,7 @@ class GroupToken : public Token {
     ~GroupToken();
 
     // Pure virtual functions from Token
+    GroupToken *clone() const override;
     Token::Class getClass() const override;
     Token::Type getType() const override;
     void setType(const Token::Type &type) override;
