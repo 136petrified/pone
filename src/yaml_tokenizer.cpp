@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-02-2025
+ *   Modified: 09-04-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -40,7 +40,9 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
 
 std::string &&SingleToken::getData() { return std::move(m_data); }
 
-SingleToken *SingleToken::clone() const { return new SingleToken(*this); }
+std::unique_ptr<Token> SingleToken::clone() const {
+    return std::make_unique<SingleToken>(*this);
+}
 
 void SingleToken::setData(const std::string &data) { m_data = data; }
 
@@ -57,11 +59,11 @@ GroupToken::GroupToken() : m_class{Token::Class::Group} {}
 GroupToken::GroupToken(const Token::Type &type)
     : m_class{Token::Class::Group}, m_type{type} {}
 
-GroupToken::GroupToken(const GroupToken &other) {
-    for (auto token : other.m_tokenGroup) {
-        if (token != nullptr) {
-            insertToTokenGroup(token->clone());
-        }
+GroupToken::GroupToken(const GroupToken &other)
+    : m_tokenGroupSize{other.m_tokenGroupSize} {
+    m_tokenGroup.reserve(m_tokenGroupSize);
+    for (size_t i = 0; i < m_tokenGroupSize; ++i) {
+        m_tokenGroup[i] = other.m_tokenGroup[i]->clone();
     }
 }
 
@@ -78,7 +80,13 @@ GroupToken &GroupToken::operator=(const GroupToken &other) {
     return *this;
 }
 
-void GroupToken::clearTokenGroup() {}
+void GroupToken::clearTokenGroup() {
+    for (auto token : m_tokenGroup) {
+        if (token->getClass() == Token::Class::Group) {
+            token->clearTokenGroup();
+        }
+    }
+}
 
 void GroupToken::insertToTokenGroup(Token *token) {
     if (token != nullptr) {
@@ -91,7 +99,9 @@ bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
-GroupToken *GroupToken::clone() const { return new GroupToken(*this); }
+std::unique_ptr<Token> GroupToken::clone() const {
+    return std::make_unique<GroupToken>(*this);
+}
 
 GroupToken::~GroupToken() {}
 Tokenizer::Tokenizer()

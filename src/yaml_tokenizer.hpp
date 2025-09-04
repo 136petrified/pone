@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-02-2025
+ *   Modified: 09-04-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -7,6 +7,7 @@
 
 #include <array>
 #include <fstream>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -75,7 +76,7 @@ class Token {
     virtual ~Token() = 0;
 
     // Start of basic Token functions
-    virtual Token *clone() const = 0;
+    virtual std::unique_ptr<Token> clone() const = 0;
     virtual Class getClass() const = 0;
     virtual Type getType() const = 0;
     virtual void setType(const Type &type) = 0;
@@ -96,7 +97,7 @@ class SingleToken : public Token {
     ~SingleToken();
 
     // Pure virtual functions from Token
-    SingleToken *clone() const override;
+    std::unique_ptr<Token> clone() const override;
     Token::Class getClass() const override;
     Token::Type getType() const override;
     void setType(const Token::Type &type) override;
@@ -123,14 +124,14 @@ class GroupToken : public Token {
     ~GroupToken();
 
     // Pure virtual functions from Token
-    GroupToken *clone() const override;
+    std::unique_ptr<Token> clone() const override;
     Token::Class getClass() const override;
     Token::Type getType() const override;
     void setType(const Token::Type &type) override;
 
    private:
     Token::Class m_class;
-    std::vector<Token *> m_tokenGroup;
+    std::vector<std::unique_ptr<Token>> m_tokenGroup;
     size_t m_tokenGroupSize;
     Token::Type m_type;
 };
@@ -139,16 +140,17 @@ class Tokenizer {
    public:
     Tokenizer();
     Tokenizer(const std::string &file_name);
-    std::vector<Token> getTokens() const;
+    std::vector<std::unique_ptr<Token>> getTokens() const;
     void tokenize();
     ~Tokenizer();
 
    protected:
     void backslash();
-    Token &clearBuf(const Token::Type &tokenType);
+    void clearBuf();
     void colon();
     void comma();
     void comment();
+    void createToken();
     void dash();
     void doubleQuote();
     void doubleQuotedKey();
@@ -179,6 +181,7 @@ class Tokenizer {
     std::string m_file_name;
     std::ifstream m_ifs;
     std::vector<Token> m_tokens;
+    size_t m_tokensSize;
     std::string m_buf;
     char m_char;
     bool m_endOfFile;
