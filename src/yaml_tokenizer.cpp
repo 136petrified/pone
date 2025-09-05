@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-04-2025
+ *   Modified: 09-05-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -61,16 +61,17 @@ GroupToken::GroupToken(const Token::Type &type)
 
 GroupToken::GroupToken(const GroupToken &other)
     : m_tokenGroupSize{other.m_tokenGroupSize} {
-    m_tokenGroup.reserve(m_tokenGroupSize);
-    for (size_t i = 0; i < m_tokenGroupSize; ++i) {
-        m_tokenGroup[i] = other.m_tokenGroup[i]->clone();
+    for (auto &token : other.m_tokenGroup) {
+        if (token != nullptr) {
+            insertToTokenGroup(token->clone());
+        }
     }
 }
 
 GroupToken &GroupToken::operator=(const GroupToken &other) {
     if (this != &other) {
         clearTokenGroup();
-        for (auto token : other.m_tokenGroup) {
+        for (auto &token : other.m_tokenGroup) {
             if (token != nullptr) {
                 insertToTokenGroup(token->clone());
             }
@@ -81,16 +82,16 @@ GroupToken &GroupToken::operator=(const GroupToken &other) {
 }
 
 void GroupToken::clearTokenGroup() {
-    for (auto token : m_tokenGroup) {
+    for (auto &token : m_tokenGroup) {
         if (token->getClass() == Token::Class::Group) {
             token->clearTokenGroup();
         }
     }
 }
 
-void GroupToken::insertToTokenGroup(Token *token) {
+void GroupToken::insertToTokenGroup(std::unique_ptr<Token> &&token) {
     if (token != nullptr) {
-        m_tokenGroup.push_back(token);
+        m_tokenGroup.push_back(std::move(token));
         ++m_tokenGroupSize;
     }
 }
@@ -104,105 +105,38 @@ std::unique_ptr<Token> GroupToken::clone() const {
 }
 
 GroupToken::~GroupToken() {}
+
 Tokenizer::Tokenizer()
     : m_file_name{""}, m_ifs{""}, m_buf{""}, m_endOfFile{false} {}
 
 Tokenizer::Tokenizer(const std::string &file_name)
     : m_file_name{file_name}, m_ifs{file_name}, m_buf{""}, m_endOfFile{false} {}
 
-void Tokenizer::backslash() { tokenizeSpecialChar(Token::Type::Backslash); }
+void Tokenizer::backslash() {}
 
-Token &Tokenizer::clearBuf(const Token::Type &tokenType) {
-    Token token = Token{tokenType, std::move(m_buf)};
-    m_tokens.push_back(token);
-    m_buf.clear();
-    return m_tokens.back();
-}
+void Tokenizer::clearBuf() {}
 
-void Tokenizer::colon() { tokenizeSpecialChar(Token::Type::Colon); }
+void Tokenizer::colon() {}
 
 void Tokenizer::comma() { tokenizeSpecialChar(Token::Type::Comma); }
 
-void Tokenizer::comment() {
-    while (m_char != '\n') {
-        m_buf += m_char;  // Until the stream hits the newline, add to buffer
-        try {
-            next();
-        } catch (const EndOfIfstreamException &) {
-            clearBuf(Token::Type::Comment);
-            return;
-        }
-    }
+void Tokenizer::comment() {}
 
-    clearBuf(Token::Type::Comment);
+void Tokenizer::dash() {}
+
+void Tokenizer::doubleQuote() {}
+
+void Tokenizer::doubleQuotedKey() {}
+
+void Tokenizer::doubleQuotedValue() {}
+
+std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
+    return std::vector<std::unique_ptr<Token>>();  // dummy value
 }
 
-void Tokenizer::dash() { tokenizeSpecialChar(Token::Type::Dash); }
+void Tokenizer::leftBrace() {}
 
-void Tokenizer::doubleQuote() { tokenizeSpecialChar(Token::Type::DoubleQuote); }
-
-void Tokenizer::doubleQuotedKey() {
-    while (m_char != '"') {
-        if (m_char == '\\') {
-            // Do not call backslash(), this will cause buf to clear
-            // Backslash is not part of token data
-            try {
-                next();
-            } catch (const EndOfIfstreamException &) {
-                clearBuf(Token::Type::DoubleQuotedKey);
-                return;
-            }
-        }
-
-        m_buf += m_char;  // Assume that first quote is consumed
-        try {
-            next();
-        } catch (const EndOfIfstreamException &) {
-            clearBuf(Token::Type::DoubleQuotedKey);
-            return;
-        }
-    }
-
-    clearBuf(Token::Type::DoubleQuotedKey);
-}
-
-void Tokenizer::doubleQuotedValue() {
-    while (m_char != '"') {
-        if (m_char == '\\') {
-            try {
-                next();
-            } catch (const EndOfIfstreamException &) {
-                clearBuf(Token::Type::Backslash);
-                return;
-            }
-
-            switch (m_char) {
-                case '\\':
-                    m_buf += '\\';
-                    break;
-                case '\"':
-                    m_buf += '"';
-                    break;
-                case '\n':
-                    m_buf += '\n';
-                    break;
-            }
-
-            try {
-                next();
-            } catch (const EndOfIfstreamException &) {
-                clearBuf(Token::Type::DoubleQuotedValue);
-                return;
-            }
-        }
-    }
-}
-
-std::vector<Token> Tokenizer::getTokens() const { return m_tokens; }
-
-void Tokenizer::leftBrace() { tokenizeSpecialChar(Token::Type::LeftBrace); }
-
-void Tokenizer::leftBracket() { tokenizeSpecialChar(Token::Type::LeftBracket); }
+void Tokenizer::leftBracket() {}
 
 const char Tokenizer::lookahead() {
     // Looks ahead of the current character from ifstream
@@ -231,33 +165,13 @@ void Tokenizer::next() {
     }
 }
 
-void Tokenizer::numSign() { tokenizeSpecialChar(Token::Type::NumSign); }
+void Tokenizer::numSign() {}
 
-void Tokenizer::otherSymbols() { tokenizeSpecialChar(Token::Type::Symbol); }
+void Tokenizer::otherSymbols() {}
 
-void Tokenizer::singleQuote() { tokenizeSpecialChar(Token::Type::SingleQuote); }
+void Tokenizer::singleQuote() {}
 
-void Tokenizer::scalar() {
-    if (!isAlnum(m_char)) return;
-    while (isAlnum(m_char)) {
-        m_buf += m_char;
-        try {
-            next();
-        } catch (const EndOfIfstreamException &) {
-            return;
-        }
-    }
-
-    Token &tokenBuf = clearBuf(Token::Type::Key);
-
-    while (isSpace(m_char)) {
-        whitespace();
-    }
-
-    if (m_char != ':') {
-        tokenBuf.m_type = Token::Type::Value;
-    }
-}
+void Tokenizer::scalar() {}
 
 void Tokenizer::sym() {
     if (!isSymbol(m_char)) return;
@@ -317,49 +231,14 @@ void Tokenizer::tokenize() {
     }
 
     while (!m_endOfFile) {
-        scalar();
-        sym();
-        whitespace();
     }
 }
 
-void Tokenizer::tokenizeSpecialChar(const Token::Type &tokenType) {
-    try {
-        next();
-    } catch (const EndOfIfstreamException) {
-        clearBuf(tokenType);
-        return;
-    }
+void Tokenizer::space() {}
 
-    clearBuf(tokenType);
-}
+void Tokenizer::tab() {}
 
-void Tokenizer::space() { tokenizeSpecialChar(Token::Type::Space); }
-
-void Tokenizer::tab() { tokenizeSpecialChar(Token::Type::Tab); }
-
-void Tokenizer::whitespace() {
-    if (!isSpace(m_char)) return;
-    m_buf += m_char;
-
-    switch (m_char) {
-        case '\n':
-            newline();
-            break;
-        case ' ':
-            space();
-            break;
-        case '\t':
-            tab();
-            break;
-    }
-
-    try {
-        next();
-    } catch (const EndOfIfstreamException &) {
-        return;
-    }
-}
+void Tokenizer::whitespace() {}
 
 Tokenizer::~Tokenizer() {}
 }  // namespace YAML

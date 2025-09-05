@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-04-2025
+ *   Modified: 09-05-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -81,6 +81,18 @@ class Token {
     virtual Type getType() const = 0;
     virtual void setType(const Type &type) = 0;
     // End of basic Token functions
+
+    // Start of basic SingleToken functions
+    virtual std::string &&getData();
+    virtual void setData(const std::string &data);
+    // End of basic SingleToken functions
+
+    // Start of basic GroupToken functions
+    virtual void clearTokenGroup();
+    virtual void insertToTokenGroup(std::unique_ptr<Token> &&token);
+    virtual bool isTokenGroupEmpty() const;
+    virtual size_t sizeOfTokenGroup() const;
+    // End of basic GroupToken functions
 };
 
 class SingleToken : public Token {
@@ -92,8 +104,8 @@ class SingleToken : public Token {
     SingleToken(const SingleToken &other);
     SingleToken &operator=(const SingleToken &other);
     // This will move the data out of m_data! Only call once
-    std::string &&getData();
-    void setData(const std::string &data);
+    std::string &&getData() override;
+    void setData(const std::string &data) override;
     ~SingleToken();
 
     // Pure virtual functions from Token
@@ -117,10 +129,10 @@ class GroupToken : public Token {
     GroupToken(GroupToken &&other);
     GroupToken &operator=(const GroupToken &other);
     GroupToken &operator=(GroupToken &&other);
-    void clearTokenGroup();
-    void insertToTokenGroup(Token *token);
-    bool isTokenGroupEmpty() const;
-    size_t sizeOfTokenGroup() const;
+    void clearTokenGroup() override;
+    void insertToTokenGroup(std::unique_ptr<Token> &&token) override;
+    bool isTokenGroupEmpty() const override;
+    size_t sizeOfTokenGroup() const override;
     ~GroupToken();
 
     // Pure virtual functions from Token
@@ -173,8 +185,6 @@ class Tokenizer {
     void sym();
     void tab();
     void toggleEscape();
-    void tokenizeSpecialChar(
-        const Token::Type &tokenType);  // Tokenize a single character
     void whitespace();
 
    private:
