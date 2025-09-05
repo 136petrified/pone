@@ -162,7 +162,9 @@ class Tokenizer {
     void colon();
     void comma();
     void comment();
-    void createToken();
+    void createGroupToken(const Token::Type &tokenType);
+    void createSingleToken(const Token::Type &tokenType);
+    void createSingleToken(const Token::Type &tokenType, std::string &&data);
     void dash();
     void doubleQuote();
     void doubleQuotedKey();
@@ -190,7 +192,7 @@ class Tokenizer {
    private:
     std::string m_file_name;
     std::ifstream m_ifs;
-    std::vector<Token> m_tokens;
+    std::vector<std::unique_ptr<Token>> m_tokens;
     size_t m_tokensSize;
     std::string m_buf;
     char m_char;

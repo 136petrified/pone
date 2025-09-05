@@ -118,9 +118,16 @@ void Tokenizer::clearBuf() {}
 
 void Tokenizer::colon() {}
 
-void Tokenizer::comma() { tokenizeSpecialChar(Token::Type::Comma); }
+void Tokenizer::comma() {}
 
 void Tokenizer::comment() {}
+
+void createGroupToken(const Token::Type &tokenType) {}
+
+void Tokenizer::createSingleToken(const Token::Type &tokenType) {}
+
+void Tokenizer::createSingleToken(const Token::Type &tokenType,
+                                  std::string &&data) {}
 
 void Tokenizer::dash() {}
 
@@ -149,13 +156,11 @@ const char Tokenizer::lookahead() {
     return static_cast<char>(nextChar);
 }
 
-void Tokenizer::rightBrace() { tokenizeSpecialChar(Token::Type::RightBrace); }
+void Tokenizer::rightBrace() {}
 
-void Tokenizer::rightBracket() {
-    tokenizeSpecialChar(Token::Type::RightBracket);
-}
+void Tokenizer::rightBracket() {}
 
-void Tokenizer::newline() { tokenizeSpecialChar(Token::Type::Newline); }
+void Tokenizer::newline() {}
 
 void Tokenizer::next() {
     m_ifs.get(m_char);
@@ -238,7 +243,27 @@ void Tokenizer::space() {}
 
 void Tokenizer::tab() {}
 
-void Tokenizer::whitespace() {}
+void Tokenizer::whitespace() {
+    while (isSpace(m_char)) {
+        switch (m_char) {
+            case '\n':
+                newline();
+                break;
+            case ' ':
+                space();
+                break;
+            case '\t':
+                tab();
+                break;
+        }
+
+        try {
+            next();
+        } catch (const EndOfIfstreamException &) {
+            return;
+        }
+    }
+}
 
 Tokenizer::~Tokenizer() {}
 }  // namespace YAML
