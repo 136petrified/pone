@@ -8,6 +8,7 @@
 #include <array>
 #include <fstream>
 #include <memory>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -29,9 +30,11 @@ class Token {
         LeftBrace,
         LeftBracket,
         Newline,
+        None,
         NumSign,
         RightBrace,
         RightBracket,
+        Scalar,
         SingleQuote,
         SingleQuotedKey,
         SingleQuotedValue,
@@ -47,7 +50,7 @@ class Token {
         Single
     };
 
-    static const int ALL_TOKEN_SYM_TYPES_SIZE = 22;
+    static const int ALL_TOKEN_SYM_TYPES_SIZE = 24;
     const std::array<Type, ALL_TOKEN_SYM_TYPES_SIZE> ALL_TOKEN_SYM_TYPES = {
         Type::Backslash,
         Type::Colon,
@@ -61,9 +64,11 @@ class Token {
         Type::LeftBracket,
         Type::LeftBrace,
         Type::Newline,
+        Type::None,
         Type::NumSign,
         Type::RightBrace,
         Type::RightBracket,
+        Type::Scalar,
         Type::SingleQuote,
         Type::SingleQuotedKey,
         Type::SingleQuotedValue,
@@ -89,6 +94,7 @@ class Token {
 
     // Start of basic GroupToken functions
     virtual void clearTokenGroup();
+    virtual std::vector<std::unique_ptr<Token>> getTokenGroup() const;
     virtual void insertToTokenGroup(std::unique_ptr<Token> &&token);
     virtual bool isTokenGroupEmpty() const;
     virtual size_t sizeOfTokenGroup() const;
@@ -130,6 +136,7 @@ class GroupToken : public Token {
     GroupToken &operator=(const GroupToken &other);
     GroupToken &operator=(GroupToken &&other);
     void clearTokenGroup() override;
+    std::vector<std::unique_ptr<Token>> getTokenGroup() const override;
     void insertToTokenGroup(std::unique_ptr<Token> &&token) override;
     bool isTokenGroupEmpty() const override;
     size_t sizeOfTokenGroup() const override;
@@ -158,44 +165,76 @@ class Tokenizer {
 
    protected:
     void backslash();
+    void backslash(GroupToken &gtok);
     void clearBuf();
     void colon();
+    void colon(GroupToken &gtok);
     void comma();
+    void comma(GroupToken &gtok);
     void comment();
-    void createGroupToken(const Token::Type &tokenType);
-    void createSingleToken(const Token::Type &tokenType);
-    void createSingleToken(const Token::Type &tokenType, std::string &&data);
+    std::unique_ptr<Token> createGroupToken(const Token::Type &tokenType) const;
+    std::unique_ptr<Token> createSingleToken(
+        const Token::Type &tokenType) const;
+    std::unique_ptr<Token> createSingleToken(const Token::Type &tokenType,
+                                             std::string &&data) const;
     void dash();
+    void dash(GroupToken &gtok);
     void doubleQuote();
+    void doubleQuote(GroupToken &gtok);
     void doubleQuotedKey();
+    void doubleQuotedKey(GroupToken &gtok);
     void doubleQuotedValue();
+    void doubleQuotedValue(GroupToken &gtok);
+    void insertGroupTokenToGroupToken(GroupToken &gtok,
+                                      const Token::Type &tokenType);
+    void insertSingleTokenToGroupToken(GroupToken &gtok,
+                                       const Token::Type &tokenType);
     void key();
+    void key(GroupToken &gtok);
     void leftBrace();
+    void leftBrace(GroupToken &gtok);
     void leftBracket();
+    void leftBracket(GroupToken &gtok);
     const char lookahead();
     void rightBrace();
+    void rightBrace(GroupToken &gtok);
     void rightBracket();
+    void rightBracket(GroupToken &gtok);
     void newline();
+    void newline(GroupToken &gtok);
     void next();
     void numSign();
+    void numSign(GroupToken &gtok);
     void otherSymbols();
+    void otherSymbols(GroupToken &gtok);
     void scalar();
+    void scalar(GroupToken &gtok);
     void singleQuote();
+    void singleQuote(GroupToken &gtok);
     void singleQuotedKey();
+    void singleQuotedKey(GroupToken &gtok);
     void singleQuotedValue();
+    void singleQuotedValue(GroupToken &gtok);
     void space();
+    void space(GroupToken &gtok);
+    // This is a symbol "multiplexer"
     void sym();
     void tab();
-    void toggleEscape();
+    void tab(GroupToken &gtok);
+    // This is a whitespace "multiplexer"
     void whitespace();
 
    private:
     std::string m_file_name;
     std::ifstream m_ifs;
+
     std::vector<std::unique_ptr<Token>> m_tokens;
     size_t m_tokensSize;
+
     std::string m_buf;
     char m_char;
+
+    std::stack<GroupToken> groupTokenStack;
     bool m_endOfFile;
 };
 }  // namespace YAML
