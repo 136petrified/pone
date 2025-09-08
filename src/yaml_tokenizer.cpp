@@ -61,16 +61,13 @@ GroupToken::GroupToken(const Token::Type &type)
     : m_class{Token::Class::Group}, m_type{type} {}
 
 GroupToken::GroupToken(const GroupToken &other)
-    : m_tokenGroupSize{other.m_tokenGroupSize} {}
+    : m_tokenGroup{other.getTokenGroup()},
+      m_tokenGroupSize{other.m_tokenGroupSize} {}
 
 GroupToken &GroupToken::operator=(const GroupToken &other) {
     if (this != &other) {
         clearTokenGroup();
-        for (const auto &token : other.m_tokenGroup) {
-            if (token != nullptr) {
-                insertToTokenGroup(token->clone());
-            }
-        }
+        m_tokenGroup = other.getTokenGroup();
     }
 
     return *this;
@@ -78,7 +75,6 @@ GroupToken &GroupToken::operator=(const GroupToken &other) {
 
 void GroupToken::clearTokenGroup() { m_tokenGroup.clear(); }
 
-// TODO: Find a way to copy the GroupTokens in GroupTokens
 std::vector<std::unique_ptr<Token>> GroupToken::getTokenGroup() const {
     std::vector<std::unique_ptr<Token>> newTokenVector;
 
@@ -102,7 +98,10 @@ size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
 std::unique_ptr<Token> GroupToken::clone() const {
     // Make a new GroupToken
-    GroupToken newGroupToken{m_type};
+    // Do not invoke copy constructor
+    GroupToken newGroupToken;
+
+    newGroupToken.setType(m_type);
 
     for (const auto &token : m_tokenGroup) {
         if (token != nullptr) {
