@@ -1,9 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 09-06-2025
+ *   Modified: 09-07-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
+#include <memory>
 #include <utility>
 
 namespace YAML {
@@ -60,18 +61,12 @@ GroupToken::GroupToken(const Token::Type &type)
     : m_class{Token::Class::Group}, m_type{type} {}
 
 GroupToken::GroupToken(const GroupToken &other)
-    : m_tokenGroupSize{other.m_tokenGroupSize} {
-    for (auto &token : other.m_tokenGroup) {
-        if (token != nullptr) {
-            insertToTokenGroup(token->clone());
-        }
-    }
-}
+    : m_tokenGroupSize{other.m_tokenGroupSize} {}
 
 GroupToken &GroupToken::operator=(const GroupToken &other) {
     if (this != &other) {
         clearTokenGroup();
-        for (auto &token : other.m_tokenGroup) {
+        for (const auto &token : other.m_tokenGroup) {
             if (token != nullptr) {
                 insertToTokenGroup(token->clone());
             }
@@ -81,21 +76,17 @@ GroupToken &GroupToken::operator=(const GroupToken &other) {
     return *this;
 }
 
-void GroupToken::clearTokenGroup() {
-    for (auto &token : m_tokenGroup) {
-        if (token->getClass() == Token::Class::Group) {
-        }
-    }
-}
+void GroupToken::clearTokenGroup() { m_tokenGroup.clear(); }
 
+// TODO: Find a way to copy the GroupTokens in GroupTokens
 std::vector<std::unique_ptr<Token>> GroupToken::getTokenGroup() const {
     std::vector<std::unique_ptr<Token>> newTokenVector;
 
     for (const auto &token : m_tokenGroup) {
-        if (token->getClass() == Token::Class::Group) {
-            token->clone()
-        }
+        newTokenVector.push_back(token->clone());
     }
+
+    return newTokenVector;
 }
 
 void GroupToken::insertToTokenGroup(std::unique_ptr<Token> &&token) {
@@ -110,7 +101,17 @@ bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
 std::unique_ptr<Token> GroupToken::clone() const {
-    return std::make_unique<GroupToken>(*this);
+    // Make a new GroupToken
+    GroupToken newGroupToken{m_type};
+
+    for (const auto &token : m_tokenGroup) {
+        if (token != nullptr) {
+            // If this is a GroupToken, recursively add all subtokens
+            newGroupToken.insertToTokenGroup(token->clone());
+        }
+    }
+
+    return std::make_unique<GroupToken>(newGroupToken);
 }
 
 GroupToken::~GroupToken() {}
