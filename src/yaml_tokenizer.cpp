@@ -1,8 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 09-07-2025
+ *   Modified: 09-08-2025
  */
 
 #include "yaml_tokenizer.hpp"
+
+#include <gtest/gtest.h>
 
 #include <memory>
 #include <utility>
@@ -147,7 +149,7 @@ void Tokenizer::backslash(GroupToken &gtok) {
     insertSingleTokenToGroupToken(gtok, Token::Type::Backslash);
 }
 
-void Tokenizer::clearBuf() {}
+void Tokenizer::clearBuf() { m_buf.clear(); }
 
 void Tokenizer::colon() { createSingleToken(Token::Type::Colon); }
 
@@ -163,23 +165,20 @@ void Tokenizer::comma(GroupToken &gtok) {
 
 void Tokenizer::comment() {}
 
-// TODO: Implement token creation functions
 std::unique_ptr<Token> Tokenizer::createGroupToken(
     const Token::Type &tokenType) const {
-    // Dummy value
-    return std::unique_ptr<GroupToken>();
+    return std::make_unique<GroupToken>(GroupToken{tokenType});
 }
 
 std::unique_ptr<Token> Tokenizer::createSingleToken(
     const Token::Type &tokenType) const {
-    // Dummy value
-    return std::unique_ptr<SingleToken>();
+    return std::make_unique<SingleToken>(SingleToken{tokenType});
 }
 
 std::unique_ptr<Token> Tokenizer::createSingleToken(
     const Token::Type &tokenType, std::string &&data) const {
-    // Dummy value
-    return std::unique_ptr<SingleToken>();
+    return std::make_unique<SingleToken>(
+        SingleToken{tokenType, std::move(data)});
 }
 
 void Tokenizer::dash() { createSingleToken(Token::Type::Dash); }
@@ -193,10 +192,6 @@ void Tokenizer::doubleQuote() { createSingleToken(Token::Type::DoubleQuote); }
 void Tokenizer::doubleQuote(GroupToken &gtok) {
     insertSingleTokenToGroupToken(gtok, Token::Type::DoubleQuote);
 }
-
-void Tokenizer::doubleQuotedKey() {}
-
-void Tokenizer::doubleQuotedValue() {}
 
 std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
     /* Copy every single unique_ptr from m_tokens
@@ -241,17 +236,7 @@ const char Tokenizer::lookahead() {
     return static_cast<char>(nextChar);
 }
 
-void Tokenizer::rightBrace() { createSingleToken(Token::Type::RightBrace); }
-
-void Tokenizer::rightBrace(GroupToken &gtok) {
-    insertSingleTokenToGroupToken(gtok, Token::Type::RightBrace);
-}
-
-void Tokenizer::rightBracket() { createSingleToken(Token::Type::RightBracket); }
-
-void Tokenizer::rightBracket(GroupToken &gtok) {
-    insertSingleTokenToGroupToken(gtok, Token::Type::RightBracket);
-}
+void Tokenizer::mapping() {}
 
 void Tokenizer::newline() { createSingleToken(Token::Type::Newline); }
 
@@ -274,6 +259,19 @@ void Tokenizer::otherSymbols() { createSingleToken(Token::Type::Symbol); }
 void Tokenizer::otherSymbols(GroupToken &gtok) {
     insertSingleTokenToGroupToken(gtok, Token::Type::Symbol);
 }
+
+void Tokenizer::rightBrace() { createSingleToken(Token::Type::RightBrace); }
+
+void Tokenizer::rightBrace(GroupToken &gtok) {
+    insertSingleTokenToGroupToken(gtok, Token::Type::RightBrace);
+}
+
+void Tokenizer::rightBracket() { createSingleToken(Token::Type::RightBracket); }
+
+void Tokenizer::rightBracket(GroupToken &gtok) {
+    insertSingleTokenToGroupToken(gtok, Token::Type::RightBracket);
+}
+
 void Tokenizer::singleQuote() { createSingleToken(Token::Type::SingleQuote); }
 
 void Tokenizer::singleQuote(GroupToken &gtok) {
@@ -330,6 +328,56 @@ void Tokenizer::sym() {
     }
 }
 
+void Tokenizer::sym(GroupToken &gtok) {
+    if (!isSymbol(m_char)) return;
+    m_buf += m_char;
+
+    switch (m_char) {
+        case '\\':
+            backslash(gtok);
+            break;
+        case ':':
+            colon(gtok);
+            break;
+        case ',':
+            comma(gtok);
+            break;
+        case '-':
+            dash(gtok);
+            break;
+        case '"':
+            doubleQuote(gtok);
+            break;
+        case '{':
+            leftBrace(gtok);
+            break;
+        case '[':
+            leftBracket(gtok);
+            break;
+        case '#':
+            numSign(gtok);
+            break;
+        case '}':
+            rightBrace(gtok);
+            break;
+        case ']':
+            rightBracket(gtok);
+            break;
+        case '\'':
+            singleQuote(gtok);
+            break;
+        default:
+            otherSymbols(gtok);
+            break;
+    }
+
+    try {
+        next();
+    } catch (const EndOfIfstreamException &) {
+        return;
+    }
+}
+
 void Tokenizer::tokenize() {
     try {
         next();  // Start with first token
@@ -370,6 +418,28 @@ void Tokenizer::whitespace() {
         try {
             next();
         } catch (const EndOfIfstreamException &) {
+            return;
+        }
+    }
+}
+
+void Tokenizer::whitespace(GroupToken &gtok) {
+    while (isSpace(m_char)) {
+        switch (m_char) {
+            case '\n':
+                newline(gtok);
+                break;
+            case ' ':
+                space(gtok);
+                break;
+            case '\t':
+                tab(gtok);
+                break;
+        }
+
+        try {
+            next();
+        } catch (const EndOfIfstreamException) {
             return;
         }
     }

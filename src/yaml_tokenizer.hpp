@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-05-2025
+ *   Modified: 09-08-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -172,6 +172,7 @@ class Tokenizer {
     void comma();
     void comma(GroupToken &gtok);
     void comment();
+    // TODO: Change type to derived
     std::unique_ptr<Token> createGroupToken(const Token::Type &tokenType) const;
     std::unique_ptr<Token> createSingleToken(
         const Token::Type &tokenType) const;
@@ -181,9 +182,7 @@ class Tokenizer {
     void dash(GroupToken &gtok);
     void doubleQuote();
     void doubleQuote(GroupToken &gtok);
-    void doubleQuotedKey();
     void doubleQuotedKey(GroupToken &gtok);
-    void doubleQuotedValue();
     void doubleQuotedValue(GroupToken &gtok);
     void insertGroupTokenToGroupToken(GroupToken &gtok,
                                       const Token::Type &tokenType);
@@ -196,10 +195,7 @@ class Tokenizer {
     void leftBracket();
     void leftBracket(GroupToken &gtok);
     const char lookahead();
-    void rightBrace();
-    void rightBrace(GroupToken &gtok);
-    void rightBracket();
-    void rightBracket(GroupToken &gtok);
+    void mapping();
     void newline();
     void newline(GroupToken &gtok);
     void next();
@@ -207,6 +203,10 @@ class Tokenizer {
     void numSign(GroupToken &gtok);
     void otherSymbols();
     void otherSymbols(GroupToken &gtok);
+    void rightBrace();
+    void rightBrace(GroupToken &gtok);
+    void rightBracket();
+    void rightBracket(GroupToken &gtok);
     void scalar();
     void scalar(GroupToken &gtok);
     void singleQuote();
@@ -219,10 +219,14 @@ class Tokenizer {
     void space(GroupToken &gtok);
     // This is a symbol "multiplexer"
     void sym();
+    void sym(GroupToken &gtok);
     void tab();
     void tab(GroupToken &gtok);
+    void value();
+    void value(GroupToken &gtok);
     // This is a whitespace "multiplexer"
     void whitespace();
+    void whitespace(GroupToken &gtok);
 
    private:
     std::string m_file_name;
