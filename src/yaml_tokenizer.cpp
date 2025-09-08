@@ -97,20 +97,7 @@ bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
 std::unique_ptr<Token> GroupToken::clone() const {
-    // Make a new GroupToken
-    // Do not invoke copy constructor
-    GroupToken newGroupToken;
-
-    newGroupToken.setType(m_type);
-
-    for (const auto &token : m_tokenGroup) {
-        if (token != nullptr) {
-            // If this is a GroupToken, recursively add all subtokens
-            newGroupToken.insertToTokenGroup(token->clone());
-        }
-    }
-
-    return std::make_unique<GroupToken>(newGroupToken);
+    return std::make_unique<GroupToken>(*this);
 }
 
 GroupToken::~GroupToken() {}
