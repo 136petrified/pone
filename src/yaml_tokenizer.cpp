@@ -205,10 +205,8 @@ std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
     std::vector<std::unique_ptr<Token>> newTokenVector;
 
     for (const auto &token : m_tokens) {
-        Token::Type tokenType = token->getType();
-        if (token->getClass() == Token::Class::Group) {
-        } else {
-            newTokenVector.push_back(createSingleToken(tokenType));
+        if (token != nullptr) {
+            newTokenVector.push_back(token->clone());
         }
     }
 
