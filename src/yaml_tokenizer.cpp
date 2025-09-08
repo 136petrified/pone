@@ -60,6 +60,9 @@ GroupToken::GroupToken() : m_class{Token::Class::Group} {}
 GroupToken::GroupToken(const Token::Type &type)
     : m_class{Token::Class::Group}, m_type{type} {}
 
+// Do not call clone()
+// This will not copy members directly into the current object
+
 GroupToken::GroupToken(const GroupToken &other)
     : m_tokenGroup{other.getTokenGroup()},
       m_tokenGroupSize{other.m_tokenGroupSize} {}
@@ -79,7 +82,9 @@ std::vector<std::unique_ptr<Token>> GroupToken::getTokenGroup() const {
     std::vector<std::unique_ptr<Token>> newTokenVector;
 
     for (const auto &token : m_tokenGroup) {
-        newTokenVector.push_back(token->clone());
+        if (token != nullptr) {
+            newTokenVector.push_back(token->clone());
+        }
     }
 
     return newTokenVector;
@@ -97,8 +102,28 @@ bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
 std::unique_ptr<Token> GroupToken::clone() const {
-    return std::make_unique<GroupToken>(*this);
+    // Make a new GroupToken
+    // Do not call copy constructor
+    // It does not use recursion directly
+    GroupToken newGroupToken;
+
+    newGroupToken.setType(m_type);
+
+    for (const auto &token : m_tokenGroup) {
+        if (token != nullptr) {
+            // If this is a GroupToken, recursively add all subtokens
+            newGroupToken.insertToTokenGroup(token->clone());
+        }
+    }
+
+    return std::make_unique<GroupToken>(newGroupToken);
 }
+
+Token::Class GroupToken::getClass() const { return m_class; }
+
+Token::Type GroupToken::getType() const { return m_type; }
+
+void GroupToken::setType(const Token::Type &type) { m_type = type; }
 
 GroupToken::~GroupToken() {}
 
