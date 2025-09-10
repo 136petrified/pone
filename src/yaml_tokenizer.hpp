@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-08-2025
+ *   Modified: 09-10-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -172,22 +172,41 @@ class Tokenizer {
     void comma();
     void comma(GroupToken &gtok);
     void comment();
-    // TODO: Change type to derived
-    std::unique_ptr<Token> createGroupToken(const Token::Type &tokenType) const;
-    std::unique_ptr<Token> createSingleToken(
+    std::unique_ptr<GroupToken> createGroupToken(
         const Token::Type &tokenType) const;
-    std::unique_ptr<Token> createSingleToken(const Token::Type &tokenType,
-                                             std::string &&data) const;
+    std::unique_ptr<SingleToken> createSingleToken(
+        const Token::Type &tokenType) const;
+    std::unique_ptr<SingleToken> createSingleToken(const Token::Type &tokenType,
+                                                   std::string &&data) const;
     void dash();
     void dash(GroupToken &gtok);
     void doubleQuote();
     void doubleQuote(GroupToken &gtok);
     void doubleQuotedKey(GroupToken &gtok);
     void doubleQuotedValue(GroupToken &gtok);
-    void insertGroupTokenToGroupToken(GroupToken &gtok,
+    void insertGroupTokenToGroupToken(GroupToken &to_gtok,
                                       const Token::Type &tokenType);
-    void insertSingleTokenToGroupToken(GroupToken &gtok,
+    void insertGroupTokenToGroupToken(
+        GroupToken &to_gtok, const std::unique_ptr<GroupToken> &gtokPtr);
+    void insertGroupTokenToGroupToken(GroupToken &to_gtok,
+                                      std::unique_ptr<GroupToken> &&gtokPtr);
+    void insertGroupTokenToTokens(const Token::Type &tokenType);
+    void insertGroupTokenToTokens(const std::unique_ptr<GroupToken> &gtokPtr);
+    void insertGroupTokenToTokens(std::unique_ptr<GroupToken> &&gtokPtr);
+    void insertSingleTokenToGroupToken(GroupToken &to_gtok,
                                        const Token::Type &tokenType);
+    void insertSingleTokenToGroupToken(GroupToken &to_gtok,
+                                       const Token::Type &tokenType,
+                                       std::string &&data);
+    void insertSingleTokenToGroupToken(
+        GroupToken &to_gtok, const std::unique_ptr<SingleToken> &stokPtr);
+    void insertSingleTokenToGroupToken(GroupToken &to_gtok,
+                                       std::unique_ptr<SingleToken> &&stokPtr);
+    void insertSingleTokenToTokens(const Token::Type &tokenType);
+    void insertSingleTokenToTokens(const Token::Type &tokenType,
+                                   std::string &&data);
+    void insertSingleTokenToTokens(const std::unique_ptr<SingleToken> &stokPtr);
+    void insertSingleTokenToTokens(std::unique_ptr<SingleToken> &&stokPtr);
     void key();
     void key(GroupToken &gtok);
     void leftBrace();
