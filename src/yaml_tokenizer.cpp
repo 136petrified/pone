@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-10-2025
+ *   Modified: 09-11-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -39,11 +39,11 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
     return *this;
 }
 
-std::string &&SingleToken::getData() { return std::move(m_data); }
-
 std::unique_ptr<Token> SingleToken::clone() const {
     return std::make_unique<SingleToken>(*this);
 }
+
+const std::string &SingleToken::getData() const { return m_data; }
 
 void SingleToken::setData(const std::string &data) { m_data = data; }
 
@@ -161,11 +161,40 @@ void Tokenizer::comma(GroupToken &gtok) {
     insertSingleTokenToGroupToken(gtok, Token::Type::Comma);
 }
 
-void Tokenizer::comment() {}
+void Tokenizer::comment() {
+    // Assume unquoted and numSign
+    // is consumed
+
+    GroupToken commentToken{Token::Type::Comment};
+
+    while (m_char != '\n') {  // Stop at indent
+        scalar(commentToken);
+        sym(commentToken);
+        whitespace(commentToken);
+    }
+
+    insertGroupTokenToTokens(createGroupToken(commentToken));
+}
+
+void Tokenizer::comment(GroupToken &gtok) {
+    GroupToken commentToken{Token::Type::Comment};
+
+    while (m_char != '\n') {  // Stop at indent
+        scalar(commentToken);
+        sym(commentToken);
+        whitespace(commentToken);
+    }
+
+    insertGroupTokenToGroupToken(gtok, createGroupToken(commentToken));
+}
 
 std::unique_ptr<GroupToken> Tokenizer::createGroupToken(
     const Token::Type &tokenType) const {
     return std::make_unique<GroupToken>(GroupToken{tokenType});
+}
+
+std::unique_ptr<GroupToken> Tokenizer::createGroupToken(GroupToken &gtok) {
+    return std::make_unique<GroupToken>(gtok);
 }
 
 std::unique_ptr<SingleToken> Tokenizer::createSingleToken(
@@ -177,6 +206,10 @@ std::unique_ptr<SingleToken> Tokenizer::createSingleToken(
     const Token::Type &tokenType, std::string &&data) const {
     return std::make_unique<SingleToken>(
         SingleToken{tokenType, std::move(data)});
+}
+
+std::unique_ptr<SingleToken> Tokenizer::createSingleToken(SingleToken &stok) {
+    return std::make_unique<SingleToken>(stok);
 }
 
 void Tokenizer::dash() { createSingleToken(Token::Type::Dash); }
@@ -192,8 +225,8 @@ void Tokenizer::doubleQuote(GroupToken &gtok) {
 }
 
 std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
-    /* Copy every single unique_ptr from m_tokens
-     * and every GroupToken within it */
+    // Copy every single unique_ptr from m_tokens
+    // and every GroupToken within it
 
     std::vector<std::unique_ptr<Token>> newTokenVector;
 
@@ -461,7 +494,6 @@ void Tokenizer::tab() { createSingleToken(Token::Type::Tab); }
 
 void Tokenizer::tab(GroupToken &gtok) {
     insertSingleTokenToGroupToken(gtok, Token::Type::Tab);
-    // TODO: Implement token creation functions
 }
 
 void Tokenizer::whitespace() {

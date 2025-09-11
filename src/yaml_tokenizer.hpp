@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-10-2025
+ *   Modified: 09-11-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -88,7 +88,7 @@ class Token {
     // End of basic Token functions
 
     // Start of basic SingleToken functions
-    virtual std::string &&getData();
+    virtual const std::string &getData() const;
     virtual void setData(const std::string &data);
     // End of basic SingleToken functions
 
@@ -110,7 +110,7 @@ class SingleToken : public Token {
     SingleToken(const SingleToken &other);
     SingleToken &operator=(const SingleToken &other);
     // This will move the data out of m_data! Only call once
-    std::string &&getData() override;
+    const std::string &getData() const override;
     void setData(const std::string &data) override;
     ~SingleToken();
 
@@ -125,6 +125,11 @@ class SingleToken : public Token {
     std::string m_data;
     Token::Type m_type;
 };
+
+/*  func(Token &) means that you
+ *  should pass the reference before making it read access
+ *  only
+ */
 
 class GroupToken : public Token {
     // NOTE: This allows for a Token to be made up of Tokens
@@ -165,19 +170,22 @@ class Tokenizer {
 
    protected:
     void backslash();
-    void backslash(GroupToken &gtok);
+    void backslash(GroupToken &gtokPtr);
     void clearBuf();
     void colon();
     void colon(GroupToken &gtok);
     void comma();
     void comma(GroupToken &gtok);
     void comment();
+    void comment(GroupToken &gtok);
     std::unique_ptr<GroupToken> createGroupToken(
         const Token::Type &tokenType) const;
+    std::unique_ptr<GroupToken> createGroupToken(GroupToken &gtok);
     std::unique_ptr<SingleToken> createSingleToken(
         const Token::Type &tokenType) const;
     std::unique_ptr<SingleToken> createSingleToken(const Token::Type &tokenType,
                                                    std::string &&data) const;
+    std::unique_ptr<SingleToken> createSingleToken(SingleToken &stok);
     void dash();
     void dash(GroupToken &gtok);
     void doubleQuote();
