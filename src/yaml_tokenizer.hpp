@@ -178,14 +178,14 @@ class Tokenizer {
 
    protected:
     void backslash();
-    void backslash(GroupToken &gtokPtr);
+    void backslash(GroupToken &toGtok);
     void clearBuf();
     void colon();
-    void colon(GroupToken &gtok);
+    void colon(GroupToken &toGtok);
     void comma();
-    void comma(GroupToken &gtok);
+    void comma(GroupToken &toGtok);
     void comment();
-    void comment(GroupToken &gtok);
+    void comment(GroupToken &toGtok);
     std::unique_ptr<GroupToken> createGroupToken(
         const Token::Type &tokenType) const;
     std::unique_ptr<GroupToken> createGroupToken(GroupToken &gtok);
@@ -195,28 +195,28 @@ class Tokenizer {
                                                    std::string &&data) const;
     std::unique_ptr<SingleToken> createSingleToken(SingleToken &stok);
     void dash();
-    void dash(GroupToken &gtok);
+    void dash(GroupToken &toGtok);
     void doubleQuote();
-    void doubleQuote(GroupToken &gtok);
-    void doubleQuotedKey(GroupToken &gtok);
-    void doubleQuotedValue(GroupToken &gtok);
-    void insertGroupTokenToGroupToken(GroupToken &to_gtok,
+    void doubleQuote(GroupToken &toGtok);
+    void doubleQuotedKey(GroupToken &toGtok);
+    void doubleQuotedValue(GroupToken &toGtok);
+    void insertGroupTokenToGroupToken(GroupToken &toGtok,
                                       const Token::Type &tokenType);
     void insertGroupTokenToGroupToken(
         GroupToken &to_gtok, const std::unique_ptr<GroupToken> &gtokPtr);
-    void insertGroupTokenToGroupToken(GroupToken &to_gtok,
+    void insertGroupTokenToGroupToken(GroupToken &toGtok,
                                       std::unique_ptr<GroupToken> &&gtokPtr);
     void insertGroupTokenToTokens(const Token::Type &tokenType);
     void insertGroupTokenToTokens(const std::unique_ptr<GroupToken> &gtokPtr);
     void insertGroupTokenToTokens(std::unique_ptr<GroupToken> &&gtokPtr);
-    void insertSingleTokenToGroupToken(GroupToken &to_gtok,
+    void insertSingleTokenToGroupToken(GroupToken &toGtok,
                                        const Token::Type &tokenType);
-    void insertSingleTokenToGroupToken(GroupToken &to_gtok,
+    void insertSingleTokenToGroupToken(GroupToken &toGtok,
                                        const Token::Type &tokenType,
                                        std::string &&data);
     void insertSingleTokenToGroupToken(
-        GroupToken &to_gtok, const std::unique_ptr<SingleToken> &stokPtr);
-    void insertSingleTokenToGroupToken(GroupToken &to_gtok,
+        GroupToken &toGtok, const std::unique_ptr<SingleToken> &stokPtr);
+    void insertSingleTokenToGroupToken(GroupToken &toGtok,
                                        std::unique_ptr<SingleToken> &&stokPtr);
     void insertSingleTokenToTokens(const Token::Type &tokenType);
     void insertSingleTokenToTokens(const Token::Type &tokenType,
@@ -224,47 +224,47 @@ class Tokenizer {
     void insertSingleTokenToTokens(const std::unique_ptr<SingleToken> &stokPtr);
     void insertSingleTokenToTokens(std::unique_ptr<SingleToken> &&stokPtr);
     void key();
-    void key(GroupToken &gtok);
+    void key(GroupToken &toGtok);
     void leftBrace();
-    void leftBrace(GroupToken &gtok);
+    void leftBrace(GroupToken &toGtok);
     void leftBracket();
-    void leftBracket(GroupToken &gtok);
+    void leftBracket(GroupToken &toGtok);
     const char lookahead();
     void mapping();
     void newline();
-    void newline(GroupToken &gtok);
+    void newline(GroupToken &toGtok);
     void next();
     void numSign();
-    void numSign(GroupToken &gtok);
+    void numSign(GroupToken &toGtok);
     void otherSymbols();
-    void otherSymbols(GroupToken &gtok);
+    void otherSymbols(GroupToken &toGtok);
     void rightBrace();
-    void rightBrace(GroupToken &gtok);
+    void rightBrace(GroupToken &toGtok);
     void rightBracket();
-    void rightBracket(GroupToken &gtok);
+    void rightBracket(GroupToken &toGtok);
     void scalar();
-    void scalar(GroupToken &gtok);
+    void scalar(GroupToken &toGtok);
     void singleQuote();
-    void singleQuote(GroupToken &gtok);
+    void singleQuote(GroupToken &toGtok);
     void singleQuotedKey();
-    void singleQuotedKey(GroupToken &gtok);
+    void singleQuotedKey(GroupToken &toGtok);
     void singleQuotedValue();
-    void singleQuotedValue(GroupToken &gtok);
+    void singleQuotedValue(GroupToken &toGtok);
     void space();
-    void space(GroupToken &gtok);
+    void space(GroupToken &toGtok);
     // This is a symbol "multiplexer"
     void sym();
-    void sym(GroupToken &gtok);
+    void sym(GroupToken &toGtok);
     void tab();
-    void tab(GroupToken &gtok);
+    void tab(GroupToken &toGtok);
     void value();
-    void value(GroupToken &gtok);
+    void value(GroupToken &toGtok);
     // This is a whitespace "multiplexer"
     void whitespace();
-    void whitespace(GroupToken &gtok);
+    void whitespace(GroupToken &toGtok);
 
    private:
-    std::string m_file_name;
+    std::string m_fileName;
     std::ifstream m_ifs;
 
     std::vector<std::unique_ptr<Token>> m_tokens;
