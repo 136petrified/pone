@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-11-2025
+ *   Modified: 09-12-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -15,50 +15,56 @@
 #include "yaml_utils.hpp"
 
 namespace YAML {
+
+/*! Abstract base class for Tokens.
+ */
 class Token {
    public:
+    /*! An enum of all types of Tokens. */
     enum class Type {
-        Backslash,
-        Colon,
-        Comma,
-        Comment,
-        Dash,
-        DoubleQuote,
-        DoubleQuotedKey,
-        DoubleQuotedValue,
-        Key,
-        LeftBrace,
-        LeftBracket,
-        Newline,
-        None,
-        NumSign,
-        RightBrace,
-        RightBracket,
-        Scalar,
-        SingleQuote,
-        SingleQuotedKey,
-        SingleQuotedValue,
-        Space,
-        Symbol,
-        Tab,
-        Value,
+        Backslash,         /*! The backslash character \ */
+        Colon,             /*! The colon character : */
+        Comma,             /*! The comma character , */
+        Comment,           /*! A grouped type for YAML comments */
+        Dash,              /*! The dash character -*/
+        DoubleQuote,       /*! The double quote character " */
+        DoubleQuotedKey,   /*! A grouped type for keys within double quotes */
+        DoubleQuotedValue, /*! A grouped type for values within double quotes */
+        Key,               /*! A grouped type for keys */
+        LeftBrace,         /*! The left brace character { */
+        LeftBracket,       /*! The left bracket character [ */
+        Newline,           /*! The newline character \n */
+        None,              /*! Placeholder token type */
+        NumSign,           /*! The number sign character # */
+        RightBrace,        /*! The right brace character } */
+        RightBracket,      /*! The right bracket character ]*/
+        Scalar,            /*! An alphanumeric identifier type */
+        SingleQuote,       /* The single quote character ' */
+        SingleQuotedKey,   /* A grouped type for keys within single quotes */
+        SingleQuotedValue, /* A grouped type for values within single quotes */
+        Space,             /* The space character ' ' */
+        Symbol,            /* A generic symbol character type */
+        Tab,               /* The tab character \t */
+        Value,             /* A grouped type for values */
     };
 
+    /*! An enum of all derived Token classes */
     enum class Class {
         // This is a "type" to differentiate derived classes
-        Group,
-        Single
+        Group, /*! The GroupToken class */
+        Single /*! The SingleToken class */
     };
 
-    static const int ALL_TOKEN_SYM_TYPES_SIZE = 24;
-    const std::array<Type, ALL_TOKEN_SYM_TYPES_SIZE> ALL_TOKEN_SYM_TYPES = {
+    /*! The total size of the token types. */
+    static const int ALL_TOKENS_SIZE = 24;
+    const std::array<Type, ALL_TOKENS_SIZE> ALL_TOKEN_TYPES = {
         Type::Backslash,
         Type::Colon,
         Type::Comma,
         Type::Comment,
         Type::Dash,
         Type::DoubleQuote,
-        Type::DoubleQuotedKey,  // TODO: Find way to separate this
+        Type::DoubleQuotedKey,
         Type::DoubleQuotedValue,
         Type::Key,
         Type::LeftBracket,
@@ -77,7 +83,9 @@ class Token {
         Type::Tab,
         Type::Value};
 
+    /*! Token constructor. */
     Token();
+    /*! Pure virtual token destructor */
     virtual ~Token() = 0;
 
     // Start of basic Token functions
