@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-11-2025
+ *   Modified: 09-13-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -391,9 +391,39 @@ void Tokenizer::rightBracket(GroupToken &toGtok) {
     insertSingleTokenToGroupToken(toGtok, Token::Type::RightBracket);
 }
 
-void Tokenizer::scalar() {}
+void Tokenizer::scalar() {
+    if (!isAlnum(m_char)) return;
+    while (isAlnum(m_char)) {
+        m_buf += m_char;
 
-void Tokenizer::scalar(GroupToken &toGtok) {}
+        try {
+            next();
+        } catch (const EndOfIfstreamException &) {
+            return;
+        }
+    }
+
+    insertSingleTokenToTokens(
+        createSingleToken(Token::Type::Scalar, std::move(m_buf)));
+    clearBuf();  // Clear the buffer after creating the token
+}
+
+void Tokenizer::scalar(GroupToken &toGtok) {
+    if (!isAlnum(m_char)) return;
+    while (isAlnum(m_char)) {
+        m_buf += m_char;
+
+        try {
+            next();
+        } catch (const EndOfIfstreamException &) {
+            return;
+        }
+    }
+
+    insertSingleTokenToGroupToken(toGtok,
+                                  createSingleToken(Token::Type::Scalar));
+    clearBuf();
+}
 
 void Tokenizer::singleQuote() {
     insertSingleTokenToTokens(createSingleToken(Token::Type::SingleQuote));
@@ -405,7 +435,6 @@ void Tokenizer::singleQuote(GroupToken &toGtok) {
 
 void Tokenizer::sym() {
     if (!isSymbol(m_char)) return;
-    m_buf += m_char;
 
     switch (m_char) {
         case '\\':
@@ -455,7 +484,6 @@ void Tokenizer::sym() {
 
 void Tokenizer::sym(GroupToken &toGtok) {
     if (!isSymbol(m_char)) return;
-    m_buf += m_char;
 
     switch (m_char) {
         case '\\':

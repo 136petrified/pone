@@ -89,7 +89,16 @@ class Token {
     virtual ~Token() = 0;
 
     // Start of basic Token functions
+
+    /*! Pure virtual function for making a deep copy of a Token.
+        \return a unique_ptr of type Token.
+    */
     virtual std::unique_ptr<Token> clone() const = 0;
+
+    /*! Pure virtual function for getting the class of a Token.
+        \return an enum value of type Token::Class.
+        \sa Token::Class
+    */
     virtual Class getClass() const = 0;
     virtual Type getType() const = 0;
     virtual void setType(const Type &type) = 0;
