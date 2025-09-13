@@ -40,7 +40,12 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
 }
 
 std::unique_ptr<Token> SingleToken::clone() const {
-    return std::make_unique<SingleToken>(*this);
+    try {
+        return std::make_unique<SingleToken>(*this);
+    } catch (const std::bad_alloc &e) {
+        // TODO: Print error here
+        return nullptr;
+    }
 }
 
 const std::string &SingleToken::getData() const { return m_data; }
@@ -116,7 +121,12 @@ std::unique_ptr<Token> GroupToken::clone() const {
         }
     }
 
-    return std::make_unique<GroupToken>(newGroupToken);
+    try {
+        return std::make_unique<GroupToken>(newGroupToken);
+    } catch (const std::bad_alloc &e) {
+        // TODO: Print error here
+        return nullptr;
+    }
 }
 
 Token::Class GroupToken::getClass() const { return m_class; }
