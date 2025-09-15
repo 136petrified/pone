@@ -122,13 +122,13 @@ class Token {
     // ----------------------------------------
     /*! A virtual function to the string data from a SingleToken.
 
-        \return a read-only std::string reference of the data.
+        \return a read-only string reference of the data.
      */
     virtual const std::string &getData() const;
 
     /*! A virtual function to set the string data of a SingleToken.
 
-        \param data a std::string representing SingleToken data.
+        \param data a string representing SingleToken data.
      */
     virtual void setData(const std::string &data);
     // End of basic SingleToken functions
@@ -169,19 +169,69 @@ class Token {
  */
 class SingleToken : public Token {
    public:
-    /*!
+    /*! Default SingleToken constructor.
      */
     SingleToken();
+
+    /*! SingleToken constructor.
+
+        \param type the Token's type.
+        \sa Token
+     */
     SingleToken(const Token::Type &type);
+
+    /*! SingleToken constructor.
+
+        \param type the Token's type.
+        \param data a read-only string reference of the Token's data.
+        \sa Token
+     */
     SingleToken(const Token::Type &type, const std::string &data);
+
+    /*! SingleToken constructor.
+
+        \param type the Token's type
+        \param data a string rvalue reference of the Token's data
+        \sa Token
+     */
     SingleToken(const Token::Type &type, std::string &&data);
+
+    /*! SingleToken copy constructor.
+
+        \param other the SingleToken to copy from.
+        \sa Token
+     */
     SingleToken(const SingleToken &other);
+
+    /*! SingleToken copy assignment.
+
+        \param other the SingleToken to copy from.
+        \sa Token
+     */
     SingleToken &operator=(const SingleToken &other);
+
+    /*! Gets string data from a SingleToken.
+
+        \return a read-only string reference SingleToken data.
+        \sa Token
+     */
     const std::string &getData() const override;
+
+    /*! Sets string data for a SingleToken.
+
+        \param data a string representing SingleToken data.
+        \sa Token
+     */
     void setData(const std::string &data) override;
+
+    /*! SingleToken destructor.
+     */
     ~SingleToken();
 
     // Pure virtual functions from Token
+    // ----------------------------------------
+    /*!
+     */
     std::unique_ptr<Token> clone() const override;
     Token::Class getClass() const override;
     Token::Type getType() const override;
