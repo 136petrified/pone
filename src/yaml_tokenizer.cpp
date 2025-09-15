@@ -72,10 +72,33 @@ GroupToken::GroupToken(const GroupToken &other)
     : m_tokenGroup{other.getTokenGroup()},
       m_tokenGroupSize{other.m_tokenGroupSize} {}
 
+GroupToken::GroupToken(GroupToken &&other) noexcept {
+    for (auto &token : other.m_tokenGroup) {
+        // Each sub-GroupToken owns its own tokens
+        // therefore, no copying is necessary
+        m_tokenGroup.push_back(std::move(token));
+    }
+
+    m_tokenGroupSize = other.m_tokenGroupSize;
+}
+
 GroupToken &GroupToken::operator=(const GroupToken &other) {
     if (this != &other) {
         clearTokenGroup();
         m_tokenGroup = other.getTokenGroup();
+    }
+
+    return *this;
+}
+
+GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
+    if (this != &other) {
+        clearTokenGroup();
+        for (auto &token : other.m_tokenGroup) {
+            m_tokenGroup.push_back(std::move(token));
+        }
+
+        m_tokenGroupSize = other.m_tokenGroupSize;
     }
 
     return *this;

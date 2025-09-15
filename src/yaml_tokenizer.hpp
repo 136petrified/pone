@@ -305,7 +305,7 @@ class GroupToken : public Token {
         \param other an rvalue reference to the GroupToken to move from.
         \sa Token
      */
-    GroupToken(GroupToken &&other);
+    GroupToken(GroupToken &&other) noexcept;
 
     /*! GroupToken copy assignment.
 
@@ -319,7 +319,7 @@ class GroupToken : public Token {
         \param other an rvalue reference to the GroupToken to move from.
         \sa Token
      */
-    GroupToken &operator=(GroupToken &&other);
+    GroupToken &operator=(GroupToken &&other) noexcept;
 
     /*! Clears all the elements from a GroupToken.
 
@@ -332,6 +332,7 @@ class GroupToken : public Token {
         \return a vector of Token pointers.
         \sa Token
      */
+
     std::vector<std::unique_ptr<Token>> getTokenGroup() const override;
 
     /*! Inserts a Token into a GroupToken.
@@ -340,6 +341,12 @@ class GroupToken : public Token {
         \sa Token
      */
     void insertToTokenGroup(std::unique_ptr<Token> &&token) override;
+
+    /*! Checks if a GroupToken is empty.
+
+        \return true if empty, false otherwise.
+     */
+
     bool isTokenGroupEmpty() const override;
     size_t sizeOfTokenGroup() const override;
     ~GroupToken();
