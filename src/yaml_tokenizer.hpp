@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-14-2025
+ *   Modified: 09-15-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -92,7 +92,7 @@ class Token {
     // Start of basic Token functions
     // ----------------------------------------
     /*! Pure virtual function for making a deep copy of a Token.
-        \return a unique_ptr of type Token.
+        \return a unique_ptr of the Token copy.
      */
     virtual std::unique_ptr<Token> clone() const = 0;
 
@@ -139,13 +139,15 @@ class Token {
      */
     virtual void clearTokenGroup();
 
-    /*! A virtual function for getting a list of a Tokens within a GroupToken.
+    /*! A virtual function for getting a vector of a Tokens within a GroupToken.
 
        \return a vector of Token pointers.
      */
     virtual std::vector<std::unique_ptr<Token>> getTokenGroup() const;
 
     /*! A virtual function for inserting a Token to a GroupToken.
+
+        \param token an rvalue reference to a Token pointer.
      */
     virtual void insertToTokenGroup(std::unique_ptr<Token> &&token);
 
@@ -170,19 +172,21 @@ class Token {
 class SingleToken : public Token {
    public:
     /*! Default SingleToken constructor.
+
+        \sa Token
      */
     SingleToken();
 
     /*! SingleToken constructor.
 
-        \param type the Token's type.
+        \param type the assigned type of SingleToken.
         \sa Token
      */
     SingleToken(const Token::Type &type);
 
     /*! SingleToken constructor.
 
-        \param type the Token's type.
+        \param type the assigned type of SingleToken.
         \param data a read-only string reference of the Token's data.
         \sa Token
      */
@@ -190,8 +194,8 @@ class SingleToken : public Token {
 
     /*! SingleToken constructor.
 
-        \param type the Token's type
-        \param data a string rvalue reference of the Token's data
+        \param type the assigned type of SingleToken.
+        \param data a string rvalue reference of the Token's data.
         \sa Token
      */
     SingleToken(const Token::Type &type, std::string &&data);
@@ -230,11 +234,32 @@ class SingleToken : public Token {
 
     // Pure virtual functions from Token
     // ----------------------------------------
-    /*!
+    /*! Creates a deep copy of a SingleToken.
+
+        \returns a unique_ptr of the Token copy.
+        \sa Token
      */
     std::unique_ptr<Token> clone() const override;
+
+    /*! Gets the class of a SingleToken.
+
+        \return an enum value of type Type::Class.
+        \sa Token, Token::Class
+     */
     Token::Class getClass() const override;
+
+    /*! Gets the type of a SingleToken.
+
+        \return an enum value of type Token::Type.
+        \sa Token, Token::Type
+     */
     Token::Type getType() const override;
+
+    /*! Sets the type of a SingleToken.
+
+        \param type the type assigned to the SingleToken.
+        \sa Token, Token::Type
+     */
     void setType(const Token::Type &type) override;
 
    private:
@@ -248,17 +273,72 @@ class SingleToken : public Token {
  *  only
  */
 
+/*! Token class for Tokens that contain nested Tokens.
+
+    \sa Token
+ */
 class GroupToken : public Token {
     // NOTE: This allows for a Token to be made up of Tokens
    public:
+    /*! Default GroupToken constructor.
+
+        \sa Token
+     */
     GroupToken();
+
+    /*! GroupToken constructor.
+
+        \param type the assigned type of GroupToken.
+        \sa Token
+     */
     GroupToken(const Token::Type &type);
+
+    /*! GroupToken copy constructor.
+
+        \param other the GroupToken to copy from.
+        \sa Token
+     */
     GroupToken(const GroupToken &other);
+
+    /*! GroupToken move constructor.
+
+        \param other an rvalue reference to the GroupToken to move from.
+        \sa Token
+     */
     GroupToken(GroupToken &&other);
+
+    /*! GroupToken copy assignment.
+
+        \param other the GroupToken to copy from.
+        \sa Token
+     */
     GroupToken &operator=(const GroupToken &other);
+
+    /*! GroupToken move assignment.
+
+        \param other an rvalue reference to the GroupToken to move from.
+        \sa Token
+     */
     GroupToken &operator=(GroupToken &&other);
+
+    /*! Clears all the elements from a GroupToken.
+
+        \sa Token
+     */
     void clearTokenGroup() override;
+
+    /*! Gets the vector of Tokens within a GroupToken.
+
+        \return a vector of Token pointers.
+        \sa Token
+     */
     std::vector<std::unique_ptr<Token>> getTokenGroup() const override;
+
+    /*! Inserts a Token into a GroupToken.
+
+        \param token an rvalue reference to a Token pointer.
+        \sa Token
+     */
     void insertToTokenGroup(std::unique_ptr<Token> &&token) override;
     bool isTokenGroupEmpty() const override;
     size_t sizeOfTokenGroup() const override;
