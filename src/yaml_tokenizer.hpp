@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-15-2025
+ *   Modified: 09-16-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -31,6 +31,8 @@ class Token {
         DoubleQuotedKey,   /*! A grouped type for keys within double quotes */
         DoubleQuotedValue, /*! A grouped type for values within double quotes */
         Key,               /*! A grouped type for keys */
+        List,              /*! A grouped type for list containers */
+        ListElement,       /*! A grouped type for list elements */
         LeftBrace,         /*! The left brace character { */
         LeftBracket,       /*! The left bracket character [ */
         Newline,           /*! The newline character \n */
@@ -345,16 +347,50 @@ class GroupToken : public Token {
     /*! Checks if a GroupToken is empty.
 
         \return true if empty, false otherwise.
+        \sa Token
      */
 
     bool isTokenGroupEmpty() const override;
+
+    /*! Gets the size of a GroupToken.
+
+        \return a size_t value.
+        \sa Token
+     */
     size_t sizeOfTokenGroup() const override;
+
+    /*! GroupToken destructor.
+     */
     ~GroupToken();
 
     // Pure virtual functions from Token
+
+    /*! Creates a deep copy of a GroupToken.
+
+        \return a unique_ptr to the GroupToken copy.
+        \sa Token
+     */
     std::unique_ptr<Token> clone() const override;
+
+    /*! Gets the class of a GroupToken.
+
+        \return an enum value of type Token::Class.
+        \sa Token::Class, Token
+     */
     Token::Class getClass() const override;
+
+    /*! Gets the type of a GroupToken.
+
+        \return an enum value of type Token::Type.
+        \sa Token::Type, Token
+     */
     Token::Type getType() const override;
+
+    /*! Sets the type of a GroupToken.
+
+        \param type the type assigned to a GroupToken.
+        \sa Token::Type, Token
+     */
     void setType(const Token::Type &type) override;
 
    private:
@@ -364,22 +400,70 @@ class GroupToken : public Token {
     Token::Type m_type;
 };
 
+/*! A class to tokenize custom YAML files for this program.
+ */
 class Tokenizer {
    public:
+    /*! Default Tokenizer constructor. */
     Tokenizer();
+
+    /*! Tokenizer constructor.
+
+        \param file_name the string .YAML filename to load.
+     */
     Tokenizer(const std::string &file_name);
+
+    /*! Gets a deep copy of the vector of Tokens within the Tokenizer.
+
+        \return a vector of Token pointers.
+     */
     std::vector<std::unique_ptr<Token>> getTokens() const;
+
+    /*! Initializes the Tokenizer.
+        This function is the starting point of the Tokenizer.
+     */
     void tokenize();
+
+    /*! Tokenizer destructor. */
     ~Tokenizer();
 
    protected:
+    /*! Processes a backslash Token.
+     */
     void backslash();
+
+    /*! Processes a nested backslash Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void backslash(GroupToken &toGtok);
+
+    /*! Clears the current character buffer in the Tokenizer.
+     */
     void clearBuf();
+
+    /*! Processes a colon Token.
+     */
     void colon();
+
+    /*! Processes a nested colon Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void colon(GroupToken &toGtok);
+
+    /*! Processes a comma Token.
+     */
     void comma();
+
+    /*! Processes a nested comma Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void comma(GroupToken &toGtok);
+
+    /*! Processes a comment Token.
+     */
     void comment();
     void comment(GroupToken &toGtok);
     std::unique_ptr<GroupToken> createGroupToken(
@@ -390,11 +474,27 @@ class Tokenizer {
     std::unique_ptr<SingleToken> createSingleToken(const Token::Type &tokenType,
                                                    std::string &&data) const;
     std::unique_ptr<SingleToken> createSingleToken(SingleToken &stok);
+
+    /*! Processes a dash Token.
+     */
     void dash();
     void dash(GroupToken &toGtok);
+
+    /*! Processes a doubleQuote Token.
+     */
     void doubleQuote();
     void doubleQuote(GroupToken &toGtok);
+
+    /*! Processes a double-quoted key Token.
+        A double-quoted key is a key enclosed in quotes.
+     */
+    void doubleQuotedKey();
     void doubleQuotedKey(GroupToken &toGtok);
+
+    /*! Processes a double-quoted value Token.
+        A double-quoted value is a value enclosed in quotes.
+     */
+    void doubleQuotedValue();
     void doubleQuotedValue(GroupToken &toGtok);
     void insertGroupTokenToGroupToken(GroupToken &toGtok,
                                       const Token::Type &tokenType);
@@ -419,40 +519,109 @@ class Tokenizer {
                                    std::string &&data);
     void insertSingleTokenToTokens(const std::unique_ptr<SingleToken> &stokPtr);
     void insertSingleTokenToTokens(std::unique_ptr<SingleToken> &&stokPtr);
+
+    /*! Processes a key Token.
+     */
     void key();
     void key(GroupToken &toGtok);
+
+    /*! Processes a left brace Token.
+     */
     void leftBrace();
     void leftBrace(GroupToken &toGtok);
+
+    /*! Processes a left bracket Token.
+     */
     void leftBracket();
     void leftBracket(GroupToken &toGtok);
+
+    /*! Processes a list Token.
+     */
+    void list();
+    void list(GroupToken &toGtok);
+
+    /*! Processes a list element Token.
+     */
+    void listElement();
+    void listElement(GroupToken &toGtok);
     const char lookahead();
+
+    /*! Processes a mapping Token.
+        A mapping is defined as a key and value pair.
+     */
     void mapping();  // TODO: Group mapping
+    void mapping(GroupToken &toGtok);
+
+    /*! Processes a newline Token.
+     */
     void newline();
     void newline(GroupToken &toGtok);
     void next();
+
+    /*! Processes a number symbol (#) Token.
+     */
     void numSign();
     void numSign(GroupToken &toGtok);
+
+    /*! Processes a symbol.
+     */
     void otherSymbols();
     void otherSymbols(GroupToken &toGtok);
+
+    /*! Processes a mapping where the key or value is within quotes.
+        A mapping is defined as a key and value pair.
+     */
+    void quotedMapping();
+    void quotedMapping(GroupToken &toGtok);
+
+    /*! Processes a right brace Token.
+     */
     void rightBrace();
     void rightBrace(GroupToken &toGtok);
+
+    /*! Processes a right bracket Token.
+     */
     void rightBracket();
     void rightBracket(GroupToken &toGtok);
+
+    /*! Processes a scalar token.
+        A scalar is defined as an alphanumeric identifier.
+     */
     void scalar();
     void scalar(GroupToken &toGtok);
+
+    /*! Processes a single quote Token.
+     */
     void singleQuote();
     void singleQuote(GroupToken &toGtok);
+
+    /*! Processes a single-quoted key Token.
+        A single-quoted key is a key enclosed in single quotes.
+     */
     void singleQuotedKey();
     void singleQuotedKey(GroupToken &toGtok);
+
+    /*! Processes a single-quoted value Token.
+        A single-quoted value is a value enclosed in single quotes.
+     */
     void singleQuotedValue();
     void singleQuotedValue(GroupToken &toGtok);
+
+    /*! Processes a space Token.
+     */
     void space();
     void space(GroupToken &toGtok);
     // This is a symbol "multiplexer"
     void sym();
     void sym(GroupToken &toGtok);
+
+    /*! Processes a tab Token.
+     */
     void tab();
     void tab(GroupToken &toGtok);
+
+    /*! Processes a value Token.
+     */
     void value();
     void value(GroupToken &toGtok);
     // This is a whitespace "multiplexer"
