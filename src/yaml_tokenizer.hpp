@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-16-2025
+ *   Modified: 09-17-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -465,37 +465,103 @@ class Tokenizer {
     /*! Processes a comment Token.
      */
     void comment();
+
+    /*! Processes a nested comment Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void comment(GroupToken &toGtok);
+
+    /*! Creates a unique GroupToken pointer.
+
+        \param tokenType the Token type to create the GroupToken with.
+        \return a unique pointer to the GroupToken.
+     */
     std::unique_ptr<GroupToken> createGroupToken(
         const Token::Type &tokenType) const;
+
+    /*! Creates a unique GroupToken pointer from an existing GroupToken.
+
+        \param gtok the GroupToken object to tokenize.
+        \return a unique pointer to the GroupToken.
+     */
     std::unique_ptr<GroupToken> createGroupToken(GroupToken &gtok);
+
+    /*! Creates a unique SingleToken pointer.
+
+        \param tokenType the Token type to create the SingleToken with.
+        \return a unique pointer to the SingleToken.
+     */
     std::unique_ptr<SingleToken> createSingleToken(
         const Token::Type &tokenType) const;
+
+    /*! Creates a unique SingleToken pointer with string data.
+
+       \param tokenType the Token type to create the SingleToken with.
+       \param data the rvalue reference of string data.
+       \return a unique pointer to the SingleToken.
+     */
     std::unique_ptr<SingleToken> createSingleToken(const Token::Type &tokenType,
                                                    std::string &&data) const;
+
+    /*! Creates a unique SingleToken pointer from an existing SingleToken.
+
+        \param stok the SingleToken object to tokenize.
+        \return a unique pointer to the SingleToken.
+     */
     std::unique_ptr<SingleToken> createSingleToken(SingleToken &stok);
 
     /*! Processes a dash Token.
      */
     void dash();
+
+    /*! Processes a nested dash Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
+
     void dash(GroupToken &toGtok);
 
-    /*! Processes a doubleQuote Token.
+    /*! Processes a double quote Token.
      */
     void doubleQuote();
+
+    /*! Processes a nested double quote Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void doubleQuote(GroupToken &toGtok);
 
     /*! Processes a double-quoted key Token.
         A double-quoted key is a key enclosed in quotes.
      */
     void doubleQuotedKey();
+
+    /*! Processes a nested double-quoted key Token.
+        A double-quoted key is a key enclosed in quotes.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
+
     void doubleQuotedKey(GroupToken &toGtok);
 
     /*! Processes a double-quoted value Token.
         A double-quoted value is a value enclosed in quotes.
      */
     void doubleQuotedValue();
+
+    /*! Processes a nested doubleQuotedValue Token.
+        A double-quoted value is a value enclosed in quotes.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void doubleQuotedValue(GroupToken &toGtok);
+
+    /*! Creates and inserts a GroupToken to a parent GroupToken.
+
+        \param toGtok the parent GroupToken.
+        \param tokenType the Token type to create the GroupToken with.
+     */
     void insertGroupTokenToGroupToken(GroupToken &toGtok,
                                       const Token::Type &tokenType);
     void insertGroupTokenToGroupToken(
@@ -523,60 +589,117 @@ class Tokenizer {
     /*! Processes a key Token.
      */
     void key();
+
+    /*! Processes a nested key Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void key(GroupToken &toGtok);
 
     /*! Processes a left brace Token.
      */
     void leftBrace();
+
+    /*! Processes a nested left brace Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void leftBrace(GroupToken &toGtok);
 
     /*! Processes a left bracket Token.
      */
     void leftBracket();
+
+    /*! Processes a nested left bracket Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void leftBracket(GroupToken &toGtok);
 
     /*! Processes a list Token.
      */
     void list();
+
+    /*! Processes a nested list Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void list(GroupToken &toGtok);
 
     /*! Processes a list element Token.
      */
     void listElement();
+
+    /*! Processes a nested list element Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void listElement(GroupToken &toGtok);
+
     const char lookahead();
 
     /*! Processes a mapping Token.
         A mapping is defined as a key and value pair.
      */
     void mapping();  // TODO: Group mapping
+
+    /*! Processes a mapping Token.
+        A mapping is defined as a key and value pair.
+     */
     void mapping(GroupToken &toGtok);
 
     /*! Processes a newline Token.
      */
     void newline();
+
+    /*! Processes a nested newline Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void newline(GroupToken &toGtok);
+
     void next();
 
     /*! Processes a number symbol (#) Token.
      */
     void numSign();
+
+    /*! Processes a nested number symbol (#) Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void numSign(GroupToken &toGtok);
 
-    /*! Processes a symbol.
+    /*! Processes a symbol Token.
      */
     void otherSymbols();
+
+    /*! Processes a nested symbol Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void otherSymbols(GroupToken &toGtok);
 
     /*! Processes a mapping where the key or value is within quotes.
         A mapping is defined as a key and value pair.
      */
     void quotedMapping();
+
+    /*! Processes a nested mapping where the key or value is within quotes.
+        A mapping is defined as a key and value pair.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void quotedMapping(GroupToken &toGtok);
 
     /*! Processes a right brace Token.
      */
     void rightBrace();
+
+    /*! Processes a nested left brace Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void rightBrace(GroupToken &toGtok);
 
     /*! Processes a right bracket Token.
@@ -605,11 +728,21 @@ class Tokenizer {
         A single-quoted value is a value enclosed in single quotes.
      */
     void singleQuotedValue();
+
+    /*! Processes a nested left brace Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void singleQuotedValue(GroupToken &toGtok);
 
     /*! Processes a space Token.
      */
     void space();
+
+    /*! Processes a nested left brace Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void space(GroupToken &toGtok);
     // This is a symbol "multiplexer"
     void sym();
@@ -618,11 +751,21 @@ class Tokenizer {
     /*! Processes a tab Token.
      */
     void tab();
+
+    /*! Processes a nested tab Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void tab(GroupToken &toGtok);
 
     /*! Processes a value Token.
      */
     void value();
+
+    /*! Processes a nested value Token.
+
+        \param toGtok a reference to the current parent GroupToken.
+     */
     void value(GroupToken &toGtok);
     // This is a whitespace "multiplexer"
     void whitespace();
