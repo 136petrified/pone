@@ -434,9 +434,9 @@ class Tokenizer {
 
     /*! Processes a nested backslash Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void backslash(GroupToken &toGtok);
+    void backslash(GroupToken &parentGtok);
 
     /*! Clears the current character buffer in the Tokenizer.
      */
@@ -448,9 +448,9 @@ class Tokenizer {
 
     /*! Processes a nested colon Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void colon(GroupToken &toGtok);
+    void colon(GroupToken &parentGtok);
 
     /*! Processes a comma Token.
      */
@@ -458,9 +458,9 @@ class Tokenizer {
 
     /*! Processes a nested comma Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void comma(GroupToken &toGtok);
+    void comma(GroupToken &parentGtok);
 
     /*! Processes a comment Token.
      */
@@ -468,9 +468,9 @@ class Tokenizer {
 
     /*! Processes a nested comment Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void comment(GroupToken &toGtok);
+    void comment(GroupToken &parentGtok);
 
     /*! Creates a unique GroupToken pointer.
 
@@ -517,10 +517,10 @@ class Tokenizer {
 
     /*! Processes a nested dash Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
 
-    void dash(GroupToken &toGtok);
+    void dash(GroupToken &parentGtok);
 
     /*! Processes a double quote Token.
      */
@@ -528,9 +528,9 @@ class Tokenizer {
 
     /*! Processes a nested double quote Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void doubleQuote(GroupToken &toGtok);
+    void doubleQuote(GroupToken &parentGtok);
 
     /*! Processes a double-quoted key Token.
         A double-quoted key is a key enclosed in quotes.
@@ -540,10 +540,10 @@ class Tokenizer {
     /*! Processes a nested double-quoted key Token.
         A double-quoted key is a key enclosed in quotes.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
 
-    void doubleQuotedKey(GroupToken &toGtok);
+    void doubleQuotedKey(GroupToken &parentGtok);
 
     /*! Processes a double-quoted value Token.
         A double-quoted value is a value enclosed in quotes.
@@ -553,32 +553,32 @@ class Tokenizer {
     /*! Processes a nested doubleQuotedValue Token.
         A double-quoted value is a value enclosed in quotes.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void doubleQuotedValue(GroupToken &toGtok);
+    void doubleQuotedValue(GroupToken &parentGtok);
 
     /*! Creates and inserts a GroupToken to a parent GroupToken.
 
-        \param toGtok the parent GroupToken.
+        \param parentGtok the parent GroupToken.
         \param tokenType the Token type to create the GroupToken with.
      */
-    void insertGroupTokenToGroupToken(GroupToken &toGtok,
+    void insertGroupTokenToGroupToken(GroupToken &parentGtok,
                                       const Token::Type &tokenType);
     void insertGroupTokenToGroupToken(
         GroupToken &to_gtok, const std::unique_ptr<GroupToken> &gtokPtr);
-    void insertGroupTokenToGroupToken(GroupToken &toGtok,
+    void insertGroupTokenToGroupToken(GroupToken &parentGtok,
                                       std::unique_ptr<GroupToken> &&gtokPtr);
     void insertGroupTokenToTokens(const Token::Type &tokenType);
     void insertGroupTokenToTokens(const std::unique_ptr<GroupToken> &gtokPtr);
     void insertGroupTokenToTokens(std::unique_ptr<GroupToken> &&gtokPtr);
-    void insertSingleTokenToGroupToken(GroupToken &toGtok,
+    void insertSingleTokenToGroupToken(GroupToken &parentGtok,
                                        const Token::Type &tokenType);
-    void insertSingleTokenToGroupToken(GroupToken &toGtok,
+    void insertSingleTokenToGroupToken(GroupToken &parentGtok,
                                        const Token::Type &tokenType,
                                        std::string &&data);
     void insertSingleTokenToGroupToken(
-        GroupToken &toGtok, const std::unique_ptr<SingleToken> &stokPtr);
-    void insertSingleTokenToGroupToken(GroupToken &toGtok,
+        GroupToken &parentGtok, const std::unique_ptr<SingleToken> &stokPtr);
+    void insertSingleTokenToGroupToken(GroupToken &parentGtok,
                                        std::unique_ptr<SingleToken> &&stokPtr);
     void insertSingleTokenToTokens(const Token::Type &tokenType);
     void insertSingleTokenToTokens(const Token::Type &tokenType,
@@ -592,9 +592,9 @@ class Tokenizer {
 
     /*! Processes a nested key Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void key(GroupToken &toGtok);
+    void key(GroupToken &parentGtok);
 
     /*! Processes a left brace Token.
      */
@@ -602,9 +602,9 @@ class Tokenizer {
 
     /*! Processes a nested left brace Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void leftBrace(GroupToken &toGtok);
+    void leftBrace(GroupToken &parentGtok);
 
     /*! Processes a left bracket Token.
      */
@@ -612,9 +612,9 @@ class Tokenizer {
 
     /*! Processes a nested left bracket Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void leftBracket(GroupToken &toGtok);
+    void leftBracket(GroupToken &parentGtok);
 
     /*! Processes a list Token.
      */
@@ -622,9 +622,9 @@ class Tokenizer {
 
     /*! Processes a nested list Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void list(GroupToken &toGtok);
+    void list(GroupToken &parentGtok);
 
     /*! Processes a list element Token.
      */
@@ -632,9 +632,9 @@ class Tokenizer {
 
     /*! Processes a nested list element Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void listElement(GroupToken &toGtok);
+    void listElement(GroupToken &parentGtok);
 
     const char lookahead();
 
@@ -646,7 +646,7 @@ class Tokenizer {
     /*! Processes a mapping Token.
         A mapping is defined as a key and value pair.
      */
-    void mapping(GroupToken &toGtok);
+    void mapping(GroupToken &parentGtok);
 
     /*! Processes a newline Token.
      */
@@ -654,9 +654,9 @@ class Tokenizer {
 
     /*! Processes a nested newline Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void newline(GroupToken &toGtok);
+    void newline(GroupToken &parentGtok);
 
     void next();
 
@@ -666,9 +666,9 @@ class Tokenizer {
 
     /*! Processes a nested number symbol (#) Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void numSign(GroupToken &toGtok);
+    void numSign(GroupToken &parentGtok);
 
     /*! Processes a symbol Token.
      */
@@ -676,9 +676,9 @@ class Tokenizer {
 
     /*! Processes a nested symbol Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void otherSymbols(GroupToken &toGtok);
+    void otherSymbols(GroupToken &parentGtok);
 
     /*! Processes a mapping where the key or value is within quotes.
         A mapping is defined as a key and value pair.
@@ -688,9 +688,9 @@ class Tokenizer {
     /*! Processes a nested mapping where the key or value is within quotes.
         A mapping is defined as a key and value pair.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void quotedMapping(GroupToken &toGtok);
+    void quotedMapping(GroupToken &parentGtok);
 
     /*! Processes a right brace Token.
      */
@@ -698,31 +698,31 @@ class Tokenizer {
 
     /*! Processes a nested left brace Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void rightBrace(GroupToken &toGtok);
+    void rightBrace(GroupToken &parentGtok);
 
     /*! Processes a right bracket Token.
      */
     void rightBracket();
-    void rightBracket(GroupToken &toGtok);
+    void rightBracket(GroupToken &parentGtok);
 
     /*! Processes a scalar token.
         A scalar is defined as an alphanumeric identifier.
      */
     void scalar();
-    void scalar(GroupToken &toGtok);
+    void scalar(GroupToken &parentGtok);
 
     /*! Processes a single quote Token.
      */
     void singleQuote();
-    void singleQuote(GroupToken &toGtok);
+    void singleQuote(GroupToken &parentGtok);
 
     /*! Processes a single-quoted key Token.
         A single-quoted key is a key enclosed in single quotes.
      */
     void singleQuotedKey();
-    void singleQuotedKey(GroupToken &toGtok);
+    void singleQuotedKey(GroupToken &parentGtok);
 
     /*! Processes a single-quoted value Token.
         A single-quoted value is a value enclosed in single quotes.
@@ -731,9 +731,9 @@ class Tokenizer {
 
     /*! Processes a nested left brace Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void singleQuotedValue(GroupToken &toGtok);
+    void singleQuotedValue(GroupToken &parentGtok);
 
     /*! Processes a space Token.
      */
@@ -741,12 +741,12 @@ class Tokenizer {
 
     /*! Processes a nested left brace Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void space(GroupToken &toGtok);
+    void space(GroupToken &parentGtok);
     // This is a symbol "multiplexer"
     void sym();
-    void sym(GroupToken &toGtok);
+    void sym(GroupToken &parentGtok);
 
     /*! Processes a tab Token.
      */
@@ -754,9 +754,9 @@ class Tokenizer {
 
     /*! Processes a nested tab Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void tab(GroupToken &toGtok);
+    void tab(GroupToken &parentGtok);
 
     /*! Processes a value Token.
      */
@@ -764,12 +764,12 @@ class Tokenizer {
 
     /*! Processes a nested value Token.
 
-        \param toGtok a reference to the current parent GroupToken.
+        \param parentGtok a reference to the current parent GroupToken.
      */
-    void value(GroupToken &toGtok);
+    void value(GroupToken &parentGtok);
     // This is a whitespace "multiplexer"
     void whitespace();
-    void whitespace(GroupToken &toGtok);
+    void whitespace(GroupToken &parentGtok);
 
    private:
     std::string m_fileName;
