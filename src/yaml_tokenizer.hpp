@@ -498,7 +498,7 @@ class Tokenizer {
     /*! Creates a unique SingleToken pointer with string data.
 
        \param tokenType the Token type to create the SingleToken with.
-       \param data the rvalue reference of string data.
+       \param data a string rvalue reference.
        \return a unique pointer to the SingleToken.
      */
     std::unique_ptr<SingleToken> createSingleToken(const Token::Type &tokenType,
@@ -542,7 +542,6 @@ class Tokenizer {
 
         \param parentGtok a reference to the current parent GroupToken.
      */
-
     void doubleQuotedKey(GroupToken &parentGtok);
 
     /*! Processes a double-quoted value Token.
@@ -555,35 +554,114 @@ class Tokenizer {
 
         \param parentGtok a reference to the current parent GroupToken.
      */
+
     void doubleQuotedValue(GroupToken &parentGtok);
 
     /*! Creates and inserts a GroupToken to a parent GroupToken.
 
         \param parentGtok the parent GroupToken.
-        \param tokenType the Token type to create the GroupToken with.
+        \param tokenType the Token type.
      */
-    void insertGroupTokenToGroupToken(GroupToken &parentGtok,
-                                      const Token::Type &tokenType);
-    void insertGroupTokenToGroupToken(
-        GroupToken &to_gtok, const std::unique_ptr<GroupToken> &gtokPtr);
-    void insertGroupTokenToGroupToken(GroupToken &parentGtok,
-                                      std::unique_ptr<GroupToken> &&gtokPtr);
+
+    void insertGroupTokenToParent(GroupToken &parentGtok,
+                                  const Token::Type &tokenType);
+
+    /*! Inserts a GroupToken to a parent GroupToken.
+
+        \param parentGtok the parent GroupToken.
+        \param gtokPtr a pointer to the GroupToken to insert.
+     */
+    void insertGroupTokenToParent(GroupToken &parentGtok,
+                                  const std::unique_ptr<GroupToken> &gtokPtr);
+
+    /*! Moves and inserts a GroupToken to a parent GroupToken.
+
+        \param parentGtok the parent GroupToken.
+        \param gtokPtr an pointer rvalue reference to a GroupToken.
+     */
+    void insertGroupTokenToParent(GroupToken &parentGtok,
+                                  std::unique_ptr<GroupToken> &&gtokPtr);
+
+    /*! Creates and inserts a GroupToken without a parent GroupToken.
+
+        \param tokenType the Token type.
+     */
+
     void insertGroupTokenToTokens(const Token::Type &tokenType);
+
+    /*! Inserts a GroupToken without a parent GroupToken.
+
+        \param gtokPtr a pointer to the GroupToken.
+     */
     void insertGroupTokenToTokens(const std::unique_ptr<GroupToken> &gtokPtr);
+
+    /*! Moves and inserts a GroupToken without a paraent GroupToken.
+
+        \param gtokPtr a pointer rvalue reference to a GroupToken.
+     */
+
     void insertGroupTokenToTokens(std::unique_ptr<GroupToken> &&gtokPtr);
-    void insertSingleTokenToGroupToken(GroupToken &parentGtok,
-                                       const Token::Type &tokenType);
-    void insertSingleTokenToGroupToken(GroupToken &parentGtok,
-                                       const Token::Type &tokenType,
-                                       std::string &&data);
-    void insertSingleTokenToGroupToken(
-        GroupToken &parentGtok, const std::unique_ptr<SingleToken> &stokPtr);
-    void insertSingleTokenToGroupToken(GroupToken &parentGtok,
-                                       std::unique_ptr<SingleToken> &&stokPtr);
+
+    /*! Creates and inserts a SingleToken to a parent GroupToken.
+
+        \param parentGtok the parent GroupToken.
+        \param tokenType the Token type.
+     */
+    void insertSingleTokenToParent(GroupToken &parentGtok,
+                                   const Token::Type &tokenType);
+
+    /*! Creates and inserts a SingleToken to a parent GroupToken with string
+        data.
+
+        \param parentGtok the parent GroupToken.
+        \param tokenType the Token type.
+        \param data a string rvalue reference.
+     */
+    void insertSingleTokenToParent(GroupToken &parentGtok,
+                                   const Token::Type &tokenType,
+                                   std::string &&data);
+
+    /*! Inserts a SingleToken to a parent GroupToken.
+
+        \param parentGtok the parent GroupToken.
+        \param stokPtr a pointer to the SingleToken.
+     */
+    void insertSingleTokenToParent(GroupToken &parentGtok,
+                                   const std::unique_ptr<SingleToken> &stokPtr);
+
+    /*! Moves and inserts a SingleToken to parent GroupToken.
+
+        \param parentGtok the parent GroupToken.
+        \param stokPtr a pointer rvalue reference to the SingleToken.
+     */
+    void insertSingleTokenToParent(GroupToken &parentGtok,
+                                   std::unique_ptr<SingleToken> &&stokPtr);
+
+    /*! Creates and inserts a SingleToken without a parent GroupToken.
+
+        \param tokenType the Token type.
+     */
     void insertSingleTokenToTokens(const Token::Type &tokenType);
+
+    /*! Creates and inserts a SingleToken without a parent GroupToken with
+       string data.
+
+        \param tokenType the Token type.
+        \param data a string rvalue reference.
+     */
     void insertSingleTokenToTokens(const Token::Type &tokenType,
                                    std::string &&data);
+
+    /*! Inserts a SingleToken without a parent GroupToken.
+
+        \param stokPtr a pointer to the SingleToken.
+     */
     void insertSingleTokenToTokens(const std::unique_ptr<SingleToken> &stokPtr);
+
+    /*! Inserts a SingleToken without a parent GroupToken.
+
+        \param stokPtr a pointer rvalue reference to the SingleToken.
+     */
     void insertSingleTokenToTokens(std::unique_ptr<SingleToken> &&stokPtr);
 
     /*! Processes a key Token.
@@ -636,6 +714,10 @@ class Tokenizer {
      */
     void listElement(GroupToken &parentGtok);
 
+    /*! Peeks to the next character in the ifstream.
+
+        \return a read-only character.
+     */
     const char lookahead();
 
     /*! Processes a mapping Token.
@@ -658,6 +740,10 @@ class Tokenizer {
      */
     void newline(GroupToken &parentGtok);
 
+    /*! Advances the next character in the ifstream.
+
+        \throws EndOfIstreamException if the filestream throws EOF.
+     */
     void next();
 
     /*! Processes a number symbol (#) Token.
@@ -705,23 +791,46 @@ class Tokenizer {
     /*! Processes a right bracket Token.
      */
     void rightBracket();
+
+    /*! Processes a nested right bracket Token.
+
+        \param parentGtok a reference to the current parent GroupToken.
+     */
     void rightBracket(GroupToken &parentGtok);
 
     /*! Processes a scalar token.
         A scalar is defined as an alphanumeric identifier.
      */
     void scalar();
+
+    /*! Processes a nested scalar Token.
+        A scalar is defined as an alphanumeric identifier.
+
+        \param parentGtok a reference to the current parent GroupToken.
+     */
     void scalar(GroupToken &parentGtok);
 
     /*! Processes a single quote Token.
      */
     void singleQuote();
+
+    /*! Processes a nested single quote Token.
+        A scalar is defined as an alphanumeric identifier.
+
+        \param parentGtok a reference to the current parent GroupToken.
+     */
     void singleQuote(GroupToken &parentGtok);
 
     /*! Processes a single-quoted key Token.
         A single-quoted key is a key enclosed in single quotes.
      */
     void singleQuotedKey();
+
+    /*! Processes a single-quoted key Token.
+        A scalar is defined as an alphanumeric identifier.
+
+        \param parentGtok a reference to the current parent GroupToken.
+     */
     void singleQuotedKey(GroupToken &parentGtok);
 
     /*! Processes a single-quoted value Token.
@@ -729,7 +838,7 @@ class Tokenizer {
      */
     void singleQuotedValue();
 
-    /*! Processes a nested left brace Token.
+    /*! Processes a nested single-quoted value Token.
 
         \param parentGtok a reference to the current parent GroupToken.
      */
@@ -739,13 +848,20 @@ class Tokenizer {
      */
     void space();
 
-    /*! Processes a nested left brace Token.
+    /*! Processes a nested space Token.
 
         \param parentGtok a reference to the current parent GroupToken.
      */
     void space(GroupToken &parentGtok);
     // This is a symbol "multiplexer"
+
+    /*! Pipelines a symbol to its respective tokenizing function.
+     */
     void sym();
+    /*! Pipelines a nested symbol to its respective tokenizing function.
+
+        \param parentGtok a reference to the current parent GroupToken.
+     */
     void sym(GroupToken &parentGtok);
 
     /*! Processes a tab Token.
@@ -768,7 +884,15 @@ class Tokenizer {
      */
     void value(GroupToken &parentGtok);
     // This is a whitespace "multiplexer"
+
+    /*! Pipelines a whitespace character to a tokenizing function.
+     */
     void whitespace();
+
+    /*! Pipelines a whitespace character to a tokenizing function.
+
+        \param parentGtok a reference to the current parent GroupToken.
+     */
     void whitespace(GroupToken &parentGtok);
 
    private:

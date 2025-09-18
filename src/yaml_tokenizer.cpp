@@ -179,7 +179,7 @@ void Tokenizer::backslash() {
 }
 
 void Tokenizer::backslash(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Backslash);
+    insertSingleTokenToParent(parentGtok, Token::Type::Backslash);
 }
 
 void Tokenizer::clearBuf() { m_buf.clear(); }
@@ -189,7 +189,7 @@ void Tokenizer::colon() {
 }
 
 void Tokenizer::colon(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Colon);
+    insertSingleTokenToParent(parentGtok, Token::Type::Colon);
 }
 
 void Tokenizer::comma() {
@@ -197,7 +197,7 @@ void Tokenizer::comma() {
 }
 
 void Tokenizer::comma(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Comma);
+    insertSingleTokenToParent(parentGtok, Token::Type::Comma);
 }
 
 void Tokenizer::comment() {
@@ -224,7 +224,7 @@ void Tokenizer::comment(GroupToken &parentGtok) {
         whitespace(commentToken);
     }
 
-    insertGroupTokenToGroupToken(parentGtok, createGroupToken(commentToken));
+    insertGroupTokenToParent(parentGtok, createGroupToken(commentToken));
 }
 
 std::unique_ptr<GroupToken> Tokenizer::createGroupToken(
@@ -256,7 +256,7 @@ void Tokenizer::dash() {
 }
 
 void Tokenizer::dash(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Dash);
+    insertSingleTokenToParent(parentGtok, Token::Type::Dash);
 }
 
 void Tokenizer::doubleQuote() {
@@ -264,7 +264,7 @@ void Tokenizer::doubleQuote() {
 }
 
 void Tokenizer::doubleQuote(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::DoubleQuote);
+    insertSingleTokenToParent(parentGtok, Token::Type::DoubleQuote);
 }
 
 std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
@@ -282,17 +282,17 @@ std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
     return newTokenVector;
 }
 
-void Tokenizer::insertGroupTokenToGroupToken(GroupToken &parentGtok,
-                                             const Token::Type &tokenType) {
+void Tokenizer::insertGroupTokenToParent(GroupToken &parentGtok,
+                                         const Token::Type &tokenType) {
     parentGtok.insertToTokenGroup(createGroupToken(tokenType));
 }
 
-void Tokenizer::insertGroupTokenToGroupToken(
+void Tokenizer::insertGroupTokenToParent(
     GroupToken &parentGtok, const std::unique_ptr<GroupToken> &gtokPtr) {
     parentGtok.insertToTokenGroup(gtokPtr->clone());
 }
 
-void Tokenizer::insertGroupTokenToGroupToken(
+void Tokenizer::insertGroupTokenToParent(
     GroupToken &parentGtok, std::unique_ptr<GroupToken> &&gtokPtr) {
     parentGtok.insertToTokenGroup(std::move(gtokPtr));
 }
@@ -311,24 +311,24 @@ void Tokenizer::insertGroupTokenToTokens(
     m_tokens.push_back(std::move(gtokPtr));
 }
 
-void Tokenizer::insertSingleTokenToGroupToken(GroupToken &parentGtok,
-                                              const Token::Type &tokenType) {
+void Tokenizer::insertSingleTokenToParent(GroupToken &parentGtok,
+                                          const Token::Type &tokenType) {
     parentGtok.insertToTokenGroup(createSingleToken(tokenType));
 }
 
-void Tokenizer::insertSingleTokenToGroupToken(GroupToken &parentGtok,
-                                              const Token::Type &tokenType,
-                                              std::string &&data) {
+void Tokenizer::insertSingleTokenToParent(GroupToken &parentGtok,
+                                          const Token::Type &tokenType,
+                                          std::string &&data) {
     parentGtok.insertToTokenGroup(
         createSingleToken(tokenType, std::move(data)));
 }
 
-void Tokenizer::insertSingleTokenToGroupToken(
+void Tokenizer::insertSingleTokenToParent(
     GroupToken &parentGtok, const std::unique_ptr<SingleToken> &stokPtr) {
     parentGtok.insertToTokenGroup(stokPtr->clone());
 }
 
-void Tokenizer::insertSingleTokenToGroupToken(
+void Tokenizer::insertSingleTokenToParent(
     GroupToken &parentGtok, std::unique_ptr<SingleToken> &&stokPtr) {
     parentGtok.insertToTokenGroup(std::move(stokPtr));
 }
@@ -357,7 +357,7 @@ void Tokenizer::leftBrace() {
 }
 
 void Tokenizer::leftBrace(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::LeftBrace);
+    insertSingleTokenToParent(parentGtok, Token::Type::LeftBrace);
 }
 
 void Tokenizer::leftBracket() {
@@ -365,7 +365,7 @@ void Tokenizer::leftBracket() {
 }
 
 void Tokenizer::leftBracket(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::LeftBracket);
+    insertSingleTokenToParent(parentGtok, Token::Type::LeftBracket);
 }
 
 const char Tokenizer::lookahead() {
@@ -398,7 +398,7 @@ void Tokenizer::numSign() {
 }
 
 void Tokenizer::numSign(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::NumSign);
+    insertSingleTokenToParent(parentGtok, Token::Type::NumSign);
 }
 
 void Tokenizer::otherSymbols() {
@@ -406,7 +406,7 @@ void Tokenizer::otherSymbols() {
 }
 
 void Tokenizer::otherSymbols(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Symbol);
+    insertSingleTokenToParent(parentGtok, Token::Type::Symbol);
 }
 
 void Tokenizer::rightBrace() {
@@ -414,7 +414,7 @@ void Tokenizer::rightBrace() {
 }
 
 void Tokenizer::rightBrace(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::RightBrace);
+    insertSingleTokenToParent(parentGtok, Token::Type::RightBrace);
 }
 
 void Tokenizer::rightBracket() {
@@ -422,7 +422,7 @@ void Tokenizer::rightBracket() {
 }
 
 void Tokenizer::rightBracket(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::RightBracket);
+    insertSingleTokenToParent(parentGtok, Token::Type::RightBracket);
 }
 
 void Tokenizer::scalar() {
@@ -454,8 +454,8 @@ void Tokenizer::scalar(GroupToken &parentGtok) {
         }
     }
 
-    insertSingleTokenToGroupToken(parentGtok,
-                                  createSingleToken(Token::Type::Scalar));
+    insertSingleTokenToParent(parentGtok,
+                              createSingleToken(Token::Type::Scalar));
     clearBuf();
 }
 
@@ -464,7 +464,7 @@ void Tokenizer::singleQuote() {
 }
 
 void Tokenizer::singleQuote(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::SingleQuote);
+    insertSingleTokenToParent(parentGtok, Token::Type::SingleQuote);
 }
 
 void Tokenizer::sym() {
@@ -581,7 +581,7 @@ void Tokenizer::space() {
 }
 
 void Tokenizer::space(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Space);
+    insertSingleTokenToParent(parentGtok, Token::Type::Space);
 }
 
 void Tokenizer::tab() {
@@ -589,7 +589,7 @@ void Tokenizer::tab() {
 }
 
 void Tokenizer::tab(GroupToken &parentGtok) {
-    insertSingleTokenToGroupToken(parentGtok, Token::Type::Tab);
+    insertSingleTokenToParent(parentGtok, Token::Type::Tab);
 }
 
 void Tokenizer::whitespace() {
