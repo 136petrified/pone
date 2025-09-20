@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-19-2025
+ *   Modified: 09-20-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -75,7 +75,8 @@ GroupToken::GroupToken(const Token::Type &type)
 
 GroupToken::GroupToken(const GroupToken &other)
     : Token(Token::Class::Group, other.m_type),
-      m_tokenGroup{other.getTokenGroup()},
+      // Deep copy required
+      m_tokenGroup{copyTokenGroup()},
       m_tokenGroupSize{other.m_tokenGroupSize} {}
 
 GroupToken::GroupToken(GroupToken &&other) noexcept
@@ -94,7 +95,7 @@ GroupToken &GroupToken::operator=(const GroupToken &other) {
         m_class = Token::Class::Group;
         m_type = other.m_type;
         clearTokenGroup();
-        m_tokenGroup = other.getTokenGroup();
+        m_tokenGroup = copyTokenGroup();
     }
 
     return *this;
@@ -117,16 +118,18 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
 
 void GroupToken::clearTokenGroup() { m_tokenGroup.clear(); }
 
-std::vector<std::unique_ptr<Token>> GroupToken::getTokenGroup() const {
+std::vector<std::unique_ptr<Token>> GroupToken::copyTokenGroup() const {
     std::vector<std::unique_ptr<Token>> newTokenVector;
 
     for (const auto &token : m_tokenGroup) {
-        if (token != nullptr) {
-            newTokenVector.push_back(token->clone());
-        }
+        newTokenVector.push_back(token->clone());
     }
 
     return newTokenVector;
+}
+
+const std::vector<std::unique_ptr<Token>> &GroupToken::getTokenGroup() const {
+    return m_tokenGroup;
 }
 
 void GroupToken::insertToTokenGroup(std::unique_ptr<Token> &&token) {
@@ -239,60 +242,31 @@ void Tokenizer::dash() { insertSingleToken(Token::Type::Dash); }
 
 void Tokenizer::doubleQuote() { insertSingleToken(Token::Type::DoubleQuote); }
 
-std::vector<std::unique_ptr<Token>> Tokenizer::getTokens() const {
-    // Copy every single unique_ptr from m_tokens
-    // and every GroupToken within it
-
-    std::vector<std::unique_ptr<Token>> newTokenVector;
-
-    for (const auto &token : rootPtr->getTokenGroup()) {
-        if (token != nullptr) {
-            newTokenVector.push_back(token->clone());
-        }
+const std::vector<std::unique_ptr<Token>> &Tokenizer::getTokens() const {
+    if (groupStack.empty()) {
+        // TODO: Throw exception
+    } else if (groupStack.size() > 1) {
+        // TODO: Throw exception
     }
 
-    return newTokenVector;
+    return groupStack.top()->getTokenGroup();
 }
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {}
 
-void Tokenizer::insertGroupTokenToTokens(
-    const std::unique_ptr<GroupToken> &gtokPtr) {
-    m_tokens.push_back(gtokPtr->clone());
+void Tokenizer::insertGroupToken(const std::unique_ptr<GroupToken> &gtokPtr) {
+    groupStack.top()->insertToTokenGroup(gtokPtr->clone());
 }
 
-void Tokenizer::insertGroupTokenToTokens(
-    std::unique_ptr<GroupToken> &&gtokPtr) {
-    m_tokens.push_back(std::move(gtokPtr));
+void Tokenizer::insertGroupToken(std::unique_ptr<GroupToken> &&gtokPtr) {
+    groupStack.top()->insertToTokenGroup(std::move(gtokPtr));
 }
 
-void Tokenizer::insertSingleTokenToParent(GroupToken &parent,
-                                          const Token::Type &type) {
-    parent.insertToTokenGroup(createSingleToken(type));
+void Tokenizer::insertSingleToken(const Token::Type &type) {
+    m_tokens.push_back(createSingleToken(type);
 }
 
-void Tokenizer::insertSingleTokenToParent(GroupToken &parent,
-                                          const Token::Type &type,
-                                          std::string &&data) {
-    parent.insertToTokenGroup(createSingleToken(type, std::move(data)));
-}
-
-void Tokenizer::insertSingleTokenToParent(
-    GroupToken &parent, const std::unique_ptr<SingleToken> &stokPtr) {
-    parent.insertToTokenGroup(stokPtr->clone());
-}
-
-void Tokenizer::insertSingleTokenToParent(
-    GroupToken &parent, std::unique_ptr<SingleToken> &&stokPtr) {
-    parent.insertToTokenGroup(std::move(stokPtr));
-}
-
-void Tokenizer::insertSingleTokenToTokens(const Token::Type &type) {
-    m_tokens.push_back(createSingleToken(type));
-}
-
-void Tokenizer::insertSingleTokenToTokens(const Token::Type &type,
-                                          std::string &&data) {
+void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
     m_tokens.push_back(createSingleToken(type, std::move(data)));
 }
 

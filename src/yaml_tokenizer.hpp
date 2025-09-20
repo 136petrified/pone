@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-19-2025
+ *   Modified: 09-20-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -164,11 +164,15 @@ class Token {
      */
     virtual void clearTokenGroup();
 
+    /*! A virtual function to copy the root vector of Tokens.
+     */
+    virtual std::vector<std::unique_ptr<Token>> copyTokenGroup() const;
+
     /*! A virtual function for getting a vector of a Tokens within a GroupToken.
 
-       \return a vector of Token pointers.
+       \return a read-only vector reference of Token pointers.
      */
-    virtual std::vector<std::unique_ptr<Token>> getTokenGroup() const;
+    virtual const std::vector<std::unique_ptr<Token>> &getTokenGroup() const;
 
     /*! A virtual function for inserting a Token to a GroupToken.
 
@@ -354,13 +358,19 @@ class GroupToken : public Token {
      */
     void clearTokenGroup() override;
 
-    /*! Gets the vector of Tokens within a GroupToken.
+    /*! Makes a copy of the root vector of Tokens
 
         \return a vector of Token pointers.
+     */
+    std::vector<std::unique_ptr<Token>> copyTokenGroup() const override;
+
+    /*! Gets the vector of Tokens within a GroupToken.
+
+        \return a read-only vector reference of Token pointers.
         \sa Token
      */
 
-    std::vector<std::unique_ptr<Token>> getTokenGroup() const override;
+    const std::vector<std::unique_ptr<Token>> &getTokenGroup() const override;
 
     /*! Inserts a Token into a GroupToken.
 
@@ -440,7 +450,7 @@ class Tokenizer {
 
         \return a vector of Token pointers.
      */
-    std::vector<std::unique_ptr<Token>> getTokens() const;
+    const std::vector<std::unique_ptr<Token>> &getTokens() const;
 
     /*! Initializes the Tokenizer.
         This function is the starting point of the Tokenizer.
@@ -686,7 +696,6 @@ class Tokenizer {
     std::string m_buf;
     char m_char;
 
-    std::stack<GroupToken> groupTokenStack;
     bool m_endOfFile;
 };
 }  // namespace YAML
