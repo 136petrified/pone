@@ -142,7 +142,7 @@ void GroupToken::insertToTokenGroup(std::shared_ptr<Token> &&token) {
     }
 }
 
-bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
+bool GroupToken::empty() const { return m_tokenGroupSize <= 0; }
 
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
@@ -313,22 +313,61 @@ void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
     std::shared_ptr<GroupToken> parent = groupStack.top();
 
     if (parent == nullptr) {
+        // TODO: Error here
+        return;
     }
+
     if (gtokPtr != parent) {
         parent->insertToTokenGroup(gtokPtr);
     }
 }
+
 void Tokenizer::insertSingleToken(const Token::Type &type) {
-    groupStack.top()->insertToTokenGroup(createSingleToken(type));
+    if (groupStack.empty()) {
+        // TODO: Error here
+        return;
+    }
+
+    std::shared_ptr<GroupToken> parent = groupStack.top();
+
+    if (parent == nullptr) {
+        // TODO: Error here
+        return;
+    }
+
+    parent->insertToTokenGroup(createSingleToken(type));
 }
 
 void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
-    groupStack.top()->insertToTokenGroup(
-        createSingleToken(type, std::move(data)));
+    if (groupStack.empty()) {
+        // TODO: Error here
+        return;
+    }
+
+    std::shared_ptr<GroupToken> parent = groupStack.top();
+
+    if (parent == nullptr) {
+        // TODO: Error here
+        return;
+    }
+
+    parent->insertToTokenGroup(createSingleToken(type, std::move(data)));
 }
 
 void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
-    groupStack.top()->insertToTokenGroup(stokPtr);
+    if (groupStack.empty()) {
+        // TODO: Error here
+        return;
+    }
+
+    std::shared_ptr<GroupToken> parent = groupStack.top();
+
+    if (parent == nullptr) {
+        // TODO: Error here
+        return;
+    }
+
+    parent->insertToTokenGroup(stokPtr);
 }
 
 void Tokenizer::leftBrace() { insertSingleToken(Token::Type::LeftBrace); }

@@ -183,7 +183,7 @@ class Token {
     /*! A virtual function. Checks if a GroupToken is empty.
         \return true if empty, false otherwise.
      */
-    virtual bool isTokenGroupEmpty() const;
+    virtual bool empty() const;
 
     /*! A virtual function. The number of Tokens within a GroupToken.
 
@@ -385,7 +385,7 @@ class GroupToken : public Token {
         \sa Token
      */
 
-    bool isTokenGroupEmpty() const override;
+    bool empty() const override;
 
     /*! Gets the size of a GroupToken.
 
