@@ -44,9 +44,9 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
     return *this;
 }
 
-std::unique_ptr<Token> SingleToken::clone() const {
+std::shared_ptr<Token> SingleToken::clone() const {
     try {
-        return std::make_unique<SingleToken>(*this);
+        return std::make_shared<SingleToken>(*this);
     } catch (const std::bad_alloc &e) {
         // TODO: Print error here
         return nullptr;
@@ -118,8 +118,8 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
 
 void GroupToken::clearTokenGroup() { m_tokenGroup.clear(); }
 
-std::vector<std::unique_ptr<Token>> GroupToken::copyTokenGroup() const {
-    std::vector<std::unique_ptr<Token>> newTokenVector;
+std::vector<std::shared_ptr<Token>> GroupToken::copyTokenGroup() const {
+    std::vector<std::shared_ptr<Token>> newTokenVector;
 
     for (const auto &token : m_tokenGroup) {
         newTokenVector.push_back(token->clone());
@@ -128,11 +128,11 @@ std::vector<std::unique_ptr<Token>> GroupToken::copyTokenGroup() const {
     return newTokenVector;
 }
 
-const std::vector<std::unique_ptr<Token>> &GroupToken::getTokenGroup() const {
+const std::vector<std::shared_ptr<Token>> &GroupToken::getTokenGroup() const {
     return m_tokenGroup;
 }
 
-void GroupToken::insertToTokenGroup(std::unique_ptr<Token> &&token) {
+void GroupToken::insertToTokenGroup(std::shared_ptr<Token> &&token) {
     if (token != nullptr) {
         m_tokenGroup.push_back(std::move(token));
         ++m_tokenGroupSize;
@@ -143,7 +143,7 @@ bool GroupToken::isTokenGroupEmpty() const { return m_tokenGroupSize <= 0; }
 
 size_t GroupToken::sizeOfTokenGroup() const { return m_tokenGroupSize; }
 
-std::unique_ptr<Token> GroupToken::clone() const {
+std::shared_ptr<Token> GroupToken::clone() const {
     // Make a new GroupToken
     // Do not call copy constructor
     // It does not use recursion directly
@@ -159,7 +159,7 @@ std::unique_ptr<Token> GroupToken::clone() const {
     }
 
     try {
-        return std::make_unique<GroupToken>(newGroupToken);
+        return std::make_shared<GroupToken>(newGroupToken);
     } catch (const std::bad_alloc &e) {
         // TODO: Print error here
         return nullptr;
@@ -205,6 +205,9 @@ void Tokenizer::comment() {
     // is consumed
 
     GroupToken commentToken{Token::Type::Comment};
+    std::shared_ptr<GroupToken> commentTokenPtr =
+        createGroupToken(commentToken);  // Allocate the pointer
+    groupStack.push(commentTokenPtr);
 
     while (m_char != '\n') {  // Stop at indent
         scalar();
@@ -212,37 +215,44 @@ void Tokenizer::comment() {
         whitespace();
     }
 
-    insertGroupToken(createGroupToken(commentToken));
+    groupStack.pop();  // Pop out parent commentToken
+
+    insertGroupToken(commentTokenPtr);
 }
 
-std::unique_ptr<GroupToken> Tokenizer::createGroupToken(
+std::shared_ptr<GroupToken> Tokenizer::createGroupToken(
     const Token::Type &type) const {
-    return std::make_unique<GroupToken>(GroupToken{type});
+    try {
+        return std::make_shared<GroupToken>(GroupToken{type});
+    } catch (const std::bad_alloc &e) {
+        // TODO: Error here
+        return nullptr;
+    }
 }
 
-std::unique_ptr<GroupToken> Tokenizer::createGroupToken(GroupToken &gtok) {
-    return std::make_unique<GroupToken>(gtok);
+std::shared_ptr<GroupToken> Tokenizer::createGroupToken(GroupToken &gtok) {
+    return std::make_shared<GroupToken>(gtok);
 }
 
-std::unique_ptr<SingleToken> Tokenizer::createSingleToken(
+std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
     const Token::Type &type) const {
-    return std::make_unique<SingleToken>(SingleToken{type});
+    return std::make_shared<SingleToken>(SingleToken{type});
 }
 
-std::unique_ptr<SingleToken> Tokenizer::createSingleToken(
+std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
     const Token::Type &type, std::string &&data) const {
-    return std::make_unique<SingleToken>(SingleToken{type, std::move(data)});
+    return std::make_shared<SingleToken>(SingleToken{type, std::move(data)});
 }
 
-std::unique_ptr<SingleToken> Tokenizer::createSingleToken(SingleToken &stok) {
-    return std::make_unique<SingleToken>(stok);
+std::shared_ptr<SingleToken> Tokenizer::createSingleToken(SingleToken &stok) {
+    return std::make_shared<SingleToken>(stok);
 }
 
 void Tokenizer::dash() { insertSingleToken(Token::Type::Dash); }
 
 void Tokenizer::doubleQuote() { insertSingleToken(Token::Type::DoubleQuote); }
 
-const std::vector<std::unique_ptr<Token>> &Tokenizer::getTokens() const {
+const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
     if (groupStack.empty()) {
         // TODO: Throw exception
     } else if (groupStack.size() > 1) {
@@ -254,11 +264,11 @@ const std::vector<std::unique_ptr<Token>> &Tokenizer::getTokens() const {
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {}
 
-void Tokenizer::insertGroupToken(const std::unique_ptr<GroupToken> &gtokPtr) {
+void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
     groupStack.top()->insertToTokenGroup(gtokPtr->clone());
 }
 
-void Tokenizer::insertGroupToken(std::unique_ptr<GroupToken> &&gtokPtr) {
+void Tokenizer::insertGroupToken(std::shared_ptr<GroupToken> &&gtokPtr) {
     groupStack.top()->insertToTokenGroup(std::move(gtokPtr));
 }
 
@@ -271,12 +281,12 @@ void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
 }
 
 void Tokenizer::insertSingleTokenToTokens(
-    const std::unique_ptr<SingleToken> &stokPtr) {
+    const std::shared_ptr<SingleToken> &stokPtr) {
     m_tokens.push_back(stokPtr->clone());
 }
 
 void Tokenizer::insertSingleTokenToTokens(
-    std::unique_ptr<SingleToken> &&stokPtr) {
+    std::shared_ptr<SingleToken> &&stokPtr) {
     m_tokens.push_back(std::move(stokPtr));
 }
 

@@ -119,7 +119,7 @@ class Token {
     /*! Pure virtual function for making a deep copy of a Token pointer.
         \return a unique_ptr of the Token copy.
      */
-    virtual std::unique_ptr<Token> clone() const = 0;
+    virtual std::shared_ptr<Token> clone() const = 0;
 
     /*! Pure virtual function for getting the class of a Token.
 
@@ -166,19 +166,19 @@ class Token {
 
     /*! A virtual function to copy the root vector of Tokens.
      */
-    virtual std::vector<std::unique_ptr<Token>> copyTokenGroup() const;
+    virtual std::vector<std::shared_ptr<Token>> copyTokenGroup() const;
 
     /*! A virtual function for getting a vector of a Tokens within a GroupToken.
 
        \return a read-only vector reference of Token pointers.
      */
-    virtual const std::vector<std::unique_ptr<Token>> &getTokenGroup() const;
+    virtual const std::vector<std::shared_ptr<Token>> &getTokenGroup() const;
 
     /*! A virtual function for inserting a Token to a GroupToken.
 
         \param token an rvalue reference to a Token pointer.
      */
-    virtual void insertToTokenGroup(std::unique_ptr<Token> &&token);
+    virtual void insertToTokenGroup(std::shared_ptr<Token> &&token);
 
     /*! A virtual function. Checks if a GroupToken is empty.
         \return true if empty, false otherwise.
@@ -269,10 +269,10 @@ class SingleToken : public Token {
     // ----------------------------------------
     /*! Creates a deep copy of a SingleToken pointer.
 
-        \returns a unique_ptr of the Token copy.
+        \returns a shared_ptr of the Token copy.
         \sa Token
      */
-    std::unique_ptr<Token> clone() const override;
+    std::shared_ptr<Token> clone() const override;
 
     /*! Gets the class of a SingleToken.
 
@@ -362,7 +362,7 @@ class GroupToken : public Token {
 
         \return a vector of Token pointers.
      */
-    std::vector<std::unique_ptr<Token>> copyTokenGroup() const override;
+    std::vector<std::shared_ptr<Token>> copyTokenGroup() const override;
 
     /*! Gets the vector of Tokens within a GroupToken.
 
@@ -370,14 +370,14 @@ class GroupToken : public Token {
         \sa Token
      */
 
-    const std::vector<std::unique_ptr<Token>> &getTokenGroup() const override;
+    const std::vector<std::shared_ptr<Token>> &getTokenGroup() const override;
 
     /*! Inserts a Token into a GroupToken.
 
         \param token an rvalue reference to a Token pointer.
         \sa Token
      */
-    void insertToTokenGroup(std::unique_ptr<Token> &&token) override;
+    void insertToTokenGroup(std::shared_ptr<Token> &&token) override;
 
     /*! Checks if a GroupToken is empty.
 
@@ -402,10 +402,10 @@ class GroupToken : public Token {
 
     /*! Creates a deep copy of a GroupToken pointer.
 
-        \return a unique_ptr to the GroupToken copy.
+        \return a shared_ptr to the GroupToken copy.
         \sa Token
      */
-    std::unique_ptr<Token> clone() const override;
+    std::shared_ptr<Token> clone() const override;
 
     /*! Gets the class of a GroupToken.
 
@@ -429,7 +429,7 @@ class GroupToken : public Token {
     void setType(const Token::Type &type) override;
 
    private:
-    std::vector<std::unique_ptr<Token>> m_tokenGroup;
+    std::vector<std::shared_ptr<Token>> m_tokenGroup;
     size_t m_tokenGroupSize;
 };
 
@@ -450,7 +450,7 @@ class Tokenizer {
 
         \return a vector of Token pointers.
      */
-    const std::vector<std::unique_ptr<Token>> &getTokens() const;
+    const std::vector<std::shared_ptr<Token>> &getTokens() const;
 
     /*! Initializes the Tokenizer.
         This function is the starting point of the Tokenizer.
@@ -486,21 +486,21 @@ class Tokenizer {
         \param type the Token type to create the GroupToken with.
         \return a unique pointer to the GroupToken.
      */
-    std::unique_ptr<GroupToken> createGroupToken(const Token::Type &type) const;
+    std::shared_ptr<GroupToken> createGroupToken(const Token::Type &type) const;
 
     /*! Creates a unique GroupToken pointer from an existing GroupToken.
 
         \param gtok the GroupToken object to tokenize.
         \return a unique pointer to the GroupToken.
      */
-    std::unique_ptr<GroupToken> createGroupToken(GroupToken &gtok);
+    std::shared_ptr<GroupToken> createGroupToken(GroupToken &gtok);
 
     /*! Creates a unique SingleToken pointer.
 
         \param type the Token type to create the SingleToken with.
         \return a unique pointer to the SingleToken.
      */
-    std::unique_ptr<SingleToken> createSingleToken(
+    std::shared_ptr<SingleToken> createSingleToken(
         const Token::Type &type) const;
 
     /*! Creates a unique SingleToken pointer with string data.
@@ -509,7 +509,7 @@ class Tokenizer {
        \param data a string rvalue reference.
        \return a unique pointer to the SingleToken.
      */
-    std::unique_ptr<SingleToken> createSingleToken(const Token::Type &type,
+    std::shared_ptr<SingleToken> createSingleToken(const Token::Type &type,
                                                    std::string &&data) const;
 
     /*! Creates a unique SingleToken pointer from an existing SingleToken.
@@ -517,7 +517,7 @@ class Tokenizer {
         \param stok the SingleToken object to tokenize.
         \return a unique pointer to the SingleToken.
      */
-    std::unique_ptr<SingleToken> createSingleToken(SingleToken &stok);
+    std::shared_ptr<SingleToken> createSingleToken(SingleToken &stok);
 
     /*! Processes a dash Token.
      */
@@ -543,14 +543,14 @@ class Tokenizer {
 
         \param gtokPtr a pointer to the GroupToken.
      */
-    void insertGroupToken(const std::unique_ptr<GroupToken> &gtokPtr);
+    void insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr);
 
     /*! Moves and inserts a GroupToken to a parent GroupToken.
 
         \param gtokPtr a pointer rvalue reference to a GroupToken.
      */
 
-    void insertGroupToken(std::unique_ptr<GroupToken> &&gtokPtr);
+    void insertGroupToken(std::shared_ptr<GroupToken> &&gtokPtr);
 
     /*! Creates and inserts a SingleToken to a parent GroupToken.
 
@@ -572,13 +572,13 @@ class Tokenizer {
 
         \param stokPtr a pointer to the SingleToken.
      */
-    void insertSingleToken(const std::unique_ptr<SingleToken> &stokPtr);
+    void insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr);
 
     /*! Inserts a SingleToken to a parent GroupToken.
 
         \param stokPtr a pointer rvalue reference to the SingleToken.
      */
-    void insertSingleToken(std::unique_ptr<SingleToken> &&stokPtr);
+    void insertSingleToken(std::shared_ptr<SingleToken> &&stokPtr);
 
     /*! Processes a key Token.
      */
@@ -690,7 +690,7 @@ class Tokenizer {
     std::ifstream m_ifs;
 
     /*! A stack of GroupToken pointers. */
-    std::stack<std::unique_ptr<Token>> groupStack;
+    std::stack<std::shared_ptr<GroupToken>> groupStack;
     size_t m_tokensSize;
 
     std::string m_buf;
