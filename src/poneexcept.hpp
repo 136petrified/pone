@@ -259,6 +259,52 @@ class GateNotFoundException : public GateException {
     std::string m_Msg;
 };
 
+class BoardException : public std::runtime_error {
+   public:
+    BoardException() = delete;
+    BoardException(const std::string &name, const std::string &msg)
+        : std::runtime_error(msg), m_Name{name} {}
+    virtual const std::string &getMessage() const = 0;
+    virtual void logToFile() const = 0;
+
+   private:
+    std::string m_Name;
+};
+
+class GoalNotFoundException : public BoardException {
+   public:
+    GoalNotFoundException() = delete;
+
+    GoalNotFoundException(const Board &b)
+        : BoardException(
+              "GoalNotFoundException",
+              std::format(
+                  "GoalNotFoundException: No Tile with type \"goal\" found in "
+                  "Board "
+                  "\"{}\"! A Tile with type \"goal\" is required inside of a "
+                  "Board "
+                  "with more than 1 Tile!",
+                  b.getName())),
+          m_Msg{std::format(
+              "GoalNotFoundException: No Tile with type \"goal\" found in "
+              "Board "
+              "\"{}\"! A Tile with type \"goal\" is required inside of a "
+              "Board "
+              "with more than 1 Tile!",
+              b.getName())} {}
+
+    const std::string &getMessage() const { return m_Msg; }
+
+    void logToFile() const {
+        std::ofstream ofs{ERR_FILE, std::ios::app};
+        ofs << m_Msg << '\n';
+        ofs.close();
+    }
+
+   private:
+    std::string m_Msg;
+};
+
 class InvalidTileException : public std::runtime_error {
    public:
     InvalidTileException()
@@ -362,52 +408,6 @@ class InvalidValueException : public std::runtime_error {
     InvalidValueException(const int &value, const std::string &msg)
         : std::runtime_error(std::format("{} : {}", value, msg)),
           m_Msg{std::format("{} : {}", value, msg)} {}
-
-    const std::string &getMessage() const { return m_Msg; }
-
-    void logToFile() const {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
-        ofs.close();
-    }
-
-   private:
-    std::string m_Msg;
-};
-
-class BoardException : public std::runtime_error {
-   public:
-    BoardException() = delete;
-    BoardException(const std::string &name, const std::string &msg)
-        : std::runtime_error(msg), m_Name{name} {}
-    virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const = 0;
-
-   private:
-    std::string m_Name;
-};
-
-class GoalNotFoundException : public BoardException {
-   public:
-    GoalNotFoundException() = delete;
-
-    GoalNotFoundException(const Board &b)
-        : BoardException(
-              "GoalNotFoundException",
-              std::format(
-                  "GoalNotFoundException: No Tile with type \"goal\" found in "
-                  "Board "
-                  "\"{}\"! A Tile with type \"goal\" is required inside of a "
-                  "Board "
-                  "with more than 1 Tile!",
-                  b.getName())),
-          m_Msg{std::format(
-              "GoalNotFoundException: No Tile with type \"goal\" found in "
-              "Board "
-              "\"{}\"! A Tile with type \"goal\" is required inside of a "
-              "Board "
-              "with more than 1 Tile!",
-              b.getName())} {}
 
     const std::string &getMessage() const { return m_Msg; }
 
