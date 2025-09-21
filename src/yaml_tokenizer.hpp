@@ -117,7 +117,7 @@ class Token {
     // Start of basic Token functions
     // ----------------------------------------
     /*! Pure virtual function for making a deep copy of a Token pointer.
-        \return a unique_ptr of the Token copy.
+        \return a shared_ptr of the Token copy.
      */
     virtual std::shared_ptr<Token> clone() const = 0;
 
@@ -453,7 +453,7 @@ class Tokenizer {
     const std::vector<std::shared_ptr<Token>> &getTokens() const;
 
     /*! Initializes the Tokenizer.
-        This function is the starting point of the Tokenizer.
+        This function is the entry point of the Tokenizer.
      */
     void tokenize();
 
@@ -481,41 +481,41 @@ class Tokenizer {
      */
     void comment();
 
-    /*! Creates a unique GroupToken pointer.
+    /*! Creates a shared GroupToken pointer.
 
         \param type the Token type to create the GroupToken with.
-        \return a unique pointer to the GroupToken.
+        \return a shared pointer to the GroupToken.
      */
     std::shared_ptr<GroupToken> createGroupToken(const Token::Type &type) const;
 
-    /*! Creates a unique GroupToken pointer from an existing GroupToken.
+    /*! Creates a shared GroupToken pointer from an existing GroupToken.
 
         \param gtok the GroupToken object to tokenize.
-        \return a unique pointer to the GroupToken.
+        \return a shared pointer to the GroupToken.
      */
     std::shared_ptr<GroupToken> createGroupToken(GroupToken &gtok);
 
-    /*! Creates a unique SingleToken pointer.
+    /*! Creates a shared SingleToken pointer.
 
         \param type the Token type to create the SingleToken with.
-        \return a unique pointer to the SingleToken.
+        \return a shared pointer to the SingleToken.
      */
     std::shared_ptr<SingleToken> createSingleToken(
         const Token::Type &type) const;
 
-    /*! Creates a unique SingleToken pointer with string data.
+    /*! Creates a shared SingleToken pointer with string data.
 
        \param type the Token type to create the SingleToken with.
        \param data a string rvalue reference.
-       \return a unique pointer to the SingleToken.
+       \return a shared pointer to the SingleToken.
      */
     std::shared_ptr<SingleToken> createSingleToken(const Token::Type &type,
                                                    std::string &&data) const;
 
-    /*! Creates a unique SingleToken pointer from an existing SingleToken.
+    /*! Creates a shared SingleToken pointer from an existing SingleToken.
 
         \param stok the SingleToken object to tokenize.
-        \return a unique pointer to the SingleToken.
+        \return a shared pointer to the SingleToken.
      */
     std::shared_ptr<SingleToken> createSingleToken(SingleToken &stok);
 
@@ -550,14 +550,6 @@ class Tokenizer {
         \param gtokPtr a pointer rvalue reference to a GroupToken.
      */
 
-    void insertGroupToken(std::shared_ptr<GroupToken> &&gtokPtr);
-
-    /*! Creates and inserts a SingleToken to a parent GroupToken.
-
-        \param parentGtok the parent GroupToken.
-        \param type the Token type.
-     */
-
     void insertSingleToken(const Token::Type &type);
 
     /*! Creates and inserts a SingleToken to a parent GroupToken with
@@ -573,12 +565,6 @@ class Tokenizer {
         \param stokPtr a pointer to the SingleToken.
      */
     void insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr);
-
-    /*! Inserts a SingleToken to a parent GroupToken.
-
-        \param stokPtr a pointer rvalue reference to the SingleToken.
-     */
-    void insertSingleToken(std::shared_ptr<SingleToken> &&stokPtr);
 
     /*! Processes a key Token.
      */

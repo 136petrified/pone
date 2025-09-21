@@ -262,49 +262,32 @@ const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
     return groupStack.top()->getTokenGroup();
 }
 
-void Tokenizer::insertGroupToken(const Token::Type &type) {}
+void Tokenizer::insertGroupToken(const Token::Type &type) {
+    groupStack.top()->insertToTokenGroup(createGroupToken(type));
+}
 
 void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
-    groupStack.top()->insertToTokenGroup(gtokPtr->clone());
+    std::shared_ptr<GroupToken> parent = groupStack.top();
+    if (gtokPtr != parent) {
+        parent->insertToTokenGroup(gtokPtr);
+    }
 }
-
-void Tokenizer::insertGroupToken(std::shared_ptr<GroupToken> &&gtokPtr) {
-    groupStack.top()->insertToTokenGroup(std::move(gtokPtr));
-}
-
 void Tokenizer::insertSingleToken(const Token::Type &type) {
-    m_tokens.push_back(createSingleToken(type);
+    groupStack.top()->insertToTokenGroup(createSingleToken(type));
 }
 
 void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
-    m_tokens.push_back(createSingleToken(type, std::move(data)));
+    groupStack.top()->insertToTokenGroup(
+        createSingleToken(type, std::move(data)));
 }
 
-void Tokenizer::insertSingleTokenToTokens(
-    const std::shared_ptr<SingleToken> &stokPtr) {
-    m_tokens.push_back(stokPtr->clone());
+void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
+    groupStack.top()->insertToTokenGroup(stokPtr);
 }
 
-void Tokenizer::insertSingleTokenToTokens(
-    std::shared_ptr<SingleToken> &&stokPtr) {
-    m_tokens.push_back(std::move(stokPtr));
-}
+void Tokenizer::leftBrace() { insertSingleToken(Token::Type::LeftBrace); }
 
-void Tokenizer::leftBrace() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::LeftBrace));
-}
-
-void Tokenizer::leftBrace(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::LeftBrace);
-}
-
-void Tokenizer::leftBracket() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::LeftBracket));
-}
-
-void Tokenizer::leftBracket(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::LeftBracket);
-}
+void Tokenizer::leftBracket() { insertSingleToken(Token::Type::LeftBracket); }
 
 const char Tokenizer::lookahead() {
     // Looks ahead of the current character from ifstream
@@ -324,9 +307,7 @@ void Tokenizer::mapping() {
     }
 }
 
-void Tokenizer::newline() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::Newline));
-}
+void Tokenizer::newline() { insertSingleToken(Token::Type::Newline); }
 
 void Tokenizer::next() {
     m_ifs.get(m_char);
@@ -336,37 +317,13 @@ void Tokenizer::next() {
     }
 }
 
-void Tokenizer::numSign() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::NumSign));
-}
+void Tokenizer::numSign() { insertSingleToken(Token::Type::NumSign); }
 
-void Tokenizer::numSign(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::NumSign);
-}
+void Tokenizer::otherSymbols() { insertSingleToken(Token::Type::Symbol); }
 
-void Tokenizer::otherSymbols() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::Symbol));
-}
+void Tokenizer::rightBrace() { insertSingleToken(Token::Type::RightBrace); }
 
-void Tokenizer::otherSymbols(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::Symbol);
-}
-
-void Tokenizer::rightBrace() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::RightBrace));
-}
-
-void Tokenizer::rightBrace(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::RightBrace);
-}
-
-void Tokenizer::rightBracket() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::RightBracket));
-}
-
-void Tokenizer::rightBracket(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::RightBracket);
-}
+void Tokenizer::rightBracket() { insertSingleToken(Token::Type::RightBracket); }
 
 void Tokenizer::scalar() {
     if (!isAlnum(m_char)) return;
@@ -380,34 +337,11 @@ void Tokenizer::scalar() {
         }
     }
 
-    insertSingleTokenToTokens(
-        createSingleToken(Token::Type::Scalar, std::move(m_buf)));
+    insertSingleToken(createSingleToken(Token::Type::Scalar, std::move(m_buf)));
     clearBuf();  // Clear the buffer after creating the token
 }
 
-void Tokenizer::scalar(GroupToken &parent) {
-    if (!isAlnum(m_char)) return;
-    while (isAlnum(m_char)) {
-        m_buf += m_char;
-
-        try {
-            next();
-        } catch (const EndOfIfstreamException &) {
-            return;
-        }
-    }
-
-    insertSingleTokenToParent(parent, createSingleToken(Token::Type::Scalar));
-    clearBuf();
-}
-
-void Tokenizer::singleQuote() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::SingleQuote));
-}
-
-void Tokenizer::singleQuote(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::SingleQuote);
-}
+void Tokenizer::singleQuote() { insertSingleToken(Token::Type::SingleQuote); }
 
 void Tokenizer::sym() {
     if (!isSymbol(m_char)) return;
@@ -458,55 +392,6 @@ void Tokenizer::sym() {
     }
 }
 
-void Tokenizer::sym(GroupToken &parent) {
-    if (!isSymbol(m_char)) return;
-
-    switch (m_char) {
-        case '\\':
-            backslash(parent);
-            break;
-        case ':':
-            colon(parent);
-            break;
-        case ',':
-            comma(parent);
-            break;
-        case '-':
-            dash(parent);
-            break;
-        case '"':
-            doubleQuote(parent);
-            break;
-        case '{':
-            leftBrace(parent);
-            break;
-        case '[':
-            leftBracket(parent);
-            break;
-        case '#':
-            numSign(parent);
-            break;
-        case '}':
-            rightBrace(parent);
-            break;
-        case ']':
-            rightBracket(parent);
-            break;
-        case '\'':
-            singleQuote(parent);
-            break;
-        default:
-            otherSymbols(parent);
-            break;
-    }
-
-    try {
-        next();
-    } catch (const EndOfIfstreamException &) {
-        return;
-    }
-}
-
 void Tokenizer::tokenize() {
     try {
         next();  // Start with first token
@@ -518,21 +403,9 @@ void Tokenizer::tokenize() {
     }
 }
 
-void Tokenizer::space() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::Space));
-}
+void Tokenizer::space() { insertSingleToken(Token::Type::Space); }
 
-void Tokenizer::space(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::Space);
-}
-
-void Tokenizer::tab() {
-    insertSingleTokenToTokens(createSingleToken(Token::Type::Tab));
-}
-
-void Tokenizer::tab(GroupToken &parent) {
-    insertSingleTokenToParent(parent, Token::Type::Tab);
-}
+void Tokenizer::tab() { insertSingleToken(Token::Type::Tab); }
 
 void Tokenizer::whitespace() {
     while (isSpace(m_char)) {
@@ -551,28 +424,6 @@ void Tokenizer::whitespace() {
         try {
             next();
         } catch (const EndOfIfstreamException &) {
-            return;
-        }
-    }
-}
-
-void Tokenizer::whitespace(GroupToken &parent) {
-    while (isSpace(m_char)) {
-        switch (m_char) {
-            case '\n':
-                newline(parent);
-                break;
-            case ' ':
-                space(parent);
-                break;
-            case '\t':
-                tab(parent);
-                break;
-        }
-
-        try {
-            next();
-        } catch (const EndOfIfstreamException) {
             return;
         }
     }
