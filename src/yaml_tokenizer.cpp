@@ -1,10 +1,11 @@
 /*   Created:  07-23-2025
- *   Modified: 09-20-2025
+ *   Modified: 09-21-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
 #include <memory>
+#include <new>
 #include <utility>
 
 namespace YAML {
@@ -231,21 +232,42 @@ std::shared_ptr<GroupToken> Tokenizer::createGroupToken(
 }
 
 std::shared_ptr<GroupToken> Tokenizer::createGroupToken(GroupToken &gtok) {
-    return std::make_shared<GroupToken>(gtok);
+    try {
+        return std::make_shared<GroupToken>(gtok);
+    } catch (const std::bad_alloc &e) {
+        // TODO: Error here
+        return nullptr;
+    }
 }
 
 std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
     const Token::Type &type) const {
-    return std::make_shared<SingleToken>(SingleToken{type});
+    try {
+        return std::make_shared<SingleToken>(SingleToken{type});
+    } catch (const std::bad_alloc &e) {
+        // TODO: Error here
+        return nullptr;
+    }
 }
 
 std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
     const Token::Type &type, std::string &&data) const {
-    return std::make_shared<SingleToken>(SingleToken{type, std::move(data)});
+    try {
+        return std::make_shared<SingleToken>(
+            SingleToken{type, std::move(data)});
+    } catch (const std::bad_alloc &e) {
+        // TODO: Error here
+        return nullptr;
+    }
 }
 
 std::shared_ptr<SingleToken> Tokenizer::createSingleToken(SingleToken &stok) {
-    return std::make_shared<SingleToken>(stok);
+    try {
+        return std::make_shared<SingleToken>(stok);
+    } catch (const std::bad_alloc &e) {
+        // TODO: Error here
+        return nullptr;
+    }
 }
 
 void Tokenizer::dash() { insertSingleToken(Token::Type::Dash); }
@@ -263,11 +285,33 @@ const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
 }
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {
-    groupStack.top()->insertToTokenGroup(createGroupToken(type));
+    if (groupStack.empty()) {
+        // TODO: Empty error here
+        // Something went wrong here
+        return;  // Dummy
+    }
+
+    std::shared_ptr<GroupToken> parent = groupStack.top();
+
+    if (parent == nullptr) {
+        // TODO: Error here
+        // Inadequate memory for further processing. Throw and exit program
+        return;
+    }
+
+    parent->insertToTokenGroup(createGroupToken(type));
 }
 
 void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
+    if (groupStack.empty()) {
+        // TODO: Empty error here
+        return;
+    }
+
     std::shared_ptr<GroupToken> parent = groupStack.top();
+
+    if (parent == nullptr) {
+    }
     if (gtokPtr != parent) {
         parent->insertToTokenGroup(gtokPtr);
     }
@@ -302,9 +346,18 @@ const char Tokenizer::lookahead() {
 
 void Tokenizer::mapping() {
     GroupToken mappingToken;
+    std::shared_ptr<GroupToken> mappingTokenPtr =
+        createGroupToken(mappingToken);
+
+    groupStack.push(mappingTokenPtr);
 
     while (m_char != ':') {
+        scalar();
+        sym();
+        whitespace();
     }
+
+    groupStack.pop();
 }
 
 void Tokenizer::newline() { insertSingleToken(Token::Type::Newline); }
@@ -385,6 +438,8 @@ void Tokenizer::sym() {
             break;
     }
 
+    clearBuf();  // Clear the buffer.
+
     try {
         next();
     } catch (const EndOfIfstreamException &) {
@@ -420,6 +475,8 @@ void Tokenizer::whitespace() {
                 tab();
                 break;
         }
+
+        clearBuf();  // Clear the buffer.
 
         try {
             next();
