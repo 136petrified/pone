@@ -8,6 +8,8 @@
 #include <new>
 #include <utility>
 
+#include "yaml_except.hpp"
+
 namespace YAML {
 
 Token::Token() {}
