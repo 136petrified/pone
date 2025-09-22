@@ -1,5 +1,5 @@
 /*   Created:  09-08-2024
- *   Modified: 09-21-2025
+ *   Modified: 09-22-2025
  */
 
 #ifndef PONE_EXCEPTION_HPP
@@ -12,6 +12,8 @@
 #include "poneboard.hpp"
 #include "ponegate.hpp"
 #include "ponetile.hpp"
+
+// TODO: Complete makeMessage implementations
 
 using GatePtr = std::shared_ptr<Gate>;
 using TilePtr = std::shared_ptr<Tile>;
@@ -36,16 +38,8 @@ class DuplicateTileCoordinatesException : public TileException {
     DuplicateTileCoordinatesException() = delete;
 
     DuplicateTileCoordinatesException(const int &x, const int &y)
-        : TileException(
-              "DuplicateTileCoordinatesException",
-              std::format(
-                  "Multiple tiles with duplicate coordinates detected with the "
-                  "coordinates: x: {}, y: {}",
-                  x, y)),
-          m_Msg{std::format(
-              "Multiple tiles with duplicate coordinates detected with the "
-              "coordinates: x: {}, y: {}",
-              x, y)} {}
+        : TileException("DuplicateTileCoordinatesException", makeMessage(x, y)),
+          m_Msg{makeMessage(x, y)} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
@@ -56,6 +50,13 @@ class DuplicateTileCoordinatesException : public TileException {
     }
 
    private:
+    std::string makeMessage(const int &x, const int &y) const {
+        return std::format(
+            "Multiple tiles with duplicate coordinates detect with the "
+            "coordinates: x: {}, y: {}",
+            x, y);
+    }
+
     std::string m_Msg;
 };
 
@@ -64,46 +65,32 @@ class DuplicateTileNamesException : public TileException {
     DuplicateTileNamesException() = delete;
 
     DuplicateTileNamesException(const std::string &name)
-        : TileException("DuplicateTileNamesException",
-                        std::format("Multiple tiles with duplicate names "
-                                    "detected with the name {}",
-                                    name)),
-          m_Msg{std::format(
-              "Multiple tiles with duplicate names detected with the name {}",
-              name)} {}
+        : TileException("DuplicateTileNamesException", makeMessage(name)),
+          m_Msg{makeMessage(name)} {}
 
    private:
+    std::string makeMessage(const std::string &name) const {
+        return std::format(
+            "Multiple tiles with duplicate names detected with the name {}",
+            name);
+    }
+
     std::string m_Msg;
 };
 
 class TileNotFoundException : public TileException {
    public:
     TileNotFoundException()
-        : TileException("TileNotFoundException",
-                        "TileNotFoundException: Null Tile (a nonexistent Tile) "
-                        "has been passed as an argument!"),
-          m_Msg{
-              "TileNotFoundException: Null Tile (a nonexistent Tile) has been "
-              "passed as an argument!"} {}
+        : TileException("TileNotFoundException", makeMessage()),
+          m_Msg{makeMessage()} {}
 
-    TileNotFoundException(const std::string &tile_name)
-        : TileException(
-              "TileNotFoundException",
-              std::format("TileNotFoundException: Tile \"{}\" was not found!",
-                          tile_name)),
-          m_Msg{std::format("TileNotFoundException: Tile \"{}\" was not found!",
-                            tile_name)} {}
+    TileNotFoundException(const std::string &tileName)
+        : TileException("TileNotFoundException", makeMessage(tileName)),
+          m_Msg{makeMessage()} {}
 
     TileNotFoundException(const int &x, const int &y)
-        : TileException("TileNotFoundException",
-                        std::format("TileNotFoundException: Tile with "
-                                    "coordinates ({}, {}) was not "
-                                    "found!",
-                                    x, y)),
-          m_Msg{std::format(
-              "TileNotFoundException: Tile with coordinates ({}, {}) was not "
-              "found!",
-              x, y)} {}
+        : TileException("TileNotFoundException", makeMessage(x, y)),
+          m_Msg{makeMessage(x, y)} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
@@ -114,6 +101,19 @@ class TileNotFoundException : public TileException {
     }
 
    private:
+    std::string makeMessage() const {
+        return "Null Tile (a nonexistent Tile) has been passed as an argument!";
+    }
+
+    std::string makeMessage(const std::string &tileName) const {
+        return std::format("Tile \"{}\" was not found!", tileName);
+    }
+
+    std::string makeMessage(const int &x, const int &y) const {
+        return std::format("Tile with coordinates ({}, {}) was not found!", x,
+                           y);
+    }
+
     std::string m_Msg;
 };
 
@@ -132,18 +132,24 @@ class GateException : public std::runtime_error {
 class DuplicateGateTilesException : public GateException {
    public:
     DuplicateGateTilesException() = delete;
+
     DuplicateGateTilesException(const TilePtr &tptr1, const TilePtr &tptr2)
         : GateException("DuplicateGateTilesException",
-                        std::format("Multiple gates with duplicate tiles "
-                                    "detected with the tiles: x: "
-                                    "{}, y: {}",
-                                    tptr1->getName(), tptr2->getName())),
-          m_Msg{std::format(
-              "Multiple gates with duplicate tiles detected with the tiles: x: "
-              "{}, y: {}",
-              tptr1->getName(), tptr2->getName())} {}
+                        makeMessage(tptr1, tptr2)),
+          m_Msg{makeMessage(tptr1, tptr2)} {}
 
    private:
+    std::string makeMessage(const TilePtr &tptr1, const TilePtr &tptr2) {
+        if (tptr1 == nullptr || tptr2 == nullptr) {
+            return "Null Tile pointers passed to this exception.";
+        }
+
+        return std::format(
+            "Multiple gates with duplicate tiles "
+            "detected with the tiles: x: "
+            "{}, y: {}",
+            tptr1->getName(), tptr2->getName());
+    }
     std::string m_Msg;
 };
 
@@ -152,13 +158,8 @@ class DuplicateGateNamesException : public GateException {
     DuplicateGateNamesException() = delete;
 
     DuplicateGateNamesException(const std::string &name)
-        : GateException("DuplicateGateNamesException",
-                        std::format("Multiple gates with duplicate names "
-                                    "detected with the name: {}",
-                                    name)),
-          m_Msg{std::format(
-              "Multiple gates with duplicate names detected with the name: {}",
-              name)} {}
+        : GateException("DuplicateGateNamesException", makeMessage(name)),
+          m_Msg{makeMessage(name)} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
@@ -169,6 +170,13 @@ class DuplicateGateNamesException : public GateException {
     }
 
    private:
+    std::string makeMessage(const std::string &name) const {
+        return std::format(
+            "Multiple gates with duplicate names "
+            "detected with the name: {}",
+            name);
+    }
+
     std::string m_Msg;
 };
 
@@ -177,14 +185,8 @@ class GateCollisionException : public GateException {
     GateCollisionException() = delete;
 
     GateCollisionException(const TilePtr &tptr)
-        : GateException(
-              "GateCollisionException",
-              std::format(
-                  "Attempted to create a gate with a collision tile: {}",
-                  tptr->getName())),
-          m_Msg{std::format(
-              "Attempted to create a gate with a collision tile: {}",
-              tptr->getName())} {}
+        : GateException("GateCollisionException", makeMessage(tptr)),
+          m_Msg{makeMessage(tptr)} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
@@ -195,6 +197,12 @@ class GateCollisionException : public GateException {
     }
 
    private:
+    std::string makeMessage(const TilePtr &tptr) const {
+        return std::format(
+            "Attempted to create a gate with a collision tile: {}",
+            tptr->getName());
+    }
+
     std::string m_Msg;
 };
 
