@@ -13,8 +13,6 @@
 #include "ponegate.hpp"
 #include "ponetile.hpp"
 
-// TODO: Complete makeMessage implementations
-
 using GatePtr = std::shared_ptr<Gate>;
 using TilePtr = std::shared_ptr<Tile>;
 
@@ -125,7 +123,7 @@ class GateException : public std::runtime_error {
     virtual const std::string &getMessage() const = 0;
     virtual void logToFile() const = 0;
 
-   private:
+   protected:
     std::string m_Name;
 };
 
@@ -165,7 +163,7 @@ class DuplicateGateNamesException : public GateException {
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
@@ -192,7 +190,7 @@ class GateCollisionException : public GateException {
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
@@ -211,59 +209,68 @@ class GateEmptyException : public GateException {
     GateEmptyException() = delete;
 
     GateEmptyException(const GatePtr &gptr)
-        : GateException(
-              "GateEmptyException",
-              std::format("Gate {} has no tiles to remove!", gptr->getName())),
-          m_Msg{std::format("Gate {} has no tiles to remove!",
-                            gptr->getName())} {}
+        : GateException("GateEmptyException", makeMessage(gptr)),
+          m_Msg{makeMessage(gptr)} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
    private:
+    std::string makeMessage(const GatePtr &gptr) const {
+        if (gptr == nullptr) {
+            return "Null Gate pointer was passed to this exception.";
+        }
+
+        return std::format("Gate {} has no tiles to remove!", gptr->getName());
+    }
     std::string m_Msg;
 };
 
 class GateNotFoundException : public GateException {
    public:
     GateNotFoundException()
-        : GateException("GateNotFoundException",
-                        "A Null Gate (a nonexistent Gate) was "
-                        "passed as an argument!"),
-          m_Msg{
-              "A Null Gate (a nonexistent Gate) was "
-              "passed as an argument!"} {}
+        : GateException("GateNotFoundException", makeMessage()),
+          m_Msg{makeMessage()} {}
 
-    GateNotFoundException(const std::string &gate_name)
-        : GateException("GateNotFoundException",
-                        std::format("Gate \"{}\" was not found!", gate_name)),
-          m_Msg{std::format("Gate \"{}\" was not found!", gate_name)} {}
+    GateNotFoundException(const std::string &name)
+        : GateException("GateNotFoundException", makeMessage(name)),
+          m_Msg{makeMessage(name)} {}
 
     GateNotFoundException(const TilePair &tp)
-        : GateException("GateNotFoundException",
-                        std::format("Gate with Tiles "
-                                    "\"{}\" and \"{}\" was not "
-                                    "found!",
-                                    tp.first->getName(), tp.second->getName())),
-          m_Msg{std::format("Gate with Tiles \"{}\" and "
-                            "\"{}\" was not "
-                            "found!",
-                            tp.first->getName(), tp.second->getName())} {}
+        : GateException("GateNotFoundException", makeMessage(tp)),
+          m_Msg{makeMessage(tp)} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
    private:
+    std::string makeMessage() const {
+        return "A Null Gate (a nonexistent Gate) was "
+               "passed as an argument!";
+    }
+
+    std::string makeMessage(const std::string &name) const {
+        return std::format("Gate \"{}\" was not found!", name);
+    }
+
+    std::string makeMessage(const TilePair &tp) const {
+        return std::format(
+            "Gate with Tiles "
+            "\"{}\" and \"{}\" was not "
+            "found!",
+            tp.first->getName(), tp.second->getName());
+    }
+
     std::string m_Msg;
 };
 
@@ -275,7 +282,7 @@ class BoardException : public std::runtime_error {
     virtual const std::string &getMessage() const = 0;
     virtual void logToFile() const = 0;
 
-   private:
+   protected:
     std::string m_Name;
 };
 
@@ -284,103 +291,104 @@ class GoalNotFoundException : public BoardException {
     GoalNotFoundException() = delete;
 
     GoalNotFoundException(const Board &b)
-        : BoardException(
-              "GoalNotFoundException",
-              std::format(
-                  "GoalNotFoundException: No Tile with type \"goal\" found in "
-                  "Board "
-                  "\"{}\"! A Tile with type \"goal\" is required inside of a "
-                  "Board "
-                  "with more than 1 Tile!",
-                  b.getName())),
-          m_Msg{std::format(
-              "GoalNotFoundException: No Tile with type \"goal\" found in "
-              "Board "
-              "\"{}\"! A Tile with type \"goal\" is required inside of a "
-              "Board "
-              "with more than 1 Tile!",
-              b.getName())} {}
+        : BoardException("GoalNotFoundException", makeMessage(b)),
+          m_Msg{makeMessage(b)} {}
 
     const std::string &getMessage() const { return m_Msg; }
 
     void logToFile() const {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
    private:
+    std::string makeMessage(const Board &b) const {
+        return std::format(
+            "GoalNotFoundException: No Tile with type \"goal\" found in "
+            "Board \"{}\"! A Tile with type \"goal\" is required inside of a "
+            "Board with more than 1 Tile!",
+            b.getName());
+    }
+
     std::string m_Msg;
 };
 
-class InvalidTileException : public std::runtime_error {
+class GameException : public std::runtime_error {
+   public:
+    GameException() = delete;
+    GameException(const std::string &name, const std::string &msg)
+        : std::runtime_error(msg), m_Name{name} {}
+    virtual const std::string &getMessage() const = 0;
+    virtual void logToFile() const = 0;
+
+   protected:
+    std::string m_Name;
+};
+
+class InvalidTileException : public GameException {
    public:
     InvalidTileException()
-        : std::runtime_error(
-              "Null Tile (a nonexistent Tile) is "
-              "passed "
-              "as a argument!"),
-          m_Msg{
-              "Null Tile (a nonexistent Tile) is "
-              "passed "
-              "as a argument!"} {}
+        : GameException("InvalidTileException", makeMessage()),
+          m_Msg{makeMessage()} {}
 
-    InvalidTileException(const std::string &toWhere)
-        : std::runtime_error(std::format("Null Tile (a nonexistent "
-                                         "Tile) is passed "
-                                         "as a argument to {}!",
-                                         toWhere)),
-          m_Msg{std::format("Null Tile (a nonexistent "
-                            "Tile) is passed "
-                            "as a argument to {}!",
-                            toWhere)} {}
+    InvalidTileException(const std::string &name)
+        : GameException("InvalidTileException", makeMessage()),
+          m_Msg{makeMessage(name)} {}
 
     // Assume gptr is not nullptr; check is done before
     // calling constructor.
 
     InvalidTileException(const TilePtr &tptr, const GatePtr &gptr)
-        : std::runtime_error(
-              (tptr == nullptr)
-                  ? std::format("Null Tile (a nonexistent Tile "
-                                "object) is within the Gate \"{}\"",
-                                gptr->getName())
-                  : std::format("Invalid Tile \"{}\" within "
-                                "Gate "
-                                "\"{}\"",
-                                tptr->getName(), gptr->getName())),
-          m_Msg{(tptr == nullptr)
-                    ? std::format("Null Tile (a nonexistent Tile "
-                                  "object) is within the Gate \"{}\"",
-                                  gptr->getName())
-                    : std::format("Invalid Tile \"{}\" within "
-                                  "Gate "
-                                  "\"{}\"",
-                                  tptr->getName(), gptr->getName())} {}
+        : GameException("InvalidTileException", makeMessage(tptr, gptr)),
+          m_Msg{makeMessage(tptr, gptr)} {}
 
     const std::string &getMessage() const { return m_Msg; }
 
     void logToFile() const {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
    private:
+    std::string makeMessage() const {
+        return "Null Tile (a nonexistent Tile) is passed as an argument!";
+    }
+
+    std::string makeMessage(const std::string &name) {
+        return std::format(
+            "Null Tile (a nonexistent Tile) is passed as a argument to {}!",
+            name);
+    }
+
+    std::string makeMessage(const TilePtr &tptr, const GatePtr &gptr) {
+        return (tptr == nullptr) ? std::format(
+                                       "Null Tile (a nonexistent Tile "
+                                       "object) is within the Gate \"{}\"",
+                                       gptr->getName())
+                                 : std::format(
+                                       "Invalid Tile \"{}\" within "
+                                       "Gate "
+                                       "\"{}\"",
+                                       tptr->getName(), gptr->getName());
+    }
+
     std::string m_Msg;
 };
 
-class NotANumberException : public std::runtime_error {
+class NotANumberException : public GameException {
    public:
     NotANumberException() = delete;
 
     NotANumberException(const std::string &msg)
-        : std::runtime_error(msg), m_Msg{msg} {}
+        : GameException("NotANumberException", msg), m_Msg{msg} {}
 
     const std::string &getMessage() const { return m_Msg; }
 
     void logToFile() const {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
@@ -388,34 +396,36 @@ class NotANumberException : public std::runtime_error {
     std::string m_Msg;
 };
 
-class InvalidDirectionException : public std::runtime_error {
+class InvalidDirectionException : public GameException {
    public:
     InvalidDirectionException()
-        : std::runtime_error("Invalid direction!"),
-          m_Msg{"Invalid direction!"} {}
+        : GameException("InvalidDirectionException", makeMessage()),
+          m_Msg{makeMessage()} {}
 
     const std::string &getMessage() const { return m_Msg; }
 
     void logToFile() const {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Msg << '\n';
+        ofs << m_Name << ": " << m_Msg << '\n';
         ofs.close();
     }
 
    private:
+    std::string makeMessage() const { return "Invalid direction!"; }
+
     std::string m_Msg;
 };
 
-class InvalidValueException : public std::runtime_error {
+class InvalidValueException : public GameException {
    public:
     InvalidValueException() = delete;
 
     InvalidValueException(const std::string &msg)
-        : std::runtime_error(msg), m_Msg{msg} {}
+        : GameException("InvalidValueException", msg), m_Msg{msg} {}
 
     InvalidValueException(const int &value, const std::string &msg)
-        : std::runtime_error(std::format("{} : {}", value, msg)),
-          m_Msg{std::format("{} : {}", value, msg)} {}
+        : GameException("InvalidValueException", makeMessage(value, msg)),
+          m_Msg{makeMessage(value, msg)} {}
 
     const std::string &getMessage() const { return m_Msg; }
 
@@ -426,6 +436,9 @@ class InvalidValueException : public std::runtime_error {
     }
 
    private:
+    std::string makeMessage(const int &value, const std::string msg) {
+        return std::format("{} : {}", value, msg);
+    }
     std::string m_Msg;
 };
 

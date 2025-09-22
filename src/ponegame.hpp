@@ -1,14 +1,15 @@
+/*  Created:  06-23-2024
+ *  Modified: 09-22-2025
+ */
+
 #ifndef PONE_GAME_HPP
 #define PONE_GAME_HPP
 
-#include <iostream>
-
 #include "poneboard.hpp"
-#include "poneconst.hpp"
 #include "ponecursor.hpp"
 
 class Game {
-public:
+   public:
     // Game constructor
     // ---------------------------------------------
     Game();
@@ -25,9 +26,10 @@ public:
     // Game destructor
     // ---------------------------------------------
     ~Game();
-private:
+
+   private:
     Board board;
     Cursor cursor;
 };
 
-#endif // PONE_GAME_HPP
+#endif  // PONE_GAME_HPP
