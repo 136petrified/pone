@@ -19,7 +19,7 @@ using TilePtr = std::shared_ptr<Tile>;
 constexpr std::string ERR_FILE = "./errlog.txt";
 
 class TileException : public std::runtime_error {
-    // Abstract base class.
+    // Abstract base class
    public:
     TileException() = delete;
     TileException(const std::string &name, const std::string &msg)

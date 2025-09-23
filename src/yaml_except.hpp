@@ -11,30 +11,29 @@
 
 constexpr std::string ERR_FILE = "./errlog.txt";
 
+namespace YAML {
+
 void logToFile(const std::string &msg);
 void logToFile(const std::runtime_error &e);
-
-namespace YAML {
 
 class TokenizerException : public std::runtime_error {
     // Abstract Base Class
    public:
     TokenizerException() = delete;
-    TokenizerException(const std::string &msg)
+    TokenizerException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_Name{"TokenizerException"} {}
     virtual const std::string &getMessage() const = 0;
     virtual void logToFile() const = 0;
 
-   private:
+   protected:
     std::string m_Name;
 };
 
 class EndOfIfstreamException : public TokenizerException {
    public:
     EndOfIfstreamException()
-        : TokenizerException(makeMessage()),
-          m_Msg{makeMessage()},
-          m_Name{"EndOfIfstreamException"} {}
+        : TokenizerException("EndOfIfstreamException", makeMessage()),
+          m_Msg{makeMessage()} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
@@ -48,7 +47,6 @@ class EndOfIfstreamException : public TokenizerException {
     std::string makeMessage() const { return "Reached end of file."; }
 
     std::string m_Msg;
-    std::string m_Name;
 };
 
 // Failed Allocation Error
@@ -56,9 +54,8 @@ class EndOfIfstreamException : public TokenizerException {
 class FailedAllocException : public TokenizerException {
    public:
     FailedAllocException()
-        : TokenizerException(makeMessage()),
-          m_Msg{makeMessage()},
-          m_Name{"FailedAllocException"} {}
+        : TokenizerException("FailedAllocException", makeMessage()),
+          m_Msg{makeMessage()} {}
 
     const std::string &getMessage() const override { return m_Msg; }
 
@@ -74,17 +71,15 @@ class FailedAllocException : public TokenizerException {
     }
 
     std::string m_Msg;
-    std::string m_Name;
 };
 
 class NullTokenException : public TokenizerException {
    public:
     NullTokenException()
-        : TokenizerException(makeMessage()),
-          m_Msg{makeMessage()},
-          m_Name{"NullTokenException"} {}
+        : TokenizerException("NullTokenException", makeMessage()),
+          m_Msg{makeMessage()} {}
     NullTokenException(const std::string &msg)
-        : TokenizerException(msg), m_Msg{msg}, m_Name{"NullTokenException"} {}
+        : TokenizerException("NullTokenException", msg), m_Msg{msg} {}
 
     const std::string &getMessage() const override { return m_Msg; }
     void logToFile() const override {
@@ -99,7 +94,6 @@ class NullTokenException : public TokenizerException {
     }
 
     std::string m_Msg;
-    std::string m_Name;
 };
 
 }  // namespace YAML
