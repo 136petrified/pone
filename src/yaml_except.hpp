@@ -14,7 +14,6 @@ constexpr std::string ERR_FILE = "./errlog.txt";
 namespace YAML {
 
 void logToFile(const std::string &msg);
-void logToFile(const std::runtime_error &e);
 
 class TokenizerException : public std::runtime_error {
     // Abstract Base Class

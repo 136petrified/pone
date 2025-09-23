@@ -14,10 +14,4 @@ void logToFile(const std::string &msg) {
     ofs.close();
 }
 
-void logToFile(const std::runtime_error &e) {
-    std::ofstream ofs{ERR_FILE, std::ios::app};
-    ofs << e.what() << '\n';
-    ofs.close();
-}
-
 }  // namespace YAML
