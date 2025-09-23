@@ -278,9 +278,9 @@ void Tokenizer::doubleQuote() { insertSingleToken(Token::Type::DoubleQuote); }
 
 const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
     if (groupStack.empty()) {
-        // TODO: Throw exception
+        throw EmptyGroupStackException();
     } else if (groupStack.size() > 1) {
-        // TODO: Throw exception
+        throw RootNotFoundException();
     }
 
     return groupStack.top()->getTokenGroup();
@@ -288,9 +288,7 @@ const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {
     if (groupStack.empty()) {
-        // TODO: Empty error here
-        // Something went wrong here
-        return;  // Dummy
+        throw EmptyGroupStackException();
     }
 
     std::shared_ptr<GroupToken> parent = groupStack.top();
@@ -304,8 +302,7 @@ void Tokenizer::insertGroupToken(const Token::Type &type) {
 
 void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
     if (groupStack.empty()) {
-        // TODO: Empty error here
-        return;
+        throw EmptyGroupStackException();
     }
 
     std::shared_ptr<GroupToken> parent = groupStack.top();
@@ -321,8 +318,7 @@ void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
 
 void Tokenizer::insertSingleToken(const Token::Type &type) {
     if (groupStack.empty()) {
-        // TODO: Error here
-        return;
+        throw EmptyGroupStackException();
     }
 
     std::shared_ptr<GroupToken> parent = groupStack.top();
@@ -336,8 +332,7 @@ void Tokenizer::insertSingleToken(const Token::Type &type) {
 
 void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
     if (groupStack.empty()) {
-        // TODO: Error here
-        return;
+        throw EmptyGroupStackException();
     }
 
     std::shared_ptr<GroupToken> parent = groupStack.top();
@@ -351,8 +346,7 @@ void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
 
 void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
     if (groupStack.empty()) {
-        // TODO: Error here
-        return;
+        throw EmptyGroupStackException();
     }
 
     std::shared_ptr<GroupToken> parent = groupStack.top();
