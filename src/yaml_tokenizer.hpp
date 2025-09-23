@@ -5,7 +5,7 @@
 #ifndef PONE_YAML_TOKENIZER_HPP
 #define PONE_YAML_TOKENIZER_HPP
 
-#include <array>
+// #include <array>
 #include <fstream>
 #include <memory>
 #include <stack>
@@ -42,6 +42,8 @@ class Token {
         RightBracket,      /*! The right bracket character ] */
         Root,              /*! The root groupToken. */
         Scalar,            /*! An alphanumeric identifier type */
+        Sequence,          /*! A grouped type for sequences */
+        SeqElement,        /*! A grouped type for sequence elements */
         SingleQuote,       /* The single quote character ' */
         SingleQuotedKey,   /* A grouped type for keys within single quotes */
         SingleQuotedValue, /* A grouped type for values within single quotes */
@@ -60,6 +62,8 @@ class Token {
 
     /*! The total size of the token types. */
     static const int ALL_TOKENS_SIZE = 27;
+
+    /*
     const std::array<Type, ALL_TOKENS_SIZE> ALL_TOKEN_TYPES = {
         Type::Backslash,
         Type::Colon,
@@ -88,6 +92,7 @@ class Token {
         Type::Symbol,
         Type::Tab,
         Type::Value};
+    */
 
     /*! Token constructor. */
     Token();
@@ -578,14 +583,6 @@ class Tokenizer {
      */
     void leftBracket();
 
-    /*! Processes a list Token.
-     */
-    void list();
-
-    /*! Processes a list element Token.
-     */
-    void listElement();
-
     /*! Peeks to the next character in the ifstream.
 
         \return a read-only character.
@@ -632,6 +629,14 @@ class Tokenizer {
         A scalar is defined as an alphanumeric identifier.
      */
     void scalar();
+
+    /*! Processes a sequence Token.
+     */
+    void sequence();
+
+    /*! Processes a sequence element Token.
+     */
+    void seqElement();
 
     /*! Processes a single quote Token.
      */

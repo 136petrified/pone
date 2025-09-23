@@ -374,11 +374,15 @@ const char Tokenizer::lookahead() {
 }
 
 void Tokenizer::mapping() {
-    GroupToken mappingToken;
-    std::shared_ptr<GroupToken> mappingTokenPtr =
-        createGroupToken(mappingToken);
+    GroupToken keyToken{Token::Type::Key};
 
-    groupStack.push(mappingTokenPtr);
+    // A mapping consists of a key and token;
+    // therefore, the key token will be processed first
+    // and along with it, the value.
+
+    std::shared_ptr<GroupToken> keyTokenPtr = createGroupToken(keyToken);
+
+    groupStack.push(keyTokenPtr);
 
     while (m_char != ':') {
         scalar();
@@ -387,6 +391,20 @@ void Tokenizer::mapping() {
     }
 
     groupStack.pop();
+
+    insertGroupToken(std::move(keyTokenPtr));  // insert the token
+    // move so it doesnt copy every token
+
+    GroupToken valueToken{Token::Type::Value};
+    std::shared_ptr<GroupToken> valueTokenPtr = createGroupToken(valueToken);
+
+    groupStack.push(valueTokenPtr);
+
+    // TODO: Logic with indents here
+
+    groupStack.pop();
+
+    insertGroupToken(std::move(valueTokenPtr));
 }
 
 void Tokenizer::newline() { insertSingleToken(Token::Type::Newline); }
