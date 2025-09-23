@@ -51,8 +51,8 @@ std::shared_ptr<Token> SingleToken::clone() const {
     try {
         return std::make_shared<SingleToken>(*this);
     } catch (const std::bad_alloc &e) {
-        // TODO: Print error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -164,8 +164,8 @@ std::shared_ptr<Token> GroupToken::clone() const {
     try {
         return std::make_shared<GroupToken>(newGroupToken);
     } catch (const std::bad_alloc &e) {
-        // TODO: Print error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -228,8 +228,8 @@ std::shared_ptr<GroupToken> Tokenizer::createGroupToken(
     try {
         return std::make_shared<GroupToken>(GroupToken{type});
     } catch (const std::bad_alloc &e) {
-        // TODO: Error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -237,8 +237,8 @@ std::shared_ptr<GroupToken> Tokenizer::createGroupToken(GroupToken &gtok) {
     try {
         return std::make_shared<GroupToken>(gtok);
     } catch (const std::bad_alloc &e) {
-        // TODO: Error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -247,8 +247,8 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
     try {
         return std::make_shared<SingleToken>(SingleToken{type});
     } catch (const std::bad_alloc &e) {
-        // TODO: Error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -258,8 +258,8 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
         return std::make_shared<SingleToken>(
             SingleToken{type, std::move(data)});
     } catch (const std::bad_alloc &e) {
-        // TODO: Error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -267,8 +267,8 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(SingleToken &stok) {
     try {
         return std::make_shared<SingleToken>(stok);
     } catch (const std::bad_alloc &e) {
-        // TODO: Error here
-        return nullptr;
+        throw FailedAllocException();
+        // return nullptr;
     }
 }
 
@@ -296,9 +296,7 @@ void Tokenizer::insertGroupToken(const Token::Type &type) {
     std::shared_ptr<GroupToken> parent = groupStack.top();
 
     if (parent == nullptr) {
-        // TODO: Error here
-        // Inadequate memory for further processing. Throw and exit program
-        return;
+        throw NullTokenException("Parent GroupToken is a null pointer.");
     }
 
     parent->insertToTokenGroup(createGroupToken(type));
@@ -313,8 +311,7 @@ void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
     std::shared_ptr<GroupToken> parent = groupStack.top();
 
     if (parent == nullptr) {
-        // TODO: Error here
-        return;
+        throw NullTokenException("Parent GroupToken is a null pointer.");
     }
 
     if (gtokPtr != parent) {
@@ -331,8 +328,7 @@ void Tokenizer::insertSingleToken(const Token::Type &type) {
     std::shared_ptr<GroupToken> parent = groupStack.top();
 
     if (parent == nullptr) {
-        // TODO: Error here
-        return;
+        throw NullTokenException("Parent GroupToken is a null pointer.");
     }
 
     parent->insertToTokenGroup(createSingleToken(type));
@@ -347,8 +343,7 @@ void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
     std::shared_ptr<GroupToken> parent = groupStack.top();
 
     if (parent == nullptr) {
-        // TODO: Error here
-        return;
+        throw NullTokenException("Parent GroupToken is a null pointer.");
     }
 
     parent->insertToTokenGroup(createSingleToken(type, std::move(data)));
@@ -363,8 +358,7 @@ void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
     std::shared_ptr<GroupToken> parent = groupStack.top();
 
     if (parent == nullptr) {
-        // TODO: Error here
-        return;
+        throw NullTokenException("Parent GroupToken is a null pointer.");
     }
 
     parent->insertToTokenGroup(stokPtr);
