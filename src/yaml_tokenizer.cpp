@@ -1,14 +1,18 @@
 /*   Created:  07-23-2025
- *   Modified: 09-22-2025
+ *   Modified: 09-24-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
+#include <iterator>
 #include <memory>
 #include <new>
 #include <utility>
 
 #include "yaml_except.hpp"
+
+// TODO: m_depth and indent()
+// TODO: rename exception members
 
 namespace YAML {
 
@@ -109,10 +113,8 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
         m_class = Token::Class::Group;
         m_type = std::move(other.m_type);
         clearTokenGroup();
-        for (auto &token : other.m_tokenGroup) {
-            m_tokenGroup.push_back(std::move(token));
-        }
-
+        m_tokenGroup.assign(std::make_move_iterator(other.m_tokenGroup.begin()),
+                            std::make_move_iterator(other.m_tokenGroup.end()));
         m_tokenGroupSize = other.m_tokenGroupSize;
     }
 

@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-20-2025
+ *   Modified: 09-24-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -30,9 +30,8 @@ class Token {
         DoubleQuote,       /*! The double quote character " */
         DoubleQuotedKey,   /*! A grouped type for keys within double quotes */
         DoubleQuotedValue, /*! A grouped type for values within double quotes */
+        Indent,            /*! Represents an indent specified. */
         Key,               /*! A grouped type for keys */
-        List,              /*! A grouped type for list containers */
-        ListElement,       /*! A grouped type for list elements */
         LeftBrace,         /*! The left brace character { */
         LeftBracket,       /*! The left bracket character [ */
         Newline,           /*! The newline character \n */
@@ -61,7 +60,7 @@ class Token {
     };
 
     /*! The total size of the token types. */
-    static const int ALL_TOKENS_SIZE = 27;
+    static const int ALL_TOKENS_SIZE = 28;
 
     /*
     const std::array<Type, ALL_TOKENS_SIZE> ALL_TOKEN_TYPES = {
@@ -201,6 +200,7 @@ class Token {
    protected:
     Class m_class;
     Type m_type;
+    int m_depth;  // root will always have depth = 0
 };
 
 /*! Token class for single-storage Tokens
@@ -542,6 +542,11 @@ class Tokenizer {
         \param parentGtok a reference to the current parent GroupToken.
      */
 
+    /*! Processes an indent Token.
+        This is a group Token.
+     */
+    void indent();
+
     void insertGroupToken(const Token::Type &type);
 
     /*! Inserts a GroupToken to a parent GroupToken.
@@ -679,6 +684,9 @@ class Tokenizer {
    private:
     std::string m_fileName;
     std::ifstream m_ifs;
+
+    int m_indent;  // Defined by YAML config
+    int m_depth;   // Current depth of tokenizer
 
     /*! A stack of GroupToken pointers. */
     std::stack<std::shared_ptr<GroupToken>> groupStack;
