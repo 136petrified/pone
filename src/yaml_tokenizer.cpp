@@ -4,7 +4,6 @@
 
 #include "yaml_tokenizer.hpp"
 
-#include <iterator>
 #include <memory>
 #include <new>
 #include <utility>
@@ -113,8 +112,7 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
         m_class = Token::Class::Group;
         m_type = std::move(other.m_type);
         clearTokenGroup();
-        m_tokenGroup.assign(std::make_move_iterator(other.m_tokenGroup.begin()),
-                            std::make_move_iterator(other.m_tokenGroup.end()));
+        m_tokenGroup = std::move(other.m_tokenGroup);
         m_tokenGroupSize = other.m_tokenGroupSize;
     }
 
