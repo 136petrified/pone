@@ -20,28 +20,28 @@ class TokenizerException : public std::runtime_error {
    public:
     TokenizerException() = delete;
     TokenizerException(const std::string &name, const std::string &msg)
-        : std::runtime_error(msg), m_Name{"TokenizerException"} {}
+        : std::runtime_error(msg), m_name{"TokenizerException"} {}
     virtual const std::string &getMessage() const = 0;
     virtual void logToFile() const = 0;
 
    protected:
-    std::string m_Name;
+    std::string m_name;
 };
 
 class EmptyGroupStackException : public TokenizerException {
    public:
     EmptyGroupStackException()
         : TokenizerException("EmptyGroupStackException", makeMessage()),
-          m_Msg{makeMessage()} {}
+          m_msg{makeMessage()} {}
 
     EmptyGroupStackException(const std::string &msg)
-        : TokenizerException("EmptyGroupStackException", msg), m_Msg{msg} {}
+        : TokenizerException("EmptyGroupStackException", msg), m_msg{msg} {}
 
-    const std::string &getMessage() const override { return m_Msg; }
+    const std::string &getMessage() const override { return m_msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Name << ": " << m_Msg << '\n';
+        ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
 
@@ -50,40 +50,40 @@ class EmptyGroupStackException : public TokenizerException {
         return "Attempted to get the front of the empty GroupToken stack.";
     }
 
-    std::string m_Msg;
+    std::string m_msg;
 };
 
 class EndOfIfstreamException : public TokenizerException {
    public:
     EndOfIfstreamException()
         : TokenizerException("EndOfIfstreamException", makeMessage()),
-          m_Msg{makeMessage()} {}
+          m_msg{makeMessage()} {}
 
-    const std::string &getMessage() const override { return m_Msg; }
+    const std::string &getMessage() const override { return m_msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Name << ": " << m_Msg << '\n';
+        ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
 
    private:
     std::string makeMessage() const { return "Reached end of file."; }
 
-    std::string m_Msg;
+    std::string m_msg;
 };
 
 class FailedAllocException : public TokenizerException {
    public:
     FailedAllocException()
         : TokenizerException("FailedAllocException", makeMessage()),
-          m_Msg{makeMessage()} {}
+          m_msg{makeMessage()} {}
 
-    const std::string &getMessage() const override { return m_Msg; }
+    const std::string &getMessage() const override { return m_msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Name << ": " << m_Msg << '\n';
+        ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
 
@@ -92,22 +92,22 @@ class FailedAllocException : public TokenizerException {
         return "Failed to allocate a Token into memory.";
     }
 
-    std::string m_Msg;
+    std::string m_msg;
 };
 
 class NullTokenException : public TokenizerException {
    public:
     NullTokenException()
         : TokenizerException("NullTokenException", makeMessage()),
-          m_Msg{makeMessage()} {}
+          m_msg{makeMessage()} {}
     NullTokenException(const std::string &msg)
-        : TokenizerException("NullTokenException", msg), m_Msg{msg} {}
+        : TokenizerException("NullTokenException", msg), m_msg{msg} {}
 
-    const std::string &getMessage() const override { return m_Msg; }
+    const std::string &getMessage() const override { return m_msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Name << ": " << m_Msg << '\n';
+        ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
 
@@ -116,7 +116,7 @@ class NullTokenException : public TokenizerException {
         return "Attempted to tokenize a null pointer.";
     }
 
-    std::string m_Msg;
+    std::string m_msg;
 };
 
 class RootNotFoundException : public TokenizerException {
@@ -124,11 +124,11 @@ class RootNotFoundException : public TokenizerException {
     RootNotFoundException()
         : TokenizerException("RootNotFoundException", makeMessage()) {}
 
-    const std::string &getMessage() const override { return m_Msg; }
+    const std::string &getMessage() const override { return m_msg; }
 
     void logToFile() const override {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_Name << ": " << m_Msg << '\n';
+        ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
 
@@ -137,7 +137,7 @@ class RootNotFoundException : public TokenizerException {
         return "Attempted to tokenize a null pointer.";
     }
 
-    std::string m_Msg;
+    std::string m_msg;
 };
 
 }  // namespace YAML
