@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-24-2025
+ *   Modified: 09-25-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -286,6 +286,17 @@ const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
     return groupStack.top()->getTokenGroup();
 }
 
+void Tokenizer::indent() {
+    GroupToken indentToken{Token::Type::Indent};
+
+    // Indents comprise of only spaces
+    for (int i = 0; i < m_indent && m_char == ' '; ++i) {
+        indentToken.insertToTokenGroup(createSingleToken(Token::Type::Space));
+    }
+
+    insertGroupToken(createGroupToken(std::move(indentToken)));
+}
+
 void Tokenizer::insertGroupToken(const Token::Type &type) {
     if (groupStack.empty()) {
         throw EmptyGroupStackException();
@@ -392,6 +403,10 @@ void Tokenizer::mapping() {
 
     groupStack.pop();
 
+    colon();    // Consume colon token
+    newline();  // Consume newline token
+    indent();   // Consume any indents before the value
+
     insertGroupToken(std::move(keyTokenPtr));  // insert the token
     // move so it doesnt copy every token
 
@@ -400,7 +415,7 @@ void Tokenizer::mapping() {
 
     groupStack.push(valueTokenPtr);
 
-    // TODO: Logic with indents here
+    // TODO: Value logic here (check depth)
 
     groupStack.pop();
 

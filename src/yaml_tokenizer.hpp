@@ -132,12 +132,36 @@ class Token {
      */
     virtual Class getClass() const = 0;
 
+    /*! Pure virtual function for getting the depth of a Token.
+
+        \return the depth of a Token.
+     */
+    virtual int getDepth() const = 0;
+
+    /*! Pure virtual function for getting the parent of a Token.
+
+        \return a read-only reference to the parent Token pointer.
+     */
+    virtual const std::shared_ptr<Token> &getParent() const = 0;
+
     /*! Pure virtual function for getting the type of a Token.
 
         \return an enum value of type Token::Type.
         \sa Token::Type
      */
     virtual Type getType() const = 0;
+
+    /*! Pure virtual function for setting the depth of a Token.
+
+        \param prev the depth of the parent Token.
+     */
+    virtual void setDepth(const int &prev) = 0;
+
+    /*! Pure virtual function for setting the parent of a Token.
+
+        \return parent the parent Token.
+     */
+    virtual void setParent(const std::shared_ptr<Token> &parent) = 0;
 
     /*! Pure virtual function for setting the type of a Token.
         \param type the type assigned to the Token.
@@ -199,8 +223,9 @@ class Token {
 
    protected:
     Class m_class;
-    Type m_type;
     int m_depth;  // root will always have depth = 0
+    const std::shared_ptr<Token> &m_parent;
+    Type m_type;
 };
 
 /*! Token class for single-storage Tokens
@@ -536,17 +561,15 @@ class Tokenizer {
      */
     void doubleQuotedValue();
 
-    /*! Processes a nested doubleQuotedValue Token.
-        A double-quoted value is a value enclosed in quotes.
-
-        \param parentGtok a reference to the current parent GroupToken.
-     */
-
     /*! Processes an indent Token.
         This is a group Token.
      */
     void indent();
 
+    /*! Inserts a GroupToken to a parent GroupToken.
+
+        \param type the Token type.
+     */
     void insertGroupToken(const Token::Type &type);
 
     /*! Inserts a GroupToken to a parent GroupToken.
