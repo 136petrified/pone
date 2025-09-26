@@ -1,10 +1,9 @@
 /*   Created:  07-23-2025
- *   Modified: 09-25-2025
+ *   Modified: 09-26-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
-#include <filesystem>
 #include <memory>
 #include <new>
 #include <utility>
@@ -55,9 +54,13 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
     return *this;
 }
 
-std::shared_ptr<Token> SingleToken::clone() const {
+std::shared_ptr<Token> SingleToken::clone(
+    const std::shared_ptr<Token> &parent) const {
     try {
-        return std::make_shared<SingleToken>(*this);
+        std::shared_ptr<SingleToken> stcopy =
+            std::make_shared<SingleToken>(*this);
+        stcopy->setParent(parent);  // Update the parent to the new one
+        return stcopy;
     } catch (const std::bad_alloc &e) {
         throw FailedAllocException();
         // return nullptr;
@@ -78,7 +81,9 @@ const std::shared_ptr<Token> &SingleToken::getParent() const {
 
 Token::Type SingleToken::getType() const { return m_type; }
 
-void SingleToken::setDepth(const int &depth) { m_depth = depth; }
+void SingleToken::setDepth() {
+    m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
+}
 
 void SingleToken::setParent(const std::shared_ptr<Token> &parent) {
     m_parent = parent;
@@ -139,9 +144,12 @@ void GroupToken::clear() {
 
 std::vector<std::shared_ptr<Token>> GroupToken::copy() const {
     std::vector<std::shared_ptr<Token>> newTokenVector;
+    std::shared_ptr<Token> curr = std::make_shared<Token>(*this);
 
     for (const auto &token : m_tokens) {
-        newTokenVector.push_back(token->clone());
+        if (token != curr) {
+            newTokenVector.push_back(token->clone(curr));
+        }
     }
 
     return newTokenVector;
@@ -151,9 +159,10 @@ const std::vector<std::shared_ptr<Token>> &GroupToken::getTokens() const {
     return m_tokens;
 }
 
-void GroupToken::insert(std::shared_ptr<Token> &&token) {
+void GroupToken::insert(const std::shared_ptr<Token> &parent,
+                        std::shared_ptr<Token> &token) {
     if (token != nullptr) {
-        m_tokens.push_back(std::move(token));
+        m_tokens.push_back(token);
         ++m_size;
     }
 }
@@ -168,7 +177,7 @@ std::shared_ptr<Token> GroupToken::clone() const {
     // It does not use recursion directly
 
     // FIXME: Make GroupToken constructor with parent
-    GroupToken newGroupToken{};
+    GroupToken newGroupToken{nullptr};
 
     newGroupToken.setType(m_type);
 

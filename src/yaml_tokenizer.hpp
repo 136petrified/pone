@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-24-2025
+ *   Modified: 09-25-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -71,6 +71,13 @@ class Token {
     /*! Token constructor.
 
         \param parent the parent Token.
+     */
+
+    Token(const std::shared_ptr<Token> &parent);
+
+    /*! Token constructor.
+
+        \param parent the parent Token.
         \param cls the Token class.
      */
     Token(const std::shared_ptr<Token> &parent, const Class &cls);
@@ -97,9 +104,12 @@ class Token {
     // Start of basic Token functions
     // ----------------------------------------
     /*! Pure virtual function for making a deep copy of a Token pointer.
+
+        \param parent the parent Token.
         \return a shared_ptr of the Token copy.
      */
-    virtual std::shared_ptr<Token> clone() const = 0;
+    virtual std::shared_ptr<Token> clone(
+        const std::shared_ptr<Token> &parent) const = 0;
 
     /*! Pure virtual function for getting the class of a Token.
 
@@ -128,10 +138,9 @@ class Token {
     virtual Type getType() const = 0;
 
     /*! Pure virtual function for setting the depth of a Token.
-
-        \param the depth of the Token.
+        If parent is null, set to 0, otherwise depth(parent) + 1.
      */
-    virtual void setDepth(const int &depth) = 0;
+    virtual void setDepth() = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 
@@ -180,9 +189,11 @@ class Token {
 
     /*! A virtual function for inserting a Token to a GroupToken.
 
+        \param parent the parent Token.
         \param token an rvalue reference to a Token pointer.
      */
-    virtual void insert(std::shared_ptr<Token> &&token);
+    virtual void insert(const std::shared_ptr<Token> &parent,
+                        std::shared_ptr<Token> &token);
 
     /*! A virtual function. Checks if a GroupToken is empty.
         \return true if empty, false otherwise.
@@ -281,10 +292,12 @@ class SingleToken : public Token {
     // ----------------------------------------
     /*! Creates a deep copy of a SingleToken pointer.
 
+        \param parent the parent Token.
         \returns a shared_ptr of the Token copy.
         \sa Token
      */
-    std::shared_ptr<Token> clone() const override;
+    std::shared_ptr<Token> clone(
+        const std::shared_ptr<Token> &parent) const override;
 
     /*! Gets the class of a SingleToken.
 
@@ -313,11 +326,9 @@ class SingleToken : public Token {
     Token::Type getType() const override;
 
     /*! Sets the depth of a SingleToken.
-        The depth is typically defined by prev + 1.
-
-        \param depth the depth of the SingleToken.
+        If parent is null, set to 0, otherwise depth(parent) + 1.
      */
-    void setDepth(const int &depth) override;
+    void setDepth() override;
 
     /*! Sets the parent of a SingleToken.
 
@@ -413,10 +424,11 @@ class GroupToken : public Token {
 
     /*! Inserts a Token into a GroupToken.
 
-        \param token an rvalue reference to a Token pointer.
+        \param token a Token pointer.
         \sa Token
      */
-    void insert(std::shared_ptr<Token> &&token) override;
+    void insert(const std::shared_ptr<Token> &parent,
+                std::shared_ptr<Token> &token) override;
     /*! Checks if a GroupToken is empty.
 
         \return true if empty, false otherwise.
@@ -440,10 +452,12 @@ class GroupToken : public Token {
 
     /*! Creates a deep copy of a GroupToken pointer.
 
+        \param parent the parent Token.
         \return a shared_ptr to the GroupToken copy.
         \sa Token
      */
-    std::shared_ptr<Token> clone() const override;
+    std::shared_ptr<Token> clone(
+        const std::shared_ptr<Token> &parent) const override;
 
     /*! Gets the class of a GroupToken.
 
@@ -472,10 +486,9 @@ class GroupToken : public Token {
     Token::Type getType() const override;
 
     /*! Sets the depth of a GroupToken.
-
-        \param prev the depth of the GroupToken.
+        If parent is null, set to 0, otherwise depth(parent) + 1.
      */
-    void setDepth(const int &depth) override;
+    void setDepth() override;
 
     /*! Sets the parent of a GroupToken.
 
@@ -757,7 +770,7 @@ class Tokenizer {
                    // not depth of a token.
 
     /*! A stack of GroupToken pointers. */
-    std::stack<std::shared_ptr<GroupToken>> groupStack;
+    std::stack<std::shared_ptr<Token>> groupStack;
     size_t m_size;
 
     std::string m_buf;
