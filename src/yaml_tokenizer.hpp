@@ -62,58 +62,34 @@ class Token {
     /*! The total size of the token types. */
     static const int ALL_TOKENS_SIZE = 28;
 
-    /*
-    const std::array<Type, ALL_TOKENS_SIZE> ALL_TOKEN_TYPES = {
-        Type::Backslash,
-        Type::Colon,
-        Type::Comma,
-        Type::Comment,
-        Type::Dash,
-        Type::DoubleQuote,
-        Type::DoubleQuotedKey,
-        Type::DoubleQuotedValue,
-        Type::Key,
-        Type::List,
-        Type::ListElement,
-        Type::LeftBracket,
-        Type::LeftBrace,
-        Type::Newline,
-        Type::None,
-        Type::NumSign,
-        Type::Root,
-        Type::RightBrace,
-        Type::RightBracket,
-        Type::Scalar,
-        Type::SingleQuote,
-        Type::SingleQuotedKey,
-        Type::SingleQuotedValue,
-        Type::Space,
-        Type::Symbol,
-        Type::Tab,
-        Type::Value};
-    */
+    /*! Default Token constructor.
 
-    /*! Token constructor. */
-    Token();
+        \note This constructor is deleted.
+     */
+    Token() = delete;
 
     /*! Token constructor.
 
+        \param parent the parent Token.
         \param cls the Token class.
      */
-    Token(const Class &cls);
+    Token(const std::shared_ptr<Token> &parent, const Class &cls);
 
     /*! Token constructor.
 
+        \param parent the parent Token.
         \param type the Token type.
      */
-    Token(const Type &type);
+    Token(const std::shared_ptr<Token> &parent, const Type &type);
 
     /*! Token constructor.
 
+        \param parent the parent Token.
         \param class the Token class.
         \param type the Token type.
      */
-    Token(const Class &cls, const Type &type);
+    Token(const std::shared_ptr<Token> &parent, const Class &cls,
+          const Type &type);
 
     /*! Pure virtual token destructor */
     virtual ~Token() = 0;
@@ -134,7 +110,7 @@ class Token {
 
     /*! Pure virtual function for getting the depth of a Token.
 
-        \return the depth of a Token.
+        \return an int value.
      */
     virtual int getDepth() const = 0;
 
@@ -153,9 +129,9 @@ class Token {
 
     /*! Pure virtual function for setting the depth of a Token.
 
-        \param prev the depth of the parent Token.
+        \param the depth of the Token.
      */
-    virtual void setDepth(const int &prev) = 0;
+    virtual void setDepth(const int &depth) = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 
@@ -190,41 +166,41 @@ class Token {
     // ----------------------------------------
     /* A virtual function for erasing all of the Tokens within a GroupToken.
      */
-    virtual void clearTokenGroup();
+    virtual void clear();
 
     /*! A virtual function to copy the root vector of Tokens.
      */
-    virtual std::vector<std::shared_ptr<Token>> copyTokenGroup() const;
+    virtual std::vector<std::shared_ptr<Token>> copy() const;
 
     /*! A virtual function for getting a vector of a Tokens within a GroupToken.
 
        \return a read-only vector reference of Token pointers.
      */
-    virtual const std::vector<std::shared_ptr<Token>> &getTokenGroup() const;
+    virtual const std::vector<std::shared_ptr<Token>> &getTokens() const;
 
     /*! A virtual function for inserting a Token to a GroupToken.
 
         \param token an rvalue reference to a Token pointer.
      */
-    virtual void insertToTokenGroup(std::shared_ptr<Token> &&token);
+    virtual void insert(std::shared_ptr<Token> &&token);
 
     /*! A virtual function. Checks if a GroupToken is empty.
         \return true if empty, false otherwise.
      */
     virtual bool empty() const;
 
-    /*! A virtual function. The number of Tokens within a GroupToken.
+    /*! A virtual function. The size of a GroupToken.
 
         \return a size_t value.
      */
-    virtual size_t sizeOfTokenGroup() const;
+    virtual size_t size() const;
     // ----------------------------------------
     // End of basic GroupToken functions
 
    protected:
     Class m_class;
     int m_depth;  // root will always have depth = 0
-    const std::shared_ptr<Token> &m_parent;
+    std::shared_ptr<Token> m_parent;
     Type m_type;
 };
 
@@ -236,32 +212,38 @@ class SingleToken : public Token {
    public:
     /*! Default SingleToken constructor.
 
+        \note This constructor is deleted.
         \sa Token
      */
-    SingleToken();
+    SingleToken() = delete;
 
     /*! SingleToken constructor.
 
+        \param parent the parent Token.
         \param type the assigned type of SingleToken.
         \sa Token
      */
-    SingleToken(const Token::Type &type);
+    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type);
 
     /*! SingleToken constructor.
 
+        \param parent the parent Token.
         \param type the assigned type of SingleToken.
         \param data a read-only string reference of the Token's data.
         \sa Token
      */
-    SingleToken(const Token::Type &type, const std::string &data);
+    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type,
+                const std::string &data);
 
     /*! SingleToken constructor.
 
+        \param parent the parent Token.
         \param type the assigned type of SingleToken.
         \param data a string rvalue reference of the Token's data.
         \sa Token
      */
-    SingleToken(const Token::Type &type, std::string &&data);
+    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type,
+                std::string &&data);
 
     /*! SingleToken copy constructor.
 
@@ -311,12 +293,37 @@ class SingleToken : public Token {
      */
     Token::Class getClass() const override;
 
+    /*! Gets the depth of a SingleToken.
+
+        \return an int value.
+     */
+    int getDepth() const override;
+
+    /*! Gets the parent of a SingleToken.
+
+        \return the parent of the SingleToken.
+     */
+    const std::shared_ptr<Token> &getParent() const override;
+
     /*! Gets the type of a SingleToken.
 
         \return an enum value of type Token::Type.
         \sa Token, Token::Type
      */
     Token::Type getType() const override;
+
+    /*! Sets the depth of a SingleToken.
+        The depth is typically defined by prev + 1.
+
+        \param depth the depth of the SingleToken.
+     */
+    void setDepth(const int &depth) override;
+
+    /*! Sets the parent of a SingleToken.
+
+        \param parent the parent Token.
+     */
+    void setParent(const std::shared_ptr<Token> &parent) override;
 
     /*! Sets the type of a SingleToken.
 
@@ -343,16 +350,18 @@ class GroupToken : public Token {
    public:
     /*! Default GroupToken constructor.
 
+        \note This constructor is deleted.
         \sa Token
      */
-    GroupToken();
+    GroupToken() = delete;
 
     /*! GroupToken constructor.
 
+        \param parent the parent Token.
         \param type the assigned type of GroupToken.
         \sa Token
      */
-    GroupToken(const Token::Type &type);
+    GroupToken(const std::shared_ptr<Token> &parent, const Token::Type &type);
 
     /*! GroupToken copy constructor.
 
@@ -386,13 +395,13 @@ class GroupToken : public Token {
 
         \sa Token
      */
-    void clearTokenGroup() override;
+    void clear() override;
 
     /*! Makes a copy of the root vector of Tokens
 
         \return a vector of Token pointers.
      */
-    std::vector<std::shared_ptr<Token>> copyTokenGroup() const override;
+    std::vector<std::shared_ptr<Token>> copy() const override;
 
     /*! Gets the vector of Tokens within a GroupToken.
 
@@ -400,15 +409,14 @@ class GroupToken : public Token {
         \sa Token
      */
 
-    const std::vector<std::shared_ptr<Token>> &getTokenGroup() const override;
+    const std::vector<std::shared_ptr<Token>> &getTokens() const override;
 
     /*! Inserts a Token into a GroupToken.
 
         \param token an rvalue reference to a Token pointer.
         \sa Token
      */
-    void insertToTokenGroup(std::shared_ptr<Token> &&token) override;
-
+    void insert(std::shared_ptr<Token> &&token) override;
     /*! Checks if a GroupToken is empty.
 
         \return true if empty, false otherwise.
@@ -422,7 +430,7 @@ class GroupToken : public Token {
         \return a size_t value.
         \sa Token
      */
-    size_t sizeOfTokenGroup() const override;
+    size_t size() const override;
 
     /*! GroupToken destructor.
      */
@@ -444,12 +452,36 @@ class GroupToken : public Token {
      */
     Token::Class getClass() const override;
 
+    /*! Gets the depth of a GroupToken.
+
+        \return an int value.
+     */
+    int getDepth() const override;
+
+    /*! Gets the parent of a GroupToken.
+
+        \return a read-only reference of a Token pointer.
+     */
+    const std::shared_ptr<Token> &getParent() const override;
+
     /*! Gets the type of a GroupToken.
 
         \return an enum value of type Token::Type.
         \sa Token::Type, Token
      */
     Token::Type getType() const override;
+
+    /*! Sets the depth of a GroupToken.
+
+        \param prev the depth of the GroupToken.
+     */
+    void setDepth(const int &depth) override;
+
+    /*! Sets the parent of a GroupToken.
+
+        \param parent the parent token.
+     */
+    void setParent(const std::shared_ptr<Token> &parent) override;
 
     /*! Sets the type of a GroupToken.
 
@@ -459,8 +491,8 @@ class GroupToken : public Token {
     void setType(const Token::Type &type) override;
 
    private:
-    std::vector<std::shared_ptr<Token>> m_tokenGroup;
-    size_t m_tokenGroupSize;
+    std::vector<std::shared_ptr<Token>> m_tokens;
+    size_t m_size;
 };
 
 /*! A class to tokenize custom YAML files for this program.
@@ -480,17 +512,29 @@ class Tokenizer {
 
         \return a vector of Token pointers.
      */
+
+    /*! Gets the size of the Tokenizer.
+
+        \return a size_t value.
+     */
+
+    size_t size() const;
+
     const std::vector<std::shared_ptr<Token>> &getTokens() const;
 
     /*! Initializes the Tokenizer.
         This function is the entry point of the Tokenizer.
      */
+
     void tokenize();
 
     /*! Tokenizer destructor. */
     ~Tokenizer();
 
-   protected:
+    // FIXME: Enable the protected access specifier
+    //        after testing! v v v
+
+    // protected:
     /*! Processes a backslash Token.
      */
     void backslash();
@@ -710,10 +754,11 @@ class Tokenizer {
 
     int m_indent;  // Defined by YAML config
     int m_depth;   // Current depth of tokenizer
+                   // not depth of a token.
 
     /*! A stack of GroupToken pointers. */
     std::stack<std::shared_ptr<GroupToken>> groupStack;
-    size_t m_tokensSize;
+    size_t m_size;
 
     std::string m_buf;
     char m_char;
