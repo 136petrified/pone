@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-25-2025
+ *   Modified: 09-26-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -18,7 +18,7 @@ namespace YAML {
 
 /*! Abstract base class for Tokens.
  */
-class Token {
+class Token : public std::enable_shared_from_this<Token> {
    public:
     /*! An enum of all types of Tokens. */
     enum class Type {
@@ -109,7 +109,7 @@ class Token {
         \return a shared_ptr of the Token copy.
      */
     virtual std::shared_ptr<Token> clone(
-        const std::shared_ptr<Token> &parent) const = 0;
+        std::shared_ptr<Token> parent) const = 0;
 
     /*! Pure virtual function for getting the class of a Token.
 
@@ -130,11 +130,18 @@ class Token {
      */
     virtual const std::shared_ptr<Token> &getParent() const = 0;
 
+    /*! Pure virtual function that gets a pointer from the current Token.
+
+        \return a pointer to the Token.
+     */
+    virtual std::shared_ptr<Token> getPtr() const = 0;
+
     /*! Pure virtual function for getting the type of a Token.
 
         \return an enum value of type Token::Type.
         \sa Token::Type
      */
+
     virtual Type getType() const = 0;
 
     /*! Pure virtual function for setting the depth of a Token.
@@ -189,11 +196,9 @@ class Token {
 
     /*! A virtual function for inserting a Token to a GroupToken.
 
-        \param parent the parent Token.
         \param token an rvalue reference to a Token pointer.
      */
-    virtual void insert(const std::shared_ptr<Token> &parent,
-                        std::shared_ptr<Token> &token);
+    virtual void insert(std::shared_ptr<Token> token);
 
     /*! A virtual function. Checks if a GroupToken is empty.
         \return true if empty, false otherwise.
@@ -296,8 +301,7 @@ class SingleToken : public Token {
         \returns a shared_ptr of the Token copy.
         \sa Token
      */
-    std::shared_ptr<Token> clone(
-        const std::shared_ptr<Token> &parent) const override;
+    std::shared_ptr<Token> clone(std::shared_ptr<Token> parent) const override;
 
     /*! Gets the class of a SingleToken.
 
@@ -317,6 +321,12 @@ class SingleToken : public Token {
         \return the parent of the SingleToken.
      */
     const std::shared_ptr<Token> &getParent() const override;
+
+    /*! Gets a pointer from the current SingleToken.
+
+        \return a pointer to the Token.
+     */
+    std::shared_ptr<Token> getPtr() const override;
 
     /*! Gets the type of a SingleToken.
 
@@ -422,13 +432,16 @@ class GroupToken : public Token {
 
     const std::vector<std::shared_ptr<Token>> &getTokens() const override;
 
+    // NOTE: Cannot use std::shared_ptr<Token> & due to clone()
+    //       requirement of rvalue argument
+
     /*! Inserts a Token into a GroupToken.
 
         \param token a Token pointer.
         \sa Token
      */
-    void insert(const std::shared_ptr<Token> &parent,
-                std::shared_ptr<Token> &token) override;
+    void insert(std::shared_ptr<Token> token) override;
+
     /*! Checks if a GroupToken is empty.
 
         \return true if empty, false otherwise.
@@ -456,8 +469,7 @@ class GroupToken : public Token {
         \return a shared_ptr to the GroupToken copy.
         \sa Token
      */
-    std::shared_ptr<Token> clone(
-        const std::shared_ptr<Token> &parent) const override;
+    std::shared_ptr<Token> clone(std::shared_ptr<Token> parent) const override;
 
     /*! Gets the class of a GroupToken.
 
@@ -477,6 +489,12 @@ class GroupToken : public Token {
         \return a read-only reference of a Token pointer.
      */
     const std::shared_ptr<Token> &getParent() const override;
+
+    /*! Gets a pointer from the current GroupToken.
+
+        \return a pointer to the Token.
+     */
+    std::shared_ptr<Token> getPtr() const override;
 
     /*! Gets the type of a GroupToken.
 
