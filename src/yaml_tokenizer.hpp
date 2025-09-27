@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-26-2025
+ *   Modified: 09-27-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -133,6 +133,7 @@ class Token : public std::enable_shared_from_this<Token> {
     /*! Pure virtual function that gets a pointer from the current Token.
 
         \return a pointer to the Token.
+        \throws FailedAllocException
      */
     virtual std::shared_ptr<Token> getPtr() const = 0;
 
@@ -325,6 +326,7 @@ class SingleToken : public Token {
     /*! Gets a pointer from the current SingleToken.
 
         \return a pointer to the Token.
+        \throws FailedAllocException
      */
     std::shared_ptr<Token> getPtr() const override;
 
@@ -493,6 +495,7 @@ class GroupToken : public Token {
     /*! Gets a pointer from the current GroupToken.
 
         \return a pointer to the Token.
+        \throws FailedAllocException
      */
     std::shared_ptr<Token> getPtr() const override;
 
