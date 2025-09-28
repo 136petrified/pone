@@ -14,32 +14,35 @@
 
 namespace YAML {
 
-Token::Token(const std::shared_ptr<Token> &parent, const Token::Class &cls)
-    : m_class{cls}, m_parent{parent} {}
+Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
+             const Token::Class &cls)
+    : m_class{cls}, m_name{name}, m_parent{parent} {}
 
-Token::Token(const std::shared_ptr<Token> &parent, const Token::Type &type)
-    : m_parent{parent}, m_type{type} {}
-
-Token::Token(const std::shared_ptr<Token> &parent, const Token::Class &cls,
+Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
              const Token::Type &type)
-    : m_class{cls}, m_parent{parent}, m_type{type} {}
+    : m_name{name}, m_parent{parent}, m_type{type} {}
+
+Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
+             const Token::Class &cls, const Token::Type &type)
+    : m_class{cls}, m_name{name}, m_parent{parent}, m_type{type} {}
 
 Token::~Token() {}
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
                          const Token::Type &type)
-    : Token(parent, Token::Class::Single, type), m_data{""} {}
+    : Token(parent, setName(), Token::Class::Single, type), m_data{""} {}
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
                          const Token::Type &type, const std::string &data)
-    : Token(parent, Token::Class::Single, type), m_data{data} {}
+    : Token(parent, setName(), Token::Class::Single, type), m_data{data} {}
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
                          const Token::Type &type, std::string &&data)
-    : Token(parent, Token::Class::Single, type), m_data{std::move(data)} {}
+    : Token(parent, setName(), Token::Class::Single, type),
+      m_data{std::move(data)} {}
 
 SingleToken::SingleToken(const SingleToken &other)
-    : Token(other.m_parent, Token::Class::Single, other.m_type),
+    : Token(other.m_parent, setName(), Token::Class::Single, other.m_type),
       m_data{other.m_data} {}
 
 SingleToken &SingleToken::operator=(const SingleToken &other) {
@@ -67,6 +70,8 @@ Token::Class SingleToken::getClass() const { return m_class; }
 
 int SingleToken::getDepth() const { return m_depth; }
 
+const std::string &SingleToken::getName() const { return m_name; }
+
 const std::shared_ptr<Token> &SingleToken::getParent() const {
     return m_parent;
 }
@@ -85,6 +90,8 @@ void SingleToken::setDepth() {
     m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
 }
 
+std::string SingleToken::setName() const { return tokenNameMap.at(m_type); }
+
 void SingleToken::setParent(const std::shared_ptr<Token> &parent) {
     m_parent = parent;
 }
@@ -95,19 +102,19 @@ SingleToken::~SingleToken() {}
 
 GroupToken::GroupToken(const std::shared_ptr<Token> &parent,
                        const Token::Type &type)
-    : Token(parent, Token::Class::Group, type) {}
+    : Token(parent, setName(), Token::Class::Group, type) {}
 
 // Do not call clone()
 // This will not copy members directly into the current object
 
 GroupToken::GroupToken(const GroupToken &other)
-    : Token(other.m_parent, Token::Class::Group, other.m_type),
+    : Token(other.m_parent, setName(), Token::Class::Group, other.m_type),
       // Deep copy required
       m_tokens{copy()},
       m_size{other.m_size} {}
 
 GroupToken::GroupToken(GroupToken &&other) noexcept
-    : Token(std::move(other.m_parent), Token::Class::Group,
+    : Token(std::move(other.m_parent), setName(), Token::Class::Group,
             std::move(other.m_type)),
       m_tokens{std::move(other.m_tokens)},
       m_size{std::move(other.m_size)} {}
@@ -187,6 +194,8 @@ Token::Class GroupToken::getClass() const { return m_class; }
 
 int GroupToken::getDepth() const { return m_depth; }
 
+const std::string &GroupToken::getName() const { return m_name; }
+
 const std::shared_ptr<Token> &GroupToken::getParent() const { return m_parent; }
 
 std::shared_ptr<Token> GroupToken::getPtr() const {
@@ -203,6 +212,8 @@ void GroupToken::setDepth() {
     m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
 }
 
+std::string GroupToken::setName() const { return tokenNameMap.at(m_type); }
+
 void GroupToken::setParent(const std::shared_ptr<Token> &parent) {
     m_parent = parent;
 }
@@ -216,9 +227,9 @@ Tokenizer::Tokenizer()
     insertGroupToken(Token::Type::Root);
 }
 
-Tokenizer::Tokenizer(const std::string &file_name)
-    : m_fileName{file_name},
-      m_ifs{file_name},
+Tokenizer::Tokenizer(const std::string &fileName)
+    : m_fileName{fileName},
+      m_ifs{fileName},
       m_size{0},
       m_buf{""},
       m_endOfFile{false} {
@@ -236,14 +247,14 @@ void Tokenizer::comma() { insertSingleToken(Token::Type::Comma); }
 void Tokenizer::comment() {
     // Assume unquoted and numSign
     // is consumed
+    if (groupStack.empty()) {
+        throw EmptyGroupStackException();
+    }
 
     GroupToken commentToken{groupStack.top(), Token::Type::Comment};
+
     std::shared_ptr<GroupToken> commentTokenPtr =
         createGroupToken(commentToken);  // Allocate the pointer
-
-    if (groupStack.size() < 1) {
-        // TODO: Error here
-    }
 
     groupStack.push(commentTokenPtr);
 
@@ -355,11 +366,11 @@ void Tokenizer::insertSingleToken(const Token::Type &type) {
         throw EmptyGroupStackException();
     }
 
-    std::shared_ptr<Token> parent = groupStack.top();
-
-    if (parent->getClass() == Token::Class::Group) {
-        // TODO: Error here
+    if (groupStack.size() < 1) {
+        throw RootNotFoundException();
     }
+
+    std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
         throw NullTokenException("Parent GroupToken is a null pointer.");

@@ -1,5 +1,5 @@
 /*   Created:  09-20-2025
- *   Modified: 09-22-2025
+ *   Modified: 09-27-2025
  */
 
 #ifndef PONE_YAML_EXCEPTION_HPP
@@ -90,6 +90,50 @@ class FailedAllocException : public TokenizerException {
    private:
     std::string makeMessage() const {
         return "Failed to allocate a Token into memory.";
+    }
+
+    std::string m_msg;
+};
+
+class NotAGroupException : public TokenizerException {
+   public:
+    NotAGroupException()
+        : TokenizerException("NotAGroupException", makeMessage()),
+          m_msg{makeMessage()} {}
+
+    const std::string &getMessage() const override { return m_msg; }
+
+    void logToFile() const override {
+        std::ofstream ofs{ERR_FILE, std::ios::app};
+        ofs << m_name << ": " << m_msg << '\n';
+        ofs.close();
+    }
+
+   private:
+    std::string makeMessage() const {
+        return "The Token passed is not of type Group.";
+    }
+
+    std::string m_msg;
+};
+
+class NotASingleException : public TokenizerException {
+   public:
+    NotASingleException()
+        : TokenizerException("NotASingleException", makeMessage()),
+          m_msg{makeMessage()} {}
+
+    const std::string &getMessage() const override { return m_msg; }
+
+    void logToFile() const override {
+        std::ofstream ofs{ERR_FILE, std::ios::app};
+        ofs << m_name << ": " << m_msg << '\n';
+        ofs.close();
+    }
+
+   private:
+    std::string makeMessage() const {
+        return "The Token passed is not of type Single.";
     }
 
     std::string m_msg;

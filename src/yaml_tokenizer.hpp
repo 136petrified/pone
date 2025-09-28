@@ -10,6 +10,7 @@
 #include <memory>
 #include <stack>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "yaml_utils.hpp"
@@ -22,34 +23,30 @@ class Token : public std::enable_shared_from_this<Token> {
    public:
     /*! An enum of all types of Tokens. */
     enum class Type {
-        Backslash,         /*! The backslash character \ */
-        Colon,             /*! The colon character : */
-        Comma,             /*! The comma character , */
-        Comment,           /*! A grouped type for YAML comments */
-        Dash,              /*! The dash character -*/
-        DoubleQuote,       /*! The double quote character " */
-        DoubleQuotedKey,   /*! A grouped type for keys within double quotes */
-        DoubleQuotedValue, /*! A grouped type for values within double quotes */
-        Indent,            /*! Represents an indent specified. */
-        Key,               /*! A grouped type for keys */
-        LeftBrace,         /*! The left brace character { */
-        LeftBracket,       /*! The left bracket character [ */
-        Newline,           /*! The newline character \n */
-        None,              /*! Placeholder token type */
-        NumSign,           /*! The number sign character # */
-        RightBrace,        /*! The right brace character } */
-        RightBracket,      /*! The right bracket character ] */
-        Root,              /*! The root groupToken. */
-        Scalar,            /*! An alphanumeric identifier type */
-        Sequence,          /*! A grouped type for sequences */
-        SeqElement,        /*! A grouped type for sequence elements */
-        SingleQuote,       /* The single quote character ' */
-        SingleQuotedKey,   /* A grouped type for keys within single quotes */
-        SingleQuotedValue, /* A grouped type for values within single quotes */
-        Space,             /* The space character ' ' */
-        Symbol,            /* A generic symbol character type */
-        Tab,               /* The tab character \t */
-        Value,             /* A grouped type for values */
+        Backslash,    /*! The backslash character \ */
+        Colon,        /*! The colon character : */
+        Comma,        /*! The comma character , */
+        Comment,      /*! A grouped type for YAML comments */
+        Dash,         /*! The dash character -*/
+        DoubleQuote,  /*! The double quote character " */
+        Indent,       /*! Represents an indent specified. */
+        Key,          /*! A grouped type for keys */
+        LeftBrace,    /*! The left brace character { */
+        LeftBracket,  /*! The left bracket character [ */
+        Newline,      /*! The newline character \n */
+        None,         /*! Placeholder token type */
+        NumSign,      /*! The number sign character # */
+        RightBrace,   /*! The right brace character } */
+        RightBracket, /*! The right bracket character ] */
+        Root,         /*! The root groupToken. */
+        Scalar,       /*! An alphanumeric identifier type */
+        Sequence,     /*! A grouped type for sequences */
+        SeqElement,   /*! A grouped type for sequence elements */
+        SingleQuote,  /* The single quote character ' */
+        Space,        /* The space character ' ' */
+        Symbol,       /* A generic symbol character type */
+        Tab,          /* The tab character \t */
+        Value,        /* A grouped type for values */
     };
 
     /*! An enum of all derived Token classes */
@@ -60,7 +57,33 @@ class Token : public std::enable_shared_from_this<Token> {
     };
 
     /*! The total size of the token types. */
-    static const int ALL_TOKENS_SIZE = 28;
+    static const int ALL_TOKENS_SIZE = 23;
+
+    /*! Map of Types to its string name. */
+    std::unordered_map<Type, std::string> tokenNameMap = {
+        {Type::Backslash, "Backslash"},
+        {Type::Colon, "Colon"},
+        {Type::Comma, "Comma"},
+        {Type::Comment, "Comment"},
+        {Type::Dash, "Dash"},
+        {Type::DoubleQuote, "DoubleQuote"},
+        {Type::Indent, "Indent"},
+        {Type::Key, "Key"},
+        {Type::LeftBrace, "LeftBrace"},
+        {Type::LeftBracket, "LeftBracket"},
+        {Type::Newline, "Newline"},
+        {Type::None, "None"},
+        {Type::NumSign, "NumSign"},
+        {Type::RightBrace, "RightBrace"},
+        {Type::RightBracket, "RightBracket"},
+        {Type::Root, "Root"},
+        {Type::Scalar, "Scalar"},
+        {Type::Sequence, "Sequence"},
+        {Type::SeqElement, "SequenceElement"},
+        {Type::SingleQuote, "SingleQuote"},
+        {Type::Symbol, "Symbol"},
+        {Type::Tab, "Tab"},
+        {Type::Value, "Value"}};
 
     /*! Default Token constructor.
 
@@ -71,32 +94,38 @@ class Token : public std::enable_shared_from_this<Token> {
     /*! Token constructor.
 
         \param parent the parent Token.
+        \param name the string name.
      */
 
-    Token(const std::shared_ptr<Token> &parent);
+    Token(const std::shared_ptr<Token> &parent, const std::string &name);
 
     /*! Token constructor.
 
         \param parent the parent Token.
+        \param name the string name.
         \param cls the Token class.
      */
-    Token(const std::shared_ptr<Token> &parent, const Class &cls);
+    Token(const std::shared_ptr<Token> &parent, const std::string &name,
+          const Class &cls);
 
     /*! Token constructor.
 
         \param parent the parent Token.
+        \param name the string name.
         \param type the Token type.
      */
-    Token(const std::shared_ptr<Token> &parent, const Type &type);
+    Token(const std::shared_ptr<Token> &parent, const std::string &name,
+          const Type &type);
 
     /*! Token constructor.
 
         \param parent the parent Token.
+        \param name the string name.
         \param class the Token class.
         \param type the Token type.
      */
-    Token(const std::shared_ptr<Token> &parent, const Class &cls,
-          const Type &type);
+    Token(const std::shared_ptr<Token> &parent, const std::string &name,
+          const Class &cls, const Type &type);
 
     /*! Pure virtual token destructor */
     virtual ~Token() = 0;
@@ -124,6 +153,12 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual int getDepth() const = 0;
 
+    /*! Pure virtual function for getting the name of a Token.
+
+        \return a read-only reference to the Token name.
+     */
+    virtual const std::string &getName() const = 0;
+
     /*! Pure virtual function for getting the parent of a Token.
 
         \return a read-only reference to the parent Token pointer.
@@ -149,6 +184,12 @@ class Token : public std::enable_shared_from_this<Token> {
         If parent is null, set to 0, otherwise depth(parent) + 1.
      */
     virtual void setDepth() = 0;
+
+    /*! Pure virtual function for setting the name of a Token.
+
+        \return the string name.
+     */
+    virtual std::string setName() const = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 
@@ -217,6 +258,7 @@ class Token : public std::enable_shared_from_this<Token> {
    protected:
     Class m_class;
     int m_depth;  // root will always have depth = 0
+    std::string m_name;
     std::shared_ptr<Token> m_parent;
     Type m_type;
 };
@@ -317,6 +359,12 @@ class SingleToken : public Token {
      */
     int getDepth() const override;
 
+    /*! Gets the depth of a SingleToken.
+
+        \return a read-only string.
+     */
+    const std::string &getName() const override;
+
     /*! Gets the parent of a SingleToken.
 
         \return the parent of the SingleToken.
@@ -341,6 +389,12 @@ class SingleToken : public Token {
         If parent is null, set to 0, otherwise depth(parent) + 1.
      */
     void setDepth() override;
+
+    /*! Sets the name of a Token.
+
+        \return the string name.
+     */
+    std::string setName() const override;
 
     /*! Sets the parent of a SingleToken.
 
@@ -486,6 +540,12 @@ class GroupToken : public Token {
      */
     int getDepth() const override;
 
+    /*! Gets the depth of a GroupToken.
+
+        \return a read-only string.
+     */
+    const std::string &getName() const override;
+
     /*! Gets the parent of a GroupToken.
 
         \return a read-only reference of a Token pointer.
@@ -510,6 +570,12 @@ class GroupToken : public Token {
         If parent is null, set to 0, otherwise depth(parent) + 1.
      */
     void setDepth() override;
+
+    /*! Sets the name of a Token.
+
+        \return the string name.
+     */
+    std::string setName() const override;
 
     /*! Sets the parent of a GroupToken.
 
@@ -538,9 +604,9 @@ class Tokenizer {
 
     /*! Tokenizer constructor.
 
-        \param file_name the string .YAML filename to load.
+        \param fileName the string .YAML filename to load.
      */
-    Tokenizer(const std::string &file_name);
+    Tokenizer(const std::string &fileName);
 
     /*! Gets a deep copy of the vector of Tokens within the Tokenizer.
 
@@ -634,10 +700,6 @@ class Tokenizer {
     /*! Processes a double quote Token.
      */
     void doubleQuote();
-    /*! Processes a double-quoted value Token.
-        A double-quoted value is a value enclosed in quotes.
-     */
-    void doubleQuotedValue();
 
     /*! Processes an indent Token.
         This is a group Token.
@@ -718,11 +780,6 @@ class Tokenizer {
      */
     void otherSymbols();
 
-    /*! Processes a mapping where the key or value is within quotes.
-        A mapping is defined as a key and value pair.
-     */
-    void quotedMapping();
-
     /*! Processes a right brace Token.
      */
     void rightBrace();
@@ -747,16 +804,6 @@ class Tokenizer {
     /*! Processes a single quote Token.
      */
     void singleQuote();
-
-    /*! Processes a single-quoted key Token.
-        A single-quoted key is a key enclosed in single quotes.
-     */
-    void singleQuotedKey();
-
-    /*! Processes a single-quoted value Token.
-        A single-quoted value is a value enclosed in single quotes.
-     */
-    void singleQuotedValue();
 
     /*! Processes a space Token.
      */
