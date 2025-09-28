@@ -329,6 +329,7 @@ void Tokenizer::indent() {
     }
 
     insertGroupToken(createGroupToken(indentToken));
+    ++m_depth;  // Increases depth by one
 }
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {
@@ -441,9 +442,9 @@ void Tokenizer::mapping() {
 
     groupStack.pop();
 
-    colon();    // Consume colon token
-    newline();  // Consume newline token
-    indent();   // Consume any indents before the value
+    colon();       // Consume colon token
+    whitespace();  // Consume any whitespace
+    indent();      // Consume any indents before the value
 
     insertGroupToken(std::move(keyTokenPtr));  // insert the token
     // move so it doesnt copy every token
@@ -453,7 +454,10 @@ void Tokenizer::mapping() {
 
     groupStack.push(valueTokenPtr);
 
-    // TODO: Value logic here (check depth)
+    if (m_char == '-') {
+        // TODO: Implement value logic
+        // For sequences and regular values
+    }
 
     groupStack.pop();
 
