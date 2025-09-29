@@ -10,8 +10,6 @@
 
 #include "yaml_except.hpp"
 
-// TODO: rename exception members
-
 namespace YAML {
 
 Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
@@ -483,6 +481,10 @@ void Tokenizer::numSign() { insertSingleToken(Token::Type::NumSign); }
 
 void Tokenizer::otherSymbols() { insertSingleToken(Token::Type::Symbol); }
 
+void Tokenizer::print(std::ostream &out) const {
+    // TODO: Implement this
+}
+
 void Tokenizer::rightBrace() { insertSingleToken(Token::Type::RightBrace); }
 
 void Tokenizer::rightBracket() { insertSingleToken(Token::Type::RightBracket); }
@@ -580,12 +582,18 @@ void Tokenizer::sequence() {
 
     while (m_char == '-') {
         dash();  // Consume dash token
+        try {
+            next();
+        } catch (const EndOfIfstreamException &) {
+            groupStack.pop();
+            return;
+        }
 
         if (isSpace(m_char)) {
             whitespace();  // Consume whitespace token
         } else {
+            groupStack.pop();  // Exit gracefully
             // throw InvalidSequenceException();
-            groupStack.pop();
             return;  // Dummy
         }
 
@@ -598,6 +606,27 @@ void Tokenizer::sequence() {
 void Tokenizer::space() { insertSingleToken(Token::Type::Space); }
 
 void Tokenizer::tab() { insertSingleToken(Token::Type::Tab); }
+
+void Tokenizer::value() {
+    std::shared_ptr<GroupToken> valueToken =
+        createGroupToken(Token::Type::Value);
+    groupStack.push(valueToken);
+
+    if (m_char == '-') {
+        sequence();
+    } else {
+        while (m_char == '\n') {
+            // TODO: If-else if block for these
+            scalar();
+            sym();
+            whitespace();
+        }
+    }
+
+    groupStack.pop();
+
+    insertGroupToken(std::move(valueToken));
+}
 
 void Tokenizer::whitespace() {
     while (isSpace(m_char)) {
@@ -619,26 +648,6 @@ void Tokenizer::whitespace() {
             return;
         }
     }
-}
-
-void Tokenizer::value() {
-    std::shared_ptr<GroupToken> valueToken =
-        createGroupToken(Token::Type::Value);
-    groupStack.push(valueToken);
-
-    if (m_char == '-') {
-        sequence();
-    } else {
-        while (m_char == '\n') {
-            scalar();
-            sym();
-            whitespace();
-        }
-    }
-
-    groupStack.pop();
-
-    insertGroupToken(std::move(valueToken));
 }
 
 Tokenizer::~Tokenizer() {}
