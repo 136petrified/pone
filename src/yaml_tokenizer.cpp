@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-27-2025
+ *   Modified: 09-28-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -444,7 +444,6 @@ void Tokenizer::mapping() {
 
     colon();       // Consume colon token
     whitespace();  // Consume any whitespace
-    indent();      // Consume any indents before the value
 
     insertGroupToken(std::move(keyTokenPtr));  // insert the token
     // move so it doesnt copy every token
@@ -455,8 +454,20 @@ void Tokenizer::mapping() {
     groupStack.push(valueTokenPtr);
 
     if (m_char == '-') {
-        // TODO: Implement value logic
-        // For sequences and regular values
+        GroupToken seqToken{groupStack.top(), Token::Type::Sequence};
+
+        while (m_char == '-') {
+            dash();  // Consume dash token
+            seqElement();
+        }
+
+        groupStack.pop();
+    } else {
+        while (m_char == '\n') {
+            scalar();
+            sym();
+            whitespace();
+        }
     }
 
     groupStack.pop();
