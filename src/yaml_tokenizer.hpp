@@ -1,11 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 09-27-2025
+ *   Modified: 09-29-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
 #define PONE_YAML_TOKENIZER_HPP
 
-// #include <array>
 #include <fstream>
 #include <memory>
 #include <stack>
@@ -780,6 +779,10 @@ class Tokenizer {
      */
     void otherSymbols();
 
+    /*! Prints out a tree of the Tokenizer.
+     */
+    void print(std::ostream &out) const;
+
     /*! Processes a right brace Token.
      */
     void rightBrace();
@@ -793,13 +796,13 @@ class Tokenizer {
      */
     void scalar();
 
-    /*! Processes a sequence Token.
-     */
-    void sequence();
-
     /*! Processes a sequence element Token.
      */
     void seqElement();
+
+    /*! Processes a sequence Token.
+     */
+    void sequence();
 
     /*! Processes a single quote Token.
      */
@@ -828,6 +831,11 @@ class Tokenizer {
     /*! Pipelines a whitespace character to a tokenizing function.
      */
     void whitespace();
+
+    /*! Friend function to print out the Tokenizer.
+     */
+    friend std::ostream &operator<<(std::ostream &out,
+                                    const Tokenizer &tokenizer);
 
    private:
     std::string m_fileName;

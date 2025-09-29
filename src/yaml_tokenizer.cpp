@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-28-2025
+ *   Modified: 09-29-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -151,7 +151,7 @@ void GroupToken::clear() {
 
 std::vector<std::shared_ptr<Token>> GroupToken::copy() const {
     std::vector<std::shared_ptr<Token>> newTokenVector;
-    std::shared_ptr<Token> curr = getPtr();
+    std::shared_ptr<Token> curr = getPtr();  // Assume make_shared
 
     for (const auto &token : m_tokens) {
         if (token != curr) {
@@ -329,7 +329,6 @@ void Tokenizer::indent() {
     }
 
     insertGroupToken(createGroupToken(indentToken));
-    ++m_depth;  // Increases depth by one
 }
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {
@@ -408,6 +407,34 @@ void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
     parent->insert(stokPtr);
 }
 
+void Tokenizer::key() {
+    std::shared_ptr<GroupToken> keyToken = createGroupToken(Token::Type::Key);
+
+    groupStack.push(keyToken);
+
+    while (m_char != ':') {
+        if (m_char == '\n') {
+            groupStack.pop();  // Discard the keyToken
+            return;
+        } else if (m_char == '"') {
+            doubleQuote();
+            // TODO: Quote logic here
+        }
+
+        if (isAlnum(m_char)) {
+            scalar();
+        } else if (isSymbol(m_char)) {
+            sym();
+        } else if (isSpace(m_char)) {
+            whitespace();
+        }
+    }
+
+    groupStack.pop();
+
+    insertGroupToken(std::move(keyToken));
+}
+
 void Tokenizer::leftBrace() { insertSingleToken(Token::Type::LeftBrace); }
 
 void Tokenizer::leftBracket() { insertSingleToken(Token::Type::LeftBracket); }
@@ -424,55 +451,22 @@ const char Tokenizer::lookahead() {
 }
 
 void Tokenizer::mapping() {
-    GroupToken keyToken{groupStack.top(), Token::Type::Key};
-
     // A mapping consists of a key and token;
     // therefore, the key token will be processed first
     // and along with it, the value.
 
-    std::shared_ptr<GroupToken> keyTokenPtr = createGroupToken(keyToken);
-
-    groupStack.push(keyTokenPtr);
-
-    while (m_char != ':') {
-        scalar();
-        sym();
-        whitespace();
+    while (!isSpace(m_char)) {
+        whitespace();  // Consume all whitespace first
     }
 
-    groupStack.pop();
+    key();
 
-    colon();       // Consume colon token
-    whitespace();  // Consume any whitespace
-
-    insertGroupToken(std::move(keyTokenPtr));  // insert the token
-    // move so it doesnt copy every token
-
-    GroupToken valueToken{groupStack.top(), Token::Type::Value};
-    std::shared_ptr<GroupToken> valueTokenPtr = createGroupToken(valueToken);
-
-    groupStack.push(valueTokenPtr);
-
-    if (m_char == '-') {
-        GroupToken seqToken{groupStack.top(), Token::Type::Sequence};
-
-        while (m_char == '-') {
-            dash();  // Consume dash token
-            seqElement();
-        }
-
-        groupStack.pop();
-    } else {
-        while (m_char == '\n') {
-            scalar();
-            sym();
-            whitespace();
-        }
+    colon();  // Consume colon token
+    while (!isSpace(m_char)) {
+        whitespace();  // Consume any whitespace
     }
 
-    groupStack.pop();
-
-    insertGroupToken(std::move(valueTokenPtr));
+    value();
 }
 
 void Tokenizer::newline() { insertSingleToken(Token::Type::Newline); }
@@ -553,8 +547,6 @@ void Tokenizer::sym() {
             break;
     }
 
-    clearBuf();  // Clear the buffer.
-
     try {
         next();
     } catch (const EndOfIfstreamException &) {
@@ -571,6 +563,36 @@ void Tokenizer::tokenize() {
 
     while (!m_endOfFile) {
     }
+}
+
+void Tokenizer::seqElement() {
+    while (m_char != '-') {
+        mapping();
+        sequence();
+        scalar();
+    }
+}
+
+void Tokenizer::sequence() {
+    std::shared_ptr<GroupToken> seqToken =
+        createGroupToken(Token::Type::Sequence);
+    groupStack.push(seqToken);
+
+    while (m_char == '-') {
+        dash();  // Consume dash token
+
+        if (isSpace(m_char)) {
+            whitespace();  // Consume whitespace token
+        } else {
+            // throw InvalidSequenceException();
+            groupStack.pop();
+            return;  // Dummy
+        }
+
+        seqElement();
+    }
+
+    groupStack.pop();
 }
 
 void Tokenizer::space() { insertSingleToken(Token::Type::Space); }
@@ -591,14 +613,32 @@ void Tokenizer::whitespace() {
                 break;
         }
 
-        clearBuf();  // Clear the buffer.
-
         try {
             next();
         } catch (const EndOfIfstreamException &) {
             return;
         }
     }
+}
+
+void Tokenizer::value() {
+    std::shared_ptr<GroupToken> valueToken =
+        createGroupToken(Token::Type::Value);
+    groupStack.push(valueToken);
+
+    if (m_char == '-') {
+        sequence();
+    } else {
+        while (m_char == '\n') {
+            scalar();
+            sym();
+            whitespace();
+        }
+    }
+
+    groupStack.pop();
+
+    insertGroupToken(std::move(valueToken));
 }
 
 Tokenizer::~Tokenizer() {}
