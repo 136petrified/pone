@@ -233,7 +233,7 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
     indent.push_back(indentStr);
 
     for (size_t i = 0; i < m_size; ++i) {
-        if (i >= m_size - 1) {
+        if (i == m_size - 1) {
             indentStr = " \t";
             indent.back() = indentStr;
 
