@@ -6,6 +6,7 @@
 #define PONE_YAML_TOKENIZER_HPP
 
 #include <fstream>
+#include <iostream>
 #include <memory>
 #include <stack>
 #include <string>
@@ -176,8 +177,13 @@ class Token : public std::enable_shared_from_this<Token> {
         \return an enum value of type Token::Type.
         \sa Token::Type
      */
-
     virtual Type getType() const = 0;
+
+    /*! Pure virtual function for printing out a Token.
+
+        \param out the output stream.
+     */
+    virtual void print(std::ostream &out) const = 0;
 
     /*! Pure virtual function for setting the depth of a Token.
         If parent is null, set to 0, otherwise depth(parent) + 1.
@@ -384,6 +390,12 @@ class SingleToken : public Token {
      */
     Token::Type getType() const override;
 
+    /*! Prints out the SingleToken.
+
+        \param out the output stream.
+     */
+    void print(std::ostream &out) const override;
+
     /*! Sets the depth of a SingleToken.
         If parent is null, set to 0, otherwise depth(parent) + 1.
      */
@@ -565,6 +577,12 @@ class GroupToken : public Token {
      */
     Token::Type getType() const override;
 
+    /*! Prints out a GroupToken.
+
+        \param out the output stream.
+     */
+    void print(std::ostream &out) const override;
+
     /*! Sets the depth of a GroupToken.
         If parent is null, set to 0, otherwise depth(parent) + 1.
      */
@@ -619,7 +637,11 @@ class Tokenizer {
 
     size_t size() const;
 
-    const std::vector<std::shared_ptr<Token>> &getTokens() const;
+    /*! Gets a read-only reference to the tree of Tokens.
+
+        \return a pointer to the token tree.
+     */
+    const std::shared_ptr<Token> &getTokens() const;
 
     /*! Initializes the Tokenizer.
         This function is the entry point of the Tokenizer.

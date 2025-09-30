@@ -55,9 +55,13 @@ SingleToken &SingleToken::operator=(const SingleToken &other) {
 }
 
 std::shared_ptr<Token> SingleToken::clone(std::shared_ptr<Token> parent) const {
-    std::shared_ptr<Token> pRoot = std::make_shared<SingleToken>(*this);
-    pRoot->setParent(parent);
-    return pRoot;
+    try {
+        std::shared_ptr<Token> root = std::make_shared<SingleToken>(*this);
+        root->setParent(parent);
+        return root;
+    } catch (const std::bad_alloc &e) {
+        throw FailedAllocException();
+    }
 }
 
 const std::string &SingleToken::getData() const { return m_data; }
@@ -83,6 +87,8 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
 }
 
 Token::Type SingleToken::getType() const { return m_type; }
+
+void SingleToken::print(std::ostream &out) const { out << m_name << '\n'; }
 
 void SingleToken::setDepth() {
     m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
@@ -178,14 +184,14 @@ bool GroupToken::empty() const { return m_size <= 0; }
 size_t GroupToken::size() const { return m_size; }
 
 std::shared_ptr<Token> GroupToken::clone(std::shared_ptr<Token> parent) const {
-    std::shared_ptr<GroupToken> pRoot =
+    std::shared_ptr<GroupToken> root =
         std::make_shared<GroupToken>(GroupToken(parent, m_type));
 
     for (const auto &token : m_tokens) {
-        pRoot->insert(token->clone(pRoot));
+        root->insert(token->clone(root));
     }
 
-    return pRoot;
+    return root;
 }
 
 Token::Class GroupToken::getClass() const { return m_class; }
@@ -205,6 +211,15 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
 }
 
 Token::Type GroupToken::getType() const { return m_type; }
+
+void GroupToken::print(std::ostream &out) const {
+    out << m_name << '\n';
+
+    for (size_t i = 0; i < m_size; ++i) {
+        out << ((i < m_size - 1) ? "\u251c" : "\u2514") << " ";
+        m_tokens[i]->print(out);
+    }
+}
 
 void GroupToken::setDepth() {
     m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
@@ -308,14 +323,14 @@ void Tokenizer::dash() { insertSingleToken(Token::Type::Dash); }
 
 void Tokenizer::doubleQuote() { insertSingleToken(Token::Type::DoubleQuote); }
 
-const std::vector<std::shared_ptr<Token>> &Tokenizer::getTokens() const {
+const std::shared_ptr<Token> &Tokenizer::getTokens() const {
     if (groupStack.empty()) {
         throw EmptyGroupStackException();
     } else if (groupStack.size() > 1) {
         throw RootNotFoundException();
     }
 
-    return groupStack.top()->getTokens();
+    return groupStack.top();  // Which is always root
 }
 
 void Tokenizer::indent() {
@@ -482,7 +497,8 @@ void Tokenizer::numSign() { insertSingleToken(Token::Type::NumSign); }
 void Tokenizer::otherSymbols() { insertSingleToken(Token::Type::Symbol); }
 
 void Tokenizer::print(std::ostream &out) const {
-    // TODO: Implement this
+    std::shared_ptr<Token> root = getTokens();
+    // root->print(out);
 }
 
 void Tokenizer::rightBrace() { insertSingleToken(Token::Type::RightBrace); }
@@ -617,9 +633,13 @@ void Tokenizer::value() {
     } else {
         while (m_char == '\n') {
             // TODO: If-else if block for these
-            scalar();
-            sym();
-            whitespace();
+            if (isAlnum(m_char)) {
+                scalar();
+            } else if (isSymbol(m_char)) {
+                sym();
+            } else if (isSpace(m_char)) {
+                whitespace();
+            }
         }
     }
 
