@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-29-2025
+ *   Modified: 09-30-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -182,8 +182,11 @@ class Token : public std::enable_shared_from_this<Token> {
     /*! Pure virtual function for printing out a Token.
 
         \param out the output stream.
+        \param indent the indent for the next child Token.
+        \param prefix the branch symbol before a listing.
      */
-    virtual void print(std::ostream &out) const = 0;
+    virtual void print(std::ostream &out, std::vector<std::string> &indent,
+                       const char *prefix) const = 0;
 
     /*! Pure virtual function for setting the depth of a Token.
         If parent is null, set to 0, otherwise depth(parent) + 1.
@@ -393,8 +396,11 @@ class SingleToken : public Token {
     /*! Prints out the SingleToken.
 
         \param out the output stream.
+        \param indent the indent for the next child Token.
+        \param prefix the branch symbol before a listing.
      */
-    void print(std::ostream &out) const override;
+    void print(std::ostream &out, std::vector<std::string> &indent,
+               const char *prefix = "") const override;
 
     /*! Sets the depth of a SingleToken.
         If parent is null, set to 0, otherwise depth(parent) + 1.
@@ -580,8 +586,11 @@ class GroupToken : public Token {
     /*! Prints out a GroupToken.
 
         \param out the output stream.
+        \param indent the indent for the next child Token.
+        \param prefix the branch symbol before a listing.
      */
-    void print(std::ostream &out) const override;
+    void print(std::ostream &out, std::vector<std::string> &indent,
+               const char *prefix = "") const override;
 
     /*! Sets the depth of a GroupToken.
         If parent is null, set to 0, otherwise depth(parent) + 1.

@@ -88,7 +88,14 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
 
 Token::Type SingleToken::getType() const { return m_type; }
 
-void SingleToken::print(std::ostream &out) const { out << m_name << '\n'; }
+void SingleToken::print(std::ostream &out, std::vector<std::string> &indent,
+                        const char *prefix) const {
+    for (const auto &item : indent) {
+        out << item;
+    }
+
+    out << prefix << m_name << '\n';
+}
 
 void SingleToken::setDepth() {
     m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
@@ -212,19 +219,33 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
 
 Token::Type GroupToken::getType() const { return m_type; }
 
-void GroupToken::print(std::ostream &out) const {
-    std::string padding{" ", m_name.size()};
-    int depth = m_depth + 1;
+void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
+                       const char *prefix) const {
+    std::string indentStr;
 
-    out << m_name << '\n';
+    for (const auto &item : indent) {
+        out << item;
+    }
+
+    out << prefix << m_name << '\n';
+
+    indentStr = "\u2502\t";
+    indent.push_back(indentStr);
 
     for (size_t i = 0; i < m_size; ++i) {
-        for (int j = 1; j < depth; ++j) {
-            out << ((i < m_size - 1) ? "\u2502" : " ") << padding;
+        if (i >= m_depth - 1) {
+            indentStr = " \t";
+            std::string &top = indent.back();
+            top = indentStr;
+
+            // End of the groupToken "directory"
+            m_tokens[i]->print(out, indent, "\u2514");
+        } else {
+            m_tokens[i]->print(out, indent, "\u251c");
         }
-        out << ((i < m_size - 1) ? "\u251c" : "\u2514") << " ";
-        m_tokens[i]->print(out);
     }
+
+    indent.pop_back();
 }
 
 void GroupToken::setDepth() {
