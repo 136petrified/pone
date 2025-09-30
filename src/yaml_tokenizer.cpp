@@ -213,11 +213,14 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
 Token::Type GroupToken::getType() const { return m_type; }
 
 void GroupToken::print(std::ostream &out) const {
+    std::string padding{" ", m_name.size()};
+    int depth = m_depth + 1;
+
     out << m_name << '\n';
 
     for (size_t i = 0; i < m_size; ++i) {
-        for (int j = 0; j < m_depth; ++j) {
-            out << "\u2502" << '\t';
+        for (int j = 1; j < depth; ++j) {
+            out << ((i < m_size - 1) ? "\u2502" : " ") << padding;
         }
         out << ((i < m_size - 1) ? "\u251c" : "\u2514") << " ";
         m_tokens[i]->print(out);
