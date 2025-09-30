@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-29-2025
+ *   Modified: 09-30-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -216,6 +216,9 @@ void GroupToken::print(std::ostream &out) const {
     out << m_name << '\n';
 
     for (size_t i = 0; i < m_size; ++i) {
+        for (int j = 0; j < m_depth; ++j) {
+            out << "\u2502" << '\t';
+        }
         out << ((i < m_size - 1) ? "\u251c" : "\u2514") << " ";
         m_tokens[i]->print(out);
     }
