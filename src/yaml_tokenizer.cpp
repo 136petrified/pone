@@ -221,21 +221,17 @@ Token::Type GroupToken::getType() const { return m_type; }
 
 void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
                        const char *prefix) const {
-    std::string indentStr;
-
     for (const auto &item : indent) {
         out << item;
     }
 
     out << prefix << m_name << '\n';
 
-    indentStr = "\u2502\t";
-    indent.push_back(indentStr);
+    indent.push_back("\u2502\t");
 
     for (size_t i = 0; i < m_size; ++i) {
         if (i == m_size - 1) {
-            indentStr = " \t";
-            indent.back() = indentStr;
+            indent.back() = " \t";
 
             // End of the groupToken "directory"
             m_tokens[i]->print(out, indent, "\u2514");
