@@ -127,6 +127,65 @@ class Token : public std::enable_shared_from_this<Token> {
     Token(const std::shared_ptr<Token> &parent, const std::string &name,
           const Class &cls, const Type &type);
 
+    /*! Gets the class of a Token.
+
+        \return an enum value of type Token::Class.
+        \sa Token::Class
+     */
+    Class getClass() const;
+
+    /*! Gets the depth of a Token.
+
+         \return an int value.
+      */
+    int getDepth() const;
+
+    /*! Gets the name of a Token.
+
+        \return a read-only reference to the Token name.
+     */
+    const std::string &getName() const;
+
+    /*! Gets the parent of a Token.
+
+        \return a read-only reference to the parent Token pointer.
+     */
+    const std::shared_ptr<Token> &getParent() const;
+
+    /*! Gets the type of a Token.
+
+        \return an enum value of type Token::Type.
+        \sa Token::Type
+     */
+    Type getType() const;
+
+    /*! Prints out a Token entry.
+        Helper function. Do not call directly.
+
+        \param out the output stream.
+        \param indent the indent for the next child Token.
+        \param prefix the branch symbol before an entry.
+     */
+    void printEntry(std::ostream &out, std::vector<std::string> &indent,
+                    const char *prefix) const;
+
+    /*! Sets the depth of a Token.
+        If parent is null, set to 0, otherwise depth(parent) + 1.
+     */
+    void setDepth();
+
+    /*! Sets the name of a Token.
+
+        \return the string name.
+     */
+    std::string setName() const;
+
+    /*! Sets the type of a Token.
+        \param type the type assigned to the Token.
+        \sa Token::Type
+     */
+    void setType(const Type &type);
+
     /*! Pure virtual token destructor */
     virtual ~Token() = 0;
 
@@ -140,76 +199,27 @@ class Token : public std::enable_shared_from_this<Token> {
     virtual std::shared_ptr<Token> clone(
         std::shared_ptr<Token> parent) const = 0;
 
-    /*! Pure virtual function for getting the class of a Token.
-
-        \return an enum value of type Token::Class.
-        \sa Token::Class
-     */
-    virtual Class getClass() const = 0;
-
-    /*! Pure virtual function for getting the depth of a Token.
-
-        \return an int value.
-     */
-    virtual int getDepth() const = 0;
-
-    /*! Pure virtual function for getting the name of a Token.
-
-        \return a read-only reference to the Token name.
-     */
-    virtual const std::string &getName() const = 0;
-
-    /*! Pure virtual function for getting the parent of a Token.
-
-        \return a read-only reference to the parent Token pointer.
-     */
-    virtual const std::shared_ptr<Token> &getParent() const = 0;
-
-    /*! Pure virtual function that gets a pointer from the current Token.
+    /*! Pure virtual function for getting a pointer from the current Token.
 
         \return a pointer to the Token.
         \throws FailedAllocException
      */
     virtual std::shared_ptr<Token> getPtr() const = 0;
 
-    /*! Pure virtual function for getting the type of a Token.
-
-        \return an enum value of type Token::Type.
-        \sa Token::Type
-     */
-    virtual Type getType() const = 0;
-
-    /*! Pure virtual function for printing out a Token.
+    /*! Pure virtual function for printing out every Token.
 
         \param out the output stream.
         \param indent the indent for the next child Token.
-        \param prefix the branch symbol before a listing.
+        \param prefix the branch symbol before a entry.
      */
     virtual void print(std::ostream &out, std::vector<std::string> &indent,
                        const char *prefix) const = 0;
-
-    /*! Pure virtual function for setting the depth of a Token.
-        If parent is null, set to 0, otherwise depth(parent) + 1.
-     */
-    virtual void setDepth() = 0;
-
-    /*! Pure virtual function for setting the name of a Token.
-
-        \return the string name.
-     */
-    virtual std::string setName() const = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 
         \return parent the parent Token.
      */
     virtual void setParent(const std::shared_ptr<Token> &parent) = 0;
-
-    /*! Pure virtual function for setting the type of a Token.
-        \param type the type assigned to the Token.
-        \sa Token::Type
-     */
-    virtual void setType(const Type &type) = 0;
     // ----------------------------------------
     // End of basic Token functions
 
@@ -265,7 +275,7 @@ class Token : public std::enable_shared_from_this<Token> {
 
    protected:
     Class m_class;
-    int m_depth;  // root will always have depth = 0
+    int m_depth = 0;  // root will always have depth = 0
     std::string m_name;
     std::shared_ptr<Token> m_parent;
     Type m_type;
@@ -354,31 +364,6 @@ class SingleToken : public Token {
      */
     std::shared_ptr<Token> clone(std::shared_ptr<Token> parent) const override;
 
-    /*! Gets the class of a SingleToken.
-
-        \return an enum value of type Type::Class.
-        \sa Token, Token::Class
-     */
-    Token::Class getClass() const override;
-
-    /*! Gets the depth of a SingleToken.
-
-        \return an int value.
-     */
-    int getDepth() const override;
-
-    /*! Gets the depth of a SingleToken.
-
-        \return a read-only string.
-     */
-    const std::string &getName() const override;
-
-    /*! Gets the parent of a SingleToken.
-
-        \return the parent of the SingleToken.
-     */
-    const std::shared_ptr<Token> &getParent() const override;
-
     /*! Gets a pointer from the current SingleToken.
 
         \return a pointer to the Token.
@@ -386,45 +371,20 @@ class SingleToken : public Token {
      */
     std::shared_ptr<Token> getPtr() const override;
 
-    /*! Gets the type of a SingleToken.
-
-        \return an enum value of type Token::Type.
-        \sa Token, Token::Type
-     */
-    Token::Type getType() const override;
-
-    /*! Prints out the SingleToken.
+    /*! Prints out every SingleToken.
 
         \param out the output stream.
         \param indent the indent for the next child Token.
-        \param prefix the branch symbol before a listing.
+        \param prefix the branch symbol before a entry.
      */
     void print(std::ostream &out, std::vector<std::string> &indent,
                const char *prefix = "") const override;
-
-    /*! Sets the depth of a SingleToken.
-        If parent is null, set to 0, otherwise depth(parent) + 1.
-     */
-    void setDepth() override;
-
-    /*! Sets the name of a Token.
-
-        \return the string name.
-     */
-    std::string setName() const override;
 
     /*! Sets the parent of a SingleToken.
 
         \param parent the parent Token.
      */
     void setParent(const std::shared_ptr<Token> &parent) override;
-
-    /*! Sets the type of a SingleToken.
-
-        \param type the type assigned to the SingleToken.
-        \sa Token, Token::Type
-     */
-    void setType(const Token::Type &type) override;
 
    private:
     std::string m_data;
@@ -544,77 +504,27 @@ class GroupToken : public Token {
      */
     std::shared_ptr<Token> clone(std::shared_ptr<Token> parent) const override;
 
-    /*! Gets the class of a GroupToken.
-
-        \return an enum value of type Token::Class.
-        \sa Token::Class, Token
-     */
-    Token::Class getClass() const override;
-
-    /*! Gets the depth of a GroupToken.
-
-        \return an int value.
-     */
-    int getDepth() const override;
-
-    /*! Gets the depth of a GroupToken.
-
-        \return a read-only string.
-     */
-    const std::string &getName() const override;
-
-    /*! Gets the parent of a GroupToken.
-
-        \return a read-only reference of a Token pointer.
-     */
-    const std::shared_ptr<Token> &getParent() const override;
-
-    /*! Gets a pointer from the current GroupToken.
+    /*! Gets a pointer from the current SingleToken.
 
         \return a pointer to the Token.
         \throws FailedAllocException
      */
     std::shared_ptr<Token> getPtr() const override;
 
-    /*! Gets the type of a GroupToken.
-
-        \return an enum value of type Token::Type.
-        \sa Token::Type, Token
-     */
-    Token::Type getType() const override;
-
     /*! Prints out a GroupToken.
 
         \param out the output stream.
         \param indent the indent for the next child Token.
-        \param prefix the branch symbol before a listing.
+        \param prefix the branch symbol before a entry.
      */
     void print(std::ostream &out, std::vector<std::string> &indent,
                const char *prefix = "") const override;
-
-    /*! Sets the depth of a GroupToken.
-        If parent is null, set to 0, otherwise depth(parent) + 1.
-     */
-    void setDepth() override;
-
-    /*! Sets the name of a Token.
-
-        \return the string name.
-     */
-    std::string setName() const override;
 
     /*! Sets the parent of a GroupToken.
 
         \param parent the parent token.
      */
     void setParent(const std::shared_ptr<Token> &parent) override;
-
-    /*! Sets the type of a GroupToken.
-
-        \param type the type assigned to a GroupToken.
-        \sa Token::Type, Token
-     */
-    void setType(const Token::Type &type) override;
 
    private:
     std::vector<std::shared_ptr<Token>> m_tokens;

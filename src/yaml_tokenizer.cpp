@@ -24,6 +24,33 @@ Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
              const Token::Class &cls, const Token::Type &type)
     : m_class{cls}, m_name{name}, m_parent{parent}, m_type{type} {}
 
+Token::Class Token::getClass() const { return m_class; }
+
+int Token::getDepth() const { return m_depth; }
+
+const std::string &Token::getName() const { return m_name; }
+
+const std::shared_ptr<Token> &Token::getParent() const { return m_parent; }
+
+Token::Type Token::getType() const { return m_type; }
+
+void Token::printEntry(std::ostream &out, std::vector<std::string> &indent,
+                       const char *prefix) const {
+    for (const auto &item : indent) {
+        out << item;
+    }
+
+    out << prefix << m_name << '\n';
+}
+
+void Token::setDepth() {
+    m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth();
+}
+
+std::string Token::setName() const { return tokenNameMap.at(m_type); }
+
+void Token::setType(const Token::Type &type) { m_type = type; }
+
 Token::~Token() {}
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
@@ -68,16 +95,6 @@ const std::string &SingleToken::getData() const { return m_data; }
 
 void SingleToken::setData(const std::string &data) { m_data = data; }
 
-Token::Class SingleToken::getClass() const { return m_class; }
-
-int SingleToken::getDepth() const { return m_depth; }
-
-const std::string &SingleToken::getName() const { return m_name; }
-
-const std::shared_ptr<Token> &SingleToken::getParent() const {
-    return m_parent;
-}
-
 std::shared_ptr<Token> SingleToken::getPtr() const {
     try {
         return std::static_pointer_cast<Token>(shared_from_this());
@@ -85,8 +102,6 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
         throw FailedAllocException();
     }
 }
-
-Token::Type SingleToken::getType() const { return m_type; }
 
 void SingleToken::print(std::ostream &out, std::vector<std::string> &indent,
                         const char *prefix) const {
@@ -97,17 +112,9 @@ void SingleToken::print(std::ostream &out, std::vector<std::string> &indent,
     out << prefix << m_name << '\n';
 }
 
-void SingleToken::setDepth() {
-    m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
-}
-
-std::string SingleToken::setName() const { return tokenNameMap.at(m_type); }
-
 void SingleToken::setParent(const std::shared_ptr<Token> &parent) {
     m_parent = parent;
 }
-
-void SingleToken::setType(const Token::Type &type) { m_type = type; }
 
 SingleToken::~SingleToken() {}
 
@@ -201,14 +208,6 @@ std::shared_ptr<Token> GroupToken::clone(std::shared_ptr<Token> parent) const {
     return root;
 }
 
-Token::Class GroupToken::getClass() const { return m_class; }
-
-int GroupToken::getDepth() const { return m_depth; }
-
-const std::string &GroupToken::getName() const { return m_name; }
-
-const std::shared_ptr<Token> &GroupToken::getParent() const { return m_parent; }
-
 std::shared_ptr<Token> GroupToken::getPtr() const {
     try {
         return std::static_pointer_cast<Token>(shared_from_this());
@@ -216,8 +215,6 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
         throw FailedAllocException();
     }
 }
-
-Token::Type GroupToken::getType() const { return m_type; }
 
 void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
                        const char *prefix) const {
@@ -243,17 +240,11 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
     indent.pop_back();
 }
 
-void GroupToken::setDepth() {
-    m_depth = (m_parent == nullptr) ? 0 : m_parent->getDepth() + 1;
-}
-
-std::string GroupToken::setName() const { return tokenNameMap.at(m_type); }
-
 void GroupToken::setParent(const std::shared_ptr<Token> &parent) {
-    m_parent = parent;
+    if (parent != getPtr()) {
+        m_parent = parent;
+    }
 }
-
-void GroupToken::setType(const Token::Type &type) { m_type = type; }
 
 GroupToken::~GroupToken() {}
 
