@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 09-30-2025
+ *   Modified: 10-01-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -36,6 +36,7 @@ class Token : public std::enable_shared_from_this<Token> {
         Newline,      /*! The newline character \n */
         None,         /*! Placeholder token type */
         NumSign,      /*! The number sign character # */
+        Quoted,       /*! A group type for quoted keys and values */
         RightBrace,   /*! The right brace character } */
         RightBracket, /*! The right bracket character ] */
         Root,         /*! The root groupToken. */
@@ -57,7 +58,7 @@ class Token : public std::enable_shared_from_this<Token> {
     };
 
     /*! The total size of the token types. */
-    static const int ALL_TOKENS_SIZE = 23;
+    static const int ALL_TOKENS_SIZE = 24;
 
     /*! Map of Types to its string name. */
     std::unordered_map<Type, std::string> tokenNameMap = {
@@ -74,6 +75,7 @@ class Token : public std::enable_shared_from_this<Token> {
         {Type::Newline, "Newline"},
         {Type::None, "None"},
         {Type::NumSign, "NumSign"},
+        {Type::Quoted, "Quoted"},
         {Type::RightBrace, "RightBrace"},
         {Type::RightBracket, "RightBracket"},
         {Type::Root, "Root"},

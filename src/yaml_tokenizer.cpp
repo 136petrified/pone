@@ -233,9 +233,11 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
 }
 
 void GroupToken::setParent(const std::shared_ptr<Token> &parent) {
-    if (parent != getPtr()) {
-        m_parent = parent;
+    if (parent == getPtr()) {
+        throw SelfParentInsertionException();
     }
+
+    m_parent = parent;
 }
 
 GroupToken::~GroupToken() {}
@@ -263,8 +265,6 @@ void Tokenizer::colon() { insertSingleToken(Token::Type::Colon); }
 void Tokenizer::comma() { insertSingleToken(Token::Type::Comma); }
 
 void Tokenizer::comment() {
-    // Assume unquoted and numSign
-    // is consumed
     if (groupStack.empty()) {
         throw EmptyGroupStackException();
     }
@@ -480,6 +480,12 @@ void Tokenizer::mapping() {
     key();
 
     colon();  // Consume colon token
+    try {
+        next();
+    } catch (const EndOfIfstreamException &) {
+        return;  // Discard mapping
+    }
+
     while (!isSpace(m_char)) {
         whitespace();  // Consume any whitespace
     }
@@ -502,8 +508,9 @@ void Tokenizer::numSign() { insertSingleToken(Token::Type::NumSign); }
 void Tokenizer::otherSymbols() { insertSingleToken(Token::Type::Symbol); }
 
 void Tokenizer::print(std::ostream &out) const {
-    std::shared_ptr<Token> root = getTokens();
-    // root->print(out);
+    std::shared_ptr<Token> root = getTokens();  // returns ptr to root
+    std::vector<std::string> indentVector;
+    root->print(out, indentVector, "");
 }
 
 void Tokenizer::rightBrace() { insertSingleToken(Token::Type::RightBrace); }
@@ -524,6 +531,64 @@ void Tokenizer::scalar() {
 
     insertSingleToken(createSingleToken(Token::Type::Scalar, std::move(m_buf)));
     clearBuf();  // Clear the buffer after creating the token
+}
+
+void Tokenizer::sequence() {
+    if (groupStack.empty()) {
+        throw EmptyGroupStackException();
+    }
+
+    std::shared_ptr<GroupToken> seqToken =
+        createGroupToken(Token::Type::Sequence);
+
+    groupStack.push(seqToken);
+
+    // Must start with dash
+
+    while (m_char == '-') {
+        dash();  // Consume dash token
+        try {
+            next();
+        } catch (const EndOfIfstreamException &) {
+            groupStack.pop();
+            return;
+        }
+
+        if (isSpace(m_char)) {
+            whitespace();  // Consume whitespace token
+        } else {
+            groupStack.pop();  // Exit gracefully
+            // throw InvalidSequenceException();
+            return;  // Dummy
+        }
+
+        seqElement();
+    }
+
+    groupStack.pop();
+
+    insertGroupToken(seqToken);
+}
+
+void Tokenizer::seqElement() {
+    if (groupStack.empty()) {
+        throw EmptyGroupStackException();
+    }
+
+    std::shared_ptr<GroupToken> seqElemToken =
+        createGroupToken(Token::Type::SeqElement);
+
+    groupStack.push(seqElemToken);
+
+    while (m_char != '-') {
+        mapping();
+        sequence();
+        scalar();
+    }
+
+    groupStack.pop();
+
+    insertGroupToken(seqElemToken);  // when insert phase is finished
 }
 
 void Tokenizer::singleQuote() { insertSingleToken(Token::Type::SingleQuote); }
@@ -577,6 +642,10 @@ void Tokenizer::sym() {
     }
 }
 
+void Tokenizer::space() { insertSingleToken(Token::Type::Space); }
+
+void Tokenizer::tab() { insertSingleToken(Token::Type::Tab); }
+
 void Tokenizer::tokenize() {
     try {
         next();  // Start with first token
@@ -585,48 +654,13 @@ void Tokenizer::tokenize() {
     }
 
     while (!m_endOfFile) {
-    }
-}
-
-void Tokenizer::seqElement() {
-    while (m_char != '-') {
         mapping();
         sequence();
-        scalar();
+        if (isSymbol(m_char)) {  // Must be symbol
+            sym();               // This is to check for comments
+        }
     }
 }
-
-void Tokenizer::sequence() {
-    std::shared_ptr<GroupToken> seqToken =
-        createGroupToken(Token::Type::Sequence);
-    groupStack.push(seqToken);
-
-    while (m_char == '-') {
-        dash();  // Consume dash token
-        try {
-            next();
-        } catch (const EndOfIfstreamException &) {
-            groupStack.pop();
-            return;
-        }
-
-        if (isSpace(m_char)) {
-            whitespace();  // Consume whitespace token
-        } else {
-            groupStack.pop();  // Exit gracefully
-            // throw InvalidSequenceException();
-            return;  // Dummy
-        }
-
-        seqElement();
-    }
-
-    groupStack.pop();
-}
-
-void Tokenizer::space() { insertSingleToken(Token::Type::Space); }
-
-void Tokenizer::tab() { insertSingleToken(Token::Type::Tab); }
 
 void Tokenizer::value() {
     std::shared_ptr<GroupToken> valueToken =
@@ -640,7 +674,7 @@ void Tokenizer::value() {
             if (isAlnum(m_char)) {
                 scalar();
             } else if (isSymbol(m_char)) {
-                sym();
+                sym();  // will also handle comments
             } else if (isSpace(m_char)) {
                 whitespace();
             }
