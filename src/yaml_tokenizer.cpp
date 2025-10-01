@@ -105,11 +105,7 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
 
 void SingleToken::print(std::ostream &out, std::vector<std::string> &indent,
                         const char *prefix) const {
-    for (const auto &item : indent) {
-        out << item;
-    }
-
-    out << prefix << m_name << '\n';
+    printEntry(out, indent, prefix);
 }
 
 void SingleToken::setParent(const std::shared_ptr<Token> &parent) {
@@ -218,11 +214,7 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
 
 void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
                        const char *prefix) const {
-    for (const auto &item : indent) {
-        out << item;
-    }
-
-    out << prefix << m_name << '\n';
+    printEntry(out, indent, prefix);
 
     indent.push_back("\u2502\t");
 
@@ -645,7 +637,6 @@ void Tokenizer::value() {
         sequence();
     } else {
         while (m_char == '\n') {
-            // TODO: If-else if block for these
             if (isAlnum(m_char)) {
                 scalar();
             } else if (isSymbol(m_char)) {
