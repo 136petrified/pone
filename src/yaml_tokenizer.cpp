@@ -36,8 +36,8 @@ Token::Type Token::getType() const { return m_type; }
 
 void Token::printEntry(std::ostream &out, std::vector<std::string> &indent,
                        const char *prefix) const {
-    for (const auto &item : indent) {
-        out << item;
+    for (size_t i = 0; i < m_depth && i < indent.size(); ++i) {
+        out << indent[i];
     }
 
     out << prefix << m_name << '\n';
