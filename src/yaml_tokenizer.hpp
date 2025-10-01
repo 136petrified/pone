@@ -726,6 +726,10 @@ class Tokenizer {
      */
     void print(std::ostream &out) const;
 
+    /*! Processes a quoted segment of Tokens.
+     */
+    void quoted();
+
     /*! Processes a right brace Token.
      */
     void rightBrace();

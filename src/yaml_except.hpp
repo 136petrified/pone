@@ -51,6 +51,8 @@ class EndOfIfstreamException : public TokenizerException {
    public:
     EndOfIfstreamException()
         : TokenizerException("EndOfIfstreamException", makeMessage()) {}
+    EndOfIfstreamException(const std::string &msg)
+        : TokenizerException("EndOfIfstreamException", msg) {}
 
    private:
     std::string makeMessage() const { return "Reached end of file."; }
@@ -60,6 +62,8 @@ class FailedAllocException : public TokenizerException {
    public:
     FailedAllocException()
         : TokenizerException("FailedAllocException", makeMessage()) {}
+    FailedAllocException(const std::string &msg)
+        : TokenizerException("FailedAllocException", msg) {}
 
    private:
     std::string makeMessage() const {
@@ -71,6 +75,8 @@ class NotAGroupException : public TokenizerException {
    public:
     NotAGroupException()
         : TokenizerException("NotAGroupException", makeMessage()) {}
+    NotAGroupException(const std::string &msg)
+        : TokenizerException("NotAGroupException", msg) {}
 
    private:
     std::string makeMessage() const {
@@ -82,6 +88,8 @@ class NotASingleException : public TokenizerException {
    public:
     NotASingleException()
         : TokenizerException("NotASingleException", makeMessage()) {}
+    NotASingleException(const std::string &msg)
+        : TokenizerException("NotASingleException", msg) {}
 
    private:
     std::string makeMessage() const {
@@ -100,25 +108,25 @@ class NullTokenException : public TokenizerException {
     std::string makeMessage() const {
         return "Attempted to tokenize a null pointer.";
     }
-
-    std::string m_msg;
 };
 
 class RootNotFoundException : public TokenizerException {
    public:
     RootNotFoundException()
         : TokenizerException("RootNotFoundException", makeMessage()) {}
+    RootNotFoundException(const std::string &msg)
+        : TokenizerException("RootNotFoundException", msg) {}
 
    private:
-    std::string makeMessage() const {
-        return "Attempted to tokenize a null pointer.";
-    }
+    std::string makeMessage() const { return "Failed to find root Token!"; }
 };
 
 class SelfParentInsertionException : public TokenizerException {
    public:
     SelfParentInsertionException()
         : TokenizerException("SelfParentInsertionException", makeMessage()) {}
+    SelfParentInsertionException(const std::string &msg)
+        : TokenizerException("SelfParentInsertionException", msg) {}
 
    private:
     std::string makeMessage() const {
