@@ -269,22 +269,18 @@ void Tokenizer::comment() {
         throw EmptyGroupStackException();
     }
 
-    GroupToken commentToken{groupStack.top(), Token::Type::Comment};
+    std::shared_ptr<GroupToken> commentToken =
+        createGroupToken(Token::Type::Comment);  // Allocate the pointer
 
-    std::shared_ptr<GroupToken> commentTokenPtr =
-        createGroupToken(commentToken);  // Allocate the pointer
-
-    groupStack.push(commentTokenPtr);
+    groupStack.push(commentToken);
 
     while (m_char != '\n') {  // Stop at indent
-        scalar();
-        sym();
-        whitespace();
+        literal();
     }
 
     groupStack.pop();  // Pop out parent commentToken
 
-    insertGroupToken(commentTokenPtr);
+    insertGroupToken(commentToken);
 }
 
 std::shared_ptr<GroupToken> Tokenizer::createGroupToken(
@@ -435,17 +431,11 @@ void Tokenizer::key() {
             groupStack.pop();  // Discard the keyToken
             return;
         } else if (m_char == '"') {
-            doubleQuote();
+            quoted();
             // TODO: Quote logic here
         }
 
-        if (isAlnum(m_char)) {
-            scalar();
-        } else if (isSymbol(m_char)) {
-            sym();
-        } else if (isSpace(m_char)) {
-            whitespace();
-        }
+        literal();
     }
 
     groupStack.pop();
@@ -456,6 +446,16 @@ void Tokenizer::key() {
 void Tokenizer::leftBrace() { insertSingleToken(Token::Type::LeftBrace); }
 
 void Tokenizer::leftBracket() { insertSingleToken(Token::Type::LeftBracket); }
+
+void Tokenizer::literal() {
+    if (isAlnum(m_char)) {
+        scalar();
+    } else if (isSymbol(m_char)) {
+        sym();
+    } else if (isSpace(m_char)) {
+        whitespace();
+    }
+}
 
 const char Tokenizer::lookahead() {
     // Looks ahead of the current character from ifstream
@@ -486,8 +486,13 @@ void Tokenizer::mapping() {
         return;  // Discard mapping
     }
 
-    while (!isSpace(m_char)) {
-        whitespace();  // Consume any whitespace
+    if (!isSpace(m_char)) {
+        while (!isSpace(m_char)) {
+            whitespace();  // Consume any whitespace
+        }
+    } else {
+        // TODO: throw MalformedMappingException();
+        return;  // dummy
     }
 
     value();
@@ -511,6 +516,39 @@ void Tokenizer::print(std::ostream &out) const {
     std::shared_ptr<Token> root = getTokens();  // returns ptr to root
     std::vector<std::string> indentVector;
     root->print(out, indentVector, "");
+}
+
+void Tokenizer::quoted() {
+    if (groupStack.empty()) {
+        throw EmptyGroupStackException();
+    }
+
+    std::shared_ptr<GroupToken> quotedToken =
+        createGroupToken(Token::Type::Quoted);
+
+    groupStack.push(quotedToken);
+
+    if (m_char == '"') {
+        doubleQuote();
+
+        while (m_char != '"') {
+            literal();
+        }
+
+        doubleQuote();  // Consume ending quote
+    } else if (m_char == '\'') {
+        singleQuote();
+
+        while (m_char != '\'') {
+            literal();
+        }
+
+        singleQuote();  // Consume ending quote
+    } else {
+        return;
+    }
+
+    groupStack.pop();
 }
 
 void Tokenizer::rightBrace() { insertSingleToken(Token::Type::RightBrace); }
@@ -558,7 +596,7 @@ void Tokenizer::sequence() {
             whitespace();  // Consume whitespace token
         } else {
             groupStack.pop();  // Exit gracefully
-            // throw InvalidSequenceException();
+            // TODO: throw InvalidSequenceException();
             return;  // Dummy
         }
 
@@ -671,13 +709,7 @@ void Tokenizer::value() {
         sequence();
     } else {
         while (m_char == '\n') {
-            if (isAlnum(m_char)) {
-                scalar();
-            } else if (isSymbol(m_char)) {
-                sym();  // will also handle comments
-            } else if (isSpace(m_char)) {
-                whitespace();
-            }
+            literal();
         }
     }
 
@@ -706,6 +738,11 @@ void Tokenizer::whitespace() {
             return;
         }
     }
+}
+
+std::ostream &operator<<(std::ostream &out, const Tokenizer &tokenizer) {
+    tokenizer.print(out);
+    return out;
 }
 
 Tokenizer::~Tokenizer() {}

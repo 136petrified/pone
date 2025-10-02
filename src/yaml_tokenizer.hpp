@@ -693,6 +693,13 @@ class Tokenizer {
      */
     void leftBracket();
 
+    /*! Processes literals in order of:
+            - scalars
+            - symbols
+            - whitespace
+     */
+    void literal();
+
     /*! Peeks to the next character in the ifstream.
 
         \return a read-only character.
