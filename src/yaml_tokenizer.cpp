@@ -224,10 +224,8 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
     if (m_depth > 0) {
         padding = std::string((prefix == "\u2514") ? " " : "\u2502") + padding;
     }
-    out << "\u2510";
+    out << "\u2510\n";
     indent.push_back(padding);
-
-    out << '\n';
 
     for (size_t i = 0; i < m_size; ++i) {
         m_tokens[i]->print(out, indent,
