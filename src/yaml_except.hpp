@@ -1,5 +1,5 @@
 /*   Created:  09-20-2025
- *   Modified: 10-01-2025
+ *   Modified: 10-03-2025
  */
 
 #ifndef PONE_YAML_EXCEPTION_HPP
@@ -37,7 +37,6 @@ class EmptyGroupStackException : public TokenizerException {
    public:
     EmptyGroupStackException()
         : TokenizerException("EmptyGroupStackException", makeMessage()) {}
-
     EmptyGroupStackException(const std::string &msg)
         : TokenizerException("EmptyGroupStackException", msg) {}
 
@@ -68,6 +67,32 @@ class FailedAllocException : public TokenizerException {
    private:
     std::string makeMessage() const {
         return "Failed to allocate a Token into memory.";
+    }
+};
+
+class InvalidMappingException : public TokenizerException {
+   public:
+    InvalidMappingException()
+        : TokenizerException("InvalidMappingException", makeMessage()) {}
+    InvalidMappingException(const std::string &msg)
+        : TokenizerException("InvalidMappingException", msg) {}
+
+   private:
+    std::string makeMessage() const {
+        return "A mapping was malformed (not made correctly).";
+    }
+};
+
+class InvalidSequenceException : public TokenizerException {
+   public:
+    InvalidSequenceException()
+        : TokenizerException("InvalidSequenceException", makeMessage()) {}
+    InvalidSequenceException(const std::string &msg)
+        : TokenizerException("InvalidSequenceException", msg) {}
+
+   private:
+    std::string makeMessage() const {
+        return "A sequence was malformed (not made correctly).";
     }
 };
 

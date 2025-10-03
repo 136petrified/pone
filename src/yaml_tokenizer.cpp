@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-02-2025
+ *   Modified: 10-03-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -496,8 +496,7 @@ void Tokenizer::mapping() {
             whitespace();  // Consume any whitespace
         }
     } else {
-        // TODO: throw MalformedMappingException();
-        return;  // dummy
+        throw InvalidMappingException();
     }
 
     value();
@@ -601,8 +600,7 @@ void Tokenizer::sequence() {
             whitespace();  // Consume whitespace token
         } else {
             groupStack.pop();  // Exit gracefully
-            // TODO: throw InvalidSequenceException();
-            return;  // Dummy
+            throw InvalidSequenceException();
         }
 
         seqElement();
