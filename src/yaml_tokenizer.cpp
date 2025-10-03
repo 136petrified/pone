@@ -1,9 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 10-01-2025
+ *   Modified: 10-02-2025
  */
 
 #include "yaml_tokenizer.hpp"
 
+#include <algorithm>
 #include <memory>
 #include <new>
 #include <utility>
@@ -35,14 +36,14 @@ const std::shared_ptr<Token> &Token::getParent() const { return m_parent; }
 Token::Type Token::getType() const { return m_type; }
 
 void Token::printEntry(std::ostream &out, std::vector<std::string> &indent,
-                       const char *prefix) const {
-    size_t ivSize = indent.size();
+                       const std::string &prefix) const {
+    size_t depth = std::min(static_cast<size_t>(m_depth), indent.size());
 
-    for (size_t i = 0; i < m_depth && i < ivSize; ++i) {
+    for (size_t i = 0; i < depth; ++i) {
         out << indent[i];
     }
 
-    out << prefix << m_name << '\n';
+    out << prefix << m_name;
 }
 
 void Token::setDepth() {
@@ -106,8 +107,9 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
 }
 
 void SingleToken::print(std::ostream &out, std::vector<std::string> &indent,
-                        const char *prefix) const {
+                        const std::string &prefix) const {
     printEntry(out, indent, prefix);
+    out << '\n';
 }
 
 void SingleToken::setParent(const std::shared_ptr<Token> &parent) {
@@ -215,23 +217,26 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
 }
 
 void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
-                       const char *prefix) const {
+                       const std::string &prefix) const {
     printEntry(out, indent, prefix);
 
-    indent.push_back("\u2502\t");
+    std::string padding(m_name.size() + 1, ' ');
+    if (m_depth > 0) {
+        padding = std::string((prefix == "\u2514") ? " " : "\u2502") + padding;
+    }
+    out << "\u2510";
+    indent.push_back(padding);
+
+    out << '\n';
 
     for (size_t i = 0; i < m_size; ++i) {
-        if (i == m_size - 1) {
-            indent.back() = " \t";
-
-            // End of the groupToken "directory"
-            m_tokens[i]->print(out, indent, "\u2514");
-        } else {
-            m_tokens[i]->print(out, indent, "\u251c");
-        }
+        m_tokens[i]->print(out, indent,
+                           (i == m_size - 1) ? "\u2514" : "\u251c");
     }
 
-    indent.pop_back();
+    if (!indent.empty()) {
+        indent.pop_back();
+    }
 }
 
 void GroupToken::setParent(const std::shared_ptr<Token> &parent) {

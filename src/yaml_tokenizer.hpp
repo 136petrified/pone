@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-01-2025
+ *   Modified: 10-02-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -169,7 +169,7 @@ class Token : public std::enable_shared_from_this<Token> {
         \param prefix the branch symbol before an entry.
      */
     void printEntry(std::ostream &out, std::vector<std::string> &indent,
-                    const char *prefix) const;
+                    const std::string &prefix) const;
 
     /*! Sets the depth of a Token.
         If parent is null, set to 0, otherwise depth(parent) + 1.
@@ -215,7 +215,7 @@ class Token : public std::enable_shared_from_this<Token> {
         \param prefix the branch symbol before a entry.
      */
     virtual void print(std::ostream &out, std::vector<std::string> &indent,
-                       const char *prefix) const = 0;
+                       const std::string &prefix) const = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 
@@ -380,7 +380,7 @@ class SingleToken : public Token {
         \param prefix the branch symbol before a entry.
      */
     void print(std::ostream &out, std::vector<std::string> &indent,
-               const char *prefix = "") const override;
+               const std::string &prefix = "") const override;
 
     /*! Sets the parent of a SingleToken.
 
@@ -520,7 +520,7 @@ class GroupToken : public Token {
         \param prefix the branch symbol before a entry.
      */
     void print(std::ostream &out, std::vector<std::string> &indent,
-               const char *prefix = "") const override;
+               const std::string &prefix = "") const override;
 
     /*! Sets the parent of a GroupToken.
 
