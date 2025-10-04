@@ -54,8 +54,6 @@ std::string Token::setName() const { return tokenNameMap.at(m_type); }
 
 void Token::setType(const Token::Type &type) { m_type = type; }
 
-Token::~Token() {}
-
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
                          const Token::Type &type)
     : Token(parent, setName(), Token::Class::Single, type), m_data{""} {}
@@ -224,7 +222,10 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
     if (m_depth > 0) {
         padding = std::string((prefix == "\u2514") ? " " : "\u2502") + padding;
     }
-    out << "\u2510\n";
+
+    if (!empty()) {
+        out << "\u2510\n";
+    }
     indent.push_back(padding);
 
     for (size_t i = 0; i < m_size; ++i) {
@@ -427,17 +428,29 @@ void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
 }
 
 void Tokenizer::key() {
+    if (groupStack.empty()) {
+        throw EmptyGroupStackException();
+    }
+
     std::shared_ptr<GroupToken> keyToken = createGroupToken(Token::Type::Key);
 
     groupStack.push(keyToken);
 
     while (m_char != ':') {
         if (m_char == '\n') {
+            // Reject the keyToken
+            // and feed tokens to parent Token
+
+            std::shared_ptr<GroupToken> keyParent =
+                std::dynamic_pointer_cast<GroupToken>(keyToken->getParent());
+            for (const auto &token : keyToken->getTokens()) {
+                keyParent->insert(token);
+            }
+
             groupStack.pop();  // Discard the keyToken
             return;
-        } else if (m_char == '"') {
+        } else if (m_char == '"' || m_char == '\'') {
             quoted();
-            // TODO: Quote logic here
         }
 
         literal();
@@ -592,14 +605,14 @@ void Tokenizer::sequence() {
         try {
             next();
         } catch (const EndOfIfstreamException &) {
-            groupStack.pop();
+            groupStack.pop();  // seqToken
             return;
         }
 
         if (isSpace(m_char)) {
             whitespace();  // Consume whitespace token
         } else {
-            groupStack.pop();  // Exit gracefully
+            groupStack.pop();  // Exit gracefully seqToken
             throw InvalidSequenceException();
         }
 
@@ -624,7 +637,10 @@ void Tokenizer::seqElement() {
     while (m_char != '-') {
         mapping();
         sequence();
-        scalar();
+
+        if (isAlnum(m_char)) {
+            scalar();
+        }
     }
 
     groupStack.pop();
@@ -710,13 +726,16 @@ void Tokenizer::value() {
 
     if (m_char == '-') {
         sequence();
+    } else if (m_char == '"' || m_char == '\'') {
+        quoted();
     } else {
         while (m_char == '\n') {
+            mapping();  // check mapping first
             literal();
         }
     }
 
-    groupStack.pop();
+    groupStack.pop();  // valueToken
 
     insertGroupToken(std::move(valueToken));
 }

@@ -189,7 +189,7 @@ class Token : public std::enable_shared_from_this<Token> {
     void setType(const Type &type);
 
     /*! Pure virtual token destructor */
-    virtual ~Token() = 0;
+    virtual ~Token() {};
 
     // Start of basic Token functions
     // ----------------------------------------
