@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-02-2025
+ *   Modified: 10-04-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -267,6 +267,10 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual bool empty() const;
 
+    /*! A virtual function. Releases a GroupToken's Tokens into the parent.
+     */
+    virtual void release();
+
     /*! A virtual function. The size of a GroupToken.
 
         \return a size_t value.
@@ -484,6 +488,10 @@ class GroupToken : public Token {
      */
 
     bool empty() const override;
+
+    /*! Releases a GroupToken's tokens into the parent.
+     */
+    void release() override;
 
     /*! Gets the size of a GroupToken.
 

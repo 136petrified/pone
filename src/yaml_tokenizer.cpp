@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-03-2025
+ *   Modified: 10-04-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -441,13 +441,9 @@ void Tokenizer::key() {
             // Reject the keyToken
             // and feed tokens to parent Token
 
-            std::shared_ptr<GroupToken> keyParent =
-                std::dynamic_pointer_cast<GroupToken>(keyToken->getParent());
-            for (const auto &token : keyToken->getTokens()) {
-                keyParent->insert(token);
-            }
-
             groupStack.pop();  // Discard the keyToken
+
+            // TODO: release(keyToken);
             return;
         } else if (m_char == '"' || m_char == '\'') {
             quoted();
@@ -457,7 +453,6 @@ void Tokenizer::key() {
     }
 
     groupStack.pop();
-
     insertGroupToken(std::move(keyToken));
 }
 
