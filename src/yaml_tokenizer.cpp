@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-04-2025
+ *   Modified: 10-05-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -161,8 +161,16 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
 }
 
 void GroupToken::clear() {
-    m_tokens.clear();
-    m_size = 0;
+    for (const auto &token : m_tokens) {
+        if (token == nullptr) {
+            throw NullTokenException();
+        } else if (token->getClass() == Token::Class::Group) {
+            token->clear();
+        }
+
+        m_tokens.clear();
+        m_size = 0;
+    }
 }
 
 std::vector<std::shared_ptr<Token>> GroupToken::copy() const {
@@ -192,6 +200,18 @@ void GroupToken::insert(std::shared_ptr<Token> token) {
 }
 
 bool GroupToken::empty() const { return m_size <= 0; }
+
+void GroupToken::release() {
+    if (m_parent == nullptr) {
+        return;
+    } else if (m_parent->getClass() == Token::Class::Single) {
+        throw NotAGroupException();
+    }
+
+    for (const auto &token : m_tokens) {
+        m_parent->insert(token);
+    }
+}
 
 size_t GroupToken::size() const { return m_size; }
 
@@ -441,9 +461,8 @@ void Tokenizer::key() {
             // Reject the keyToken
             // and feed tokens to parent Token
 
+            keyToken->release();
             groupStack.pop();  // Discard the keyToken
-
-            // TODO: release(keyToken);
             return;
         } else if (m_char == '"' || m_char == '\'') {
             quoted();
