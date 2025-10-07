@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-06-2025
+ *   Modified: 10-07-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -244,8 +244,11 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
     }
 
     if (!empty()) {
-        out << "\u2510\n";
+        out << "\u2510";
     }
+
+    out << '\n';
+
     indent.push_back(padding);
 
     for (size_t i = 0; i < m_size; ++i) {
@@ -727,8 +730,13 @@ void Tokenizer::tokenize() {
     while (!m_endOfFile) {
         mapping();
         sequence();
-        if (isSymbol(m_char)) {  // Must be symbol
-            sym();               // This is to check for comments
+        if (m_char == '#') {  // Must be symbol
+            comment();        // This is to check for comments
+            try {
+                next();
+            } catch (const EndOfIfstreamException &) {
+                return;
+            }
         }
     }
 }
@@ -744,6 +752,9 @@ void Tokenizer::value() {
         quoted();
     } else {
         while (m_char == '\n') {
+            if (m_char == '#') {  // TODO: Change these
+                sym();
+            }
             mapping();  // check mapping first
             literal();
         }
