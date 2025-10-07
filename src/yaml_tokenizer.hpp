@@ -247,7 +247,7 @@ class Token : public std::enable_shared_from_this<Token> {
     virtual void clear();
 
     // TODO: Check if this is viable
-    virtual void detach();
+    // virtual void detach();
 
     /*! A virtual function to copy the root vector of Tokens.
      */
