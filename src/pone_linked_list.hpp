@@ -3,6 +3,7 @@
  */
 
 #include <cstdio>
+#include <stdexcept>
 
 template <typename T>
 class Node {
@@ -33,8 +34,8 @@ class UnsortedLinkedList : public LinkedList<T> {
     void remove(const T &data);
     std::size_t size() const;
 
-    Node<T> *&operator[](std::size_t idx);
-    const Node<T> *&operator[](std::size_t idx) const;
+    T &operator[](std::size_t idx);
+    const T &operator[](std::size_t idx) const;
 
     ~UnsortedLinkedList();
 };
@@ -104,25 +105,29 @@ std::size_t UnsortedLinkedList<T>::size() const {
 }
 
 template <typename T>
-Node<T> *&UnsortedLinkedList<T>::operator[](std::size_t idx) {
+T &UnsortedLinkedList<T>::operator[](std::size_t idx) {
     Node<T> *curr;
     std::size_t i;
 
     for (curr = m_head, i = 0; curr != nullptr; curr = curr->next, ++i) {
         if (i == idx) {
-            return curr;
+            return curr->data;
         }
     }
+
+    throw std::runtime_error("");  // TODO: Replace with OutOfBoundsException
 }
 
 template <typename T>
-const Node<T> *&UnsortedLinkedList<T>::operator[](std::size_t idx) const {
+const T &UnsortedLinkedList<T>::operator[](std::size_t idx) const {
     Node<T> *curr;
     std::size_t i;
 
     for (curr = m_head, i = 0; curr != nullptr; curr = curr->next, ++i) {
         if (i == idx) {
-            return curr;
+            return curr->data;
         }
     }
+
+    throw std::runtime_error("");  // TODO: Replace with OutOfBoundsException
 }
