@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-04-2025
+ *   Modified: 10-06-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -245,6 +245,9 @@ class Token : public std::enable_shared_from_this<Token> {
     /* A virtual function for erasing all of the Tokens within a GroupToken.
      */
     virtual void clear();
+
+    // TODO: Check if this is viable
+    virtual void detach();
 
     /*! A virtual function to copy the root vector of Tokens.
      */
