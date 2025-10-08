@@ -1,5 +1,5 @@
 /*   Created:  09-20-2025
- *   Modified: 09-22-2025
+ *   Modified: 10-08-2025
  */
 
 #include "yaml_except.hpp"
@@ -11,7 +11,7 @@ namespace YAML {
 void logToFile(const std::string &msg) {
     std::ofstream ofs{ERR_FILE, std::ios::app};
     ofs << msg << '\n';
-    ofs.close();
+    // ofs.close();
 }
 
 }  // namespace YAML
