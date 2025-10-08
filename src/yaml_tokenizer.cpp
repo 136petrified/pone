@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-07-2025
+ *   Modified: 10-08-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -24,6 +24,8 @@ Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
 Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
              const Token::Class &cls, const Token::Type &type)
     : m_class{cls}, m_name{name}, m_parent{parent}, m_type{type} {}
+
+Token::~Token() {}
 
 Token::Class Token::getClass() const { return m_class; }
 
@@ -467,8 +469,9 @@ void Tokenizer::key() {
             keyToken->release();
             groupStack.pop();  // Discard the keyToken
             return;
-        } else if (m_char == '"' || m_char == '\'') {
+        } else if (isQuote(m_char)) {
             quoted();
+            return;
         }
 
         literal();
@@ -750,11 +753,13 @@ void Tokenizer::value() {
         sequence();
     } else if (isQuote(m_char)) {
         quoted();
+        return;  // A value if quoted must end
     } else {
         while (m_char == '\n') {
             if (m_char == '#') {
                 sym();  // Directly check for '#'
             } else if (isQuote(m_char)) {
+                // Throw as this should not be in here
                 throw InvalidMappingException();  // TODO: Probably add location
             }
             mapping();  // check mapping first

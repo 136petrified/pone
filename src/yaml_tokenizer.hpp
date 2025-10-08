@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-06-2025
+ *   Modified: 10-08-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -189,7 +189,7 @@ class Token : public std::enable_shared_from_this<Token> {
     void setType(const Type &type);
 
     /*! Pure virtual token destructor */
-    virtual ~Token() {};
+    virtual ~Token() = 0;
 
     // Start of basic Token functions
     // ----------------------------------------
@@ -653,6 +653,10 @@ class Tokenizer {
     /*! Processes a double quote Token.
      */
     void doubleQuote();
+
+    /*! Processes an escape sequence.
+     */
+    void escape();
 
     /*! Processes an indent Token.
         This is a group Token.
