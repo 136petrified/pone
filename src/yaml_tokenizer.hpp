@@ -724,7 +724,7 @@ class Tokenizer {
     /*! Processes a mapping Token.
         A mapping is defined as a key and value pair.
      */
-    void mapping();  // TODO: Group mapping
+    void mapping();
 
     /*! Processes a newline Token.
      */

@@ -468,7 +468,12 @@ void Tokenizer::key() {
 
             keyToken->release();
             groupStack.pop();  // Discard the keyToken
-            return;
+
+            // The key failed, therefore the mapping does
+            // throw malformed map exception
+            // and have mapping() call catch this
+            // TODO: throw InvalidKeyException();
+            return;  // FIXME: Dummy
         } else if (isQuote(m_char)) {
             quoted();
             return;
@@ -515,7 +520,10 @@ void Tokenizer::mapping() {
         whitespace();  // Consume all whitespace first
     }
 
-    key();
+    try {
+        key();
+    } catch (const InvalidMappingException &e) {
+    }
 
     colon();  // Consume colon token
     try {
