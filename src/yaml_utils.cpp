@@ -1,5 +1,5 @@
 /*   Created:  07-21-2025
- *   Modified: 07-28-2025
+ *   Modified: 10-08-2025
  */
 
 #include "yaml_utils.hpp"
@@ -37,21 +37,23 @@ bool isDigit(std::string &s) {
     return true;
 }
 
-bool isSymbol(char &c) { return std::ispunct(c); }
-
-bool isSymbol(std::string &s) {
-    for (char &c : s) {
-        if (!std::ispunct(c)) return false;
-    }
-
-    return true;
-}
+bool isQuote(char &c) { return c == '"' || c == '\''; }
 
 bool isSpace(char &c) { return std::isspace(c); }
 
 bool isSpace(std::string &s) {
     for (char &c : s) {
         if (!std::isspace(c)) return false;
+    }
+
+    return true;
+}
+
+bool isSymbol(char &c) { return std::ispunct(c); }
+
+bool isSymbol(std::string &s) {
+    for (char &c : s) {
+        if (!std::ispunct(c)) return false;
     }
 
     return true;

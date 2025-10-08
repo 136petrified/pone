@@ -748,12 +748,14 @@ void Tokenizer::value() {
 
     if (m_char == '-') {
         sequence();
-    } else if (m_char == '"' || m_char == '\'') {
+    } else if (isQuote(m_char)) {
         quoted();
     } else {
         while (m_char == '\n') {
-            if (m_char == '#') {  // TODO: Change these
-                sym();
+            if (m_char == '#') {
+                sym();  // Directly check for '#'
+            } else if (isQuote(m_char)) {
+                throw InvalidMappingException();  // TODO: Probably add location
             }
             mapping();  // check mapping first
             literal();
