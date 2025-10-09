@@ -8,6 +8,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 
 constexpr std::string ERR_FILE = "./errlog.txt";
 constexpr std::string NO_ERR_LOCATION = "<unknown>";
@@ -28,11 +29,14 @@ class TokenizerException : public std::runtime_error {
     TokenizerException(const std::string &location, const std::string &name,
                        const std::string &msg)
         : std::runtime_error(msg), m_msg{msg}, m_name{"TokenizerException"} {}
-    const std::string &getLocation() { return m_location; }
-    const std::string &getMessage() { return m_msg; }
+    const std::string_view getLocation() {
+        return std::string_view(m_location);
+    }
+    const std::string_view getMessage() { return std::string_view(m_msg); }
     void logToFile() const {
         std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << "In " << m_location << " -> " << m_name << ": " << m_msg << '\n';
+        ofs << "In \"" << m_location << "\" -> " << m_name << ": " << m_msg
+            << '\n';
         // ofs.close();
     }
 };

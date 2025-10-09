@@ -398,7 +398,8 @@ void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException("Parent GroupToken is a null pointer.");
+        throw NullTokenException("YAML::yaml_tokenizer.cpp::insertGroupToken()",
+                                 "Parent GroupToken is a null pointer.");
     }
 
     if (gtokPtr != parent) {
@@ -408,17 +409,21 @@ void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
 
 void Tokenizer::insertSingleToken(const Token::Type &type) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        throw EmptyGroupStackException(
+            "YAML::yaml_tokenizer.cpp::insertSingleToken(const Token::Type &)");
     }
 
     if (groupStack.size() < 1) {
-        throw RootNotFoundException();
+        throw RootNotFoundException(
+            "YAML::yaml_tokenizer.cpp::insertSingleToken(const Token::Type &)");
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException("Parent GroupToken is a null pointer.");
+        throw NullTokenException(
+            "YAML::yaml_tokenizer.cpp::insertSingleToken(const Token::Type &)",
+            "Parent GroupToken is a null pointer.");
     }
 
     parent->insert(createSingleToken(type));
@@ -432,7 +437,10 @@ void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException("Parent GroupToken is a null pointer.");
+        throw NullTokenException(
+            "YAML::yaml_tokenizer.cpp::insertSingletoken(const Token::Type &, "
+            "std::string &&)",
+            "Parent GroupToken is a null pointer.");
     }
 
     parent->insert(createSingleToken(type, std::move(data)));
@@ -440,13 +448,18 @@ void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
 
 void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        throw EmptyGroupStackException(
+            "YAML::yaml_tokenizer.cpp::insertSingleToken(const "
+            "shared_ptr<SingleToken> &)");
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException("Parent GroupToken is a null pointer.");
+        throw NullTokenException(
+            "YAML::yaml_tokenizer.cpp::insertSingleToken(const "
+            "shared_ptr<SingleToken> &)",
+            "Parent GroupToken is a null pointer.");
     }
 
     parent->insert(stokPtr);
@@ -464,7 +477,7 @@ void Tokenizer::key() {
     while (m_char != ':') {
         if (m_char == '\n') {
             // Reject the keyToken
-            // and feed tokens to parent Token
+            // and release tokens into parent Token
 
             keyToken->release();
             groupStack.pop();  // Discard the keyToken
@@ -472,8 +485,8 @@ void Tokenizer::key() {
             // The key failed, therefore the mapping does
             // throw malformed map exception
             // and have mapping() call catch this
-            // TODO: throw InvalidKeyException();
-            return;  // FIXME: Dummy
+            throw InvalidKeyException("YAML::yaml_tokenizer::key()",
+                                      "No ':' found.");
         } else if (isQuote(m_char)) {
             quoted();
             return;
