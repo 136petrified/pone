@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-11-2025
+ *   Modified: 10-12-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -19,7 +19,7 @@ namespace YAML {
 /*! Abstract base class for Tokens.
  */
 class Token : public std::enable_shared_from_this<Token> {
-  public:
+   public:
     /*! An enum of all types of Tokens. */
     enum class Type {
         Backslash,    /*! The backslash character \ */
@@ -57,7 +57,7 @@ class Token : public std::enable_shared_from_this<Token> {
     };
 
     /*! The total size of the token types. */
-    static const int ALL_TOKENS_SIZE = 24;
+    static const int ALL_TOKENS_SIZE                   = 24;
 
     /*! Map of Types to its string name. */
     std::unordered_map<Type, std::string> tokenNameMap = {
@@ -106,7 +106,8 @@ class Token : public std::enable_shared_from_this<Token> {
         \param name the string name.
         \param cls the Token class.
      */
-    Token(const std::shared_ptr<Token> &parent, const std::string &name,
+    Token(const std::shared_ptr<Token> &parent,
+          const std::string &name,
           const Class &cls);
 
     /*! Token constructor.
@@ -115,7 +116,8 @@ class Token : public std::enable_shared_from_this<Token> {
         \param name the string name.
         \param type the Token type.
      */
-    Token(const std::shared_ptr<Token> &parent, const std::string &name,
+    Token(const std::shared_ptr<Token> &parent,
+          const std::string &name,
           const Type &type);
 
     /*! Token constructor.
@@ -125,8 +127,10 @@ class Token : public std::enable_shared_from_this<Token> {
         \param class the Token class.
         \param type the Token type.
      */
-    Token(const std::shared_ptr<Token> &parent, const std::string &name,
-          const Class &cls, const Type &type);
+    Token(const std::shared_ptr<Token> &parent,
+          const std::string &name,
+          const Class &cls,
+          const Type &type);
 
     /*! Gets the class of a Token.
 
@@ -167,7 +171,8 @@ class Token : public std::enable_shared_from_this<Token> {
         \param indent the indent for the next child Token.
         \param prefix the branch symbol before an entry.
      */
-    void printEntry(std::ostream &out, std::vector<std::string> &indent,
+    void printEntry(std::ostream &out,
+                    std::vector<std::string> &indent,
                     const std::string &prefix) const;
 
     /*! Sets the depth of a Token.
@@ -197,15 +202,15 @@ class Token : public std::enable_shared_from_this<Token> {
         \param parent the parent Token.
         \return a shared_ptr of the Token copy.
      */
-    virtual std::shared_ptr<Token>
-    clone(std::shared_ptr<Token> parent) const = 0;
+    virtual std::shared_ptr<Token> clone(
+        std::shared_ptr<Token> parent) const                     = 0;
 
     /*! Pure virtual function for getting a pointer from the current Token.
 
         \return a pointer to the Token.
         \throws FailedAllocException
      */
-    virtual std::shared_ptr<Token> getPtr() const = 0;
+    virtual std::shared_ptr<Token> getPtr() const                = 0;
 
     /*! Pure virtual function for printing out every Token.
 
@@ -213,8 +218,9 @@ class Token : public std::enable_shared_from_this<Token> {
         \param indent the indent for the next child Token.
         \param prefix the branch symbol before a entry.
      */
-    virtual void print(std::ostream &out, std::vector<std::string> &indent,
-                       const std::string &prefix) const = 0;
+    virtual void print(std::ostream &out,
+                       std::vector<std::string> &indent,
+                       const std::string &prefix) const          = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 
@@ -252,7 +258,8 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual std::vector<std::shared_ptr<Token>> copy() const;
 
-    /*! A virtual function for getting a vector of a Tokens within a GroupToken.
+    /*! A virtual function for getting a vector of a Tokens within a
+       GroupToken.
 
        \return a read-only vector reference of Token pointers.
      */
@@ -281,9 +288,9 @@ class Token : public std::enable_shared_from_this<Token> {
     // ----------------------------------------
     // End of basic GroupToken functions
 
-  protected:
+   protected:
     Class m_class;
-    int m_depth = 0; // root will always have depth = 0
+    int m_depth = 0;  // root will always have depth = 0
     std::string m_name;
     std::shared_ptr<Token> m_parent;
     Type m_type;
@@ -294,7 +301,7 @@ class Token : public std::enable_shared_from_this<Token> {
     \sa Token
  */
 class SingleToken : public Token {
-  public:
+   public:
     /*! Default SingleToken constructor.
 
         \note This constructor is deleted.
@@ -317,7 +324,8 @@ class SingleToken : public Token {
         \param data a read-only string reference of the Token's data.
         \sa Token
      */
-    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type,
+    SingleToken(const std::shared_ptr<Token> &parent,
+                const Token::Type &type,
                 const std::string &data);
 
     /*! SingleToken constructor.
@@ -327,7 +335,8 @@ class SingleToken : public Token {
         \param data a string rvalue reference of the Token's data.
         \sa Token
      */
-    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type,
+    SingleToken(const std::shared_ptr<Token> &parent,
+                const Token::Type &type,
                 std::string &&data);
 
     /*! SingleToken copy constructor.
@@ -385,7 +394,8 @@ class SingleToken : public Token {
         \param indent the indent for the next child Token.
         \param prefix the branch symbol before a entry.
      */
-    void print(std::ostream &out, std::vector<std::string> &indent,
+    void print(std::ostream &out,
+               std::vector<std::string> &indent,
                const std::string &prefix = "") const override;
 
     /*! Sets the parent of a SingleToken.
@@ -394,7 +404,7 @@ class SingleToken : public Token {
      */
     void setParent(const std::shared_ptr<Token> &parent) override;
 
-  private:
+   private:
     std::string m_data;
 };
 
@@ -409,7 +419,7 @@ class SingleToken : public Token {
  */
 class GroupToken : public Token {
     // NOTE: This allows for a Token to be made up of Tokens
-  public:
+   public:
     /*! Default GroupToken constructor.
 
         \note This constructor is deleted.
@@ -529,7 +539,8 @@ class GroupToken : public Token {
         \param indent the indent for the next child Token.
         \param prefix the branch symbol before a entry.
      */
-    void print(std::ostream &out, std::vector<std::string> &indent,
+    void print(std::ostream &out,
+               std::vector<std::string> &indent,
                const std::string &prefix = "") const override;
 
     /*! Sets the parent of a GroupToken.
@@ -538,7 +549,7 @@ class GroupToken : public Token {
      */
     void setParent(const std::shared_ptr<Token> &parent) override;
 
-  private:
+   private:
     std::vector<std::shared_ptr<Token>> m_tokens;
     size_t m_size;
 };
@@ -546,7 +557,7 @@ class GroupToken : public Token {
 /*! A class to tokenize custom YAML files for this program.
  */
 class Tokenizer {
-  public:
+   public:
     /*! Default Tokenizer constructor. */
     Tokenizer();
 
@@ -626,8 +637,8 @@ class Tokenizer {
         \param type the Token type to create the SingleToken with.
         \return a shared pointer to the SingleToken.
      */
-    std::shared_ptr<SingleToken>
-    createSingleToken(const Token::Type &type) const;
+    std::shared_ptr<SingleToken> createSingleToken(
+        const Token::Type &type) const;
 
     /*! Creates a shared SingleToken pointer with string data.
 
@@ -805,13 +816,13 @@ class Tokenizer {
     friend std::ostream &operator<<(std::ostream &out,
                                     const Tokenizer &tokenizer);
 
-  private:
+   private:
     std::string m_fileName;
     std::ifstream m_ifs;
 
-    int m_indent; // Defined by YAML config
-    int m_depth;  // Current depth of tokenizer
-                  // not depth of a token.
+    int m_indent;  // Defined by YAML config
+    int m_depth;   // Current depth of tokenizer
+                   // not depth of a token.
 
     /*! A stack of GroupToken pointers. */
     std::stack<std::shared_ptr<Token>> groupStack;
@@ -822,6 +833,6 @@ class Tokenizer {
 
     bool m_endOfFile;
 };
-} // namespace YAML
+}  // namespace YAML
 
-#endif // PONE_YAML_TOKENIZER_HPP
+#endif  // PONE_YAML_TOKENIZER_HPP

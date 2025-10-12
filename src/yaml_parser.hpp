@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 08-02-2025
+ *   Modified: 10-12-2025
  */
 
 #include <string>
@@ -34,7 +34,6 @@ class Parser {
    private:
     int m_tokenIndex;
     std::vector<Token> m_tokens;
-    Token m_token;
     bool m_endOfFile;
     std::string m_file_name;
 };

@@ -1,7 +1,8 @@
 /*   Created:  10-06-2025
- *   Modified: 10-06-2025
+ *   Modified: 10-12-2025
  */
 
+#pragma once
 #include <cstdio>
 #include <stdexcept>
 
@@ -90,7 +91,7 @@ void UnsortedLinkedList<T>::remove(const T &data) {
     for (curr = m_head->next, prev = m_head; curr != nullptr;
          curr = curr->next) {
         if (curr->data == data) {
-            tmp = curr;
+            tmp        = curr;
             prev->next = curr->next;
             delete tmp;
             --m_size;
