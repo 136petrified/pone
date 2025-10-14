@@ -1,5 +1,5 @@
 /*   Created:  09-20-2025
- *   Modified: 10-12-2025
+ *   Modified: 10-13-2025
  */
 
 #ifndef PONE_YAML_EXCEPTION_HPP
@@ -14,9 +14,12 @@ namespace YAML {
 
 constexpr std::string ERR_FILE        = "./errlog.txt";
 constexpr std::string NO_ERR_LOCATION = "<unknown>";
-constexpr std::string makeError(const std::string &location,
-                                const std::string &func,
-                                const std::string msg);
+constexpr std::string_view makeError(const std::string &location,
+                                     const std::string &func,
+                                     const std::string msg);
+
+// NOTE: string views should be converted to std::string
+//       whenever possible
 
 void logToFile(const std::string &msg);
 
