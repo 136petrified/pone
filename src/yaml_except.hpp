@@ -1,5 +1,5 @@
 /*   Created:  09-20-2025
- *   Modified: 10-13-2025
+ *   Modified: 10-16-2025
  */
 
 #ifndef PONE_YAML_EXCEPTION_HPP
@@ -14,9 +14,6 @@ namespace YAML {
 
 constexpr std::string ERR_FILE        = "./errlog.txt";
 constexpr std::string NO_ERR_LOCATION = "<unknown>";
-constexpr std::string_view makeError(const std::string &location,
-                                     const std::string &func,
-                                     const std::string msg);
 
 // NOTE: string views should be converted to std::string
 //       whenever possible
@@ -56,11 +53,13 @@ class EmptyGroupStackException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "EmptyGroupStackException",
                              makeMessage()) {}
-    EmptyGroupStackException(const std::string &location)
+    EmptyGroupStackException(const std::string &location,
+                             const std::string &func)
         : TokenizerException(location,
                              "EmptyGroupStackException",
                              makeMessage()) {}
     EmptyGroupStackException(const std::string &location,
+                             const std::string &func,
                              const std::string &msg)
         : TokenizerException(location, "EmptyGroupStackException", msg) {}
 
@@ -76,11 +75,13 @@ class EndOfIfstreamException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "EndOfIfstreamException",
                              makeMessage()) {}
-    EndOfIfstreamException(const std::string &location)
+    EndOfIfstreamException(const std::string &location, const std::string &func)
         : TokenizerException(location,
                              "EndOfIfstreamException",
                              makeMessage()) {}
-    EndOfIfstreamException(const std::string &location, const std::string &msg)
+    EndOfIfstreamException(const std::string &location,
+                           const std::string &func,
+                           const std::string &msg)
         : TokenizerException(location, "EndOfIfstreamException", msg) {}
 
    private:
@@ -93,9 +94,11 @@ class FailedAllocException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "FailedAllocException",
                              makeMessage()) {}
-    FailedAllocException(const std::string &location)
+    FailedAllocException(const std::string &location, const std::string &func)
         : TokenizerException(location, "FailedAllocException", makeMessage()) {}
-    FailedAllocException(const std::string &location, const std::string &msg)
+    FailedAllocException(const std::string &location,
+                         const std::string &func,
+                         const std::string &msg)
         : TokenizerException(location, "FailedAllocException", msg) {}
 
    private:
@@ -110,9 +113,11 @@ class InvalidKeyException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "InvalidKeyException",
                              makeMessage()) {}
-    InvalidKeyException(const std::string &location)
+    InvalidKeyException(const std::string &location, const std::string &func)
         : TokenizerException(location, "InvalidKeyException", makeMessage()) {}
-    InvalidKeyException(const std::string &location, const std::string &msg)
+    InvalidKeyException(const std::string &location,
+                        const std::string &func,
+                        const std::string &msg)
         : TokenizerException(location, "InvalidKeyException", msg) {}
 
    private:
@@ -127,11 +132,14 @@ class InvalidMappingException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "InvalidMappingException",
                              makeMessage()) {}
-    InvalidMappingException(const std::string &location)
+    InvalidMappingException(const std::string &location,
+                            const std::string &func)
         : TokenizerException(location,
                              "InvalidMappingException",
                              makeMessage()) {}
-    InvalidMappingException(const std::string &location, const std::string &msg)
+    InvalidMappingException(const std::string &location,
+                            const std::string &func,
+                            const std::string &msg)
         : TokenizerException(location, "InvalidMappingException", msg) {}
 
    private:
@@ -146,11 +154,13 @@ class InvalidSequenceException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "InvalidSequenceException",
                              makeMessage()) {}
-    InvalidSequenceException(const std::string &location)
+    InvalidSequenceException(const std::string &location,
+                             const std::string &func)
         : TokenizerException(location,
                              "InvalidSequenceException",
                              makeMessage()) {}
     InvalidSequenceException(const std::string &location,
+                             const std::string &func,
                              const std::string &msg)
         : TokenizerException(location, "InvalidSequenceException", msg) {}
 
@@ -166,10 +176,12 @@ class InvalidValueException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "InvalidValueException",
                              makeMessage()) {}
-    InvalidValueException(const std::string &location)
+    InvalidValueException(const std::string &location, const std::string &func)
         : TokenizerException(location, "InvalidValueException", makeMessage()) {
     }
-    InvalidValueException(const std::string &location, const std::string &msg)
+    InvalidValueException(const std::string &location,
+                          const std::string &func,
+                          const std::string &msg)
         : TokenizerException(location, "InvalidValueException", msg) {}
 
    private:
@@ -184,9 +196,11 @@ class NotAGroupException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "NotAGroupException",
                              makeMessage()) {}
-    NotAGroupException(const std::string &location)
+    NotAGroupException(const std::string &location, const std::string &func)
         : TokenizerException(location, "NotAGroupException", makeMessage()) {}
-    NotAGroupException(const std::string &location, const std::string &msg)
+    NotAGroupException(const std::string &location,
+                       const std::string &func,
+                       const std::string &msg)
         : TokenizerException(location, "NotAGroupException", msg) {}
 
    private:
@@ -201,9 +215,11 @@ class NotASingleException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "NotASingleException",
                              makeMessage()) {}
-    NotASingleException(const std::string &location)
+    NotASingleException(const std::string &location, const std::string &func)
         : TokenizerException(location, "NotASingleException", makeMessage()) {}
-    NotASingleException(const std::string &location, const std::string &msg)
+    NotASingleException(const std::string &location,
+                        const std::string &func,
+                        const std::string &msg)
         : TokenizerException(location, "NotASingleException", msg) {}
 
    private:
@@ -218,9 +234,11 @@ class NullTokenException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "NullTokenException",
                              makeMessage()) {}
-    NullTokenException(const std::string &location)
+    NullTokenException(const std::string &location, const std::string &func)
         : TokenizerException(location, "NullTokenException", makeMessage()) {}
-    NullTokenException(const std::string &location, const std::string &msg)
+    NullTokenException(const std::string &location,
+                       const std::string &func,
+                       const std::string &msg)
         : TokenizerException(location, "NullTokenException", msg) {}
 
    private:
@@ -235,10 +253,12 @@ class RootNotFoundException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "RootNotFoundException",
                              makeMessage()) {}
-    RootNotFoundException(const std::string &location)
+    RootNotFoundException(const std::string &location, const std::string &func)
         : TokenizerException(location, "RootNotFoundException", makeMessage()) {
     }
-    RootNotFoundException(const std::string &location, const std::string &msg)
+    RootNotFoundException(const std::string &location,
+                          const std::string &func,
+                          const std::string &msg)
         : TokenizerException(location, "RootNotFoundException", msg) {}
 
    private:
@@ -251,11 +271,13 @@ class SelfParentInsertionException : public TokenizerException {
         : TokenizerException(NO_ERR_LOCATION,
                              "SelfParentInsertionException",
                              makeMessage()) {}
-    SelfParentInsertionException(const std::string &location)
+    SelfParentInsertionException(const std::string &location,
+                                 const std::string &func)
         : TokenizerException(location,
                              "SelfParentInsertionException",
                              makeMessage()) {}
     SelfParentInsertionException(const std::string &location,
+                                 const std::string &func,
                                  const std::string &msg)
         : TokenizerException(location, "SelfParentInsertionException", msg) {}
 
