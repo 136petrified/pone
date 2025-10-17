@@ -12,8 +12,8 @@
 
 namespace YAML {
 
-constexpr std::string ERR_FILE        = "./errlog.txt";
-constexpr std::string NO_ERR_LOCATION = "<unknown>";
+inline constexpr std::string ERR_FILE        = "./errlog.txt";
+inline constexpr std::string NO_ERR_LOCATION = "<unknown>";
 
 // NOTE: string views should be converted to std::string
 //       whenever possible
