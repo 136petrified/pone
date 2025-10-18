@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.30.0)
-# set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 project(pone)
 
 set(CMAKE_HOME_DIRECTORY $ENV{USERPROFILE})
@@ -13,13 +12,8 @@ set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 set(CXXFLAGS "-g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src")
 set(CMAKE_CXX_FLAGS ${CXXFLAGS})
 
-# set(CMAKE_C_COMPILER ${PROJECT_SOURCE_DIR}/compile/gcc.exe)
-# set(CMAKE_CXX_COMPILER {PROJECT_SOURCE_DIR}/compile/g++.exe)
-
 enable_testing()
 include(FetchContent)
-
-# add_subdirectory(${PROJECT_SOURCE_DIR}/googletest)
 
 FetchContent_Declare(
     googletest
