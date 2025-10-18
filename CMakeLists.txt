@@ -118,6 +118,7 @@ ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 include_directories(
     ${GTEST_ROOT}/googletest/include
     ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src/pone
 )
 
 target_include_directories(
