@@ -30,10 +30,14 @@ set(GTEST_MAIN_LIBRARY ${GTEST_LIBRARY}/googletest/lib/libgtest_main.a)
 
 find_package(GTest REQUIRED)
 
-set(GDAPP_DIR ${PROJECT_SOURCE_DIR}/src/app)
-set(GAME_DIR ${PROJECT_SOURCE_DIR}/src/game)
-set(YAML_DIR ${PROJECT_SOURCE_DIR}/src/yaml)
+set(PONE_SRC_DIR ${PROJECT_SOURCE_DIR}/src)
+set(GDAPP_DIR ${PONE_SRC_DIR}/app)
+set(GAME_DIR ${PONE_SRC_DIR}/game)
+set(YAML_DIR ${PONE_SRC_DIR}/yaml)
 set(PONE_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
+set(GDAPP_TEST_DIR ${PONE_TEST_DIR}/app)
+set(GAME_TEST_DIR ${PONE_TEST_DIR}/game)
+set(YAML_TEST_DIR ${PONE_TEST_DIR}/yaml)
 
 set(ALL_GDAPP_FILES
 ${GDAPP_DIR}/pone.cpp
@@ -73,93 +77,102 @@ ${YAML_DIR}/yaml_utils.cpp
 ${YAML_DIR}/yaml_utils.hpp
 )
 
-set(ALL_TEST_FILES
-${}
+set(ALL_GDAPP_TEST_FILES
+${GDAPP_TEST_DIR}/app_test.cpp
 )
 
+set(ALL_GAME_TEST_FILES
+${GAME_TEST_DIR}/avl_test.cpp
+${GAME_TEST_DIR}/board_test.cpp
+${GAME_TEST_DIR}/cursor_test.cpp
+${GAME_TEST_DIR}/game_test.cpp
+${GAME_TEST_DIR}/gate_test.cpp
+${GAME_TEST_DIR}/gui_test.cpp
+${GAME_TEST_DIR}/tile_test.cpp
+)
+
+# set(ALL_YAML_TEST_FILES)
+
 add_executable(
-all_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/poneavl_tests.cpp
-${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
-${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
-${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
-${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
-${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
-${PROJECT_SOURCE_DIR}/test/ponegate_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+all_game_tests
+${ALL_GAME_FILES}
+${ALL_GAME_TEST_FILES}
 )
 
 add_executable(
 avl_tests
 ${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/poneavl_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+${GAME_TEST_DIR}/avl_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 )
 
 add_executable(
-ponetile_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/ponetile_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+tile_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/tile_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 )
 
 add_executable(
-ponecursor_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/ponecursor_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+cursor_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/cursor_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 
 )
 
 add_executable(
-ponegame_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/ponegame_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+game_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/game_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 )
 
 add_executable(
-ponegui_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/ponegui_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+gui_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/gui_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 )
 
 add_executable(
-poneboard_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/poneboard_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+board_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/board_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 )
 
 add_executable(
-ponegate_tests
-${ALL_SRC_FILES}
-${PROJECT_SOURCE_DIR}/test/ponegate_tests.cpp
-${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
+gate_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/gate_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
 )
 
 include_directories(
     ${GTEST_ROOT}/googletest/include
-    ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/src/app
-    ${PROJECT_SOURCE_DIR}/src/game
-    ${PROJECT_SOURCE_DIR}/src/yaml
+    ${PONE_SRC_DIR}
+    ${PONE_SRC_DIR}/app
+    ${PONE_SRC_DIR}/game
+    ${PONE_SRC_DIR}/yaml
+    ${PONE_TEST_DIR}
+    ${PONE_TEST_DIR}/app
+    ${PONE_TEST_DIR}/game
+    ${PONE_TEST_DIR}/yaml
 )
 
 target_include_directories(
-    all_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    poneavl_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ponetile_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ponecursor_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ponegame_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ponegui_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    poneboard_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ponegate_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    all_game_tests PRIVATE ${PONE_SRC_DIR}
+    avl_tests PRIVATE ${PONE_SRC_DIR}
+    tile_tests PRIVATE ${PONE_SRC_DIR}
+    cursor_tests PRIVATE ${PONE_SRC_DIR}
+    game_tests PRIVATE ${PONE_SRC_DIR}
+    gui_tests PRIVATE ${PONE_SRC_DIR}
+    board_tests PRIVATE ${PONE_SRC_DIR}
+    gate_tests PRIVATE ${PONE_SRC_DIR}
 )
 
-target_link_libraries(all_tests
+target_link_libraries(all_game_tests
                       GTest::gtest_main
 )
 
@@ -167,35 +180,35 @@ target_link_libraries(avl_tests
                       GTest::gtest_main
 )
 
-target_link_libraries(ponetile_tests
+target_link_libraries(tile_tests
                       GTest::gtest_main
 )
 
-target_link_libraries(ponecursor_tests
+target_link_libraries(cursor_tests
                       GTest::gtest_main
 )
 
-target_link_libraries(ponegame_tests
+target_link_libraries(game_tests
                       GTest::gtest_main
 )
 
-target_link_libraries(ponegui_tests
+target_link_libraries(gui_tests
                       GTest::gtest_main
 )
 
-target_link_libraries(poneboard_tests
+target_link_libraries(board_tests
                       GTest::gtest_main
 )
 
-target_link_libraries(ponegate_tests
+target_link_libraries(gate_tests
                       GTest::gtest_main
 )
 
-gtest_discover_tests(all_tests
-    poneboard_tests
-    ponetile_tests
-    ponecursor_tests
-    ponegui_tests
-    poneboard_tests
-    ponegate_tests
+gtest_discover_tests(all_game_tests
+    board_tests
+    tile_tests
+    cursor_tests
+    gui_tests
+    board_tests
+    gate_tests
 )
