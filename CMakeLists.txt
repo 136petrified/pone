@@ -60,6 +60,8 @@ ${GAME_DIR}/pone_gate.cpp
 ${GAME_DIR}/pone_gate.hpp
 ${GAME_DIR}/pone_gui.cpp
 ${GAME_DIR}/pone_gui.hpp
+${GAME_DIR}/pone_linked_list.cpp
+${GAME_DIR}/pone_linked_list.hpp
 ${GAME_DIR}/pone_tile.cpp
 ${GAME_DIR}/pone_tile.hpp
 )
@@ -101,8 +103,15 @@ ${ALL_GAME_TEST_FILES}
 
 add_executable(
 avl_tests
-${ALL_SRC_FILES}
+${ALL_GAME_FILES}
 ${GAME_TEST_DIR}/avl_test.cpp
+${GAME_TEST_DIR}/gtestmain.cpp
+)
+
+add_executable(
+llist_tests
+${ALL_GAME_FILES}
+${GAME_TEST_DIR}/linked_list_test.cpp
 ${GAME_TEST_DIR}/gtestmain.cpp
 )
 
@@ -164,6 +173,7 @@ include_directories(
 target_include_directories(
     all_game_tests PRIVATE ${PONE_SRC_DIR}
     avl_tests PRIVATE ${PONE_SRC_DIR}
+    llist_tests PRIVATE ${PONE_SRC_DIR}
     tile_tests PRIVATE ${PONE_SRC_DIR}
     cursor_tests PRIVATE ${PONE_SRC_DIR}
     game_tests PRIVATE ${PONE_SRC_DIR}
@@ -177,6 +187,10 @@ target_link_libraries(all_game_tests
 )
 
 target_link_libraries(avl_tests
+                      GTest::gtest_main
+)
+
+target_link_libraries(llist_tests
                       GTest::gtest_main
 )
 
@@ -205,6 +219,8 @@ target_link_libraries(gate_tests
 )
 
 gtest_discover_tests(all_game_tests
+    avl_tests
+    llist_tests
     board_tests
     tile_tests
     cursor_tests
