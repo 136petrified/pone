@@ -4,6 +4,8 @@
 
 #include "pone_game.hpp"
 
+namespace pone {
+
 // Game constructor
 // ---------------------------------------------
 
@@ -37,3 +39,5 @@ void Game::moveCursor(const int &direction) {
             return;
     }
 }
+
+}  // namespace pone

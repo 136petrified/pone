@@ -7,6 +7,8 @@
 #include "pone_board.hpp"
 #include "pone_cursor.hpp"
 
+namespace pone {
+
 class Game {
    public:
     // Game constructor
@@ -30,3 +32,5 @@ class Game {
     Board board;
     Cursor cursor;
 };
+
+}  // namespace pone

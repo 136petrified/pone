@@ -30,26 +30,51 @@ set(GTEST_MAIN_LIBRARY ${GTEST_LIBRARY}/googletest/lib/libgtest_main.a)
 
 find_package(GTest REQUIRED)
 
-set(ALL_SRC_FILES
-${PROJECT_SOURCE_DIR}/src/poneavl.cpp
-${PROJECT_SOURCE_DIR}/src/poneavl.hpp
-${PROJECT_SOURCE_DIR}/src/poneboard.cpp
-${PROJECT_SOURCE_DIR}/src/poneboard.hpp
-${PROJECT_SOURCE_DIR}/src/poneconst.hpp
-${PROJECT_SOURCE_DIR}/src/ponecursor.cpp
-${PROJECT_SOURCE_DIR}/src/ponecursor.hpp
-${PROJECT_SOURCE_DIR}/src/poneexcept.cpp
-${PROJECT_SOURCE_DIR}/src/poneexcept.hpp
-${PROJECT_SOURCE_DIR}/src/ponegame.cpp
-${PROJECT_SOURCE_DIR}/src/ponegame.hpp
-${PROJECT_SOURCE_DIR}/src/ponegate.cpp
-${PROJECT_SOURCE_DIR}/src/ponegate.hpp
-${PROJECT_SOURCE_DIR}/src/ponegui.cpp
-${PROJECT_SOURCE_DIR}/src/ponegui.hpp
-${PROJECT_SOURCE_DIR}/src/ponescript.cpp
-${PROJECT_SOURCE_DIR}/src/ponescript.hpp
-${PROJECT_SOURCE_DIR}/src/ponetile.cpp
-${PROJECT_SOURCE_DIR}/src/ponetile.hpp
+set(GDAPP_DIR ${PROJECT_SOURCE_DIR}/src/app)
+set(GAME_DIR ${PROJECT_SOURCE_DIR}/src/game)
+set(YAML_DIR ${PROJECT_SOURCE_DIR}/src/yaml)
+set(PONE_TEST_DIR ${PROJECT_SOURCE_DIR}/test)
+
+set(ALL_GDAPP_FILES
+${GDAPP_DIR}/pone.cpp
+${GDAPP_DIR}/pone.hpp
+)
+
+set(ALL_GAME_FILES
+${GAME_DIR}/pone_avl.cpp
+${GAME_DIR}/pone_avl.hpp
+${GAME_DIR}/pone_board.cpp
+${GAME_DIR}/pone_board.hpp
+${GAME_DIR}/pone_const.hpp
+${GAME_DIR}/pone_cursor.cpp
+${GAME_DIR}/pone_cursor.hpp
+${GAME_DIR}/pone_except.cpp
+${GAME_DIR}/pone_except.hpp
+${GAME_DIR}/pone_game.cpp
+${GAME_DIR}/pone_game.hpp
+${GAME_DIR}/pone_gate.cpp
+${GAME_DIR}/pone_gate.hpp
+${GAME_DIR}/pone_gui.cpp
+${GAME_DIR}/pone_gui.hpp
+${GAME_DIR}/pone_tile.cpp
+${GAME_DIR}/pone_tile.hpp
+)
+
+set(ALL_YAML_FILES
+${YAML_DIR}/yaml_except.cpp
+${YAML_DIR}/yaml_except.hpp
+${YAML_DIR}/yaml_generator.cpp
+${YAML_DIR}/yaml_generator.hpp
+${YAML_DIR}/yaml_parser.cpp
+${YAML_DIR}/yaml_parser.hpp
+${YAML_DIR}/yaml_tokenizer.cpp
+${YAML_DIR}/yaml_tokenizer.hpp
+${YAML_DIR}/yaml_utils.cpp
+${YAML_DIR}/yaml_utils.hpp
+)
+
+set(ALL_TEST_FILES
+${}
 )
 
 add_executable(
@@ -118,7 +143,9 @@ ${PROJECT_SOURCE_DIR}/test/gtestmain.cpp
 include_directories(
     ${GTEST_ROOT}/googletest/include
     ${PROJECT_SOURCE_DIR}/src
-    ${PROJECT_SOURCE_DIR}/src/pone
+    ${PROJECT_SOURCE_DIR}/src/app
+    ${PROJECT_SOURCE_DIR}/src/game
+    ${PROJECT_SOURCE_DIR}/src/yaml
 )
 
 target_include_directories(

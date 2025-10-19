@@ -9,6 +9,8 @@
 
 #include "pone_tile.hpp"
 
+namespace pone {
+
 using TilePtr  = std::shared_ptr<Tile>;
 using TilePair = std::pair<TilePtr, TilePtr>;
 
@@ -78,3 +80,5 @@ class Gate {
     std::string m_color;
     bool m_active;  // Is the gate on or off?
 };
+
+}  // namespace pone

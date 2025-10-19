@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+namespace pone {
+
 using CoordPair = std::pair<int, int>;
 
 class Tile {
@@ -94,3 +96,5 @@ class Tile {
         "empty", "gswitch", "tswitch", "key",  "up",
         "down",  "left",    "right",   "goal", "collision"};
 };
+
+}  // namespace pone

@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+namespace pone {
+
 // Gate constructors
 // ---------------------------------------------
 Gate::Gate()
@@ -164,3 +166,5 @@ bool Gate::operator>=(const Gate &other) const {
 // Gate destructor
 // ---------------------------------------------
 Gate::~Gate() {}
+
+}  // namespace pone

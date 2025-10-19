@@ -1,10 +1,13 @@
 /*   Created:  10-06-2025
- *   Modified: 10-12-2025
+ *   Modified: 10-19-2025
  */
 
 #pragma once
+
 #include <cstdio>
 #include <stdexcept>
+
+namespace pone {
 
 template <typename T>
 class Node {
@@ -132,3 +135,5 @@ const T &UnsortedLinkedList<T>::operator[](std::size_t idx) const {
 
     throw std::runtime_error("");  // TODO: Replace with OutOfBoundsException
 }
+
+}  // namespace pone

@@ -9,6 +9,8 @@
 
 #include "pone_tile.hpp"
 
+namespace pone {
+
 using CoordPair = std::pair<int, int>;
 using TilePtr   = std::shared_ptr<Tile>;
 
@@ -44,3 +46,5 @@ class Cursor {
     int m_x, m_y;    // where is the cursor?
     TilePtr m_tile;  // This is a shared_ptr to a tile!
 };
+
+}  // namespace pone

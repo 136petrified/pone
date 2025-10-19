@@ -9,6 +9,8 @@
 #include "pone_const.hpp"
 #include "pone_except.hpp"
 
+namespace pone {
+
 // Board constructors
 // ---------------------------------------------
 Board::Board()
@@ -348,3 +350,5 @@ const std::unordered_map<std::string, std::string> Board::counterClockwiseMap =
     {{"up", "left"}, {"left", "down"}, {"down", "right"}, {"right", "up"}};
 
 Board::~Board() {}
+
+}  // namespace pone

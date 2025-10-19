@@ -5,8 +5,12 @@
 
 #pragma once
 
+namespace pone {
+
 class GUI {
-public:
+   public:
     GUI();
     ~GUI();
 };
+
+}  // namespace pone

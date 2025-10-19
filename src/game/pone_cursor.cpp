@@ -5,6 +5,8 @@
 #include "pone_cursor.hpp"
 #include "pone_except.hpp"
 
+namespace pone {
+
 // Cursor constructor
 // ---------------------------------------------
 Cursor::Cursor() : m_x{0}, m_y{0}, m_tile{nullptr} {}
@@ -56,3 +58,5 @@ TilePtr Cursor::getTile() const {
 // Cursor destructor
 // ---------------------------------------------
 Cursor::~Cursor() {}
+
+}  // namespace pone

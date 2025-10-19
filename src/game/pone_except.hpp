@@ -12,6 +12,8 @@
 #include "pone_gate.hpp"
 #include "pone_tile.hpp"
 
+namespace pone {
+
 using GatePtr                  = std::shared_ptr<Gate>;
 using TilePtr                  = std::shared_ptr<Tile>;
 
@@ -441,4 +443,4 @@ class InvalidValueException : public GameException {
     std::string m_msg;
 };
 
-#endif  // PONE_EXCEPTION_HPP
+}  // namespace pone

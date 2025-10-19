@@ -4,6 +4,7 @@
 
 #pragma once
 
+namespace pone {
 // Directional constants
 
 // #define UP 0
@@ -13,3 +14,5 @@
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 enum Rotation { CLOCKWISE, COUNTER_CLOCKWISE };
+
+}  // namespace pone

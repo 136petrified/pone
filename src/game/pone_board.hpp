@@ -15,6 +15,8 @@
 #include "pone_gate.hpp"
 #include "pone_tile.hpp"
 
+namespace pone {
+
 using TilePtr = std::shared_ptr<Tile>;
 using GatePtr = std::shared_ptr<Gate>;
 
@@ -191,3 +193,5 @@ class Board {
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
 };
+
+}  // namespace pone

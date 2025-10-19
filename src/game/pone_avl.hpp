@@ -9,6 +9,8 @@
 #include <iostream>
 #include <vector>
 
+namespace pone {
+
 template <typename T>
 struct DefaultComparator {
     std::strong_ordering operator()(const T &lhs, const T &rhs) {
@@ -436,3 +438,5 @@ template <typename T, typename Compare>
 AVL<T, Compare>::~AVL() {
     removeAll();
 }
+
+}  // namespace pone

@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+namespace pone {
+
 // Tile constructors
 // ---------------------------------------------
 Tile::Tile()
@@ -199,3 +201,5 @@ bool Tile::operator>=(const Tile &other) const {
 // Tile destructor
 // ---------------------------------------------
 Tile::~Tile() {}
+
+}  // namespace pone
