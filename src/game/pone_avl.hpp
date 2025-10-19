@@ -1,9 +1,8 @@
 /*    Created:    06-30-2025
- *    Modified:   07-19-2025
+ *    Modified:   10-19-2025
  */
 
-#ifndef PONE_AVL_HPP
-#define PONE_AVL_HPP
+#pragma once
 
 #include <algorithm>  // std::max
 #include <compare>
@@ -99,7 +98,8 @@ AVLNode<T, Compare>::AVLNode(const T &key, Compare compare)
 
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::insert(AVLNode *root, const T &key) {
-    if (root == nullptr) return new AVLNode<T, Compare>{key};
+    if (root == nullptr)
+        return new AVLNode<T, Compare>{key};
 
     if (less(key, root->data)) {
         root->left = insert(root->left, key);
@@ -113,7 +113,8 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::insert(AVLNode *root, const T &key) {
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::find(AVLNode<T, Compare> *root,
                                                const T &key) {
-    if (root == nullptr) return nullptr;
+    if (root == nullptr)
+        return nullptr;
 
     if (equal(key, root->data))
         return root;
@@ -126,7 +127,8 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::find(AVLNode<T, Compare> *root,
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::remove(AVLNode<T, Compare> *root,
                                                  const T &key) {
-    if (root == nullptr) return nullptr;
+    if (root == nullptr)
+        return nullptr;
 
     if (equal(key, root->data)) {
         AVLNode<T, Compare> *newRoot, *succ;
@@ -140,10 +142,10 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::remove(AVLNode<T, Compare> *root,
                 root = newRoot;
                 break;
             case 2:
-                succ = leftmost(root->right);
-                T succData = succ->data;
+                succ        = leftmost(root->right);
+                T succData  = succ->data;
                 root->right = remove(root->right, succData);
-                root->data = succData;
+                root->data  = succData;
                 break;
         }
     } else if (less(key, root->data)) {
@@ -158,17 +160,19 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::remove(AVLNode<T, Compare> *root,
 
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::leftmost(AVLNode<T, Compare> *root) {
-    if (root == nullptr) return nullptr;
+    if (root == nullptr)
+        return nullptr;
     AVLNode<T, Compare> *target = root;
-    while (target->left != nullptr) target = target->left;
+    while (target->left != nullptr)
+        target = target->left;
     return target;
 }
 
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::leftRotate(AVLNode<T, Compare> *x) {
     AVLNode<T, Compare> *y = x->right;
-    x->right = y->left;
-    y->left = x;
+    x->right               = y->left;
+    y->left                = x;
 
     setHeight(x);
     setHeight(y);
@@ -178,8 +182,8 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::leftRotate(AVLNode<T, Compare> *x) {
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::rightRotate(AVLNode<T, Compare> *y) {
     AVLNode<T, Compare> *x = y->left;
-    y->left = x->right;
-    x->right = y;
+    y->left                = x->right;
+    x->right               = y;
 
     setHeight(y);
     setHeight(x);
@@ -188,7 +192,8 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::rightRotate(AVLNode<T, Compare> *y) {
 
 template <typename T, typename Compare>
 int AVLNode<T, Compare>::setHeight(AVLNode<T, Compare> *root) {
-    if (root == nullptr) return 0;
+    if (root == nullptr)
+        return 0;
     root->height = 1 + std::max(getHeight(root->left), getHeight(root->right));
     return root->height;
 }
@@ -216,14 +221,16 @@ bool AVLNode<T, Compare>::isLeaf(AVLNode<T, Compare> *root) {
 
 template <typename T, typename Compare>
 int AVLNode<T, Compare>::balanceFactor(AVLNode<T, Compare> *root) {
-    if (root == nullptr) return 0;
+    if (root == nullptr)
+        return 0;
     return getHeight(root->right) - getHeight(root->left);
 }
 
 template <typename T, typename Compare>
 void AVLNode<T, Compare>::preorder(AVLNode<T, Compare> *root,
                                    std::vector<T> &vec) {
-    if (root == nullptr) return;
+    if (root == nullptr)
+        return;
     vec.push_back(root->data);
     preorder(root->left, vec);
     preorder(root->right, vec);
@@ -232,7 +239,8 @@ void AVLNode<T, Compare>::preorder(AVLNode<T, Compare> *root,
 template <typename T, typename Compare>
 void AVLNode<T, Compare>::inorder(AVLNode<T, Compare> *root,
                                   std::vector<T> &vec) {
-    if (root == nullptr) return;
+    if (root == nullptr)
+        return;
     inorder(root->left, vec);
     vec.push_back(root->data);
     inorder(root->right, vec);
@@ -241,7 +249,8 @@ void AVLNode<T, Compare>::inorder(AVLNode<T, Compare> *root,
 template <typename T, typename Compare>
 void AVLNode<T, Compare>::postorder(AVLNode<T, Compare> *root,
                                     std::vector<T> &vec) {
-    if (root == nullptr) return;
+    if (root == nullptr)
+        return;
     postorder(root->left, vec);
     postorder(root->right, vec);
     vec.push_back(root->data);
@@ -249,9 +258,10 @@ void AVLNode<T, Compare>::postorder(AVLNode<T, Compare> *root,
 
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::rebalance(AVLNode<T, Compare> *root) {
-    if (root == nullptr) return nullptr;
+    if (root == nullptr)
+        return nullptr;
 
-    int bf = AVLNode<T, Compare>::balanceFactor(root);
+    int bf  = AVLNode<T, Compare>::balanceFactor(root);
     int bfl = AVLNode<T, Compare>::balanceFactor(root->left);
     int bfr = AVLNode<T, Compare>::balanceFactor(root->right);
     // bf = height(right) - height(left)
@@ -281,7 +291,8 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::rebalance(AVLNode<T, Compare> *root) {
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::findSuccessor(
     AVLNode<T, Compare> *target) {
-    if (target == nullptr) return nullptr;
+    if (target == nullptr)
+        return nullptr;
     return leftmost(target->right);
 }
 
@@ -289,21 +300,24 @@ template <typename T, typename Compare>
 void AVLNode<T, Compare>::printPreorder(AVLNode<T, Compare> *root) {
     std::vector<T> vec;
     preorder(root, vec);
-    for (const auto &item : vec) std::cout << item << std::endl;
+    for (const auto &item : vec)
+        std::cout << item << std::endl;
 }
 
 template <typename T, typename Compare>
 void AVLNode<T, Compare>::printInorder(AVLNode<T, Compare> *root) {
     std::vector<T> vec;
     inorder(root, vec);
-    for (const auto &item : vec) std::cout << item << std::endl;
+    for (const auto &item : vec)
+        std::cout << item << std::endl;
 }
 
 template <typename T, typename Compare>
 void AVLNode<T, Compare>::printPostorder(AVLNode<T, Compare> *root) {
     std::vector<T> vec;
     postorder(root, vec);
-    for (const auto &item : vec) std::cout << item << std::endl;
+    for (const auto &item : vec)
+        std::cout << item << std::endl;
 }
 
 template <typename T, typename Compare>
@@ -330,18 +344,21 @@ AVL<T, Compare>::AVL(const AVL &other)
     : root{nullptr}, m_compare{other.m_compare}, m_size{0} {
     std::vector<T> vec;
     AVLNode<T, Compare>::preorder(other.root, vec);
-    for (const auto &item : vec) insert(item);
+    for (const auto &item : vec)
+        insert(item);
 }
 
 template <typename T, typename Compare>
 AVL<T, Compare> &AVL<T, Compare>::operator=(const AVL<T, Compare> &other) {
-    if (this == &other) return *this;
+    if (this == &other)
+        return *this;
 
     removeAll();
 
     std::vector<T> vec;
     AVLNode<T, Compare>::preorder(other.root, vec);
-    for (const auto &item : vec) insert(item);
+    for (const auto &item : vec)
+        insert(item);
 
     return *this;
 }
@@ -365,7 +382,8 @@ void AVL<T, Compare>::remove(const T &key) {
 
 template <typename T, typename Compare>
 void AVL<T, Compare>::removeAll() {
-    while (!empty()) remove(root->data);
+    while (!empty())
+        remove(root->data);
 }
 
 template <typename T, typename Compare>
@@ -418,5 +436,3 @@ template <typename T, typename Compare>
 AVL<T, Compare>::~AVL() {
     removeAll();
 }
-
-#endif  // PONE_AVL_HPP

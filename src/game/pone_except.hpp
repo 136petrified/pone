@@ -1,20 +1,19 @@
 /*   Created:  09-08-2024
- *   Modified: 09-22-2025
+ *   Modified: 10-19-2025
  */
 
-#ifndef PONE_EXCEPTION_HPP
-#define PONE_EXCEPTION_HPP
+#pragma once
 
 #include <format>
 #include <fstream>
 #include <memory>
 
-#include "poneboard.hpp"
-#include "ponegate.hpp"
-#include "ponetile.hpp"
+#include "pone_board.hpp"
+#include "pone_gate.hpp"
+#include "pone_tile.hpp"
 
-using GatePtr = std::shared_ptr<Gate>;
-using TilePtr = std::shared_ptr<Tile>;
+using GatePtr                  = std::shared_ptr<Gate>;
+using TilePtr                  = std::shared_ptr<Tile>;
 
 constexpr std::string ERR_FILE = "./errlog.txt";
 
@@ -25,7 +24,7 @@ class TileException : public std::runtime_error {
     TileException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_name{name} {}
     virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const = 0;
+    virtual void logToFile() const                = 0;
 
    private:
     std::string m_name;
@@ -121,7 +120,7 @@ class GateException : public std::runtime_error {
     GateException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_name{name} {}
     virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const = 0;
+    virtual void logToFile() const                = 0;
 
    protected:
     std::string m_name;
@@ -280,7 +279,7 @@ class BoardException : public std::runtime_error {
     BoardException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_name{name} {}
     virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const = 0;
+    virtual void logToFile() const                = 0;
 
    protected:
     std::string m_name;
@@ -320,7 +319,7 @@ class GameException : public std::runtime_error {
     GameException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_name{name} {}
     virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const = 0;
+    virtual void logToFile() const                = 0;
 
    protected:
     std::string m_name;

@@ -1,12 +1,11 @@
 /*  Created:  06-23-2024
- *  Modified: 09-22-2025
+ *  Modified: 10-19-2025
  */
 
-#ifndef PONE_GAME_HPP
-#define PONE_GAME_HPP
+#pragma once
 
-#include "poneboard.hpp"
-#include "ponecursor.hpp"
+#include "pone_board.hpp"
+#include "pone_cursor.hpp"
 
 class Game {
    public:
@@ -31,5 +30,3 @@ class Game {
     Board board;
     Cursor cursor;
 };
-
-#endif  // PONE_GAME_HPP

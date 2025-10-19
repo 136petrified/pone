@@ -1,13 +1,16 @@
-#ifndef PONE_CURSOR_HPP
-#define PONE_CURSOR_HPP
+/*   Created:  06-23-2024
+ *   Modified: 10-19-2025
+ */
+
+#pragma once
 
 #include <memory>
 #include <utility>
 
-#include "ponetile.hpp"
+#include "pone_tile.hpp"
 
 using CoordPair = std::pair<int, int>;
-using TilePtr = std::shared_ptr<Tile>;
+using TilePtr   = std::shared_ptr<Tile>;
 
 class Cursor {
    public:
@@ -41,5 +44,3 @@ class Cursor {
     int m_x, m_y;    // where is the cursor?
     TilePtr m_tile;  // This is a shared_ptr to a tile!
 };
-
-#endif  // PONE_CURSOR_HPP

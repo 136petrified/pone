@@ -1,5 +1,8 @@
-#ifndef PONE_TILE_HPP
-#define PONE_TILE_HPP
+#/*  Created:    06-23-2024
+  *  Modified:   10-19-2025
+  */
+
+#pragma once
 
 #include <string>
 #include <vector>
@@ -11,8 +14,12 @@ class Tile {
     // Tile constructors
     // ---------------------------------------------
     Tile();
-    Tile(const std::string &name, const int &id, const int &x, const int &y,
-         const std::string &color, const std::string &type,
+    Tile(const std::string &name,
+         const int &id,
+         const int &x,
+         const int &y,
+         const std::string &color,
+         const std::string &type,
          bool cursor);  // Full constructor
     Tile(const Tile &other);
 
@@ -87,5 +94,3 @@ class Tile {
         "empty", "gswitch", "tswitch", "key",  "up",
         "down",  "left",    "right",   "goal", "collision"};
 };
-
-#endif  // PONE_TILE_HPP

@@ -1,12 +1,15 @@
-#ifndef PONE_GATE_HPP
-#define PONE_GATE_HPP
+#/*   Created:    06-29-2024
+  *   Modified:   10-19-2025
+  */
+
+#pragma once
 
 #include <memory>
 #include <utility>
 
-#include "ponetile.hpp"
+#include "pone_tile.hpp"
 
-using TilePtr = std::shared_ptr<Tile>;
+using TilePtr  = std::shared_ptr<Tile>;
 using TilePair = std::pair<TilePtr, TilePtr>;
 
 class Gate {
@@ -14,8 +17,11 @@ class Gate {
     // Gate constructors
     // ---------------------------------------------
     Gate();
-    Gate(TilePtr t1, TilePtr t2, const std::string &name,
-         const std::string &color, bool active = false);
+    Gate(TilePtr t1,
+         TilePtr t2,
+         const std::string &name,
+         const std::string &color,
+         bool active = false);
     Gate(const Gate &other);
 
     // Gate assignment
@@ -72,5 +78,3 @@ class Gate {
     std::string m_color;
     bool m_active;  // Is the gate on or off?
 };
-
-#endif  // PONE_GATE_HPP

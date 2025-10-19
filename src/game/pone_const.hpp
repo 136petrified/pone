@@ -1,9 +1,8 @@
 /*   Created:    08-15-2024
- *   Modified:   06-17-2025
+ *   Modified:   10-19-2025
  */
 
-#ifndef PONE_CONSTANTS_HPP
-#define PONE_CONSTANTS_HPP
+#pragma once
 
 // Directional constants
 
@@ -14,5 +13,3 @@
 
 enum Direction { UP, DOWN, LEFT, RIGHT };
 enum Rotation { CLOCKWISE, COUNTER_CLOCKWISE };
-
-#endif  // PONE_CONSTANTS_HPP

@@ -1,16 +1,19 @@
-#ifndef PONE_BOARD_HPP
-#define PONE_BOARD_HPP
+/*   Created:    06-23-2024
+ *   Modified:   10-19-2025
+ */
+
+#pragma once
 
 #include <compare>
 #include <functional>
 #include <memory>
 #include <unordered_map>
 
-#include "poneavl.hpp"
-#include "poneconst.hpp"
-#include "ponecursor.hpp"
-#include "ponegate.hpp"
-#include "ponetile.hpp"
+#include "pone_avl.hpp"
+#include "pone_const.hpp"
+#include "pone_cursor.hpp"
+#include "pone_gate.hpp"
+#include "pone_tile.hpp"
 
 using TilePtr = std::shared_ptr<Tile>;
 using GatePtr = std::shared_ptr<Gate>;
@@ -59,7 +62,8 @@ using TilePairGateMap =
 struct compareTileByCoords {
     std::strong_ordering operator()(const TilePtr tptr1, const TilePtr tptr2) {
         auto cmp = tptr1->getX() <=> tptr2->getX();
-        if (cmp != 0) return cmp;
+        if (cmp != 0)
+            return cmp;
         return tptr1->getY() <=> tptr2->getY();
     }
 };
@@ -75,7 +79,8 @@ struct compareGateByTilePair {
         TilePair tp1 = gptr1->getTilePair(), tp2 = gptr2->getTilePair();
 
         auto cmp = compareTileByCoords()(tp1.first, tp2.first);
-        if (cmp != 0) return cmp;
+        if (cmp != 0)
+            return cmp;
         return compareTileByCoords()(tp1.second, tp2.second);
     }
 };
@@ -92,8 +97,11 @@ class Board {
     // ---------------------------------------------
     Board();
     Board(const std::string &name, const int &length, const int &width);
-    Board(const std::string &name, const int &length, const int &width,
-          const int &cursor_x, const int &cursor_y);
+    Board(const std::string &name,
+          const int &length,
+          const int &width,
+          const int &cursor_x,
+          const int &cursor_y);
 
     // Board getter/setter functions
     // ---------------------------------------------
@@ -183,5 +191,3 @@ class Board {
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
 };
-
-#endif  // PONE_BOARD_HPP

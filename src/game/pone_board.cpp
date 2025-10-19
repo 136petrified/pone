@@ -1,13 +1,13 @@
 /*   Created:    06-23-2024
- *   Modified:   07-18-2025
+ *   Modified:   10-19-2025
  */
 
-#include "poneboard.hpp"
+#include "pone_board.hpp"
 
 #include <stdexcept>
 
-#include "poneconst.hpp"
-#include "poneexcept.hpp"
+#include "pone_const.hpp"
+#include "pone_except.hpp"
 
 // Board constructors
 // ---------------------------------------------
@@ -27,8 +27,11 @@ Board::Board(const std::string &name, const int &length, const int &width)
       m_numTiles{0},
       m_cursor{Cursor{0, 0}} {}
 
-Board::Board(const std::string &name, const int &length, const int &width,
-             const int &cursor_x, const int &cursor_y)
+Board::Board(const std::string &name,
+             const int &length,
+             const int &width,
+             const int &cursor_x,
+             const int &cursor_y)
     : m_name{name},
       m_length{length},
       m_width{width},
@@ -39,21 +42,37 @@ Board::Board(const std::string &name, const int &length, const int &width,
 // Board getter/setter functions
 // ---------------------------------------------
 
-int Board::getLength() const { return m_length; }
+int Board::getLength() const {
+    return m_length;
+}
 
-void Board::setLength(const int &length) { m_length = length; }
+void Board::setLength(const int &length) {
+    m_length = length;
+}
 
-std::string Board::getName() const { return m_name; }
+std::string Board::getName() const {
+    return m_name;
+}
 
-void Board::setName(const std::string &name) { m_name = name; }
+void Board::setName(const std::string &name) {
+    m_name = name;
+}
 
-int Board::getWidth() const { return m_width; }
+int Board::getWidth() const {
+    return m_width;
+}
 
-void Board::setWidth(const int &width) { m_width = width; }
+void Board::setWidth(const int &width) {
+    m_width = width;
+}
 
-TilePtr Board::getCursorTile() const { return m_cursor.getTile(); }
+TilePtr Board::getCursorTile() const {
+    return m_cursor.getTile();
+}
 
-void Board::setCursorTile(const TilePtr &tptr) { m_cursor.setTile(tptr); }
+void Board::setCursorTile(const TilePtr &tptr) {
+    m_cursor.setTile(tptr);
+}
 
 TilePtr Board::getTile(const std::string &name) const {
     TilePtr tptr;
@@ -260,7 +279,7 @@ bool Board::checkMove(const Direction &direction) {
     // Check collision first
 
     TilePtr currentTile = m_cursor.getTile();
-    TilePtr target = getTile(currentTile, direction);
+    TilePtr target      = getTile(currentTile, direction);
     if (target->isCollision())
         return false;
     else if (getGate(currentTile, target)) {
@@ -288,7 +307,8 @@ void Board::rotateTile(const TilePtr &tptr, const Rotation &rotation) {
 
 void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
     for (TilePtr &tptr : m_tileNamesTree.inorder()) {
-        if (tptr->getColor() == color) rotateTile(tptr, rotation);
+        if (tptr->getColor() == color)
+            rotateTile(tptr, rotation);
     }
 }
 void Board::toggleGate(const TilePtr &tptr1, const TilePtr &tptr2) {
@@ -306,14 +326,23 @@ void Board::toggleGate(const TilePtr &tptr1, const TilePtr &tptr2) {
     gptr->isActive() ? gptr->setInactive() : gptr->setActive();
 }
 
-bool Board::isGoal() const { return m_cursor.getTile()->isGoal(); }
+bool Board::isGoal() const {
+    return m_cursor.getTile()->isGoal();
+}
 
-bool Board::empty() const { return m_numTiles <= 0; }
+bool Board::empty() const {
+    return m_numTiles <= 0;
+}
 
-bool Board::full() const { return m_numTiles > m_length * m_width; }
+bool Board::full() const {
+    return m_numTiles > m_length * m_width;
+}
 
 const std::unordered_map<std::string, std::string> Board::clockwiseMap = {
-    {"up", "right"}, {"right", "down"}, {"down", "left"}, {"left", "up"}};
+    {"up", "right"},
+    {"right", "down"},
+    {"down", "left"},
+    {"left", "up"}};
 
 const std::unordered_map<std::string, std::string> Board::counterClockwiseMap =
     {{"up", "left"}, {"left", "down"}, {"down", "right"}, {"right", "up"}};

@@ -1,8 +1,8 @@
 /*   Created:    06-29-2024
- *   Modified:   07-13-2025
+ *   Modified:   10-19-2025
  */
 
-#include "ponegate.hpp"
+#include "pone_gate.hpp"
 
 #include <iostream>
 
@@ -15,8 +15,11 @@ Gate::Gate()
       m_color{"none"},
       m_active{false} {}
 
-Gate::Gate(TilePtr t1, TilePtr t2, const std::string &name,
-           const std::string &color, bool active)
+Gate::Gate(TilePtr t1,
+           TilePtr t2,
+           const std::string &name,
+           const std::string &color,
+           bool active)
     : m_name{name},
       m_id{-1},
       m_tp{TilePair{t1, t2}},
@@ -33,12 +36,13 @@ Gate::Gate(const Gate &other)
 // Gate assignment
 // ---------------------------------------------
 Gate &Gate::operator=(const Gate &other) {
-    if (this == &other) return *this;
+    if (this == &other)
+        return *this;
 
-    m_name = other.m_name;
-    m_id = other.m_id;
-    m_tp = other.m_tp;
-    m_color = other.m_color;
+    m_name   = other.m_name;
+    m_id     = other.m_id;
+    m_tp     = other.m_tp;
+    m_color  = other.m_color;
     m_active = other.m_active;
 
     return *this;
@@ -47,38 +51,68 @@ Gate &Gate::operator=(const Gate &other) {
 // Gate getter/setter functions
 // ---------------------------------------------
 
-TilePtr Gate::getTile1() const { return m_tp.first; }
+TilePtr Gate::getTile1() const {
+    return m_tp.first;
+}
 
-void Gate::setTile1(TilePtr t1) { m_tp.first = t1; }
+void Gate::setTile1(TilePtr t1) {
+    m_tp.first = t1;
+}
 
-TilePtr Gate::getTile2() const { return m_tp.second; }
+TilePtr Gate::getTile2() const {
+    return m_tp.second;
+}
 
-void Gate::setTile2(TilePtr t2) { m_tp.second = t2; }
+void Gate::setTile2(TilePtr t2) {
+    m_tp.second = t2;
+}
 
-TilePair Gate::getTilePair() const { return m_tp; }
+TilePair Gate::getTilePair() const {
+    return m_tp;
+}
 
-void Gate::setTilePair(TilePair tp) { m_tp = tp; }
+void Gate::setTilePair(TilePair tp) {
+    m_tp = tp;
+}
 
-int Gate::getID() const { return m_id; }
+int Gate::getID() const {
+    return m_id;
+}
 
-void Gate::setID(int id) { m_id = id; }
+void Gate::setID(int id) {
+    m_id = id;
+}
 
-std::string Gate::getColor() const { return m_color; }
+std::string Gate::getColor() const {
+    return m_color;
+}
 
-void Gate::setColor(const std::string &color) { m_color = color; }
+void Gate::setColor(const std::string &color) {
+    m_color = color;
+}
 
-std::string Gate::getName() const { return m_name; }
+std::string Gate::getName() const {
+    return m_name;
+}
 
-void Gate::setName(const std::string &name) { m_name = name; }
+void Gate::setName(const std::string &name) {
+    m_name = name;
+}
 
-void Gate::setInactive() { m_active = false; }
+void Gate::setInactive() {
+    m_active = false;
+}
 
-void Gate::setActive() { m_active = true; }
+void Gate::setActive() {
+    m_active = true;
+}
 
 // Gate functions
 // ---------------------------------------------
 
-bool Gate::isActive() { return m_active; }
+bool Gate::isActive() {
+    return m_active;
+}
 
 void Gate::print(std::ostream &out) const {
     TilePtr t1 = m_tp.first, t2 = m_tp.second;
@@ -103,7 +137,9 @@ bool Gate::operator==(const Gate &other) const {
     return *g1t1 == *g2t1 && *g1t2 == *g2t2;
 }
 
-bool Gate::operator!=(const Gate &other) const { return !(*this == other); }
+bool Gate::operator!=(const Gate &other) const {
+    return !(*this == other);
+}
 
 bool Gate::operator<(const Gate &other) const {
     TilePair g1 = m_tp, g2 = other.m_tp;
@@ -117,9 +153,13 @@ bool Gate::operator<=(const Gate &other) const {
     return *this < other || *this == other;
 }
 
-bool Gate::operator>(const Gate &other) const { return !(*this <= other); }
+bool Gate::operator>(const Gate &other) const {
+    return !(*this <= other);
+}
 
-bool Gate::operator>=(const Gate &other) const { return !(*this < other); }
+bool Gate::operator>=(const Gate &other) const {
+    return !(*this < other);
+}
 
 // Gate destructor
 // ---------------------------------------------
