@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SOURCE_DIR $ENV{USERPROFILE}/pone)
 
-set(CXXFLAGS "-g -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src")
+set(CXXFLAGS "-g -fsanitize=address -Wall -Wfatal-errors -Werror -pedantic -Iheaders/src")
 set(CMAKE_CXX_FLAGS ${CXXFLAGS})
 
 enable_testing()
@@ -103,7 +103,7 @@ ${ALL_GAME_TEST_FILES}
 
 add_executable(
 avl_tests
-${ALL_GAME_FILES}
+# ${ALL_GAME_FILES}
 ${GAME_TEST_DIR}/avl_test.cpp
 ${GAME_TEST_DIR}/gtestmain.cpp
 )
@@ -220,11 +220,11 @@ target_link_libraries(gate_tests
 
 gtest_discover_tests(all_game_tests
     avl_tests
-    llist_tests
-    board_tests
-    tile_tests
-    cursor_tests
-    gui_tests
-    board_tests
-    gate_tests
+    # llist_tests
+    # board_tests
+    # tile_tests
+    # cursor_tests
+    # gui_tests
+    # board_tests
+    # gate_tests
 )

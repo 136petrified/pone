@@ -21,14 +21,14 @@ using TilePtr = std::shared_ptr<Tile>;
 using GatePtr = std::shared_ptr<Gate>;
 
 struct CoordPairHasher {
-    std::size_t operator()(const CoordPair &coords) {
+    std::size_t operator()(const CoordPair &coords) const {
         return std::hash<int>{}(coords.first) ^
                (std::hash<int>{}(coords.second) << 1);
     }
 };
 
 struct CoordPairEquals {
-    bool operator()(const CoordPair &lhs, const CoordPair &rhs) {
+    bool operator()(const CoordPair &lhs, const CoordPair &rhs) const {
         return lhs.first == rhs.first && lhs.second == rhs.second;
     }
 };
