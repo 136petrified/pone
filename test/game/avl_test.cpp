@@ -25,7 +25,7 @@ TEST(avl_test, Insert) {
 
     std::vector<int> solution = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    EXPECT_EQ(solution, tree.preorder());
+    EXPECT_EQ(solution, tree.inorder());
 }
 
 TEST(avl_test, Less) {
