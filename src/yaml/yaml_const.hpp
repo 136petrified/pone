@@ -6,13 +6,19 @@
 
 namespace YAML {
 
+inline constexpr std::string_view YAML_GLOBAL_NAMESPACE = "pone::YAML::";
+
 // YAML Tokenizer constants
 // +--------------------------------+
 
+inline constexpr std::string_view TOKEN_NAMESPACE       = "Token::";
 inline constexpr std::string_view TOKEN_TOKEN_1 =
-    "YAML::Token::Token(const std::shared_ptr<Token>, const std::string &, "
+    "Token(const std::shared_ptr<Token>, const std::string &, "
     "const Token::Class &)";
-inline constexpr std::string_view TOKEN_GETCLASS = "YAML::Token::getClass()";
-inline constexpr std::string_view TOKEN_GETDEPTH = "YAML::Token::getDepth()";
+inline constexpr std::string_view TOKEN_TOKEN_2 =
+    "Token(const std::shared_ptr<Token>, const std::string &, const "
+    "Token::Type &";
+inline constexpr std::string_view TOKEN_GETCLASS = "getClass()";
+inline constexpr std::string_view TOKEN_GETDEPTH = "getDepth()";
 
 }  // namespace YAML
