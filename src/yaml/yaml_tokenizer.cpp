@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-12-2025
+ *   Modified: 10-21-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -61,7 +61,7 @@ void Token::printEntry(std::ostream &out,
         out << indent[i];
     }
 
-    out << prefix << m_name;
+    out << prefix << " " << m_name;
 }
 
 void Token::setDepth() {
@@ -274,7 +274,7 @@ void GroupToken::print(std::ostream &out,
                        const std::string &prefix) const {
     printEntry(out, indent, prefix);
 
-    std::string padding(m_name.size() + 1, ' ');
+    std::string padding(m_name.size() + 2, ' ');
     if (m_depth > 0) {
         padding = std::string((prefix == "\u2514") ? " " : "\u2502") + padding;
     }
