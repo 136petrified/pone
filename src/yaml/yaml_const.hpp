@@ -2,6 +2,8 @@
  *   Modified: 10-23-2025
  */
 
+#pragma once
+
 #include <string_view>
 
 namespace YAML::name {
@@ -11,6 +13,8 @@ namespace YAML::name {
 // +--------------------------------+
 
 inline constexpr std::string_view YAML_GLOBAL_NAMESPACE = "pone::YAML::";
+inline constexpr std::string_view ERR_FILE              = "./errlog.txt";
+inline constexpr std::string_view NO_ERR_LOCATION       = "<unknown>";
 
 // +--------------------------------+
 // YAML Tokenizer constants         +

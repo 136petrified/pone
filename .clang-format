@@ -2,6 +2,7 @@ AlignConsecutiveAssignments: AcrossEmptyLines
 AllowShortBlocksOnASingleLine: Never
 AllowShortFunctionsOnASingleLine: Empty
 BasedOnStyle: Chromium
+IncludeBlocks: Merge
 IndentWidth: 4
 PointerAlignment: Right
 TabWidth: 4
