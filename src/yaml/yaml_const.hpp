@@ -16,7 +16,7 @@ inline constexpr std::string_view YAML_GLOBAL_NAMESPACE = "pone::YAML::";
 // YAML Tokenizer constants         +
 // +--------------------------------+
 
-// Start of YAML:: Token constants
+// Start of YAML::Token constants
 
 inline constexpr std::string_view TOKEN_NAMESPACE       = "Token::";
 inline constexpr std::string_view TOKEN_TOKEN_1 =
@@ -31,8 +31,18 @@ inline constexpr std::string_view TOKEN_GETNAME   = "getName()";
 inline constexpr std::string_view TOKEN_GETPARENT = "getParent()";
 inline constexpr std::string_view TOKEN_GETTYPE   = "getType()";
 inline constexpr std::string_view TOKEN_PRINTENTRY =
-    "printEntry(std::ostream &, std::vector<std::string> &, const std::string "
-    "&)";
+    "printEntry(std::ostream&, std::vector<std::string>&, const std::string&)";
 inline constexpr std::string_view TOKEN_SETDEPTH = "setDepth()";
+inline constexpr std::string_view TOKEN_SETPARENT =
+    "setParent(const std::shared_ptr<Token>&)";
+inline constexpr std::string_view TOKEN_CLONE = "clone()";
+
+// End of YAML::Token constants
+
+// +--------------------------------+
+// YAML SingleToken constants       +
+// +--------------------------------+
+
+// Start of YAML::SingleToken constants
 
 }  // namespace YAML
