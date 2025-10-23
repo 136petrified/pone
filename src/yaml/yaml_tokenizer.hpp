@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-12-2025
+ *   Modified: 10-23-2025
  */
 
 #ifndef PONE_YAML_TOKENIZER_HPP
@@ -57,7 +57,7 @@ class Token : public std::enable_shared_from_this<Token> {
     };
 
     /*! The total size of the token types. */
-    static const int ALL_TOKENS_SIZE                   = 24;
+    static const int ALL_TOKENS_SIZE = 24;
 
     /*! Map of Types to its string name. */
     std::unordered_map<Type, std::string> tokenNameMap = {
@@ -203,14 +203,14 @@ class Token : public std::enable_shared_from_this<Token> {
         \return a shared_ptr of the Token copy.
      */
     virtual std::shared_ptr<Token> clone(
-        std::shared_ptr<Token> parent) const                     = 0;
+        std::shared_ptr<Token> parent) const = 0;
 
     /*! Pure virtual function for getting a pointer from the current Token.
 
         \return a pointer to the Token.
         \throws FailedAllocException
      */
-    virtual std::shared_ptr<Token> getPtr() const                = 0;
+    virtual std::shared_ptr<Token> getPtr() const = 0;
 
     /*! Pure virtual function for printing out every Token.
 
@@ -220,7 +220,7 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual void print(std::ostream &out,
                        std::vector<std::string> &indent,
-                       const std::string &prefix) const          = 0;
+                       const std::string &prefix) const = 0;
 
     /*! Pure virtual function for setting the parent of a Token.
 

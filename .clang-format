@@ -1,6 +1,9 @@
-AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
+AlignConsecutiveAssignments: AcrossEmptyLines
+AllowShortBlocksOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Empty
 BasedOnStyle: Chromium
 IndentWidth: 4
 PointerAlignment: Right
 TabWidth: 4
 UseTab: Never
+
