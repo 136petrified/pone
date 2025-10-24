@@ -1,11 +1,11 @@
 /*   Created:  07-23-2025
- *   Modified: 07-31-2025
+ *   Modified: 10-23-2025
  */
 
+#pragma once
+
 #include "yaml_parser.hpp"
-
 #include <stdexcept>
-
 #include "yaml_tokenizer.hpp"
 
 namespace YAML {
@@ -47,10 +47,13 @@ void Parser::parse() {
     }
 }
 
-void Parser::newline() { next(); }
+void Parser::newline() {
+    next();
+}
 
 void Parser::symbol() {
-    if (!Token::isSymbol(m_token)) return;
+    if (!Token::isSymbol(m_token))
+        return;
     TokenType tokenType = m_token.m_type;
     if (tokenType == TokenType::Colon) {
         colon();

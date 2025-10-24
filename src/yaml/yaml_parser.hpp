@@ -1,10 +1,11 @@
 /*   Created:  07-23-2025
- *   Modified: 10-12-2025
+ *   Modified: 10-23-2025
  */
+
+#pragma once
 
 #include <string>
 #include <vector>
-
 #include "yaml_tokenizer.hpp"
 
 namespace YAML {
