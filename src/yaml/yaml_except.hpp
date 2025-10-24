@@ -4,12 +4,10 @@
 
 #pragma once
 
-#include <fstream>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 #include <string_view>
-#include "yaml_const.hpp"
 
 namespace YAML {
 
@@ -37,24 +35,14 @@ class TokenizerException : public std::runtime_error {
     ErrorMessage m_err;
     std::string m_location;
     std::string m_name;
+    std::string m_parent;
 
    public:
     TokenizerException() = delete;
-    TokenizerException(const ErrorMessage &e)
-        : std::runtime_error(e.m_msg),
-          m_err{e},
-          m_location{e.m_scope + e.m_func},
-          m_name{"TokenizerException"} {}
-    const std::string_view getLocation() const {
-        return std::string_view(m_location);
-    }
-    const std::string_view getMessage() const {
-        return std::string_view(m_err.m_msg);
-    }
-    void logToFile() const {
-        std::ofstream ofs{std::string(name::ERR_FILE), std::ios::app};
-        ofs << m_name << "at:" << m_err << '\n';
-    }
+    TokenizerException(const ErrorMessage &e, const std::string &name);
+    const std::string_view getLocation() const;
+    const std::string_view getMessage() const;
+    void logToFile() const;
 };
 
 class EmptyGroupStackException : public TokenizerException {

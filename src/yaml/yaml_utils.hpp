@@ -1,11 +1,10 @@
 /*   Created:  07-21-2025
- *   Modified: 10-12-2025
+ *   Modified: 10-23-2025
  */
 
-#include <string>
+#pragma once
 
-#ifndef PONE_YAML_UTIL_HPP
-#define PONE_YAML_UTIL_HPP
+#include <string>
 
 namespace YAML {
 bool isAlnum(char &c);
@@ -21,5 +20,3 @@ bool isSymbol(char &c);
 bool isSymbol(std::string &s);
 
 }  // namespace YAML
-
-#endif  // PONE_YAML_UTIL_HPP

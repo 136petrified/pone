@@ -2,8 +2,7 @@
  *   Modified: 10-23-2025
  */
 
-#ifndef PONE_YAML_TOKENIZER_HPP
-#define PONE_YAML_TOKENIZER_HPP
+#pragma once
 
 #include <fstream>
 #include <iostream>
@@ -12,8 +11,6 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-#include "yaml_utils.hpp"
 
 namespace YAML {
 /*! Abstract base class for Tokens.
@@ -834,5 +831,3 @@ class Tokenizer {
     bool m_endOfFile;
 };
 }  // namespace YAML
-
-#endif  // PONE_YAML_TOKENIZER_HPP
