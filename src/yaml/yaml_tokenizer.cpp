@@ -1,9 +1,10 @@
 /*   Created:  07-23-2025
- *   Modified: 10-23-2025
+ *   Modified: 10-24-2025
  */
 
 #include "yaml_tokenizer.hpp"
 #include <algorithm>
+#include <format>
 #include <memory>
 #include <new>
 #include <utility>
@@ -111,7 +112,9 @@ std::shared_ptr<Token> SingleToken::clone(std::shared_ptr<Token> parent) const {
         root->setParent(parent);
         return root;
     } catch (const std::bad_alloc &e) {
-        throw FailedAllocException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_CLONE,
+                          "Failed to allocate a SingleToken."};
+        throw FailedAllocException(emsg);
     }
 }
 
@@ -127,7 +130,9 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
     try {
         return std::static_pointer_cast<Token>(shared_from_this());
     } catch (const std::bad_weak_ptr &e) {
-        throw FailedAllocException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_GETPTR,
+                          "Failed to allocate a pointer to SingleToken"};
+        throw FailedAllocException(emsg);
     }
 }
 
@@ -193,7 +198,10 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
 void GroupToken::clear() {
     for (const auto &token : m_tokens) {
         if (token == nullptr) {
-            throw NullTokenException();
+            ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_CLEAR,
+                              "Received nullptr at this "
+                              "function."};
+            throw NullTokenException(emsg);
         } else if (token->getClass() == Token::Class::Group) {
             token->clear();
         }
@@ -222,7 +230,11 @@ const std::vector<std::shared_ptr<Token>> &GroupToken::getTokens() const {
 
 void GroupToken::insert(std::shared_ptr<Token> token) {
     if (token == nullptr) {
-        throw NullTokenException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_INSERT,
+                          "Received nullptr at this "
+                          "function."};
+
+        throw NullTokenException(emsg);
     }
 
     m_tokens.push_back(token);
@@ -237,7 +249,12 @@ void GroupToken::release() {
     if (m_parent == nullptr) {
         return;
     } else if (m_parent->getClass() == Token::Class::Single) {
-        throw NotAGroupException();
+        ErrorMessage emsg{
+            name::YAML_GLOBAL_NAMESPACE, name::TOKEN_RELEASE,
+            std::format(
+                "Attempted to parse {}GroupToken but received {}SingleToken.",
+                name::YAML_GLOBAL_NAMESPACE, name::YAML_GLOBAL_NAMESPACE)};
+        throw NotAGroupException(emsg);
     }
 
     for (const auto &token : m_tokens) {
@@ -264,7 +281,10 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
     try {
         return std::static_pointer_cast<Token>(shared_from_this());
     } catch (const std::bad_weak_ptr &e) {
-        throw FailedAllocException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_GETPTR,
+                          "Failed to allocate a pointer to "
+                          "GroupToken."};
+        throw FailedAllocException(emsg);
     }
 }
 
@@ -298,7 +318,10 @@ void GroupToken::print(std::ostream &out,
 
 void GroupToken::setParent(const std::shared_ptr<Token> &parent) {
     if (parent == getPtr()) {
-        throw SelfParentInsertionException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_SETPARENT,
+                          "Attempted to set a GroupToken's parent to "
+                          "itself."};
+        throw SelfParentInsertionException(emsg);
     }
 
     m_parent = parent;
@@ -338,7 +361,9 @@ void Tokenizer::comma() {
 
 void Tokenizer::comment() {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_COMMENT,
+                          "No parent found to insert a Token into."};
+        throw EmptyGroupStackException(emsg);
     }
 
     std::shared_ptr<GroupToken> commentToken =
@@ -360,7 +385,10 @@ std::shared_ptr<GroupToken> Tokenizer::createGroupToken(
     try {
         return std::make_shared<GroupToken>(GroupToken{groupStack.top(), type});
     } catch (const std::bad_alloc &e) {
-        throw FailedAllocException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE,
+                          name::TOKENIZER_CREATEGROUPTOKEN,
+                          "Failed to allocate GroupToken."};
+        throw FailedAllocException(emsg);
     }
 }
 
@@ -374,7 +402,10 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
         return std::make_shared<SingleToken>(
             SingleToken{groupStack.top(), type});
     } catch (const std::bad_alloc &e) {
-        throw FailedAllocException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE,
+                          name::TOKENIZER_CREATESINGLETOKEN,
+                          "Failed to allocate SingleToken."};
+        throw FailedAllocException(emsg);
     }
 }
 
@@ -385,7 +416,10 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
         return std::make_shared<SingleToken>(
             SingleToken{groupStack.top(), type, std::move(data)});
     } catch (const std::bad_alloc &e) {
-        throw FailedAllocException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE,
+                          name::TOKENIZER_CREATESINGLETOKEN_2,
+                          "Failed to allocate SingleToken."};
+        throw FailedAllocException(emsg);
     }
 }
 
@@ -403,9 +437,16 @@ void Tokenizer::doubleQuote() {
 
 const std::shared_ptr<Token> &Tokenizer::getTokens() const {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "No parent found to insert a Token into."};
+        throw EmptyGroupStackException(emsg_1);
     } else if (groupStack.size() > 1) {
-        throw RootNotFoundException();
+        ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "Attempted to insert into a GroupToken that was "
+                            "not of type pone::YAML::Token::Type::Root."};
+        throw RootNotFoundException(emsg_2);
     }
 
     return groupStack.top();  // Which is always root
@@ -424,13 +465,20 @@ void Tokenizer::indent() {
 
 void Tokenizer::insertGroupToken(const Token::Type &type) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "No parent found to insert a Token into."};
+        throw EmptyGroupStackException(emsg_1);
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException("Parent GroupToken is a null pointer.");
+        ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "Parent GroupToken is null."};
+
+        throw NullTokenException(emsg_2);
     }
 
     parent->insert(createGroupToken(type));
@@ -438,14 +486,21 @@ void Tokenizer::insertGroupToken(const Token::Type &type) {
 
 void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "No parent found to insert a Token into."};
+        throw EmptyGroupStackException(emsg_1);
+    } else if (gtokPtr == nullptr) {
+        // TODO: Continue adding ErrorMessage structs
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException("YAML::yaml_tokenizer.cpp::insertGroupToken()",
-                                 "Parent GroupToken is a null pointer.");
+        ErrorMessage emsg_3{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "Parent GroupToken is null."};
+        throw NullTokenException(emsg_3);
     }
 
     if (gtokPtr != parent) {
@@ -455,15 +510,16 @@ void Tokenizer::insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr) {
 
 void Tokenizer::insertSingleToken(const Token::Type &type) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException(
-            "YAML::yaml_tokenizer.cpp::insertSingleToken(const "
-            "Token::Type &)");
-    }
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_GETTOKENS,
+                            "No parent found to insert a Token into."};
+        throw EmptyGroupStackException(emsg_1);
+    } else if (groupStack.size() < 1) {
+        ErrorMessage emsg_2{
+            name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_GETTOKENS,
+            "Missing GroupToken of type pone::YAML::Token::Type::Root."};
 
-    if (groupStack.size() < 1) {
-        throw RootNotFoundException(
-            "YAML::yaml_tokenizer.cpp::insertSingleToken(const "
-            "Token::Type &)");
+        throw RootNotFoundException(emsg_2);
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
