@@ -114,6 +114,43 @@ inline constexpr std::string_view TOKENIZER_CREATESINGLETOKEN_2 =
     "std::string&&)";
 inline constexpr std::string_view TOKENIZER_CREATESINGLETOKEN_3 =
     "Tokenizer::createSingleToken(pone::YAML::SingleToken&)";
-inline constexpr std::string_view TOKENIZER_DASH = "dash()";
+inline constexpr std::string_view TOKENIZER_DASH   = "dash()";
+inline constexpr std::string_view TOKENIZER_DQ     = "Tokenizer::doubleQuote()";
+inline constexpr std::string_view TOKENIZER_ESC    = "Tokenizer::escape()";
+inline constexpr std::string_view TOKENIZER_INDENT = "Tokenizer::indent()";
+inline constexpr std::string_view TOKENIZER_INSERTGROUPTOKEN =
+    "Tokenizer::insertGroupToken(const pone::YAML::Token::Type&)";
+inline constexpr std::string_view TOKENIZER_INSERTGROUPTOKEN_2 =
+    "Tokenizer::insertGroupToken(const "
+    "std::shared_ptr<pone::YAML::GroupToken&)";
+inline constexpr std::string_view TOKENIZER_INSERTSINGLETOKEN =
+    "Tokenizer::insertSingleToken(const "
+    "std::shared_ptr<pone::YAML::SingleToken&)";
+inline constexpr std::string_view TOKENIZER_INSERTSINGLETOKEN_2 =
+    "Tokenizer::insertSingleToken(const "
+    "std::shared_ptr<pone::YAML::SingleToken&, std::string&&)";
+inline constexpr std::string_view TOKENIZER_KEY =
+    "Tokenizer::insertSingleToken(const std::string_view&)";
+inline constexpr std::string_view TOKENIZER_LBCE = "Tokenizer::leftBrace()";
+inline constexpr std::string_view TOKENIZER_LBKT = "Tokenizer::leftBracket()";
+inline constexpr std::string_view TOKENIZER_LITERAL = "Tokenizer::literal()";
+inline constexpr std::string_view TOKENIZER_LOOKAHEAD =
+    "Tokenizer::lookahead()";
+inline constexpr std::string_view TOKENIZER_MAPPING = "Tokenizer::mapping()";
+inline constexpr std::string_view TOKENIZER_NL      = "Tokenizer::newline()";
+inline constexpr std::string_view TOKENIZER_NEXT    = "Tokenizer::next()";
+inline constexpr std::string_view TOKENIZER_NUMSIGN = "Tokenizer::numSign()";
+inline constexpr std::string_view TOKENIZER_OSYM  = "Tokenizer::otherSymbols()";
+inline constexpr std::string_view TOKENIZER_PRINT = "Tokenizer::print()";
+inline constexpr std::string_view TOKENIZER_QUOTED = "Tokenizer::quoted()";
+inline constexpr std::string_view TOKENIZER_RBCE   = "Tokenizer::rightBrace()";
+inline constexpr std::string_view TOKENIZER_RBKT = "Tokenizer::rightBracket()";
+inline constexpr std::string_view TOKENIZER_SCALAR  = "Tokenizer::scalar()";
+inline constexpr std::string_view TOKENIZER_SEQELEM = "Tokenizer::seqElement()";
+inline constexpr std::string_view TOKENIZER_SEQ     = "Tokenizer::sequence()";
+inline constexpr std::string_view TOKENIZER_SYM     = "Tokenizer::sym()";
+inline constexpr std::string_view TOKENIZER_TAB     = "Tokenizer::tab()";
+inline constexpr std::string_view TOKENIZER_VAL     = "Tokenizer::value()";
+inline constexpr std::string_view TOKENIZER_WS      = "Tokenizer::whitespace()";
 
 }  // namespace YAML::name

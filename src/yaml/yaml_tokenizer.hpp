@@ -678,9 +678,9 @@ class Tokenizer {
 
     /*! Inserts a GroupToken to a parent GroupToken.
 
-        \param gtokPtr a pointer to the GroupToken.
+        \param gtok a pointer to the GroupToken.
      */
-    void insertGroupToken(const std::shared_ptr<GroupToken> &gtokPtr);
+    void insertGroupToken(const std::shared_ptr<GroupToken> &gtok);
 
     /*! Moves and inserts a GroupToken to a parent GroupToken.
 
