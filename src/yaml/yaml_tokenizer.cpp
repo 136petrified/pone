@@ -937,8 +937,11 @@ void Tokenizer::value() {
                 sym();  // Directly check for '#'
             } else if (isQuote(m_char)) {
                 // Throw as this should not be in here
-                throw InvalidMappingException();  // TODO: Probably
-                                                  // add location
+                ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE,
+                                  name::TOKENIZER_VAL,
+                                  "Quoted value must be wrapped in a single "
+                                  "set of quotations."};
+                throw InvalidValueException(emsg);
             }
             mapping();  // check mapping first
             literal();
