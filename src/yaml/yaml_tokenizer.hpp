@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-23-2025
+ *   Modified: 10-25-2025
  */
 
 #pragma once
@@ -699,9 +699,9 @@ class Tokenizer {
 
     /*! Inserts a SingleToken to a parent GroupToken.
 
-        \param stokPtr a pointer to the SingleToken.
+        \param stok a pointer to the SingleToken.
      */
-    void insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr);
+    void insertSingleToken(const std::shared_ptr<SingleToken> &stok);
 
     /*! Processes a key Token.
      */

@@ -1,5 +1,5 @@
 /*   Created:  10-21-2025
- *   Modified: 10-24-2025
+ *   Modified: 10-25-2025
  */
 
 #pragma once
@@ -122,13 +122,16 @@ inline constexpr std::string_view TOKENIZER_INSERTGROUPTOKEN =
     "Tokenizer::insertGroupToken(const pone::YAML::Token::Type&)";
 inline constexpr std::string_view TOKENIZER_INSERTGROUPTOKEN_2 =
     "Tokenizer::insertGroupToken(const "
-    "std::shared_ptr<pone::YAML::GroupToken&)";
+    "pone::YAML::Token::Type&)";
 inline constexpr std::string_view TOKENIZER_INSERTSINGLETOKEN =
     "Tokenizer::insertSingleToken(const "
     "std::shared_ptr<pone::YAML::SingleToken&)";
 inline constexpr std::string_view TOKENIZER_INSERTSINGLETOKEN_2 =
     "Tokenizer::insertSingleToken(const "
-    "std::shared_ptr<pone::YAML::SingleToken&, std::string&&)";
+    "pone::YAML::Token::Type>&, std::string&&)";
+inline constexpr std::string_view TOKENIZER_INSERTSINGLETOKEN_3 =
+    "Tokenizer::insertSingleToken(const "
+    "std::shared_ptr<yaml::pone::SingleToken>&";
 inline constexpr std::string_view TOKENIZER_KEY =
     "Tokenizer::insertSingleToken(const std::string_view&)";
 inline constexpr std::string_view TOKENIZER_LBCE = "Tokenizer::leftBrace()";

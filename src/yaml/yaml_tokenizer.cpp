@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-24-2025
+ *   Modified: 10-25-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -10,6 +10,7 @@
 #include <utility>
 #include "yaml_const.hpp"
 #include "yaml_except.hpp"
+#include "yaml_utils.hpp"
 
 namespace YAML {
 
@@ -527,9 +528,9 @@ void Tokenizer::insertSingleToken(const Token::Type &type) {
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        ErrorMessage emsg_2 {
-            name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_GE
-        }
+        ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_INSERTSINGLETOKEN,
+                            "Parent GroupToken is null."};
         throw NullTokenException(emsg_2);
     }
 
@@ -538,44 +539,49 @@ void Tokenizer::insertSingleToken(const Token::Type &type) {
 
 void Tokenizer::insertSingleToken(const Token::Type &type, std::string &&data) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_INSERTSINGLETOKEN_2,
+                            "No parent found to insert a Token into."};
+        throw EmptyGroupStackException(emsg_1);
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException(
-            "YAML::yaml_tokenizer.cpp::"
-            "insertSingletoken(const Token::Type &, "
-            "std::string &&)",
-            "Parent GroupToken is a null pointer.");
+        ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_INSERTSINGLETOKEN_2,
+                            "Parent GroupToken is null"};
     }
 
     parent->insert(createSingleToken(type, std::move(data)));
 }
 
-void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stokPtr) {
+void Tokenizer::insertSingleToken(const std::shared_ptr<SingleToken> &stok) {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException(
-            "YAML::yaml_tokenizer.cpp::insertSingleToken(const "
-            "shared_ptr<SingleToken> &)");
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_INSERTSINGLETOKEN_3,
+                            "No parent to insert Token "
+                            "into."};
+        throw EmptyGroupStackException(emsg_1);
     }
 
     std::shared_ptr<Token> parent = groupStack.top();
 
     if (parent == nullptr) {
-        throw NullTokenException(
-            "YAML::yaml_tokenizer.cpp::insertSingleToken(const "
-            "shared_ptr<SingleToken> &)",
-            "Parent GroupToken is a null pointer.");
+        ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                            name::TOKENIZER_INSERTSINGLETOKEN_3,
+                            "Parent GroupToken is null."};
+        throw NullTokenException(emsg_2);
     }
 
-    parent->insert(stokPtr);
+    parent->insert(stok);
 }
 
 void Tokenizer::key() {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_KEY,
+                            "No parent to insert Token into."};
+        throw EmptyGroupStackException(emsg_1);
     }
 
     std::shared_ptr<GroupToken> keyToken = createGroupToken(Token::Type::Key);
@@ -593,8 +599,11 @@ void Tokenizer::key() {
             // The key failed, therefore the mapping does
             // throw malformed map exception
             // and have mapping() call catch this
-            throw InvalidKeyException("YAML::yaml_tokenizer::key()",
-                                      "No ':' found.");
+
+            ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                                name::TOKENIZER_KEY, "Missing ':' operator."};
+            throw InvalidKeyException(emsg_2);
+
         } else if (isQuote(m_char)) {
             quoted();
             return;
@@ -630,7 +639,10 @@ const char Tokenizer::lookahead() {
     int nextChar = m_ifs.peek();
     if (nextChar == std::char_traits<char>::eof()) {
         m_endOfFile = true;
-        throw EndOfIfstreamException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE,
+                          name::TOKENIZER_LOOKAHEAD,
+                          "Reached EOF on current filestream."};
+        throw EndOfIfstreamException(emsg);
     }
 
     return static_cast<char>(nextChar);
@@ -662,7 +674,9 @@ void Tokenizer::mapping() {
             whitespace();  // Consume any whitespace
         }
     } else {
-        throw InvalidMappingException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_MAPPING,
+                          "Failed to generate a mapping token."};
+        throw InvalidMappingException(emsg);
     }
 
     value();
@@ -676,7 +690,9 @@ void Tokenizer::next() {
     m_ifs.get(m_char);
     if (m_ifs.eof()) {
         m_endOfFile = true;
-        throw EndOfIfstreamException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_NEXT,
+                          "Reached EOF on current filestream."};
+        throw EndOfIfstreamException(emsg);
     }
 }
 
@@ -696,7 +712,9 @@ void Tokenizer::print(std::ostream &out) const {
 
 void Tokenizer::quoted() {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_QUOTED,
+                          "No parent to insert Token into."};
+        throw EmptyGroupStackException(emsg);
     }
 
     std::shared_ptr<GroupToken> quotedToken =
@@ -754,7 +772,9 @@ void Tokenizer::scalar() {
 
 void Tokenizer::sequence() {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg_1{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_SEQ,
+                            "No parent to insert Token into."};
+        throw EmptyGroupStackException(emsg_1);
     }
 
     std::shared_ptr<GroupToken> seqToken =
@@ -777,7 +797,11 @@ void Tokenizer::sequence() {
             whitespace();  // Consume whitespace token
         } else {
             groupStack.pop();  // Exit gracefully seqToken
-            throw InvalidSequenceException();
+            ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
+                                name::TOKENIZER_SEQ,
+                                "Failed to create a sequence "
+                                "token."};
+            throw InvalidSequenceException(emsg_2);
         }
 
         seqElement();
@@ -790,7 +814,9 @@ void Tokenizer::sequence() {
 
 void Tokenizer::seqElement() {
     if (groupStack.empty()) {
-        throw EmptyGroupStackException();
+        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_SEQELEM,
+                          "No parent to insert Token into."};
+        throw EmptyGroupStackException(emsg);
     }
 
     std::shared_ptr<GroupToken> seqElemToken =
