@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-27-2025
+ *   Modified: 10-29-2025
  */
 
 #include "yaml_tokenizer.hpp"
@@ -820,7 +820,7 @@ void Tokenizer::seqElement() {
     }
 
     std::shared_ptr<GroupToken> seqElemToken =
-        createGroupToken(Token::Type::SeqElement);
+        createGroupToken(Token::Type::SeqElement);  // Create the token
 
     groupStack.push(seqElemToken);
 
