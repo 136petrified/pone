@@ -20,14 +20,14 @@ bool isAlnum(char &c);
  * @param s a string.
  * @return true if alphanumeric, false otherwise.
  */
-bool isAlnum(std::string &s);
+bool isAlnum(const char *s);
 
 /* Checks if every character of a string is alphanumeric.
  *
  * @param s a string.
  * @return true if alphanumeric, false otherwise.
  */
-bool isAlnum(const char *s);
+bool isAlnum(std::string &s);
 
 /* Checks if a character is in the alphabet.
  *
@@ -57,6 +57,13 @@ bool isAlpha(std::string &s);
  */
 bool isDigit(char &c);
 
+/* Checks if every character of a string is alphanumeric.
+ *
+ * @param s a string.
+ * @return true if numeric, false otherwise.
+ */
+bool isDigit(const char *s);
+
 /* Checks if every character of a string is in the alphabet.
  *
  * @param s a string.
@@ -78,6 +85,13 @@ bool isQuote(char &c);
  */
 bool isSpace(char &c);
 
+/* Checks if every character of a string is alphanumeric.
+ *
+ * @param s a string.
+ * @return true if whitespace, false otherwise.
+ */
+bool isSpace(const char *s);
+
 /* Check if every character of a string is a whitespace character.
  *
  * @param s a string.
@@ -91,6 +105,13 @@ bool isSpace(std::string &s);
  * @return true if it is a punctuation mark, false otherwise.
  */
 bool isSymbol(char &c);
+
+/* Checks if every character of a string is alphanumeric.
+ *
+ * @param s a string.
+ * @return true if it is a punctuation mark, false otherwise.
+ */
+bool isSymbol(const char *s);
 
 /* Check if every character of a string is a punctuation character.
  *
