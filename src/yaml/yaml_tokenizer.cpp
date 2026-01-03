@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 10-29-2025
+ *   Modified: 01-03-2026
  */
 
 #include "yaml_tokenizer.hpp"
@@ -12,7 +12,7 @@
 #include "yaml_except.hpp"
 #include "yaml_utils.hpp"
 
-namespace YAML {
+namespace pone::YAML {
 
 Token::Token(const std::shared_ptr<Token> &parent,
              const std::string &name,
@@ -981,4 +981,4 @@ std::ostream &operator<<(std::ostream &out, const Tokenizer &tokenizer) {
 }
 
 Tokenizer::~Tokenizer() {}
-}  // namespace YAML
+}  // namespace pone::YAML

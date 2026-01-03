@@ -1,11 +1,11 @@
 /*   Created:  07-21-2025
- *   Modified: 12-28-2025
+ *   Modified: 01-03-2026
  */
 
 #include "yaml_utils.hpp"
 #include <cctype>
 
-namespace YAML {
+namespace pone::YAML {
 bool isAlnum(char &c) {
     return std::isalnum(c);
 }
@@ -119,4 +119,4 @@ bool isSymbol(std::string &s) {
 
     return true;
 }
-}  // namespace YAML
+}  // namespace pone::YAML

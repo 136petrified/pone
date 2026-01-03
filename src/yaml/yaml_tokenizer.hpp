@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 12-27-2025
+ *   Modified: 01-03-2026
  */
 
 #pragma once
@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace YAML {
+namespace pone::YAML {
 /* Abstract base class for Tokens.
  */
 class Token : public std::enable_shared_from_this<Token> {
@@ -833,4 +833,4 @@ class Tokenizer {
     friend std::ostream &operator<<(std::ostream &out,
                                     const Tokenizer &tokenizer);
 };
-}  // namespace YAML
+}  // namespace pone::YAML

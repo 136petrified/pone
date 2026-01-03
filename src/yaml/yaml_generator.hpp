@@ -1,8 +1,7 @@
 /*   Created:  07-28-2025
- *   Modified: 09-21-2025
+ *   Modified: 01-03-2026
  */
 
-#ifndef PONE_YAML_GENERATOR_HPP
-#define PONE_YAML_GENERATOR_HPP
+#pragma once
 
-#endif  // PONE_YAML_GENERATOR_HPP
+namespace pone::YAML {}  // namespace pone::YAML

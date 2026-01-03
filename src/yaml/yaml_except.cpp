@@ -1,26 +1,13 @@
 /*   Created:  09-20-2025
- *   Modified: 10-23-2025
+ *   Modified: 01-02-2026
  */
 
 #include "yaml_except.hpp"
-#include <format>
 #include <fstream>
 #include <string_view>
 #include "yaml_const.hpp"
 
-namespace YAML {
-
-ErrorMessage::ErrorMessage(const std::string_view &scope,
-                           const std::string_view &func,
-                           const std::string &msg)
-    : m_func{func}, m_msg{msg}, m_scope{scope} {
-    m_fmsg = std::format("{}{}: {}", scope, func, msg);
-}
-
-std::ostream &operator<<(std::ostream &out, const ErrorMessage &e) {
-    out << e.m_fmsg;
-    return out;
-}
+namespace pone::YAML {
 
 void logToFile(const std::string &msg) {
     std::ofstream ofs{std::string(name::ERR_FILE), std::ios::app};
@@ -85,4 +72,4 @@ SelfParentInsertionException::SelfParentInsertionException(
     const ErrorMessage &e)
     : TokenizerException(e, "SelfParentInsertionException") {}
 
-}  // namespace YAML
+}  // namespace pone::YAML

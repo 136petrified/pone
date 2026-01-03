@@ -1,12 +1,12 @@
 /*   Created:  10-21-2025
- *   Modified: 10-25-2025
+ *   Modified: 01-02-2026
  */
 
 #pragma once
 
 #include <string_view>
 
-namespace YAML::name {
+namespace pone::YAML::name {
 
 // +--------------------------------+
 // YAML global constants            +
@@ -156,4 +156,4 @@ inline constexpr std::string_view TOKENIZER_TAB     = "Tokenizer::tab()";
 inline constexpr std::string_view TOKENIZER_VAL     = "Tokenizer::value()";
 inline constexpr std::string_view TOKENIZER_WS      = "Tokenizer::whitespace()";
 
-}  // namespace YAML::name
+}  // namespace pone::YAML::name

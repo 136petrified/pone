@@ -1,12 +1,12 @@
 /*   Created:  07-21-2025
- *   Modified: 12-28-2025
+ *   Modified: 01-03-2026
  */
 
 #pragma once
 
 #include <string>
 
-namespace YAML {
+namespace pone::YAML {
 
 /* Checks if a character is alphanumeric.
  *
@@ -120,4 +120,4 @@ bool isSymbol(const char *s);
  */
 bool isSymbol(std::string &s);
 
-}  // namespace YAML
+}  // namespace pone::YAML
