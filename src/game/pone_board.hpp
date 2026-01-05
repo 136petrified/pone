@@ -8,12 +8,11 @@
 #include <functional>
 #include <memory>
 #include <unordered_map>
-
-#include "pone_avl.hpp"
 #include "pone_const.hpp"
 #include "pone_cursor.hpp"
 #include "pone_gate.hpp"
 #include "pone_tile.hpp"
+#include "utils/avl.h"
 
 namespace pone {
 
