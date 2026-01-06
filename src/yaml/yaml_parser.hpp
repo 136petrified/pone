@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 01-03-2026
+ *   Modified: 01-05-2026
  */
 
 #pragma once
@@ -18,11 +18,11 @@ class Parser {
     int m_tokenIndex;
     std::vector<std::shared_ptr<Token>> m_tokens;
     bool m_eof;
-    std::string m_file_name;
+    std::string m_fileName;
 
    public:
     Parser();
-    Parser(const Tokenizer &tokenizer, const std::string &file_name);
+    Parser(const Tokenizer &tokenizer, const std::string &fileName);
     ~Parser();
 };
 

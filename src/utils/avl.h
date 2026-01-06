@@ -1,5 +1,5 @@
 /*    Created:    06-30-2025
- *    Modified:   10-19-2025
+ *    Modified:   01-06-2026
  */
 
 #pragma once
@@ -11,8 +11,29 @@
 
 namespace pone {
 
+// +--------------------------------+
+// Default comparators              +
+// +--------------------------------+
+
+/* Default comparison functor for generic types.
+ *
+ * @note This uses the C++ standard library's
+ *       std::strong_ordering type for comparisons.
+ * @note Types passed into this functor must have
+ *       default comparison operations.
+ */
 template <typename T>
 struct DefaultComparator {
+    /* Default comparison functor for generic types.
+     *
+     * @note This uses the C++ standard library's
+     *       std::strong_ordering type for comparisons.
+     * @note Types passed into this functor must have
+     *       default comparison operations.
+     * @param lhs the left-hand side field.
+     * @param rhs the right-hand side field.
+     * @return a std::strong_ordering prvalue.
+     */
     std::strong_ordering operator()(const T &lhs, const T &rhs) {
         if (lhs < rhs)
             return std::strong_ordering::less;
@@ -22,18 +43,52 @@ struct DefaultComparator {
     }
 };
 
+/* Implementation of nodes within an AVL tree. */
 template <typename T, typename Compare = DefaultComparator<T>>
 struct AVLNode {
-    T data;
-    AVLNode *left, *right;
+    T data;                 // Node data
+    AVLNode *left, *right;  // Left and right children
     int height;
-    static Compare m_compare;
+    static Compare m_compare;  // Comparator
 
+    /* AVLNode constructor.
+     *
+     * @param key a value of type T.
+     * @param compare a comparison function for type T.
+     */
     AVLNode(const T &key, Compare compare = Compare());
 
+    // +--------------------------------+
+    // AVLNode node operations          +
+    // +--------------------------------+
+
+    /* Inserts a node into the AVL tree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param key a value of type T.
+     * @return the root.
+     */
     static AVLNode *insert(AVLNode *root, const T &key);
+
+    /* Finds and returns a node from the AVL tree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param key a value of type T.
+     * @return the root.
+     */
     static AVLNode *find(AVLNode *root, const T &key);
+
+    /* Removes a node from the AVL tree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param key a value of type T.
+     * @return the root.
+     */
     static AVLNode *remove(AVLNode *root, const T &key);
+
+    // +-------------------------------------+
+    // AVLNode tree balancing operations     +
+    // +-------------------------------------+
 
     static AVLNode *leftmost(AVLNode *root);
     static AVLNode *leftRotate(AVLNode *x);
