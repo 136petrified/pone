@@ -12,7 +12,7 @@
 namespace pone {
 
 // +--------------------------------+
-// Default comparators              +
+// + Default comparators            +
 // +--------------------------------+
 
 /* Default comparison functor for generic types.
@@ -46,12 +46,17 @@ struct DefaultComparator {
 /* Implementation of nodes within an AVL tree. */
 template <typename T, typename Compare = DefaultComparator<T>>
 struct AVLNode {
+    // +--------------------------------+
+    // + AVLNode data members           +
+    // +--------------------------------+
+
     T data;                 // Node data
     AVLNode *left, *right;  // Left and right children
     int height;
     static Compare m_compare;  // Comparator
 
     /* AVLNode constructor.
+     * Usage: AVLNode<T, Compare> *node = new AVLNode(x);
      *
      * @param key a value of type T.
      * @param compare a comparison function for type T.
@@ -59,10 +64,10 @@ struct AVLNode {
     AVLNode(const T &key, Compare compare = Compare());
 
     // +--------------------------------+
-    // AVLNode node operations          +
+    // + AVLNode node operations        +
     // +--------------------------------+
 
-    /* Inserts a node into the AVL tree.
+    /* Inserts a node into the AVL subtree.
      *
      * @param root the root of an AVL subtree.
      * @param key a value of type T.
@@ -70,7 +75,7 @@ struct AVLNode {
      */
     static AVLNode *insert(AVLNode *root, const T &key);
 
-    /* Finds and returns a node from the AVL tree.
+    /* Finds and returns a node from the AVL subtree.
      *
      * @param root the root of an AVL subtree.
      * @param key a value of type T.
@@ -78,7 +83,7 @@ struct AVLNode {
      */
     static AVLNode *find(AVLNode *root, const T &key);
 
-    /* Removes a node from the AVL tree.
+    /* Removes a node from the AVL subtree.
      *
      * @param root the root of an AVL subtree.
      * @param key a value of type T.
@@ -87,61 +92,287 @@ struct AVLNode {
     static AVLNode *remove(AVLNode *root, const T &key);
 
     // +-------------------------------------+
-    // AVLNode tree balancing operations     +
+    // + AVLNode tree balancing operations   +
     // +-------------------------------------+
 
+    /* Gets the leftmost node from an AVL subtree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param key a value of type T.
+     * @param return the leftmost AVLNode.
+     */
     static AVLNode *leftmost(AVLNode *root);
+
+    /* Rotates a subtree to the left.
+     *
+     * @param x the pivot subtree.
+     * @return the subtree replacing x.
+     */
     static AVLNode *leftRotate(AVLNode *x);
+
+    /* Rotates a subtree to the left.
+     *
+     * @param y the pivot subtree.
+     * @return the subtree replacing y.
+     */
     static AVLNode *rightRotate(AVLNode *y);
+
+    /* Sets the height of an AVLNode.
+     *
+     * @param root the root of an AVL subtree.
+     * @return the height.
+     */
     static int setHeight(AVLNode *root);
+
+    /* Gets the height of an AVLNode.
+     *
+     * @param root the root of an AVL subtree.
+     * @return the height.
+     */
     static int getHeight(AVLNode *root);
+
+    /* # of children an AVLNode has.
+     *
+     * @param root the root of an AVL subtree.
+     * @return # of children.
+     */
     static int numberChildNodes(AVLNode *root);
+
+    /* Checks if the AVLNode has a height of 0.
+     *
+     * @param root the root of an AVL subtree.
+     * @return true if root's height equal to 0,
+     *         false otherwise.
+     */
     static bool isLeaf(AVLNode *root);
+
+    /* Evaluates the balance factor of an AVL subtree.
+     *
+     * @param root the root of an AVL subtree.
+     * @return the balance factor.
+     */
     static int balanceFactor(AVLNode *root);
+
+    /* Recursively balances every subtree from the root.
+     *
+     * @param root the root of an AVL subtree.
+     * @return the balanced subtree.
+     */
     static AVLNode *rebalance(AVLNode *root);
+
+    /* Finds the successor for an AVLNode.
+     *
+     * @param target the pivot AVLNode.
+     * @return the successor AVLNode.
+     */
     static AVLNode *findSuccessor(AVLNode *target);
 
+    // +-------------------------------------+
+    // + AVLNode utility operations          +
+    // +-------------------------------------+
+
+    /* Prints the entire AVL subtree.
+     *
+     * @param root the root of an AVL subtree.
+     */
     static void print(AVLNode *root);
+
+    /* Gets a preorder traversal of the AVL subtree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param vec the vector to append values to.
+     */
     static void preorder(AVLNode *root, std::vector<T> &vec);
+
+    /* Gets an inorder traversal of the AVL subtree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param vec the vector to append values to.
+     */
     static void inorder(AVLNode *root, std::vector<T> &vec);
+
+    /* Gets the postorder traversal of the AVL subtree.
+     *
+     * @param root the root of an AVL subtree.
+     * @param vec the vector to append values to.
+     */
     static void postorder(AVLNode *root, std::vector<T> &vec);
+
+    /* Prints the preorder traversal of the AVL subtree
+     * to the console.
+     *
+     * @param root the root of an AVL subtree.
+     */
     static void printPreorder(AVLNode *root);
+
+    /* Prints the inorder traversal of the AVL subtree
+     * to the console.
+     *
+     * @param root the root of an AVL subtree.
+     */
     static void printInorder(AVLNode *root);
+
+    /* Prints the postorder traversal of the AVL subtree
+     * to the console.
+     *
+     * @param root the root of an AVL subtree.
+     */
     static void printPostorder(AVLNode *root);
 
+    // +-------------------------------------+
+    // + AVLNode comparison operations       +
+    // +-------------------------------------+
+
+    /* Less-than comparison for two AVLNodes.
+     *
+     * @param lhs the left-hand field.
+     * @param rhs the right-hand field.
+     * @return true if lhs->data < rhs->data, false otherwise.
+     */
     static bool less(const T &lhs, const T &rhs);
+
+    /* Equal-to comparison for two AVLNodes.
+     *
+     * @param lhs the left-hand field.
+     * @param rhs the right-hand field.
+     * @return true if lhs->data == rhs->data, false otherwise.
+     */
     static bool equal(const T &lhs, const T &rhs);
+
+    /* Greater-than comparison for two AVLNodes.
+     *
+     * @param lhs the left-hand field.
+     * @param rhs the right-hand field.
+     * @return true if lhs->data > rhs->data, false otherwise.
+     */
     static bool greater(const T &lhs, const T &rhs);
 };
 
+/* Implementation of AVL trees. */
 template <typename T, typename Compare = DefaultComparator<T>>
 class AVL {
+    // +--------------------------------+
+    // + AVL data members               +
+    // +--------------------------------+
+
+    AVLNode<T, Compare> *root;  // root of the AVL tree
+    Compare m_compare;          // comparator function
+    int m_size;
+
    public:
+    // +-----------------------------------+
+    // + AVL constructors and assignment   +
+    // +-----------------------------------+
+
+    /* AVL constructor.
+     *
+     * @param compare <optional> a comparator for the AVL data type.
+     */
     AVL(Compare compare = Compare());
+
+    /* AVL copy constructor.
+     *
+     * @param other the AVL tree to copy from.
+     */
     AVL(const AVL &other);
+
+    /* AVL copy assignment.
+     *
+     * @param other the AVL tree to copy from.
+     */
     AVL &operator=(const AVL &other);
 
+    // +--------------------------------+
+    // + AVL node functions             +
+    // +--------------------------------+
+
+    /* Inserts a node into the AVL tree.
+     *
+     * @param key the value of the node.
+     */
     void insert(const T &key);
+
+    /* Finds a node from the AVL tree.
+     *
+     * @param key the value of the node.
+     * @return the matching node if it exists,
+     *         nullptr otherwise.
+     */
     AVLNode<T, Compare> *find(const T &key);
+
+    /* Removes a node from the AVL tree.
+     *
+     * @note If the node cannot be found,
+     *       this function does nothing.
+     * @param key the value of the node.
+     */
     void remove(const T &key);
+
+    /* Removes every node from the AVL tree. */
     void removeAll();
 
+    // +--------------------------------+
+    // + AVL traversal functions        +
+    // +--------------------------------+
+
+    /* Gets the preorder traversal of an AVL tree.
+     *
+     * @return a vector containing node values.
+     */
     std::vector<T> preorder();
+
+    /* Gets the preorder traversal of an AVL tree.
+     *
+     * @return a vector containing node values.
+     */
     std::vector<T> inorder();
+
+    /* Gets the postorder traversal of an AVL tree.
+     *
+     * @return a vector containing node values.
+     */
     std::vector<T> postorder();
+
+    /* Prints the preorder traversal of an AVL tree to the console.
+     *
+     * @return a vector containing node values.
+     */
     void printPreorder();
+
+    /* Prints the inorder traversal of an AVL tree to the console.
+     *
+     * @return a vector containing node values.
+     */
     void printInorder();
+
+    /* Prints the postorder traversal of an avl tree to the console.
+     *
+     * @return a vector containing node values.
+     */
     void printPostorder();
 
+    // +--------------------------------+
+    // + AVL utility functions          +
+    // +--------------------------------+
+
+    /* Checks if the vector is empty.
+     *
+     * @return true if size == 0, false otherwise.
+     */
     bool empty() const;
+
+    /* Gets the number of nodes in the AVL tree.
+     *
+     * @return an int.
+     */
     int size() const;
 
-    ~AVL();
+    // +--------------------------------+
+    // + AVL destructor                 +
+    // +--------------------------------+
 
-   private:
-    AVLNode<T, Compare> *root;
-    Compare m_compare;
-    int m_size;
+    /* AVL destructor. Removes all nodes when destroyed. */
+    ~AVL();
 };
 
 template <typename T, typename Compare>
