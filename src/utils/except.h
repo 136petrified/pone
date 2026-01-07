@@ -1,5 +1,5 @@
 /*   Created:  01-03-2026
- *   Modified: 01-03-2026
+ *   Modified: 01-06-2026
  */
 
 #pragma once
@@ -10,6 +10,9 @@ namespace pone {
 
 /* Class for creating error messages. */
 struct ErrorMessage {
+    // +--------------------------------+
+    // + ErrorMessage data members      +
+    // +--------------------------------+
     std::string m_fmsg;   // The combined error message.
     std::string m_func;   // Name of the function the exception is thrown in.
     std::string m_msg;    // The error message.
@@ -30,7 +33,7 @@ struct ErrorMessage {
      * @note Friend function of the ErrorMessage class.
      * @param out the output stream.
      * @param e an ErrorMessage reference.
-     * @return a reference to the output stream.
+     * @return a reference to the output stream
      */
     friend std::ostream &operator<<(std::ostream &out, const ErrorMessage &e);
 };

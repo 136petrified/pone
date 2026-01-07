@@ -375,6 +375,7 @@ class AVL {
     ~AVL();
 };
 
+/* AVLNode comparator declaration */
 template <typename T, typename Compare>
 Compare AVLNode<T, Compare>::m_compare;
 

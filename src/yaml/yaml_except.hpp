@@ -1,5 +1,5 @@
 /*   Created:  09-20-2025
- *   Modified: 01-03-2026
+ *   Modified: 01-07-2026
  */
 
 #pragma once
@@ -13,6 +13,10 @@ namespace pone::YAML {
 // NOTE: string views should be converted to std::string
 //       whenever possible
 
+// +--------------------------------+
+// + Utility functions              +
+// +--------------------------------+
+
 /* Logs an error message to the error log file.
  *
  * @param msg an error message.
@@ -22,14 +26,22 @@ void logToFile(const std::string &msg);
 /* Abstract Base Exception class for the Tokenizer class. */
 class TokenizerException : public std::runtime_error {
     // Abstract Base Class
+
+    // +------------------------------------+
+    // + TokenizerException data members    +
+    // +------------------------------------+
+
    protected:
     ErrorMessage m_err;      // An ErrorMessage.
     std::string m_location;  // Name of the function the exception is thrown in.
     std::string m_name;      // Name of the function.
     std::string m_parent;    // Name of the parent exception assigned by derived
                              // classes.
-
    public:
+    // +------------------------------------+
+    // + TokenizerException constructors    +
+    // +------------------------------------+
+
     /* Default TokenizerException constructor.
      *
      * @note Deleted function. Do not use.
@@ -43,6 +55,10 @@ class TokenizerException : public std::runtime_error {
      * @param name the name of the function.
      */
     TokenizerException(const ErrorMessage &e, const std::string &name);
+
+    // +------------------------------------+
+    // + TokenizerException constructors    +
+    // +------------------------------------+
 
     /* Gets the name of the function where the exception was thrown.
      *
