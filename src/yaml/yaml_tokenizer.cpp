@@ -669,6 +669,8 @@ void Tokenizer::mapping() {
         return;  // Discard mapping
     }
 
+    // FIXME: Mapping should be rejected
+    //        if colon does not have ' ' after it.
     if (!isSpace(m_char)) {
         while (!isSpace(m_char)) {
             whitespace();  // Consume any whitespace
