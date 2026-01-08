@@ -1,5 +1,5 @@
 /*   Created:  10-21-2025
- *   Modified: 01-02-2026
+ *   Modified: 01-07-2026
  */
 
 #pragma once
@@ -9,7 +9,7 @@
 namespace pone::YAML::name {
 
 // +--------------------------------+
-// YAML global constants            +
+// + YAML global constants          +
 // +--------------------------------+
 
 inline constexpr std::string_view YAML_GLOBAL_NAMESPACE = "pone::YAML::";
@@ -17,7 +17,7 @@ inline constexpr std::string_view ERR_FILE              = "./errlog.txt";
 inline constexpr std::string_view NO_ERR_LOCATION       = "<unknown>";
 
 // +--------------------------------+
-// YAML Tokenizer constants         +
+// + YAML Tokenizer constants       +
 // +--------------------------------+
 
 // Start of YAML::Token constants

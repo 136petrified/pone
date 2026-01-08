@@ -23,6 +23,10 @@ namespace pone::YAML {
  */
 void logToFile(const std::string &msg);
 
+// +------------------------------------+
+// + Base exception classes             +
+// +------------------------------------+
+
 /* Abstract Base Exception class for the Tokenizer class. */
 class TokenizerException : public std::runtime_error {
     // Abstract Base Class

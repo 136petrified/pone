@@ -1,5 +1,5 @@
 /*   Created:  07-23-2025
- *   Modified: 01-03-2026
+ *   Modified: 01-07-2026
  */
 
 #pragma once
@@ -15,6 +15,8 @@
 namespace pone::YAML {
 /* Abstract base class for Tokens.
  */
+
+/* Token class. */
 class Token : public std::enable_shared_from_this<Token> {
    public:
     /* An enum of all types of Tokens. */
@@ -83,6 +85,10 @@ class Token : public std::enable_shared_from_this<Token> {
         {Type::Tab, "Tab"},
         {Type::Value, "Value"}};
 
+    // +--------------------------------+
+    // + Token constructors             +
+    // +--------------------------------+
+
     /* Default Token constructor.
      *
      * @note This constructor is deleted.
@@ -128,6 +134,10 @@ class Token : public std::enable_shared_from_this<Token> {
           const std::string &name,
           const Class &cls,
           const Type &type);
+
+    // +--------------------------------+
+    // + Token functions                +
+    // +--------------------------------+
 
     /* Gets the class of a Token.
      *
@@ -192,8 +202,9 @@ class Token : public std::enable_shared_from_this<Token> {
     /* Pure virtual token destructor */
     virtual ~Token() = 0;
 
-    // Start of basic Token functions
-    // ----------------------------------------
+    // +--------------------------------+
+    // + Token virtual functions        +
+    // +--------------------------------+
 
     /* Pure virtual function for making a deep copy of a Token pointer.
      *
@@ -226,11 +237,9 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual void setParent(const std::shared_ptr<Token> &parent) = 0;
 
-    // ----------------------------------------
-    // End of basic Token functions
-
-    // Start of basic SingleToken functions
-    // ----------------------------------------
+    // +--------------------------------+
+    // + SingleToken virtual functions  +
+    // +--------------------------------+
 
     /* A virtual function to the string data from a SingleToken.
      *
@@ -245,8 +254,9 @@ class Token : public std::enable_shared_from_this<Token> {
     virtual void setData(const std::string &data);
     // End of basic SingleToken functions
 
-    // Start of basic GroupToken functions
-    // ----------------------------------------
+    // +--------------------------------+
+    // + GroupToken virtual functions   +
+    // +--------------------------------+
 
     /* A virtual function for erasing all of the Tokens within a GroupToken.
      */
@@ -288,9 +298,6 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual size_t size() const;
 
-    // ----------------------------------------
-    // End of basic GroupToken functions
-
    protected:
     Class m_class;
     int m_depth = 0;  // root will always have depth = 0
@@ -304,9 +311,17 @@ class Token : public std::enable_shared_from_this<Token> {
  * @sa Token
  */
 class SingleToken : public Token {
+    // +--------------------------------+
+    // + SingleToken data members       +
+    // +--------------------------------+
+
     std::string m_data;
 
    public:
+    // +--------------------------------+
+    // + SingleToken constructors       +
+    // +--------------------------------+
+
     /* Default SingleToken constructor.
      *
      * @note This constructor is deleted.
@@ -358,6 +373,10 @@ class SingleToken : public Token {
      */
     SingleToken &operator=(const SingleToken &other);
 
+    // +--------------------------------+
+    // + SingleToken functions          +
+    // +--------------------------------+
+
     /* Gets string data from a SingleToken.
      *
      * @return a read-only string reference SingleToken data.
@@ -376,8 +395,9 @@ class SingleToken : public Token {
      */
     ~SingleToken();
 
-    // Pure virtual functions from Token
-    // ----------------------------------------
+    // +----------------------------------+
+    // + Overriden functions from Token   +
+    // +----------------------------------+
 
     /* Creates a deep copy of a SingleToken pointer.
      *
@@ -421,11 +441,19 @@ class SingleToken : public Token {
  * @sa Token
  */
 class GroupToken : public Token {
+    // +--------------------------------+
+    // + GroupToken data members        +
+    // +--------------------------------+
+
     // NOTE: This allows for a Token to be made up of Tokens
     std::vector<std::shared_ptr<Token>> m_tokens;
     size_t m_size;
 
    public:
+    // +--------------------------------+
+    // + GroupToken constructors        +
+    // +--------------------------------+
+
     /* Default GroupToken constructor.
      *
      * @note This constructor is deleted.
@@ -468,6 +496,10 @@ class GroupToken : public Token {
      * @sa Token
      */
     GroupToken &operator=(GroupToken &&other) noexcept;
+
+    // +--------------------------------+
+    // + GroupToken functions           +
+    // +--------------------------------+
 
     /* Clears all the elements from a GroupToken.
      *
@@ -520,7 +552,9 @@ class GroupToken : public Token {
      */
     ~GroupToken();
 
-    // Pure virtual functions from Token
+    // +----------------------------------+
+    // + Overriden functions from Token   +
+    // +----------------------------------+
 
     /* Creates a deep copy of a GroupToken pointer.
      *
@@ -557,7 +591,10 @@ class GroupToken : public Token {
 /* A class to tokenize custom YAML files for this program.
  */
 class Tokenizer {
-    /* Tokenizer data members */
+    // +----------------------------------+
+    // + Tokenizer data members           +
+    // +----------------------------------+
+
     std::string m_fileName;
     std::ifstream m_ifs;
 
@@ -575,6 +612,10 @@ class Tokenizer {
     bool m_endOfFile;
 
    public:
+    // +----------------------------------+
+    // + Tokenizer constructors           +
+    // +----------------------------------+
+
     /* Default Tokenizer constructor. */
     Tokenizer();
 
@@ -593,6 +634,10 @@ class Tokenizer {
      *
      * @return a size_t value.
      */
+
+    // +----------------------------------+
+    // + Tokenizer functions              +
+    // +----------------------------------+
 
     size_t size() const;
 

@@ -729,8 +729,8 @@ void Tokenizer::quoted() {
             literal();
         }
 
-        doubleQuote();  // Consume ending quote
-    } else if (m_char == '\'') {
+        doubleQuote();            // Consume ending quote
+    } else if (m_char == '\'') {  // This is single-quoted
         singleQuote();
 
         while (m_char != '\'') {
