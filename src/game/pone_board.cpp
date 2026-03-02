@@ -1,11 +1,9 @@
-/*   Created:    06-23-2024
- *   Modified:   10-19-2025
+/*   Created:    2024-06-23
+ *   Modified:   2026-03-02
  */
 
 #include "pone_board.hpp"
-
 #include <stdexcept>
-
 #include "pone_const.hpp"
 #include "pone_except.hpp"
 
@@ -195,7 +193,7 @@ bool Board::gateNameEquals(const GatePtr &gptr1, const GatePtr &gptr2) const {
     return compareGateByName()(gptr1, gptr2) == 0;
 }
 
-void Board::insTile(const TilePtr &tptr) {
+void Board::add(const TilePtr &tptr) {
     m_tileNamesTree.insert(tptr);
     m_tileNamesMap[tptr->getName()] = tptr;
 
@@ -204,7 +202,7 @@ void Board::insTile(const TilePtr &tptr) {
     ++m_numTiles;
 }
 
-void Board::remTile(const TilePtr &tptr) {
+void Board::remove(const TilePtr &tptr) {
     try {
         m_tileNamesTree.remove(tptr);
         m_tileNamesMap.erase(tptr->getName());
@@ -217,7 +215,7 @@ void Board::remTile(const TilePtr &tptr) {
     }
 }
 
-void Board::insGate(const GatePtr &gptr) {
+void Board::add(const GatePtr &gptr) {
     m_gateNamesTree.insert(gptr);
     m_gateNamesMap[gptr->getName()] = gptr;
 
@@ -225,7 +223,7 @@ void Board::insGate(const GatePtr &gptr) {
     m_gateTilePairsMap[gptr->getTilePair()] = gptr;
 }
 
-void Board::remGate(const GatePtr &gptr) {
+void Board::remove(const GatePtr &gptr) {
     try {
         m_gateNamesTree.remove(gptr);
         m_gateNamesMap.erase(gptr->getName());
@@ -328,7 +326,7 @@ void Board::toggleGate(const TilePtr &tptr1, const TilePtr &tptr2) {
     gptr->isActive() ? gptr->setInactive() : gptr->setActive();
 }
 
-bool Board::isGoal() const {
+bool Board::cursorOnGoal() const {
     return m_cursor.getTile()->isGoal();
 }
 
