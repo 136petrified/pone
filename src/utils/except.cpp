@@ -1,5 +1,5 @@
-/*   Created:  01-03-2026
- *   Modified: 01-03-2026
+/*   Created:  2026-01-02
+ *   Modified: 2026-03-03
  */
 
 #include "except.h"
@@ -9,13 +9,17 @@ namespace pone {
 
 ErrorMessage::ErrorMessage(const std::string_view &scope,
                            const std::string_view &func,
-                           const std::string &msg)
-    : m_func{func}, m_msg{msg}, m_scope{scope} {
-    m_fmsg = std::format("{}{}: {}", scope, func, msg);
+                           const std::string &desc)
+    : m_func{func}, m_desc{desc}, m_scope{scope} {
+    m_msg = std::format("{}{}: {}", scope, func, desc);
+}
+
+std::string ErrorMessage::getString() const {
+    return m_msg;
 }
 
 std::ostream &operator<<(std::ostream &out, const ErrorMessage &e) {
-    out << e.m_fmsg;
+    out << e.m_msg;
     return out;
 }
 

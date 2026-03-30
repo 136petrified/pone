@@ -1,5 +1,5 @@
-/*   Created:  09-08-2024
- *   Modified: 10-19-2025
+/*   Created:  2024-09-08
+ *   Modified: 2026-03-04
  */
 
 #pragma once
@@ -7,32 +7,68 @@
 #include <format>
 #include <fstream>
 #include <memory>
-
 #include "pone_board.hpp"
 #include "pone_gate.hpp"
 #include "pone_tile.hpp"
+#include "utils/except.h"
 
 namespace pone {
 
-using GatePtr                  = std::shared_ptr<Gate>;
-using TilePtr                  = std::shared_ptr<Tile>;
+using GatePtr = std::shared_ptr<Gate>;
+using TilePtr = std::shared_ptr<Tile>;
 
+/**
+ * Default filename for error output.
+ */
 constexpr std::string ERR_FILE = "./errlog.txt";
 
+/**
+ * Abstract exception class for tiles.
+ */
 class TileException : public std::runtime_error {
-    // Abstract base class
-   public:
-    TileException() = delete;
-    TileException(const std::string &name, const std::string &msg)
-        : std::runtime_error(msg), m_name{name} {}
-    virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const                = 0;
-
-   private:
     std::string m_name;
+    ErrorMessage m_msg;
+
+   public:
+    /**
+     * Default TileException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
+    TileException() = delete;
+
+    /**
+     * Constructs a TileException with the exception name and message.
+     *
+     * @param name of the exception.
+     * @param msg the error message.
+     */
+    TileException(const std::string &name, const ErrorMessage &msg)
+        : std::runtime_error(msg.getString()), m_name{name}, m_msg{msg} {}
+
+    /**
+     * Virtual function for getting a formatted
+     * error message.
+     *
+     * @returns the error message.
+     */
+    virtual std::string getString() const = 0;
+
+    /**
+     * Pure virtual function for logging the error message into the
+     * specified file.
+     *
+     * @param file_name filename to log the error to.
+     */
+    virtual void logToFile(const std::string &file_name) const = 0;
 };
 
+/**
+ * Exception class for duplicate tiles.
+ */
 class DuplicateTileCoordinatesException : public TileException {
+    std::string m_msg;
+
    public:
     DuplicateTileCoordinatesException() = delete;
 
@@ -40,23 +76,15 @@ class DuplicateTileCoordinatesException : public TileException {
         : TileException("DuplicateTileCoordinatesException", makeMessage(x, y)),
           m_msg{makeMessage(x, y)} {}
 
-    const std::string &getMessage() const override { return m_msg; }
+    std::string getString() const override {
+        return "";
+    }
 
-    void logToFile() const override {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_msg << '\n';
+    void logToFile(const std::string &file_name) const override {
+        std::ofstream ofs{file_name, std::ios::app};
+        ofs << m_msg.getString() << '\n';
         ofs.close();
     }
-
-   private:
-    std::string makeMessage(const int &x, const int &y) const {
-        return std::format(
-            "Multiple tiles with duplicate coordinates detect with the "
-            "coordinates: x: {}, y: {}",
-            x, y);
-    }
-
-    std::string m_msg;
 };
 
 class DuplicateTileNamesException : public TileException {
@@ -78,34 +106,12 @@ class DuplicateTileNamesException : public TileException {
 };
 
 class TileNotFoundException : public TileException {
-   public:
-    TileNotFoundException()
-        : TileException("TileNotFoundException", makeMessage()),
-          m_msg{makeMessage()} {}
-
-    TileNotFoundException(const std::string &tileName)
-        : TileException("TileNotFoundException", makeMessage(tileName)),
-          m_msg{makeMessage()} {}
-
-    TileNotFoundException(const int &x, const int &y)
-        : TileException("TileNotFoundException", makeMessage(x, y)),
-          m_msg{makeMessage(x, y)} {}
-
-    const std::string &getMessage() const override { return m_msg; }
-
-    void logToFile() const override {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
-        ofs << m_msg << '\n';
-        ofs.close();
-    }
-
-   private:
     std::string makeMessage() const {
         return "Null Tile (a nonexistent Tile) has been passed as an argument!";
     }
 
-    std::string makeMessage(const std::string &tileName) const {
-        return std::format("Tile \"{}\" was not found!", tileName);
+    std::string makeMessage(const std::string &tile_name) const {
+        return std::format("Tile \"{}\" was not found!", tile_name);
     }
 
     std::string makeMessage(const int &x, const int &y) const {
@@ -114,30 +120,43 @@ class TileNotFoundException : public TileException {
     }
 
     std::string m_msg;
+
+   public:
+    TileNotFoundException()
+        : TileException("TileNotFoundException", makeMessage()),
+          m_msg{makeMessage()} {}
+
+    TileNotFoundException(const std::string &tile_name)
+        : TileException("TileNotFoundException", makeMessage(tile_name)),
+          m_msg{makeMessage()} {}
+
+    TileNotFoundException(const int &x, const int &y)
+        : TileException("TileNotFoundException", makeMessage(x, y)),
+          m_msg{makeMessage(x, y)} {}
+
+    const std::string &getMessage() const override {
+        return m_msg;
+    }
+
+    void logToFile(const std::string &file_name) const override {
+        std::ofstream ofs{file_name, std::ios::app};
+        ofs << m_msg << '\n';
+        ofs.close();
+    }
 };
 
 class GateException : public std::runtime_error {
+    std::string m_name;
+
    public:
     GateException() = delete;
     GateException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_name{name} {}
-    virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const                = 0;
-
-   protected:
-    std::string m_name;
+    virtual const std::string &getMessage() const              = 0;
+    virtual void logToFile(const std::string &file_name) const = 0;
 };
 
 class DuplicateGateTilesException : public GateException {
-   public:
-    DuplicateGateTilesException() = delete;
-
-    DuplicateGateTilesException(const TilePtr &tptr1, const TilePtr &tptr2)
-        : GateException("DuplicateGateTilesException",
-                        makeMessage(tptr1, tptr2)),
-          m_msg{makeMessage(tptr1, tptr2)} {}
-
-   private:
     std::string makeMessage(const TilePtr &tptr1, const TilePtr &tptr2) {
         if (tptr1 == nullptr || tptr2 == nullptr) {
             return "Null Tile pointers passed to this exception.";
@@ -149,7 +168,16 @@ class DuplicateGateTilesException : public GateException {
             "{}, y: {}",
             tptr1->getName(), tptr2->getName());
     }
+
     std::string m_msg;
+
+   public:
+    DuplicateGateTilesException() = delete;
+
+    DuplicateGateTilesException(const TilePtr &tptr1, const TilePtr &tptr2)
+        : GateException("DuplicateGateTilesException",
+                        makeMessage(tptr1, tptr2)),
+          m_msg{makeMessage(tptr1, tptr2)} {}
 };
 
 class DuplicateGateNamesException : public GateException {
@@ -160,10 +188,12 @@ class DuplicateGateNamesException : public GateException {
         : GateException("DuplicateGateNamesException", makeMessage(name)),
           m_msg{makeMessage(name)} {}
 
-    const std::string &getMessage() const override { return m_msg; }
+    const std::string &getMessage() const override {
+        return m_msg;
+    }
 
-    void logToFile() const override {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const override {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -187,10 +217,12 @@ class GateCollisionException : public GateException {
         : GateException("GateCollisionException", makeMessage(tptr)),
           m_msg{makeMessage(tptr)} {}
 
-    const std::string &getMessage() const override { return m_msg; }
+    const std::string &getMessage() const override {
+        return m_msg;
+    }
 
-    void logToFile() const override {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const override {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -213,10 +245,12 @@ class GateEmptyException : public GateException {
         : GateException("GateEmptyException", makeMessage(gptr)),
           m_msg{makeMessage(gptr)} {}
 
-    const std::string &getMessage() const override { return m_msg; }
+    const std::string &getMessage() const override {
+        return m_msg;
+    }
 
-    void logToFile() const override {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const override {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -246,10 +280,12 @@ class GateNotFoundException : public GateException {
         : GateException("GateNotFoundException", makeMessage(tp)),
           m_msg{makeMessage(tp)} {}
 
-    const std::string &getMessage() const override { return m_msg; }
+    const std::string &getMessage() const override {
+        return m_msg;
+    }
 
-    void logToFile() const override {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const override {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -280,8 +316,8 @@ class BoardException : public std::runtime_error {
     BoardException() = delete;
     BoardException(const std::string &name, const std::string &msg)
         : std::runtime_error(msg), m_name{name} {}
-    virtual const std::string &getMessage() const = 0;
-    virtual void logToFile() const                = 0;
+    virtual const std::string &getMessage() const              = 0;
+    virtual void logToFile(const std::string &file_name) const = 0;
 
    protected:
     std::string m_name;
@@ -295,10 +331,12 @@ class GoalNotFoundException : public BoardException {
         : BoardException("GoalNotFoundException", makeMessage(b)),
           m_msg{makeMessage(b)} {}
 
-    const std::string &getMessage() const { return m_msg; }
+    const std::string &getMessage() const {
+        return m_msg;
+    }
 
-    void logToFile() const {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -344,10 +382,12 @@ class InvalidTileException : public GameException {
         : GameException("InvalidTileException", makeMessage(tptr, gptr)),
           m_msg{makeMessage(tptr, gptr)} {}
 
-    const std::string &getMessage() const { return m_msg; }
+    const std::string &getMessage() const {
+        return m_msg;
+    }
 
-    void logToFile() const {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -385,10 +425,12 @@ class NotANumberException : public GameException {
     NotANumberException(const std::string &msg)
         : GameException("NotANumberException", msg), m_msg{msg} {}
 
-    const std::string &getMessage() const { return m_msg; }
+    const std::string &getMessage() const {
+        return m_msg;
+    }
 
-    void logToFile() const {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
@@ -403,16 +445,20 @@ class InvalidDirectionException : public GameException {
         : GameException("InvalidDirectionException", makeMessage()),
           m_msg{makeMessage()} {}
 
-    const std::string &getMessage() const { return m_msg; }
+    const std::string &getMessage() const {
+        return m_msg;
+    }
 
-    void logToFile() const {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_name << ": " << m_msg << '\n';
         ofs.close();
     }
 
    private:
-    std::string makeMessage() const { return "Invalid direction!"; }
+    std::string makeMessage() const {
+        return "Invalid direction!";
+    }
 
     std::string m_msg;
 };
@@ -428,10 +474,12 @@ class InvalidValueException : public GameException {
         : GameException("InvalidValueException", makeMessage(value, msg)),
           m_msg{makeMessage(value, msg)} {}
 
-    const std::string &getMessage() const { return m_msg; }
+    const std::string &getMessage() const {
+        return m_msg;
+    }
 
-    void logToFile() const {
-        std::ofstream ofs{ERR_FILE, std::ios::app};
+    void logToFile(const std::string &file_name) const {
+        std::ofstream ofs{file_name, std::ios::app};
         ofs << m_msg << '\n';
         ofs.close();
     }

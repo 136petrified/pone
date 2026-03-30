@@ -1,5 +1,5 @@
-/*   Created:  01-03-2026
- *   Modified: 01-06-2026
+/*   Created:  2026-01-06
+ *   Modified: 2026-03-03
  */
 
 #pragma once
@@ -9,16 +9,18 @@
 namespace pone {
 
 /* Class for creating error messages. */
-struct ErrorMessage {
+class ErrorMessage {
     // +--------------------------------+
     // + ErrorMessage data members      +
     // +--------------------------------+
-    std::string m_fmsg;   // The combined error message.
+    std::string m_msg;    // The combined error message.
     std::string m_func;   // Name of the function the exception is thrown in.
-    std::string m_msg;    // The error message.
+    std::string m_desc;   // The error description.
     std::string m_scope;  // Name of the current scope.
 
-    /* Constructs an error message.
+   public:
+    /**
+     * Constructs an error message.
      *
      * @param scope the namespace of the function.
      * @param func the name of the current scope.
@@ -26,9 +28,16 @@ struct ErrorMessage {
      */
     ErrorMessage(const std::string_view &scope,
                  const std::string_view &func,
-                 const std::string &msg);
+                 const std::string &desc);
 
-    /* Defines the operator << for output.
+    /**
+     * Gets the string representation of the
+     * error message.
+     */
+    std::string getString() const;
+
+    /**
+     * Defines the operator << for output.
      *
      * @note Friend function of the ErrorMessage class.
      * @param out the output stream.

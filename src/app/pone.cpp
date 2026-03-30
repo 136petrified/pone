@@ -1,17 +1,17 @@
-/*    Created:    10-17-2025
- *    Modified:   10-17-2025
+/*    Created:    2025-10-17
+ *    Modified:   2026-03-03
  */
 
 #include "pone.hpp"
 
 using namespace godot;
 
-void GD_Pone::_bind_methods() {}
+void GodotPone::_bind_methods() {}
 
-GD_Pone::GD_Pone() : m_timePassed{0.0} {}
+GodotPone::GD_Pone() : m_timePassed{0.0} {}
 
-GD_Pone::~GD_Pone() {}
+GodotPone::~GodotPone() {}
 
-void GD_Pone::_process(double delta) {
+void GodotPone::_process(double delta) {
     m_timePassed += delta;
 }
