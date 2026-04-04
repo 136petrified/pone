@@ -1,5 +1,5 @@
 /*   Created:  2026-01-02
- *   Modified: 2026-03-03
+ *   Modified: 2026-04-03
  */
 
 #include "except.h"
@@ -14,7 +14,7 @@ ErrorMessage::ErrorMessage(const std::string_view &scope,
     m_msg = std::format("{}{}: {}", scope, func, desc);
 }
 
-std::string ErrorMessage::getString() const {
+std::string ErrorMessage::toString() const {
     return m_msg;
 }
 

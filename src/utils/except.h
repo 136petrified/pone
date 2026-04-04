@@ -1,5 +1,5 @@
 /*   Created:  2026-01-06
- *   Modified: 2026-03-03
+ *   Modified: 2026-04-03
  */
 
 #pragma once
@@ -34,7 +34,7 @@ class ErrorMessage {
      * Gets the string representation of the
      * error message.
      */
-    std::string getString() const;
+    std::string toString() const;
 
     /**
      * Defines the operator << for output.
