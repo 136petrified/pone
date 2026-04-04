@@ -64,106 +64,153 @@ class PoneException : public std::runtime_error {
 /**
  * Exception class for duplicate tiles.
  */
-class DuplicateTileCoordinatesException : public PoneException {
+class DuplicateTilesException : public PoneException {
    public:
-    DuplicateTileCoordinatesException() = delete;
+    /**
+     * Default DuplicateTilesException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
+    DuplicateTilesException() = delete;
 
-    DuplicateTileCoordinatesException(const ErrorMessage &msg)
-        : PoneException("DuplicateTileCoordinatesException", msg) {}
+    /**
+     * Constructs a DuplicateTileException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
+    DuplicateTilesException(const ErrorMessage &msg)
+        : PoneException("DuplicateTilesException", msg) {}
 };
 
-class DuplicateTileNamesException : public PoneException {
-   public:
-    DuplicateTileNamesException() = delete;
-
-    DuplicateTileNamesException(const ErrorMessage &msg)
-        : PoneException("DuplicateTileNamesException", msg) {}
-};
-
-class TileNotFoundException : public PoneException {
-   public:
-    TileNotFoundException() = delete;
-
-    TileNotFoundException(const ErrorMessage &msg)
-        : PoneException("TileNotFoundException", msg) {}
-};
-
-class DuplicateGateTilesException : public PoneException {
-   public:
-    DuplicateGateTilesException() = delete;
-
-    DuplicateGateTilesException(const ErrorMessage &msg)
-        : PoneException("DuplicateGateTilesException", msg) {}
-};
-
-class DuplicateGateNamesException : public PoneException {
-   public:
-    DuplicateGateNamesException() = delete;
-
-    DuplicateGateNamesException(const ErrorMessage &msg)
-        : PoneException("DuplicateGateNamesException", msg) {}
-};
-
-class GateCollisionException : public PoneException {
-   public:
-    GateCollisionException() = delete;
-
-    GateCollisionException(const ErrorMessage &msg)
-        : PoneException("GateCollisionException", msg) {}
-};
-
-class GateEmptyException : public PoneException {
-   public:
-    GateEmptyException() = delete;
-
-    GateEmptyException(const ErrorMessage &msg)
-        : PoneException("GateEmptyException", msg) {}
-};
-
-class GateNotFoundException : public PoneException {
-   public:
-    GateNotFoundException() = delete;
-
-    GateNotFoundException(const ErrorMessage &msg)
-        : PoneException("GateNotFoundException", msg) {}
-};
-
-class GoalNotFoundException : public PoneException {
-   public:
-    GoalNotFoundException() = delete;
-
-    GoalNotFoundException(const ErrorMessage &msg)
-        : PoneException("GoalNotFoundException", msg) {}
-};
-
+/**
+ * Exception class for invalid tiles.
+ */
 class InvalidTileException : public PoneException {
    public:
+    /**
+     * Default InvalidTileException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
     InvalidTileException() = delete;
 
+    /**
+     * Constructs an InvalidTileException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
     InvalidTileException(const ErrorMessage &msg)
         : PoneException("InvalidTileException", msg) {}
 };
 
-class NotANumberException : public PoneException {
+/**
+ * Exception class for duplicate gates.
+ */
+class DuplicateGatesException : public PoneException {
    public:
-    NotANumberException() = delete;
+    /**
+     * Default DuplicateGatesException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
+    DuplicateGatesException() = delete;
 
-    NotANumberException(const ErrorMessage &msg)
-        : PoneException("NotANumberException", msg) {}
+    /**
+     * Constructs an DuplicateGatesException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
+    DuplicateGatesException(const ErrorMessage &msg)
+        : PoneException("DuplicateGatesException", msg) {}
 };
 
+/**
+ * Exception class for invalid gates.
+ */
+class InvalidGateException : public PoneException {
+   public:
+    /**
+     * Default InvalidGateException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
+    InvalidGateException() = delete;
+
+    /**
+     * Constructs an InvalidGateException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
+    InvalidGateException(const ErrorMessage &msg)
+        : PoneException("InvalidGateException", msg) {}
+};
+
+/**
+ * Exception class for invalid boards.
+ */
+class InvalidBoardException : public PoneException {
+   public:
+    /**
+     * Default InvalidBoardException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
+    InvalidBoardException() = delete;
+
+    /**
+     * Constructs an InvalidBoardException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
+    InvalidBoardException(const ErrorMessage &msg)
+        : PoneException("InvalidBoardException", msg) {}
+};
+
+/**
+ * Exception class for invalid directions.
+ */
 class InvalidDirectionException : public PoneException {
    public:
+    /**
+     * Default InvalidDirectionException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
     InvalidDirectionException() = delete;
 
+    /**
+     * Constructs an InvalidDirectionException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
     InvalidDirectionException(const ErrorMessage &msg)
         : PoneException("InvalidDirectionException", msg) {}
 };
 
+/**
+ * Exception class for invalid numeric values.
+ */
 class InvalidValueException : public PoneException {
    public:
+    /**
+     * Default InvalidValueException constructor.
+     *
+     * @warning This constructor is deleted.
+     */
     InvalidValueException() = delete;
 
+    /**
+     * Constructs an InvalidValueException with an ErrorMessage
+     * instance.
+     *
+     * @param msg an ErrorMessage instance.
+     */
     InvalidValueException(const ErrorMessage &msg)
         : PoneException("InvalidValueException", msg) {}
 };
