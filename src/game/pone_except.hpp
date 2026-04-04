@@ -20,28 +20,28 @@ using TilePtr = std::shared_ptr<Tile>;
 constexpr std::string ERR_FILE = "./errlog.txt";
 
 /**
- * Abstract exception class for tiles.
+ * Abstract exception class for the game engine.
  */
-class TileException : public std::runtime_error {
+class PoneException : public std::runtime_error {
    protected:
     std::string m_name;
     ErrorMessage m_msg;
 
    public:
     /**
-     * Default TileException constructor.
+     * Default PoneException constructor.
      *
      * @warning This constructor is deleted.
      */
-    TileException() = delete;
+    PoneException() = delete;
 
     /**
-     * Constructs a TileException with the exception name and message.
+     * Constructs a PoneException with the exception name and message.
      *
      * @param name of the exception.
      * @param msg the error message.
      */
-    TileException(const std::string &name, const ErrorMessage &msg)
+    PoneException(const std::string &name, const ErrorMessage &msg)
         : std::runtime_error(msg.toString()), m_name{name}, m_msg{msg} {}
 
     /**
@@ -64,147 +64,108 @@ class TileException : public std::runtime_error {
 /**
  * Exception class for duplicate tiles.
  */
-class DuplicateTileCoordinatesException : public TileException {
+class DuplicateTileCoordinatesException : public PoneException {
    public:
     DuplicateTileCoordinatesException() = delete;
 
     DuplicateTileCoordinatesException(const ErrorMessage &msg)
-        : TileException("DuplicateTileCoordinatesException", msg) {}
+        : PoneException("DuplicateTileCoordinatesException", msg) {}
 };
 
-class DuplicateTileNamesException : public TileException {
+class DuplicateTileNamesException : public PoneException {
    public:
     DuplicateTileNamesException() = delete;
 
     DuplicateTileNamesException(const ErrorMessage &msg)
-        : TileException("DuplicateTileNamesException", msg) {}
+        : PoneException("DuplicateTileNamesException", msg) {}
 };
 
-class TileNotFoundException : public TileException {
+class TileNotFoundException : public PoneException {
    public:
     TileNotFoundException() = delete;
 
     TileNotFoundException(const ErrorMessage &msg)
-        : TileException("TileNotFoundException", msg) {}
+        : PoneException("TileNotFoundException", msg) {}
 };
 
-class GateException : public std::runtime_error {
-   protected:
-    std::string m_name;
-    ErrorMessage m_msg;
-
-   public:
-    GateException() = delete;
-    GateException(const std::string &name, const ErrorMessage &msg)
-        : std::runtime_error(msg.toString()), m_name{name}, m_msg{msg} {}
-    std::string toString() const;
-    void logToFile(const std::string &file_name) const;
-};
-
-class DuplicateGateTilesException : public GateException {
+class DuplicateGateTilesException : public PoneException {
    public:
     DuplicateGateTilesException() = delete;
 
     DuplicateGateTilesException(const ErrorMessage &msg)
-        : GateException("DuplicateGateTilesException", msg) {}
+        : PoneException("DuplicateGateTilesException", msg) {}
 };
 
-class DuplicateGateNamesException : public GateException {
+class DuplicateGateNamesException : public PoneException {
    public:
     DuplicateGateNamesException() = delete;
 
     DuplicateGateNamesException(const ErrorMessage &msg)
-        : GateException("DuplicateGateNamesException", msg) {}
+        : PoneException("DuplicateGateNamesException", msg) {}
 };
 
-class GateCollisionException : public GateException {
+class GateCollisionException : public PoneException {
    public:
     GateCollisionException() = delete;
 
     GateCollisionException(const ErrorMessage &msg)
-        : GateException("GateCollisionException", msg) {}
+        : PoneException("GateCollisionException", msg) {}
 };
 
-class GateEmptyException : public GateException {
+class GateEmptyException : public PoneException {
    public:
     GateEmptyException() = delete;
 
     GateEmptyException(const ErrorMessage &msg)
-        : GateException("GateEmptyException", msg) {}
+        : PoneException("GateEmptyException", msg) {}
 };
 
-class GateNotFoundException : public GateException {
+class GateNotFoundException : public PoneException {
    public:
     GateNotFoundException() = delete;
 
     GateNotFoundException(const ErrorMessage &msg)
-        : GateException("GateNotFoundException", msg) {}
+        : PoneException("GateNotFoundException", msg) {}
 };
 
-class BoardException : public std::runtime_error {
-   protected:
-    std::string m_name;
-    ErrorMessage m_msg;
-
-   public:
-    BoardException() = delete;
-    BoardException(const std::string &name, const ErrorMessage &msg)
-        : std::runtime_error(msg.toString()), m_name{name}, m_msg{msg} {}
-    std::string toString() const;
-    void logToFile(const std::string &file_name) const;
-};
-
-class GoalNotFoundException : public BoardException {
+class GoalNotFoundException : public PoneException {
    public:
     GoalNotFoundException() = delete;
 
     GoalNotFoundException(const ErrorMessage &msg)
-        : BoardException("GoalNotFoundException", msg) {}
+        : PoneException("GoalNotFoundException", msg) {}
 };
 
-class GameException : public std::runtime_error {
-   protected:
-    std::string m_name;
-    ErrorMessage m_msg;
-
-   public:
-    GameException() = delete;
-    GameException(const std::string &name, const ErrorMessage &msg)
-        : std::runtime_error(msg.toString()), m_name{name}, m_msg{msg} {}
-    std::string toString() const;
-    void logToFile() const;
-};
-
-class InvalidTileException : public GameException {
+class InvalidTileException : public PoneException {
    public:
     InvalidTileException() = delete;
 
     InvalidTileException(const ErrorMessage &msg)
-        : GameException("InvalidTileException", msg) {}
+        : PoneException("InvalidTileException", msg) {}
 };
 
-class NotANumberException : public GameException {
+class NotANumberException : public PoneException {
    public:
     NotANumberException() = delete;
 
     NotANumberException(const ErrorMessage &msg)
-        : GameException("NotANumberException", msg) {}
+        : PoneException("NotANumberException", msg) {}
 };
 
-class InvalidDirectionException : public GameException {
+class InvalidDirectionException : public PoneException {
    public:
     InvalidDirectionException() = delete;
 
     InvalidDirectionException(const ErrorMessage &msg)
-        : GameException("InvalidDirectionException", msg) {}
+        : PoneException("InvalidDirectionException", msg) {}
 };
 
-class InvalidValueException : public GameException {
+class InvalidValueException : public PoneException {
    public:
     InvalidValueException() = delete;
 
     InvalidValueException(const ErrorMessage &msg)
-        : GameException("InvalidValueException", msg) {}
+        : PoneException("InvalidValueException", msg) {}
 };
 
 }  // namespace pone
