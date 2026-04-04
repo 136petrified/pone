@@ -1,5 +1,5 @@
-/*   Created:  07-23-2025
- *   Modified: 01-07-2026
+/*   Created:  2025-07-23
+ *   Modified: 2026-04-03
  */
 
 #pragma once
@@ -414,7 +414,7 @@ class SingleToken : public Token {
      */
     std::shared_ptr<Token> getPtr() const override;
 
-    /*! Prints out every SingleToken.
+    /** Prints out every SingleToken.
      *
      * @param out the output stream.
      * @param indent the indent for the next child Token.
