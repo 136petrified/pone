@@ -1,5 +1,5 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-03-02
+ *   Modified:   2026-04-08
  */
 
 #pragma once
@@ -71,13 +71,13 @@ struct CoordPairEquals {
 /**
  * Hasher function for a tile.
  *
- * @param tptr a pointer to a tile.
+ * @param t a pointer to a tile.
  * @return a hash value.
  */
 struct TileHasher {
     // Hashes a tile by name
-    std::size_t operator()(const TilePtr tptr) const {
-        return std::hash<std::string>{}(tptr->getName());
+    std::size_t operator()(const TilePtr t) const {
+        return std::hash<std::string>{}(t->getName());
     }
 };
 
@@ -90,10 +90,10 @@ struct TileHasher {
 struct TilePairHasher {
     // Hashes a gate by using its name and its tiles' names
     std::size_t operator()(const TilePair &tp) const {
-        TilePtr tptr1 = tp.first;
-        TilePtr tptr2 = tp.second;
+        TilePtr t1 = tp.first;
+        TilePtr t2 = tp.second;
 
-        return TileHasher()(tptr1) ^ (TileHasher()(tptr2) << 1);
+        return TileHasher()(t1) ^ (TileHasher()(t2) << 1);
     }
 };
 
@@ -137,42 +137,42 @@ using TilePairGateMap =
 /**
  * Compares two Tiles by their coordinates.
  *
- * @param tptr1 the first tile.
- * @param tptr2 the second tile.
+ * @param t1 the first tile.
+ * @param t2 the second tile.
  * @return an object of type std::strong_ordering.
  */
 struct compareTileByCoords {
-    std::strong_ordering operator()(const TilePtr tptr1, const TilePtr tptr2) {
-        auto cmp = tptr1->getX() <=> tptr2->getX();
+    std::strong_ordering operator()(const TilePtr t1, const TilePtr t2) {
+        auto cmp = t1->getX() <=> t2->getX();
         if (cmp != 0)
             return cmp;
-        return tptr1->getY() <=> tptr2->getY();
+        return t1->getY() <=> t2->getY();
     }
 };
 
 /**
  * Compares two Tiles by their names.
  *
- * @param tptr1 the first tile.
- * @param tptr2 the second tile.
+ * @param t1 the first tile.
+ * @param t2 the second tile.
  * @return an object of type std::strong_ordering.
  */
 struct compareTileByName {
-    std::strong_ordering operator()(const TilePtr tptr1, const TilePtr tptr2) {
-        return tptr1->getName() <=> tptr2->getName();
+    std::strong_ordering operator()(const TilePtr t1, const TilePtr t2) {
+        return t1->getName() <=> t2->getName();
     }
 };
 
 /**
  * Compares two Tiles by their coordinates.
  *
- * @param gptr1 the first gate.
- * @param gptr2 the second gate.
+ * @param g1 the first gate.
+ * @param g2 the second gate.
  * @return an object of type std::strong_ordering.
  */
 struct compareGateByTilePair {
-    std::strong_ordering operator()(const GatePtr gptr1, const GatePtr gptr2) {
-        TilePair tp1 = gptr1->getTilePair(), tp2 = gptr2->getTilePair();
+    std::strong_ordering operator()(const GatePtr g1, const GatePtr g2) {
+        TilePair tp1 = g1->getTilePair(), tp2 = g2->getTilePair();
 
         auto cmp = compareTileByCoords()(tp1.first, tp2.first);
         if (cmp != 0)
@@ -184,13 +184,13 @@ struct compareGateByTilePair {
 /**
  * Compares two Gates by name.
  *
- * @param gptr1 a pointer to the first gate.
- * @param gptr2 a pointer to the second gate.
+ * @param g1 a pointer to the first gate.
+ * @param g2 a pointer to the second gate.
  * @return an object of type std::strong_ordering.
  */
 struct compareGateByName {
-    std::strong_ordering operator()(const GatePtr gptr1, const GatePtr gptr2) {
-        return gptr1->getName() <=> gptr2->getName();
+    std::strong_ordering operator()(const GatePtr g1, const GatePtr g2) {
+        return g1->getName() <=> g2->getName();
     }
 };
 
@@ -326,13 +326,13 @@ class Board {
     /**
      * Gets a tile in proximity to another.
      *
-     * @param tptr the source tile.
-     * @param direction the direction from the source tile to the adjacent tile.
+     * @param t the source tile.
+     * @param d the direction from the source tile to the adjacent tile.
      *
      * @return a pointer to the tile, otherwise nullptr
      *         if it cannot be found.
      */
-    TilePtr getTile(const TilePtr &tptr, const Direction &direction) const;
+    TilePtr getTile(const TilePtr &t, const Direction &d) const;
 
     /**
      * Gets a gate by name.
@@ -347,18 +347,18 @@ class Board {
     /**
      * Gets the gate by tile pair.
      */
-    GatePtr getGate(const TilePtr &tptr1, const TilePtr &tptr2) const;
+    GatePtr getGate(const TilePtr &t1, const TilePtr &t2) const;
 
     /**
      * Gets the gate from searching a tile and another tile adjacent to it.
      *
-     * @param tptr the source tile.
-     * @param direction the direction from the source tile to the adjacent tile.
+     * @param t the source tile.
+     * @param d the direction from the source tile to the adjacent tile.
      *
      * @return a pointer the gate, other nullptr
      *         if it cannot be found.
      */
-    GatePtr getGate(const TilePtr &tptr, const Direction &direction) const;
+    GatePtr getGate(const TilePtr &t, const Direction &d) const;
 
     /**
      * Gets the tile that the cursor is on.
@@ -371,81 +371,81 @@ class Board {
     /**
      * Sets the cursor to the specified tile.
      *
-     * @param tptr a pointer the destination tile.
+     * @param t a pointer the destination tile.
      */
-    void setCursorTile(const TilePtr &tptr);
+    void setCursorTile(const TilePtr &t);
 
     /**
      * Compares if two tiles are equal to each other
      * by coordinates.
      *
-     * @param tptr1 the first tile.
-     * @param tptr2 the second tile.
+     * @param t1 the first tile.
+     * @param t2 the second tile.
      *
      * @return true if the tiles are equal by coordinates,
      *              otherwise false.
      */
-    bool tileCoordEquals(const TilePtr &tptr1, const TilePtr &tptr2) const;
+    bool tileCoordEquals(const TilePtr &t1, const TilePtr &t2) const;
 
     /**
      * Compares if two tiles are equal to each other
      * by name.
      *
-     * @param tptr1 the first tile.
-     * @param tptr2 the second tile.
+     * @param t1 the first tile.
+     * @param t2 the second tile.
      *
      * @return true if the tiles are equal by name,
      *              otherwise false.
      */
-    bool tileNameEquals(const TilePtr &tptr1, const TilePtr &tptr2) const;
+    bool tileNameEquals(const TilePtr &t1, const TilePtr &t2) const;
 
     /**
      * Compares if two gates are equal by tile pairs.
      *
-     * @param gptr1 the first gate.
-     * @param gptr2 the second gate.
+     * @param g1 the first gate.
+     * @param g2 the second gate.
      *
      * @return true if the tiles are equal by tile pairs,
      *         otherwise false.
      */
-    bool gateTilePairEquals(const GatePtr &gptr1, const GatePtr &gptr2) const;
+    bool gateTilePairEquals(const GatePtr &g1, const GatePtr &g2) const;
 
     /**
      * Compares if two gates are equal by name.
      *
-     * @param gptr1 the first gate.
-     * @param gptr2 the second gate.
+     * @param g1 the first gate.
+     * @param g2 the second gate.
      *
      * @return true if the tiles are equal by name,
      *         otherwise false.
      */
-    bool gateNameEquals(const GatePtr &gptr1, const GatePtr &gptr2) const;
+    bool gateNameEquals(const GatePtr &g1, const GatePtr &g2) const;
 
     /**
      * Inserts a tile into the board.
      *
-     * @param tptr the tile to add.
+     * @param t the tile to add.
      */
-    void add(const TilePtr &tptr);
+    void add(const TilePtr &t);
 
     /**
      * Removes a tile from the board.
      *
-     * @param tptr the tile to remove.
+     * @param t the tile to remove.
      */
-    void remove(const TilePtr &tptr);
+    void remove(const TilePtr &t);
 
     /** Adds a gate to the board.
      *
-     * @param gptr the gate to add.
+     * @param g the gate to add.
      */
-    void add(const GatePtr &gptr);
+    void add(const GatePtr &g);
 
     /** Removes a gate from the board.
      *
      * @param the gate to remove.
      */
-    void remove(const GatePtr &gptr);
+    void remove(const GatePtr &g);
 
     /**
      * Loads a board via a YAML file.
@@ -487,40 +487,45 @@ class Board {
     /**
      * Moves the cursor one tile to a specified direction.
      *
-     * @param direction the direction to move towards.
+     * @param d the direction to move towards.
      */
-    void moveCursor(const Direction &direction);
+    void moveCursor(const Direction &d);
 
     /**
      * Checks if the next move toward a specified direction
      * is valid.
      *
+     * @param d the direction to check.
+     *
      * @return true if the move is valid, otherwise false.
      */
-    bool checkMove(const Direction &direction);
+    bool checkMove(const Direction &d);
 
     /**
      * Rotates a directional tile.
      * Does nothing if the tile is not directional.
      *
-     * @param tptr the tile to rotate.
-     * @param rotation the rotation to apply to the tile.
+     * @param t the tile to rotate.
+     * @param r the rotation to apply to the tile.
      */
-    void rotateTile(const TilePtr &tptr, const Rotation &rotation);
+    void rotateTile(const TilePtr &t, const Rotation &r);
 
     /**
      * Rotates a group of tiles based on color.
      *
      * @param color the color of the tiles.
-     * @param rotation the rotation to apply to the tile.
+     * @param r the rotation to apply to the tile.
      */
     void rotateTiles(const std::string &color,
-                     const Rotation &rotation);  // Rotate all tiles on board
+                     const Rotation &r);  // Rotate all tiles on board
 
     /**
      * Toggles the gate status.
+     *
+     * @param g the gate.
+     * @return true if gate is active, otherwise false.
      */
-    void toggleGate(const TilePtr &tptr1, const TilePtr &tptr2);
+    void toggleGate(const GatePtr &g);
 
     /**
      * Checks if the cursor is on the goal.

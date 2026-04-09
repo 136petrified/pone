@@ -8,6 +8,9 @@
 
 namespace pone {
 
+/* Default filename for error output. */
+constexpr std::string ERR_FILE = "./errlog.txt";
+
 /* Class for creating error messages. */
 class ErrorMessage {
     // +--------------------------------+

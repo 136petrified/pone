@@ -1,11 +1,13 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-03-02
+ *   Modified:   2026-04-08
  */
 
 #include "pone_board.hpp"
+#include <format>
 #include <stdexcept>
 #include "pone_const.hpp"
 #include "pone_except.hpp"
+#include "utils/except.h"
 
 namespace pone {
 
@@ -70,40 +72,43 @@ TilePtr Board::getCursorTile() const {
     return m_cursor.getTile();
 }
 
-void Board::setCursorTile(const TilePtr &tptr) {
-    m_cursor.setTile(tptr);
+void Board::setCursorTile(const TilePtr &t) {
+    m_cursor.setTile(t);
 }
 
 TilePtr Board::getTile(const std::string &name) const {
-    TilePtr tptr;
+    TilePtr t;
 
     try {
-        tptr = m_tileNamesMap.at(name);
+        t = m_tileNamesMap.at(name);
     } catch (const std::out_of_range &e) {
-        tptr = nullptr;
+        t = nullptr;
     }
 
-    return tptr;
+    return t;
 }
 
 TilePtr Board::getTile(const int &x, const int &y) const {
-    TilePtr tptr;
+    TilePtr t;
 
     try {
-        tptr = m_tileCoordPairsMap.at(CoordPair{x, y});
+        t = m_tileCoordPairsMap.at(CoordPair{x, y});
     } catch (const std::out_of_range &e) {
-        tptr = nullptr;
+        t = nullptr;
     }
 
-    return tptr;
+    return t;
 }
 
-TilePtr Board::getTile(const TilePtr &tptr, const Direction &direction) const {
-    if (tptr == nullptr) {
-        throw TileNotFoundException(tptr->getName());
+TilePtr Board::getTile(const TilePtr &t, const Direction &direction) const {
+    if (t == nullptr) {
+        ErrorMessage TILE_NULL{name::PONE_GLOBAL_NAME, name::BOARD_GETT3,
+                               "Tile is null."};
+
+        throw InvalidTileException(TILE_NULL);
     }
 
-    int tileX = tptr->getX(), tileY = tptr->getY();
+    int tileX = t->getX(), tileY = t->getY();
 
     switch (direction) {
         case UP:
@@ -115,49 +120,58 @@ TilePtr Board::getTile(const TilePtr &tptr, const Direction &direction) const {
         case RIGHT:
             return getTile(tileX - 1, tileY);
         default:
-            throw InvalidDirectionException();
+            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_GETT3,
+                                   "Invalid direction."};
+            throw InvalidDirectionException(INVAL_DIR);
     }
-
-    return nullptr;
 }
 
 GatePtr Board::getGate(const std::string &name) const {
-    GatePtr gptr;
+    GatePtr target;
 
     try {
-        gptr = m_gateNamesMap.at(name);
+        target = m_gateNamesMap.at(name);
     } catch (const std::out_of_range &e) {
-        gptr = nullptr;
+        target = nullptr;
     }
 
-    return gptr;
+    return target;
 }
 
-GatePtr Board::getGate(const TilePtr &tptr1, const TilePtr &tptr2) const {
-    if (tptr1 == nullptr || tptr2 == nullptr) {
-        throw InvalidTileException();  // From GateException
+GatePtr Board::getGate(const TilePtr &t1, const TilePtr &t2) const {
+    if (t1 == nullptr) {
+        ErrorMessage T1_NULL{name::PONE_GLOBAL_NAME, name::BOARD_GETG2,
+                             "First tile is null."};
+        throw InvalidTileException(T1_NULL);
+    } else if (t2 == nullptr) {
+        ErrorMessage T2_NULL{name::PONE_GLOBAL_NAME, name::BOARD_GETG2,
+                             "Second tile is null"};
+        throw InvalidTileException(T2_NULL);
     }
 
-    GatePtr gptr;
+    GatePtr g;
 
     try {
-        TilePair tp{tptr1, tptr2};
-        gptr = m_gateTilePairsMap.at(tp);
+        TilePair tp{t1, t2};
+        g = m_gateTilePairsMap.at(tp);
     } catch (const std::out_of_range &) {
-        gptr = nullptr;
+        g = nullptr;
     }
 
-    return gptr;
+    return g;
 }
 
-GatePtr Board::getGate(const TilePtr &tptr, const Direction &direction) const {
-    if (tptr == nullptr) {
-        throw InvalidTileException();
+GatePtr Board::getGate(const TilePtr &t, const Direction &d) const {
+    if (t == nullptr) {
+        ErrorMessage T_NULL{name::PONE_GLOBAL_NAME, name::BOARD_GETG3,
+                            "Tile is null."};
+
+        throw InvalidTileException(T_NULL);
     }
 
     TilePtr currentTile = m_cursor.getTile();
 
-    switch (direction) {
+    switch (d) {
         case UP:
             return getGate(currentTile, getTile(currentTile, UP));
         case DOWN:
@@ -167,7 +181,9 @@ GatePtr Board::getGate(const TilePtr &tptr, const Direction &direction) const {
         case RIGHT:
             return getGate(currentTile, getTile(currentTile, RIGHT));
         default:
-            throw InvalidDirectionException();
+            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_GETG3,
+                                   "Invalid direction."};
+            throw InvalidDirectionException(INVAL_DIR);
     }
 
     return nullptr;
@@ -176,63 +192,78 @@ GatePtr Board::getGate(const TilePtr &tptr, const Direction &direction) const {
 // Board functions
 // ---------------------------------------------
 
-bool Board::tileCoordEquals(const TilePtr &tptr1, const TilePtr &tptr2) const {
-    return compareTileByCoords()(tptr1, tptr2) == 0;
+bool Board::tileCoordEquals(const TilePtr &t1, const TilePtr &t2) const {
+    return compareTileByCoords()(t1, t2) == 0;
 }
 
-bool Board::tileNameEquals(const TilePtr &tptr1, const TilePtr &tptr2) const {
-    return compareTileByName()(tptr1, tptr2) == 0;
+bool Board::tileNameEquals(const TilePtr &t1, const TilePtr &t2) const {
+    return compareTileByName()(t1, t2) == 0;
 }
 
-bool Board::gateTilePairEquals(const GatePtr &gptr1,
-                               const GatePtr &gptr2) const {
-    return compareGateByTilePair()(gptr1, gptr2) == 0;
+bool Board::gateTilePairEquals(const GatePtr &g1, const GatePtr &g2) const {
+    return compareGateByTilePair()(g1, g2) == 0;
 }
 
-bool Board::gateNameEquals(const GatePtr &gptr1, const GatePtr &gptr2) const {
-    return compareGateByName()(gptr1, gptr2) == 0;
+bool Board::gateNameEquals(const GatePtr &g1, const GatePtr &g2) const {
+    return compareGateByName()(g1, g2) == 0;
 }
 
-void Board::add(const TilePtr &tptr) {
-    m_tileNamesTree.insert(tptr);
-    m_tileNamesMap[tptr->getName()] = tptr;
+void Board::add(const TilePtr &t) {
+    m_tileNamesTree.insert(t);
+    m_tileNamesMap[t->getName()] = t;
 
-    m_tileCoordPairsTree.insert(tptr);
-    m_tileCoordPairsMap[tptr->getCoordPair()] = tptr;
+    m_tileCoordPairsTree.insert(t);
+    m_tileCoordPairsMap[t->getCoordPair()] = t;
     ++m_numTiles;
 }
 
-void Board::remove(const TilePtr &tptr) {
-    try {
-        m_tileNamesTree.remove(tptr);
-        m_tileNamesMap.erase(tptr->getName());
+void Board::remove(const TilePtr &t) {
+    if (t == nullptr) {
+        ErrorMessage T_NULL{name::PONE_GLOBAL_NAME, name::BOARD_REM1,
+                            "Tile is null."};
+        throw InvalidTileException(T_NULL);
+    }
 
-        m_tileCoordPairsTree.remove(tptr);
-        m_tileCoordPairsMap.erase(tptr->getCoordPair());
+    try {
+        m_tileNamesTree.remove(t);
+        m_tileNamesMap.erase(t->getName());
+
+        m_tileCoordPairsTree.remove(t);
+        m_tileCoordPairsMap.erase(t->getCoordPair());
     } catch (const std::out_of_range &e) {
-        throw(tptr == nullptr) ? TileNotFoundException()
-                               : TileNotFoundException(tptr->getName());
+        ErrorMessage T_NF{
+            name::PONE_GLOBAL_NAME, name::BOARD_REM1,
+            std::format("Tile \"{}\" was not found.", t->getName())};
+        throw InvalidTileException(T_NF);
     }
 }
 
-void Board::add(const GatePtr &gptr) {
-    m_gateNamesTree.insert(gptr);
-    m_gateNamesMap[gptr->getName()] = gptr;
+void Board::add(const GatePtr &g) {
+    m_gateNamesTree.insert(g);
+    m_gateNamesMap[g->getName()] = g;
 
-    m_gateTilePairsTree.insert(gptr);
-    m_gateTilePairsMap[gptr->getTilePair()] = gptr;
+    m_gateTilePairsTree.insert(g);
+    m_gateTilePairsMap[g->getTilePair()] = g;
 }
 
-void Board::remove(const GatePtr &gptr) {
-    try {
-        m_gateNamesTree.remove(gptr);
-        m_gateNamesMap.erase(gptr->getName());
+void Board::remove(const GatePtr &g) {
+    if (g == nullptr) {
+        ErrorMessage G_NULL{name::PONE_GLOBAL_NAME, name::BOARD_REM2,
+                            "Gate is null."};
+        throw InvalidGateException(G_NULL);
+    }
 
-        m_gateTilePairsTree.remove(gptr);
-        m_gateTilePairsMap.erase(gptr->getTilePair());
+    try {
+        m_gateNamesTree.remove(g);
+        m_gateNamesMap.erase(g->getName());
+
+        m_gateTilePairsTree.remove(g);
+        m_gateTilePairsMap.erase(g->getTilePair());
     } catch (const std::out_of_range &e) {
-        throw(gptr == nullptr) ? GateNotFoundException()
-                               : GateNotFoundException(gptr->getName());
+        ErrorMessage G_NF{
+            name::PONE_GLOBAL_NAME, name::BOARD_REM2,
+            std::format("Gate \"{}\" was not found.", g->getName())};
+        throw InvalidGateException(G_NF);
     }
 }
 
@@ -248,13 +279,13 @@ void Board::save(const std::string &filename) {
 // Board commands
 // ---------------------------------------------
 
-void Board::moveCursor(const Direction &direction) {
+void Board::moveCursor(const Direction &d) {
     TilePtr prevTile = m_cursor.getTile();
     prevTile->setCursor(false);
 
     int cursorX = m_cursor.getX(), cursorY = m_cursor.getY();
 
-    switch (direction) {
+    switch (d) {
         case UP:
             m_cursor.setY(cursorY + 1);
             break;
@@ -268,62 +299,84 @@ void Board::moveCursor(const Direction &direction) {
             m_cursor.setX(cursorX + 1);
             break;
         default:
-            throw InvalidDirectionException();
+            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_MVCSR,
+                                   "Invalid direction."};
+            throw InvalidDirectionException(INVAL_DIR);
     }
 
-    m_cursor.setTile(getTile(prevTile, direction));
+    m_cursor.setTile(getTile(prevTile, d));
     m_cursor.getTile()->setCursor(true);
 }
 
-bool Board::checkMove(const Direction &direction) {
+bool Board::checkMove(const Direction &d) {
     // Check collision first
 
-    TilePtr currentTile = m_cursor.getTile();
-    TilePtr target      = getTile(currentTile, direction);
+    TilePtr curr   = m_cursor.getTile();
+    TilePtr target = getTile(curr, d);
     if (target->isCollision())
         return false;
-    else if (getGate(currentTile, target)) {
+    else if (getGate(curr, target)) {
         return false;
     }
 
     return true;
 }
 
-void Board::rotateTile(const TilePtr &tptr, const Rotation &rotation) {
+void Board::rotateTile(const TilePtr &t, const Rotation &r) {
     // ! - DO NOT rotate non-directional tiles!!!
-    if (!tptr->isDirection()) {
-        throw InvalidDirectionException();
+
+    if (t == nullptr) {
+        ErrorMessage T_NULL{name::PONE_GLOBAL_NAME, name::BOARD_ROTT,
+                            "Tile is null."};
+        throw InvalidTileException(T_NULL);
+    } else if (!t->isDirection()) {
+        ErrorMessage T_ND{name::PONE_GLOBAL_NAME, name::BOARD_ROTT,
+                          std::format("Tile \"{}\" is not a directional tile.",
+                                      t->getName())};
+        throw InvalidDirectionException(T_ND);
     }
 
-    std::string dir = tptr->getType();
+    std::string dir = t->getType();
 
-    if (rotation == CLOCKWISE)
+    if (r == CLOCKWISE)
         dir = clockwiseMap.at(dir);
-    else if (rotation == COUNTER_CLOCKWISE)
+    else if (r == COUNTER_CLOCKWISE)
         dir = counterClockwiseMap.at(dir);
 
-    tptr->setType(dir);
+    t->setType(dir);
 }
 
-void Board::rotateTiles(const std::string &color, const Rotation &rotation) {
-    for (TilePtr &tptr : m_tileNamesTree.inorder()) {
-        if (tptr->getColor() == color)
-            rotateTile(tptr, rotation);
+void Board::rotateTiles(const std::string &color, const Rotation &r) {
+    for (TilePtr &t : m_tileNamesTree.inorder()) {
+        if (t->getColor() == color)
+            rotateTile(t, r);
     }
 }
-void Board::toggleGate(const TilePtr &tptr1, const TilePtr &tptr2) {
-    if (tptr1->isCollision() || tptr2->isCollision()) {
-        throw GateCollisionException(tptr1);
+void Board::toggleGate(const GatePtr &g) {
+    if (g == nullptr) {
+        ErrorMessage G_NULL{name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
+                            "Gate is null."};
+        throw InvalidGateException(G_NULL);
     }
 
-    GatePtr gptr;
-    try {
-        gptr = m_gateTilePairsMap.at(TilePair{tptr1, tptr2});
-    } catch (std::out_of_range &e) {
-        return;
+    TilePtr t1 = g->getTile1();
+    TilePtr t2 = g->getTile2();
+
+    if (t1 == nullptr) {
+        ErrorMessage T1_NULL{
+            name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
+            std::format("First tile of gate \"{}\" is null.", g->getName())};
+        throw InvalidTileException(T1_NULL);
+    } else if (t1->isCollision()) {
+        ErrorMessage T1_COLL{
+            name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
+            std::format("First tile \"{}\" of gate \"{}\" is a collision tile, "
+                        "which is not allowed.",
+                        t1->getName(), g->getName())};
+        throw InvalidGateException(T1_COLL);
     }
 
-    gptr->isActive() ? gptr->setInactive() : gptr->setActive();
+    g->isActive() ? g->setInactive() : g->setActive();
 }
 
 bool Board::cursorOnGoal() const {

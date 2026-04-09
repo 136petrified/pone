@@ -15,11 +15,6 @@ using GatePtr = std::shared_ptr<Gate>;
 using TilePtr = std::shared_ptr<Tile>;
 
 /**
- * Default filename for error output.
- */
-constexpr std::string ERR_FILE = "./errlog.txt";
-
-/**
  * Abstract exception class for the game engine.
  */
 class PoneException : public std::runtime_error {

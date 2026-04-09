@@ -1,5 +1,5 @@
 /*   Created:    2024-08-15
- *   Modified:   2026-04-03
+ *   Modified:   2026-04-08
  */
 
 #pragma once
@@ -24,10 +24,10 @@ inline constexpr std::string_view PONE_GLOBAL_NAME = "pone::";
 
 // Start of pone::Board names
 
-inline constexpr std::string_view BOARD_BOARD_1 = "Board::Board()";
-inline constexpr std::string_view BOARD_BOARD_2 =
+inline constexpr std::string_view BOARD_BOARD1 = "Board::Board()";
+inline constexpr std::string_view BOARD_BOARD2 =
     "Board::Board(const std::string &, const int &, const int &)";
-inline constexpr std::string_view BOARD_BOARD_3 =
+inline constexpr std::string_view BOARD_BOARD3 =
     "Board::Board(const std::string &, const int &, const int &, const int &, "
     "const int &)";
 inline constexpr std::string_view BOARD_GETL = "Board::getLength()";
@@ -35,18 +35,18 @@ inline constexpr std::string_view BOARD_SETL = "Board::setLength(const int &)";
 inline constexpr std::string_view BOARD_GETNAME = "Board::getName()";
 inline constexpr std::string_view BOARD_GETW    = "Board::getWidth()";
 inline constexpr std::string_view BOARD_SETW = "Board::setWidth(const int &)";
-inline constexpr std::string_view BOARD_GETTILE_1 =
+inline constexpr std::string_view BOARD_GETT1 =
     "Board::getTile(const std::string &)";
-inline constexpr std::string_view BOARD_GETTILE_2 =
+inline constexpr std::string_view BOARD_GETT2 =
     "Board::getTile(const int &, const int &)";
-inline constexpr std::string_view BOARD_GETTILE_3 =
+inline constexpr std::string_view BOARD_GETT3 =
     "Board::getTile(const TilePtr &, const Direction &)";
-inline constexpr std::string_view BOARD_GETGATE_1 =
+inline constexpr std::string_view BOARD_GETG1 =
     "Board::getGate(const std::string &)";
-inline constexpr std::string_view BOARD_GETGATE_2 =
+inline constexpr std::string_view BOARD_GETG2 =
     "Board::getGate(const TilePtr &, const TilePtr &)";
-inline constexpr std::string_view BOARD_GETGATE_3 =
-    "Board::getGate(const TilePtr &, const Direction &direction)";
+inline constexpr std::string_view BOARD_GETG3 =
+    "Board::getGate(const TilePtr &, const Direction &)";
 inline constexpr std::string_view BOARD_GETCSRT = "Board::getCursorTile()";
 inline constexpr std::string_view BOARD_TCOORDEQ =
     "Board::tileCoordEquals(const TilePtr &, const Tile &)";
@@ -56,13 +56,11 @@ inline constexpr std::string_view BOARD_GTPEQ =
     "Board::gateTilePairEquals(const GatePtr &, const GatePtr &)";
 inline constexpr std::string_view BOARD_GNAMEEQ =
     "Board::gateNameEquals(const GatePtr &, const GatePtr &)";
-inline constexpr std::string_view BOARD_ADD_1 = "Board::add(const TilePtr &)";
-inline constexpr std::string_view BOARD_REM_1 =
-    "Board::remove(const TilePtr &)";
-inline constexpr std::string_view BOARD_ADD_2 =
+inline constexpr std::string_view BOARD_ADD1 = "Board::add(const TilePtr &)";
+inline constexpr std::string_view BOARD_REM1 = "Board::remove(const TilePtr &)";
+inline constexpr std::string_view BOARD_ADD2 =
     "Board::add(const GatePtr &gptr)";
-inline constexpr std::string_view BOARD_REM_2 =
-    "Board::remove(const GatePtr &)";
+inline constexpr std::string_view BOARD_REM2 = "Board::remove(const GatePtr &)";
 inline constexpr std::string_view BOARD_LOAD =
     "Board::load(const std::string &)";
 inline constexpr std::string_view BOARD_SAVE =
@@ -78,7 +76,7 @@ inline constexpr std::string_view BOARD_ROTT =
 inline constexpr std::string_view BOARD_ROTTS =
     "Board::rotateTiles(const std::string &, const Rotation &)";
 inline constexpr std::string_view BOARD_TOGG =
-    "Board::toggleGate(const TilePtr &, const TilePtr &)";
+    "Board::toggleGate(const GatePtr &)";
 inline constexpr std::string_view BOARD_CSRGOAL = "Board::cursorOnGoal()";
 inline constexpr std::string_view BOARD_BOARDD  = "Board::~Board()";
 
@@ -105,11 +103,11 @@ inline constexpr std::string_view CURSOR_CURSORD = "Cursor::~Cursor()";
 
 // Start of pone::Gate names
 
-inline constexpr std::string_view GATE_GATE_1 = "Gate::Gate()";
-inline constexpr std::string_view GATE_GATE_2 =
+inline constexpr std::string_view GATE_GATE1 = "Gate::Gate()";
+inline constexpr std::string_view GATE_GATE2 =
     "Gate::Gate(TilePtr, TilePtr, const std::string &, const std::string &, "
     "bool)";
-inline constexpr std::string_view GATE_GATE_3 = "Gate::Gate(const Gate &)";
+inline constexpr std::string_view GATE_GATE3  = "Gate::Gate(const Gate &)";
 inline constexpr std::string_view GATE_OPASGN = "Gate::operator=(const Gate &)";
 inline constexpr std::string_view GATE_GETT1  = "Gate::getTile1()";
 inline constexpr std::string_view GATE_SETT1  = "Gate::setTile1(TilePtr)";
