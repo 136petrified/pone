@@ -359,23 +359,6 @@ void Board::toggleGate(const GatePtr &g) {
         throw InvalidGateException(G_NULL);
     }
 
-    TilePtr t1 = g->getTile1();
-    TilePtr t2 = g->getTile2();
-
-    if (t1 == nullptr) {
-        ErrorMessage T1_NULL{
-            name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
-            std::format("First tile of gate \"{}\" is null.", g->getName())};
-        throw InvalidTileException(T1_NULL);
-    } else if (t1->isCollision()) {
-        ErrorMessage T1_COLL{
-            name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
-            std::format("First tile \"{}\" of gate \"{}\" is a collision tile, "
-                        "which is not allowed.",
-                        t1->getName(), g->getName())};
-        throw InvalidGateException(T1_COLL);
-    }
-
     g->isActive() ? g->setInactive() : g->setActive();
 }
 
