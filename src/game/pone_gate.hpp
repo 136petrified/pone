@@ -1,12 +1,11 @@
-#/*   Created:    06-29-2024
-  *   Modified:   10-19-2025
+#/*   Created:    2024-06-29
+  *   Modified:   2026-04-08
   */
 
 #pragma once
 
 #include <memory>
 #include <utility>
-
 #include "pone_tile.hpp"
 
 namespace pone {

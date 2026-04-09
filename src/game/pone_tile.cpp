@@ -1,9 +1,8 @@
-/*  Created:    06-23-2024
- *  Modified:   10-19-2025
+/*  Created:    2024-06-23
+ *  Modified:   2026-04-08
  */
 
 #include "pone_tile.hpp"
-
 #include <iostream>
 
 namespace pone {

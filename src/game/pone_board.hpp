@@ -346,6 +346,9 @@ class Board {
 
     /**
      * Gets the gate by tile pair.
+     *
+     * @return a pointer to the gate, otherwise nullptr
+     *         if it cannot be found.
      */
     GatePtr getGate(const TilePtr &t1, const TilePtr &t2) const;
 
