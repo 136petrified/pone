@@ -12,9 +12,6 @@ namespace pone {
 // + Cursor constructors              +
 // +----------------------------------+
 
-/**
- * Default cursor constructor.
- */
 Cursor::Cursor() : m_x{0}, m_y{0}, m_tile{nullptr} {}
 
 Cursor::Cursor(const int &x, const int &y) : m_x{x}, m_y{y}, m_tile{nullptr} {}
