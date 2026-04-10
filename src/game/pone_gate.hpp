@@ -1,5 +1,5 @@
 #/*   Created:    2024-06-29
-  *   Modified:   2026-04-08
+  *   Modified:   2026-04-09
   */
 
 #pragma once
@@ -15,8 +15,10 @@ using TilePair = std::pair<TilePtr, TilePtr>;
 
 class Gate {
    public:
-    // Gate constructors
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Gate constructors                +
+    // +----------------------------------+
+
     Gate();
     Gate(TilePtr t1,
          TilePtr t2,
@@ -25,12 +27,16 @@ class Gate {
          bool active = false);
     Gate(const Gate &other);
 
-    // Gate assignment
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Gate assignment                  +
+    // +----------------------------------+
+
     Gate &operator=(const Gate &other);
 
-    // Gate getter/setter functions
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Gate getters/setters             +
+    // +----------------------------------+
+
     TilePtr getTile1() const;
     void setTile1(TilePtr t1);
 
@@ -52,14 +58,18 @@ class Gate {
     void setInactive();
     void setActive();
 
-    // Gate functions
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Gate functions                   +
+    // +----------------------------------+
+
     bool isActive();
     void print(std::ostream &out) const;
     friend std::ostream &operator<<(std::ostream &out, const Gate &g);
 
-    // Gate comparison
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Gate comparison                  +
+    // +----------------------------------+
+
     bool operator==(const Gate &other) const;
     bool operator!=(const Gate &other) const;
     bool operator<(const Gate &other) const;
@@ -67,12 +77,17 @@ class Gate {
     bool operator>(const Gate &other) const;
     bool operator>=(const Gate &other) const;
 
-    // Gate destructor
+    // +----------------------------------+
+    // + Gate destructor                  +
+    // +----------------------------------+
+
     ~Gate();
 
    private:
-    // Gate attributes
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Gate attributes                  +
+    // +----------------------------------+
+
     std::string m_name;
     int m_id;
     TilePair m_tp;  // Is a gate between two adjacent tiles.

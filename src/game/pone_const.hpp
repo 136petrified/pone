@@ -89,11 +89,10 @@ inline constexpr std::string_view CURSOR_CURSOR_2 =
     "Cursor::Cursor(const int &, const int &)";
 inline constexpr std::string_view CURSOR_CURSOR_3 =
     "Cursor::Cursor(const CoordPair &)";
-inline constexpr std::string_view CURSOR_CURSOR_4 =
-    "Cursor::Cursor(const TilePtr &)";
-inline constexpr std::string_view CURSOR_GETX = "Cursor::setX(const int &)";
-inline constexpr std::string_view CURSOR_SETX = "Cursor::getY()";
-inline constexpr std::string_view CURSOR_GETY = "Cursor::setY(const int &)";
+inline constexpr std::string_view CURSOR_CURSOR_4 = "Cursor::Cursor(TilePtr)";
+inline constexpr std::string_view CURSOR_GETX     = "Cursor::setX(const int &)";
+inline constexpr std::string_view CURSOR_SETX     = "Cursor::getY()";
+inline constexpr std::string_view CURSOR_GETY     = "Cursor::setY(const int &)";
 inline constexpr std::string_view CURSOR_GETCRDPAIR = "Cursor::getCoordPair()";
 inline constexpr std::string_view CURSOR_SETT    = "Cursor::setTile(TilePtr)";
 inline constexpr std::string_view CURSOR_GETT    = "Cursor::getTile()";

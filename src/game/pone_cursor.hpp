@@ -1,5 +1,5 @@
 /*   Created:  2024-06-23
- *   Modified: 2026-03-03
+ *   Modified: 2026-04-08
  */
 
 #pragma once
@@ -42,9 +42,9 @@ class Cursor {
     /**
      * Constructs a cursor given a tile.
      *
-     * @param tptr a pointer to a tile.
+     * @param t a pointer to a tile.
      */
-    Cursor(const TilePtr &tptr);
+    Cursor(TilePtr t);
 
     // +----------------------------------+
     // + Cursor getter/setters            +
@@ -86,9 +86,9 @@ class Cursor {
     /**
      * Sets the current tile of the cursor.
      *
-     * @param tptr a pointer to the tile.
+     * @param t a pointer to the tile.
      */
-    void setTile(TilePtr tptr);
+    void setTile(TilePtr t);
 
     /**
      * Gets the current tile of the cursor.
@@ -100,12 +100,14 @@ class Cursor {
     // +----------------------------------+
     // + Cursor destructor                +
     // +----------------------------------+
+
     ~Cursor();
 
    private:
     // +----------------------------------+
     // + Cursor attributes                +
     // +----------------------------------+
+
     int m_x, m_y;    // where is the cursor?
     TilePtr m_tile;  // This is a shared_ptr to a tile!
 };

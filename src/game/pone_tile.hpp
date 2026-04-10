@@ -1,6 +1,6 @@
-#/*  Created:    2024-06-23
-  *  Modified:   2026-04-03
-  */
+/*  Created:    2024-06-23
+ *  Modified:   2026-04-09
+ */
 
 #pragma once
 
@@ -13,8 +13,10 @@ using CoordPair = std::pair<int, int>;
 
 class Tile {
    public:
-    // Tile constructors
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile constructors                +
+    // +----------------------------------+
+
     Tile();
     Tile(const std::string &name,
          const int &id,
@@ -25,12 +27,16 @@ class Tile {
          bool cursor);  // Full constructor
     Tile(const Tile &other);
 
-    // Tile assignment
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile assignment                  +
+    // +----------------------------------+
+
     Tile &operator=(const Tile &other);
 
-    // Tile getter/setter functions
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile getters/setters             +
+    // +----------------------------------+
+
     int getX() const;
     void setX(const int &x);
 
@@ -53,8 +59,10 @@ class Tile {
     std::string getName() const;
     void setName(const std::string &name);
 
-    // Tile functions
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile functions                   +
+    // +----------------------------------+
+
     bool isCollision() const;
     bool isCursor() const;
     bool isDirection() const;
@@ -66,8 +74,9 @@ class Tile {
     void print(std::ostream &out) const;
     friend std::ostream &operator<<(std::ostream &out, const Tile &t);
 
-    // Tile comparison
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile comparison                  +
+    // +----------------------------------+
 
     bool operator==(const Tile &other) const;
     bool operator!=(const Tile &other) const;
@@ -76,13 +85,17 @@ class Tile {
     bool operator>(const Tile &other) const;
     bool operator>=(const Tile &other) const;
 
-    // Tile destructor
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile destructor                  +
+    // +----------------------------------+
+
     ~Tile();
 
    private:
-    // Tile attributes
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile attributes                  +
+    // +----------------------------------+
+
     std::string m_name;
     int m_id;      // starting from 1
     int m_x, m_y;  // coordinates of the tile
@@ -90,8 +103,10 @@ class Tile {
     std::string m_type;  // what is the type of this tile?
     bool m_cursor;       // is the cursor on this tile?
 
-    // Tile constants
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Tile constants                   +
+    // +----------------------------------+
+
     const std::vector<std::string> types = {
         "empty", "gswitch", "tswitch", "key",  "up",
         "down",  "left",    "right",   "goal", "collision"};
