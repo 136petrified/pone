@@ -1,5 +1,5 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-04-08
+ *   Modified:   2026-04-19
  */
 
 #pragma once
@@ -521,14 +521,6 @@ class Board {
      */
     void rotateTiles(const std::string &color,
                      const Rotation &r);  // Rotate all tiles on board
-
-    /**
-     * Toggles the gate status.
-     *
-     * @param g the gate.
-     * @return true if gate is active, otherwise false.
-     */
-    void toggleGate(const GatePtr &g);
 
     /**
      * Checks if the cursor is on the goal.

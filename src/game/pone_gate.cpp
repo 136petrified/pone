@@ -1,5 +1,5 @@
 /*   Created:    2024-06-29
- *   Modified:   2026-04-08
+ *   Modified:   2026-04-19
  */
 
 #include "pone_gate.hpp"
@@ -7,8 +7,10 @@
 
 namespace pone {
 
-// Gate constructors
-// ---------------------------------------------
+// +----------------------------------+
+// + Gate constructors                +
+// +----------------------------------+
+
 Gate::Gate()
     : m_name{""},
       m_id{-1},
@@ -34,8 +36,10 @@ Gate::Gate(const Gate &other)
       m_color{other.m_color},
       m_active{other.m_active} {}
 
-// Gate assignment
-// ---------------------------------------------
+// +----------------------------------+
+// + Gate assignment                  +
+// +----------------------------------+
+
 Gate &Gate::operator=(const Gate &other) {
     if (this == &other)
         return *this;
@@ -49,8 +53,9 @@ Gate &Gate::operator=(const Gate &other) {
     return *this;
 }
 
-// Gate getter/setter functions
-// ---------------------------------------------
+// +----------------------------------+
+// + Gate getters/setters             +
+// +----------------------------------+
 
 TilePtr Gate::getTile1() const {
     return m_tp.first;
@@ -108,8 +113,9 @@ void Gate::setActive() {
     m_active = true;
 }
 
-// Gate functions
-// ---------------------------------------------
+// +----------------------------------+
+// + Gate operations                  +
+// +----------------------------------+
 
 bool Gate::isActive() {
     return m_active;
@@ -127,8 +133,9 @@ std::ostream &operator<<(std::ostream &out, const Gate &g) {
     return out;
 }
 
-// Gate comparison
-// ---------------------------------------------
+// +----------------------------------+
+// + Gate comparison                  +
+// +----------------------------------+
 
 bool Gate::operator==(const Gate &other) const {
     TilePair g1 = m_tp, g2 = other.m_tp;
@@ -162,8 +169,10 @@ bool Gate::operator>=(const Gate &other) const {
     return !(*this < other);
 }
 
-// Gate destructor
-// ---------------------------------------------
+// +----------------------------------+
+// + Gate destructor                  +
+// +----------------------------------+
+
 Gate::~Gate() {}
 
 }  // namespace pone

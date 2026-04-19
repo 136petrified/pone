@@ -1,5 +1,5 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-04-08
+ *   Modified:   2026-04-19
  */
 
 #include "pone_board.hpp"
@@ -11,8 +11,10 @@
 
 namespace pone {
 
-// Board constructors
-// ---------------------------------------------
+// +----------------------------------+
+// + Board constructors               +
+// +----------------------------------+
+
 Board::Board()
     : m_name{""},
       m_length{0},
@@ -41,8 +43,9 @@ Board::Board(const std::string &name,
       m_numTiles{0},
       m_cursor{Cursor{cursor_x, cursor_y}} {}
 
-// Board getter/setter functions
-// ---------------------------------------------
+// +----------------------------------+
+// + Board getters/setters            +
+// +----------------------------------+
 
 int Board::getLength() const {
     return m_length;
@@ -189,8 +192,9 @@ GatePtr Board::getGate(const TilePtr &t, const Direction &d) const {
     return nullptr;
 }
 
-// Board functions
-// ---------------------------------------------
+// +----------------------------------+
+// + Board functions                  +
+// +----------------------------------+
 
 bool Board::tileCoordEquals(const TilePtr &t1, const TilePtr &t2) const {
     return compareTileByCoords()(t1, t2) == 0;
@@ -276,8 +280,9 @@ void Board::save(const std::string &filename) {
     // Autogenerates a script
 }
 
-// Board commands
-// ---------------------------------------------
+// +----------------------------------+
+// + Board operations                 +
+// +----------------------------------+
 
 void Board::moveCursor(const Direction &d) {
     TilePtr prevTile = m_cursor.getTile();
@@ -351,15 +356,6 @@ void Board::rotateTiles(const std::string &color, const Rotation &r) {
         if (t->getColor() == color)
             rotateTile(t, r);
     }
-}
-void Board::toggleGate(const GatePtr &g) {
-    if (g == nullptr) {
-        ErrorMessage G_NULL{name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
-                            "Gate is null."};
-        throw InvalidGateException(G_NULL);
-    }
-
-    g->isActive() ? g->setInactive() : g->setActive();
 }
 
 bool Board::cursorOnGoal() const {

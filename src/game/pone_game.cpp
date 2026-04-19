@@ -1,31 +1,29 @@
 /*  Created:  2024-06-23
- *  Modified: 2026-04-08
+ *  Modified: 2026-04-19
  */
 
 #include "pone_game.hpp"
+#include "pone_const.hpp"
+#include "pone_except.hpp"
 
 namespace pone {
 
-// Game constructor
-// ---------------------------------------------
+// +----------------------------------+
+// + Game constructors                +
+// +----------------------------------+
 
 Game::Game() : board{Board()}, cursor{Cursor()} {}
 
-void Game::setup(const int &length, const int &width) {
-    /*
-    if (length > 0 && width > 0) {
-        board = Board(length, width);
-        cursor = Cursor(1, 1);
-    } else {
-        std::cerr << "[ERROR] Board cannot be empty." << std::endl;
-    } */
+// +----------------------------------+
+// + Game operations                  +
+// +----------------------------------+
+
+void Game::setup(const int &l, const int &w) {
+    // TODO: Implement this
 }
 
-// Game functions
-// ---------------------------------------------
-
-void Game::moveCursor(const int &direction) {
-    switch (direction) {
+void Game::moveCursor(const int &d) {
+    switch (d) {
         case UP:
             return;
         case DOWN:
@@ -35,9 +33,17 @@ void Game::moveCursor(const int &direction) {
         case RIGHT:
             return;
         default:
-            std::cerr << "[ERROR] Entered invalid direction." << std::endl;
-            return;
+            // FIXME: Add name to this
+            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, "placeholder",
+                                   "Invalid direction."};
+            throw InvalidDirectionException(INVAL_DIR);
     }
 }
+
+// +----------------------------------+
+// + Game destructors                 +
+// +----------------------------------+
+
+Game::~Game() {}
 
 }  // namespace pone

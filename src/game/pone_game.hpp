@@ -1,5 +1,5 @@
 /*  Created:  2024-06-23
- *  Modified: 2026-04-08
+ *  Modified: 2026-04-19
  */
 
 #pragma once
@@ -10,22 +10,25 @@
 namespace pone {
 
 class Game {
-   public:
-    // Game constructor
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Game constructors                +
+    // +----------------------------------+
     Game();
 
-    // Game getter/setter functions
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Game getter/setters              +
+    // +----------------------------------+
 
-    // Game functions
-    // ---------------------------------------------
-    void setup(const int &length, const int &width);
+    // +----------------------------------+
+    // + Game operations                  +
+    // +----------------------------------+
 
-    void moveCursor(const int &direction);
+    void setup(const int &l, const int &w);
+    void moveCursor(const int &d);
 
-    // Game destructor
-    // ---------------------------------------------
+    // +----------------------------------+
+    // + Game destructor                  +
+    // +----------------------------------+
     ~Game();
 
    private:

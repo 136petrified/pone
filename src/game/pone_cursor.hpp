@@ -1,5 +1,5 @@
 /*   Created:  2024-06-23
- *   Modified: 2026-04-08
+ *   Modified: 2026-04-19
  */
 
 #pragma once
@@ -14,6 +14,12 @@ using CoordPair = std::pair<int, int>;
 using TilePtr   = std::shared_ptr<Tile>;
 
 class Cursor {
+    // +----------------------------------+
+    // + Cursor attributes                +
+    // +----------------------------------+
+
+    int m_x, m_y;    // where is the cursor?
+    TilePtr m_tile;  // This is a shared_ptr to a tile!
    public:
     // +----------------------------------+
     // + Cursor constructors              +
@@ -102,14 +108,6 @@ class Cursor {
     // +----------------------------------+
 
     ~Cursor();
-
-   private:
-    // +----------------------------------+
-    // + Cursor attributes                +
-    // +----------------------------------+
-
-    int m_x, m_y;    // where is the cursor?
-    TilePtr m_tile;  // This is a shared_ptr to a tile!
 };
 
 }  // namespace pone

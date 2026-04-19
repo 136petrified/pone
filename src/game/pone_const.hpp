@@ -1,5 +1,5 @@
 /*   Created:    2024-08-15
- *   Modified:   2026-04-08
+ *   Modified:   2026-04-19
  */
 
 #pragma once
@@ -75,8 +75,6 @@ inline constexpr std::string_view BOARD_ROTT =
     "Board::rotateTile(const TilePtr &, const Rotation &)";
 inline constexpr std::string_view BOARD_ROTTS =
     "Board::rotateTiles(const std::string &, const Rotation &)";
-inline constexpr std::string_view BOARD_TOGG =
-    "Board::toggleGate(const GatePtr &)";
 inline constexpr std::string_view BOARD_CSRGOAL = "Board::cursorOnGoal()";
 inline constexpr std::string_view BOARD_BOARDD  = "Board::~Board()";
 

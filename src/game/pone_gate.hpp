@@ -1,5 +1,5 @@
 #/*   Created:    2024-06-29
-  *   Modified:   2026-04-09
+  *   Modified:   2026-04-19
   */
 
 #pragma once
@@ -14,6 +14,15 @@ using TilePtr  = std::shared_ptr<Tile>;
 using TilePair = std::pair<TilePtr, TilePtr>;
 
 class Gate {
+    // +----------------------------------+
+    // + Gate attributes                  +
+    // +----------------------------------+
+
+    std::string m_name;
+    int m_id;
+    TilePair m_tp;  // Is a gate between two adjacent tiles.
+    std::string m_color;
+    bool m_active;  // Is the gate on or off?
    public:
     // +----------------------------------+
     // + Gate constructors                +
@@ -82,17 +91,6 @@ class Gate {
     // +----------------------------------+
 
     ~Gate();
-
-   private:
-    // +----------------------------------+
-    // + Gate attributes                  +
-    // +----------------------------------+
-
-    std::string m_name;
-    int m_id;
-    TilePair m_tp;  // Is a gate between two adjacent tiles.
-    std::string m_color;
-    bool m_active;  // Is the gate on or off?
 };
 
 }  // namespace pone
