@@ -1,13 +1,13 @@
 /*   Created:  2025-09-20
- *   Modified: 2026-03-03
+ *   Modified: 2026-05-04
  */
 
 #pragma once
 
+#include "utils/except.h"
 #include <stdexcept>
 #include <string>
 #include <string_view>
-#include "utils/except.h"
 
 namespace pone::YAML {
 // NOTE: string views should be converted to std::string
@@ -35,13 +35,13 @@ class TokenizerException : public std::runtime_error {
     // + TokenizerException data members    +
     // +------------------------------------+
 
-   protected:
-    ErrorMessage m_err;      // An ErrorMessage.
-    std::string m_location;  // Name of the function the exception is thrown in.
-    std::string m_name;      // Name of the function.
-    std::string m_parent;    // Name of the parent exception assigned by derived
-                             // classes.
-   public:
+  protected:
+    ErrorMessage m_err;     // An ErrorMessage.
+    std::string m_location; // Name of the function the exception is thrown in.
+    std::string m_name;     // Name of the function.
+    std::string m_parent;   // Name of the parent exception assigned by derived
+                            // classes.
+  public:
     // +------------------------------------+
     // + TokenizerException constructors    +
     // +------------------------------------+
@@ -85,7 +85,7 @@ class TokenizerException : public std::runtime_error {
  * @sa TokenizerException
  */
 class EmptyGroupStackException : public TokenizerException {
-   public:
+  public:
     /* Default EmptyGroupStackException constructor.
      *
      * @note Deleted function. Do not use.
@@ -105,7 +105,7 @@ class EmptyGroupStackException : public TokenizerException {
  * @sa TokenizerException
  */
 class EndOfIfstreamException : public TokenizerException {
-   public:
+  public:
     /* Default EmptyGroupStackException constructor.
      *
      * @note Deleted function. Do not use.
@@ -125,7 +125,7 @@ class EndOfIfstreamException : public TokenizerException {
  * @sa TokenizerException
  */
 class FailedAllocException : public TokenizerException {
-   public:
+  public:
     /* Default FailedAllocException constructor.
      *
      * @note Deleted function. Do not use.
@@ -145,7 +145,7 @@ class FailedAllocException : public TokenizerException {
  * @sa TokenizerException, pone::YAML::Token::Key
  */
 class InvalidKeyException : public TokenizerException {
-   public:
+  public:
     /* Default InvalidKeyException constructor.
      *
      * @note Deleted function. Do not use.
@@ -166,7 +166,7 @@ class InvalidKeyException : public TokenizerException {
  * @sa TokenizerException
  */
 class InvalidMappingException : public TokenizerException {
-   public:
+  public:
     /* Default InvalidMappingException constructor.
      *
      * @note Deleted function. Do not use.
@@ -188,7 +188,7 @@ class InvalidMappingException : public TokenizerException {
  * @sa TokenizerException
  */
 class InvalidSequenceException : public TokenizerException {
-   public:
+  public:
     /* Default InvalidSequenceException constructor.
      *
      * @note Deleted function. Do not use.
@@ -208,7 +208,7 @@ class InvalidSequenceException : public TokenizerException {
  * @sa TokenizerException
  */
 class InvalidValueException : public TokenizerException {
-   public:
+  public:
     /* Default InvalidValueException constructor.
      *
      * @note Deleted function. Do not use.
@@ -228,7 +228,7 @@ class InvalidValueException : public TokenizerException {
  * @sa TokenizerException, pone::YAML::Token::Class::Group
  */
 class NotAGroupException : public TokenizerException {
-   public:
+  public:
     /* Default NotAGroupException constructor.
      *
      * @note Deleted function. Do not use.
@@ -248,7 +248,7 @@ class NotAGroupException : public TokenizerException {
  * @sa TokenizerException, pone::YAML::Token::Class::Single
  */
 class NotASingleException : public TokenizerException {
-   public:
+  public:
     /* Default NotASingleException constructor.
      *
      * @note Deleted function. Do not use.
@@ -268,7 +268,7 @@ class NotASingleException : public TokenizerException {
  * @sa TokenizerException
  */
 class NullTokenException : public TokenizerException {
-   public:
+  public:
     /* Default NullTokenException constructor.
      *
      * @note Deleted function. Do not use.
@@ -288,7 +288,7 @@ class NullTokenException : public TokenizerException {
  * @sa TokenizerException, pone::YAML::Token::Type::Root
  */
 class RootNotFoundException : public TokenizerException {
-   public:
+  public:
     /* Default RootNotFoundException constructor.
      *
      * @note Deleted function. Do not use.
@@ -309,7 +309,7 @@ class RootNotFoundException : public TokenizerException {
  * @sa TokenizerException
  */
 class SelfParentInsertionException : public TokenizerException {
-   public:
+  public:
     /* Default SelfParentInsertionException constructor.
      *
      * @note Deleted function. Do not use.
@@ -325,4 +325,4 @@ class SelfParentInsertionException : public TokenizerException {
     SelfParentInsertionException(const ErrorMessage &e);
 };
 
-}  // namespace pone::YAML
+} // namespace pone::YAML

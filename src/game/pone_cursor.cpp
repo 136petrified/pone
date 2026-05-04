@@ -1,5 +1,5 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-04-09
+ *   Modified:   2026-05-04
  */
 
 #include "pone_cursor.hpp"
@@ -21,13 +21,13 @@ Cursor::Cursor(const CoordPair &crds)
 
 Cursor::Cursor(TilePtr t) {
     if (t == nullptr) {
-        ErrorMessage T_NULL{name::PONE_GLOBAL_NAME, name::BOARD_TOGG,
+        ErrorMessage T_NULL{name::PONE_GLOBAL_NAME, name::CURSOR_CURSOR_4,
                             "Tile is null."};
         throw InvalidTileException(T_NULL);
     }
 
-    m_x    = t->getX();
-    m_y    = t->getY();
+    m_x = t->getX();
+    m_y = t->getY();
     m_tile = nullptr;
 }
 
@@ -69,4 +69,4 @@ TilePtr Cursor::getTile() const {
 
 Cursor::~Cursor() {}
 
-}  // namespace pone
+} // namespace pone

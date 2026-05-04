@@ -1,5 +1,5 @@
 /*   Created:  2026-01-02
- *   Modified: 2026-04-03
+ *   Modified: 2026-05-04
  */
 
 #include "except.h"
@@ -23,4 +23,4 @@ std::ostream &operator<<(std::ostream &out, const ErrorMessage &e) {
     return out;
 }
 
-}  // namespace pone
+} // namespace pone

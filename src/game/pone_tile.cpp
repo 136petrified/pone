@@ -1,5 +1,5 @@
 /*  Created:    2024-06-23
- *  Modified:   2026-04-08
+ *  Modified:   2026-05-04
  */
 
 #include "pone_tile.hpp"
@@ -10,47 +10,27 @@ namespace pone {
 // Tile constructors
 // ---------------------------------------------
 Tile::Tile()
-    : m_name{""},
-      m_id{0},
-      m_x{0},
-      m_y{0},
-      m_color{"none"},
-      m_type{"empty"},
+    : m_name{""}, m_id{0}, m_x{0}, m_y{0}, m_color{"none"}, m_type{"empty"},
       m_cursor{false} {}
 
-Tile::Tile(const std::string &name,
-           const int &id,
-           const int &x,
-           const int &y,
-           const std::string &color,
-           const std::string &type,
-           bool cursor)
-    : m_name{name},
-      m_id{id},
-      m_x{x},
-      m_y{y},
-      m_color{color},
-      m_type{type},
+Tile::Tile(const std::string &name, const int &id, const int &x, const int &y,
+           const std::string &color, const std::string &type, bool cursor)
+    : m_name{name}, m_id{id}, m_x{x}, m_y{y}, m_color{color}, m_type{type},
       m_cursor{cursor} {}
 
 Tile::Tile(const Tile &other)
-    : m_name{other.m_name},
-      m_id{other.m_id},
-      m_x{other.m_x},
-      m_y{other.m_y},
-      m_color{other.m_color},
-      m_type{other.m_type},
-      m_cursor{other.m_cursor} {}
+    : m_name{other.m_name}, m_id{other.m_id}, m_x{other.m_x}, m_y{other.m_y},
+      m_color{other.m_color}, m_type{other.m_type}, m_cursor{other.m_cursor} {}
 
 // Tile assignment
 // ---------------------------------------------
 Tile &Tile::operator=(const Tile &other) {
-    m_name   = other.m_name;
-    m_id     = other.m_id;
-    m_x      = other.m_x;
-    m_y      = other.m_y;
-    m_color  = other.m_color;
-    m_type   = other.m_type;
+    m_name = other.m_name;
+    m_id = other.m_id;
+    m_x = other.m_x;
+    m_y = other.m_y;
+    m_color = other.m_color;
+    m_type = other.m_type;
     m_cursor = other.m_cursor;
     return *this;
 }
@@ -201,4 +181,4 @@ bool Tile::operator>=(const Tile &other) const {
 // ---------------------------------------------
 Tile::~Tile() {}
 
-}  // namespace pone
+} // namespace pone

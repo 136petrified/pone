@@ -1,10 +1,10 @@
 /*    Created:    2025-06-30
- *    Modified:   2025-04-08
+ *    Modified:   2025-05-04
  */
 
 #pragma once
 
-#include <algorithm>  // std::max
+#include <algorithm> // std::max
 #include <compare>
 #include <iostream>
 #include <vector>
@@ -22,8 +22,7 @@ namespace pone {
  * @note Types passed into this functor must have
  *       default comparison operations.
  */
-template <typename T>
-struct DefaultComparator {
+template <typename T> struct DefaultComparator {
     /* Default comparison functor for generic types.
      *
      * @note This uses the C++ standard library's
@@ -44,16 +43,15 @@ struct DefaultComparator {
 };
 
 /* Implementation of nodes within an AVL tree. */
-template <typename T, typename Compare = DefaultComparator<T>>
-struct AVLNode {
+template <typename T, typename Compare = DefaultComparator<T>> struct AVLNode {
     // +--------------------------------+
     // + AVLNode data members           +
     // +--------------------------------+
 
-    T data;                 // Node data
-    AVLNode *left, *right;  // Left and right children
+    T data;                // Node data
+    AVLNode *left, *right; // Left and right children
     int height;
-    static Compare m_compare;  // Comparator
+    static Compare m_compare; // Comparator
 
     /* AVLNode constructor.
      * Usage: AVLNode<T, Compare> *node = new AVLNode(x);
@@ -249,17 +247,16 @@ struct AVLNode {
 };
 
 /* Implementation of AVL trees. */
-template <typename T, typename Compare = DefaultComparator<T>>
-class AVL {
+template <typename T, typename Compare = DefaultComparator<T>> class AVL {
     // +--------------------------------+
     // + AVL data members               +
     // +--------------------------------+
 
-    AVLNode<T, Compare> *root;  // root of the AVL tree
-    Compare m_compare;          // comparator function
+    AVLNode<T, Compare> *root; // root of the AVL tree
+    Compare m_compare;         // comparator function
     int m_size;
 
-   public:
+  public:
     // +-----------------------------------+
     // + AVL constructors and assignment   +
     // +-----------------------------------+
@@ -376,8 +373,7 @@ class AVL {
 };
 
 /* AVLNode comparator declaration */
-template <typename T, typename Compare>
-Compare AVLNode<T, Compare>::m_compare;
+template <typename T, typename Compare> Compare AVLNode<T, Compare>::m_compare;
 
 template <typename T, typename Compare>
 AVLNode<T, Compare>::AVLNode(const T &key, Compare compare)
@@ -422,20 +418,20 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::remove(AVLNode<T, Compare> *root,
     if (equal(key, root->data)) {
         AVLNode<T, Compare> *newRoot, *succ;
         switch (numberChildNodes(root)) {
-            case 0:
-                delete root;
-                return nullptr;
-            case 1:
-                newRoot = (root->left != nullptr) ? root->left : root->right;
-                delete root;
-                root = newRoot;
-                break;
-            case 2:
-                succ        = leftmost(root->right);
-                T succData  = succ->data;
-                root->right = remove(root->right, succData);
-                root->data  = succData;
-                break;
+        case 0:
+            delete root;
+            return nullptr;
+        case 1:
+            newRoot = (root->left != nullptr) ? root->left : root->right;
+            delete root;
+            root = newRoot;
+            break;
+        case 2:
+            succ = leftmost(root->right);
+            T succData = succ->data;
+            root->right = remove(root->right, succData);
+            root->data = succData;
+            break;
         }
     } else if (less(key, root->data)) {
         root->left = remove(root->left, key);
@@ -460,23 +456,23 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::leftmost(AVLNode<T, Compare> *root) {
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::leftRotate(AVLNode<T, Compare> *x) {
     AVLNode<T, Compare> *y = x->right;
-    x->right               = y->left;
-    y->left                = x;
+    x->right = y->left;
+    y->left = x;
 
     setHeight(x);
     setHeight(y);
-    return y;  // parent of x will be assigned y
+    return y; // parent of x will be assigned y
 }
 
 template <typename T, typename Compare>
 AVLNode<T, Compare> *AVLNode<T, Compare>::rightRotate(AVLNode<T, Compare> *y) {
     AVLNode<T, Compare> *x = y->left;
-    y->left                = x->right;
-    x->right               = y;
+    y->left = x->right;
+    x->right = y;
 
     setHeight(y);
     setHeight(x);
-    return x;  // parent of y will be assigned x
+    return x; // parent of y will be assigned x
 }
 
 template <typename T, typename Compare>
@@ -550,7 +546,7 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::rebalance(AVLNode<T, Compare> *root) {
     if (root == nullptr)
         return nullptr;
 
-    int bf  = AVLNode<T, Compare>::balanceFactor(root);
+    int bf = AVLNode<T, Compare>::balanceFactor(root);
     int bfl = AVLNode<T, Compare>::balanceFactor(root->left);
     int bfr = AVLNode<T, Compare>::balanceFactor(root->right);
     // bf = height(right) - height(left)
@@ -558,7 +554,7 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::rebalance(AVLNode<T, Compare> *root) {
     if (bf == 0) {
         return root;
     } else if (bf < -1 || bf > 1) {
-        if (bf < -1) {  // This means that the left subtree is higher
+        if (bf < -1) { // This means that the left subtree is higher
             // Do right rotation
             if (bfl > 0) {
                 root->left = AVLNode<T, Compare>::leftRotate(root->left);
@@ -578,8 +574,8 @@ AVLNode<T, Compare> *AVLNode<T, Compare>::rebalance(AVLNode<T, Compare> *root) {
 }
 
 template <typename T, typename Compare>
-AVLNode<T, Compare> *AVLNode<T, Compare>::findSuccessor(
-    AVLNode<T, Compare> *target) {
+AVLNode<T, Compare> *
+AVLNode<T, Compare>::findSuccessor(AVLNode<T, Compare> *target) {
     if (target == nullptr)
         return nullptr;
     return leftmost(target->right);
@@ -669,8 +665,7 @@ void AVL<T, Compare>::remove(const T &key) {
     --m_size;
 }
 
-template <typename T, typename Compare>
-void AVL<T, Compare>::removeAll() {
+template <typename T, typename Compare> void AVL<T, Compare>::removeAll() {
     while (!empty())
         remove(root->data);
 }
@@ -696,34 +691,28 @@ std::vector<T> AVL<T, Compare>::postorder() {
     return vec;
 }
 
-template <typename T, typename Compare>
-void AVL<T, Compare>::printPreorder() {
+template <typename T, typename Compare> void AVL<T, Compare>::printPreorder() {
     AVLNode<T, Compare>::printPreorder(root);
 }
 
-template <typename T, typename Compare>
-void AVL<T, Compare>::printInorder() {
+template <typename T, typename Compare> void AVL<T, Compare>::printInorder() {
     AVLNode<T, Compare>::printInorder(root);
 }
 
-template <typename T, typename Compare>
-void AVL<T, Compare>::printPostorder() {
+template <typename T, typename Compare> void AVL<T, Compare>::printPostorder() {
     AVLNode<T, Compare>::printPostorder(root);
 }
 
-template <typename T, typename Compare>
-bool AVL<T, Compare>::empty() const {
+template <typename T, typename Compare> bool AVL<T, Compare>::empty() const {
     return root == nullptr;
 }
 
-template <typename T, typename Compare>
-int AVL<T, Compare>::size() const {
+template <typename T, typename Compare> int AVL<T, Compare>::size() const {
     return m_size;
 }
 
-template <typename T, typename Compare>
-AVL<T, Compare>::~AVL() {
+template <typename T, typename Compare> AVL<T, Compare>::~AVL() {
     removeAll();
 }
 
-}  // namespace pone
+} // namespace pone

@@ -1,13 +1,13 @@
 /*   Created:  2024-09-08
- *   Modified: 2026-04-03
+ *   Modified: 2026-05-04
  */
 
 #pragma once
 
-#include <memory>
 #include "pone_gate.hpp"
 #include "pone_tile.hpp"
 #include "utils/except.h"
+#include <memory>
 
 namespace pone {
 
@@ -18,11 +18,11 @@ using TilePtr = std::shared_ptr<Tile>;
  * Abstract exception class for the game engine.
  */
 class PoneException : public std::runtime_error {
-   protected:
+  protected:
     std::string m_name;
     ErrorMessage m_msg;
 
-   public:
+  public:
     /**
      * Default PoneException constructor.
      *
@@ -60,7 +60,7 @@ class PoneException : public std::runtime_error {
  * Exception class for duplicate tiles.
  */
 class DuplicateTilesException : public PoneException {
-   public:
+  public:
     /**
      * Default DuplicateTilesException constructor.
      *
@@ -82,7 +82,7 @@ class DuplicateTilesException : public PoneException {
  * Exception class for invalid tiles.
  */
 class InvalidTileException : public PoneException {
-   public:
+  public:
     /**
      * Default InvalidTileException constructor.
      *
@@ -104,7 +104,7 @@ class InvalidTileException : public PoneException {
  * Exception class for duplicate gates.
  */
 class DuplicateGatesException : public PoneException {
-   public:
+  public:
     /**
      * Default DuplicateGatesException constructor.
      *
@@ -126,7 +126,7 @@ class DuplicateGatesException : public PoneException {
  * Exception class for invalid gates.
  */
 class InvalidGateException : public PoneException {
-   public:
+  public:
     /**
      * Default InvalidGateException constructor.
      *
@@ -148,7 +148,7 @@ class InvalidGateException : public PoneException {
  * Exception class for invalid boards.
  */
 class InvalidBoardException : public PoneException {
-   public:
+  public:
     /**
      * Default InvalidBoardException constructor.
      *
@@ -170,7 +170,7 @@ class InvalidBoardException : public PoneException {
  * Exception class for invalid directions.
  */
 class InvalidDirectionException : public PoneException {
-   public:
+  public:
     /**
      * Default InvalidDirectionException constructor.
      *
@@ -192,7 +192,7 @@ class InvalidDirectionException : public PoneException {
  * Exception class for invalid numeric values.
  */
 class InvalidValueException : public PoneException {
-   public:
+  public:
     /**
      * Default InvalidValueException constructor.
      *
@@ -210,4 +210,4 @@ class InvalidValueException : public PoneException {
         : PoneException("InvalidValueException", msg) {}
 };
 
-}  // namespace pone
+} // namespace pone

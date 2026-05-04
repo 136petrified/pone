@@ -1,5 +1,5 @@
 /*   Created:    2024-06-29
- *   Modified:   2026-04-19
+ *   Modified:   2026-05-04
  */
 
 #include "pone_gate.hpp"
@@ -12,29 +12,17 @@ namespace pone {
 // +----------------------------------+
 
 Gate::Gate()
-    : m_name{""},
-      m_id{-1},
-      m_tp{TilePair{nullptr, nullptr}},
-      m_color{"none"},
+    : m_name{""}, m_id{-1}, m_tp{TilePair{nullptr, nullptr}}, m_color{"none"},
       m_active{false} {}
 
-Gate::Gate(TilePtr t1,
-           TilePtr t2,
-           const std::string &name,
-           const std::string &color,
-           bool active)
-    : m_name{name},
-      m_id{-1},
-      m_tp{TilePair{t1, t2}},
-      m_color{color},
+Gate::Gate(TilePtr t1, TilePtr t2, const std::string &name,
+           const std::string &color, bool active)
+    : m_name{name}, m_id{-1}, m_tp{TilePair{t1, t2}}, m_color{color},
       m_active{active} {}
 
 Gate::Gate(const Gate &other)
-    : m_name{other.m_name},
-      m_id{other.m_id},
-      m_tp{other.m_tp},
-      m_color{other.m_color},
-      m_active{other.m_active} {}
+    : m_name{other.m_name}, m_id{other.m_id}, m_tp{other.m_tp},
+      m_color{other.m_color}, m_active{other.m_active} {}
 
 // +----------------------------------+
 // + Gate assignment                  +
@@ -44,10 +32,10 @@ Gate &Gate::operator=(const Gate &other) {
     if (this == &other)
         return *this;
 
-    m_name   = other.m_name;
-    m_id     = other.m_id;
-    m_tp     = other.m_tp;
-    m_color  = other.m_color;
+    m_name = other.m_name;
+    m_id = other.m_id;
+    m_tp = other.m_tp;
+    m_color = other.m_color;
     m_active = other.m_active;
 
     return *this;
@@ -175,4 +163,4 @@ bool Gate::operator>=(const Gate &other) const {
 
 Gate::~Gate() {}
 
-}  // namespace pone
+} // namespace pone

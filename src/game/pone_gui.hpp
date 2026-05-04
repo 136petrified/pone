@@ -1,5 +1,5 @@
 /*  Created:    2024-06-23
- *  Modified:   2026-04-08
+ *  Modified:   2026-05-04
  *
  */
 
@@ -8,9 +8,9 @@
 namespace pone {
 
 class GUI {
-   public:
+  public:
     GUI();
     ~GUI();
 };
 
-}  // namespace pone
+} // namespace pone

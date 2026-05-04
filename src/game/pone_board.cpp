@@ -1,13 +1,13 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-04-19
+ *   Modified:   2026-05-04
  */
 
 #include "pone_board.hpp"
-#include <format>
-#include <stdexcept>
 #include "pone_const.hpp"
 #include "pone_except.hpp"
 #include "utils/except.h"
+#include <format>
+#include <stdexcept>
 
 namespace pone {
 
@@ -16,32 +16,17 @@ namespace pone {
 // +----------------------------------+
 
 Board::Board()
-    : m_name{""},
-      m_length{0},
-      m_width{0},
-      m_numGates{0},
-      m_numTiles{0},
+    : m_name{""}, m_length{0}, m_width{0}, m_numGates{0}, m_numTiles{0},
       m_cursor{Cursor{0, 0}} {}
 
 Board::Board(const std::string &name, const int &length, const int &width)
-    : m_name{name},
-      m_length{length},
-      m_width{width},
-      m_numGates{0},
-      m_numTiles{0},
-      m_cursor{Cursor{0, 0}} {}
+    : m_name{name}, m_length{length}, m_width{width}, m_numGates{0},
+      m_numTiles{0}, m_cursor{Cursor{0, 0}} {}
 
-Board::Board(const std::string &name,
-             const int &length,
-             const int &width,
-             const int &cursor_x,
-             const int &cursor_y)
-    : m_name{name},
-      m_length{length},
-      m_width{width},
-      m_numGates{0},
-      m_numTiles{0},
-      m_cursor{Cursor{cursor_x, cursor_y}} {}
+Board::Board(const std::string &name, const int &length, const int &width,
+             const int &cursor_x, const int &cursor_y)
+    : m_name{name}, m_length{length}, m_width{width}, m_numGates{0},
+      m_numTiles{0}, m_cursor{Cursor{cursor_x, cursor_y}} {}
 
 // +----------------------------------+
 // + Board getters/setters            +
@@ -114,18 +99,18 @@ TilePtr Board::getTile(const TilePtr &t, const Direction &direction) const {
     int tileX = t->getX(), tileY = t->getY();
 
     switch (direction) {
-        case UP:
-            return getTile(tileX, tileY + 1);
-        case DOWN:
-            return getTile(tileX, tileY - 1);
-        case LEFT:
-            return getTile(tileX + 1, tileY);
-        case RIGHT:
-            return getTile(tileX - 1, tileY);
-        default:
-            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_GETT3,
-                                   "Invalid direction."};
-            throw InvalidDirectionException(INVAL_DIR);
+    case UP:
+        return getTile(tileX, tileY + 1);
+    case DOWN:
+        return getTile(tileX, tileY - 1);
+    case LEFT:
+        return getTile(tileX + 1, tileY);
+    case RIGHT:
+        return getTile(tileX - 1, tileY);
+    default:
+        ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_GETT3,
+                               "Invalid direction."};
+        throw InvalidDirectionException(INVAL_DIR);
     }
 }
 
@@ -175,18 +160,18 @@ GatePtr Board::getGate(const TilePtr &t, const Direction &d) const {
     TilePtr currentTile = m_cursor.getTile();
 
     switch (d) {
-        case UP:
-            return getGate(currentTile, getTile(currentTile, UP));
-        case DOWN:
-            return getGate(currentTile, getTile(currentTile, DOWN));
-        case LEFT:
-            return getGate(currentTile, getTile(currentTile, LEFT));
-        case RIGHT:
-            return getGate(currentTile, getTile(currentTile, RIGHT));
-        default:
-            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_GETG3,
-                                   "Invalid direction."};
-            throw InvalidDirectionException(INVAL_DIR);
+    case UP:
+        return getGate(currentTile, getTile(currentTile, UP));
+    case DOWN:
+        return getGate(currentTile, getTile(currentTile, DOWN));
+    case LEFT:
+        return getGate(currentTile, getTile(currentTile, LEFT));
+    case RIGHT:
+        return getGate(currentTile, getTile(currentTile, RIGHT));
+    default:
+        ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_GETG3,
+                               "Invalid direction."};
+        throw InvalidDirectionException(INVAL_DIR);
     }
 
     return nullptr;
@@ -291,22 +276,22 @@ void Board::moveCursor(const Direction &d) {
     int cursorX = m_cursor.getX(), cursorY = m_cursor.getY();
 
     switch (d) {
-        case UP:
-            m_cursor.setY(cursorY + 1);
-            break;
-        case DOWN:
-            m_cursor.setY(cursorY - 1);
-            break;
-        case LEFT:
-            m_cursor.setX(cursorX - 1);
-            break;
-        case RIGHT:
-            m_cursor.setX(cursorX + 1);
-            break;
-        default:
-            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_MVCSR,
-                                   "Invalid direction."};
-            throw InvalidDirectionException(INVAL_DIR);
+    case UP:
+        m_cursor.setY(cursorY + 1);
+        break;
+    case DOWN:
+        m_cursor.setY(cursorY - 1);
+        break;
+    case LEFT:
+        m_cursor.setX(cursorX - 1);
+        break;
+    case RIGHT:
+        m_cursor.setX(cursorX + 1);
+        break;
+    default:
+        ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, name::BOARD_MVCSR,
+                               "Invalid direction."};
+        throw InvalidDirectionException(INVAL_DIR);
     }
 
     m_cursor.setTile(getTile(prevTile, d));
@@ -316,7 +301,7 @@ void Board::moveCursor(const Direction &d) {
 bool Board::checkMove(const Direction &d) {
     // Check collision first
 
-    TilePtr curr   = m_cursor.getTile();
+    TilePtr curr = m_cursor.getTile();
     TilePtr target = getTile(curr, d);
     if (target->isCollision())
         return false;
@@ -371,14 +356,11 @@ bool Board::full() const {
 }
 
 const std::unordered_map<std::string, std::string> Board::clockwiseMap = {
-    {"up", "right"},
-    {"right", "down"},
-    {"down", "left"},
-    {"left", "up"}};
+    {"up", "right"}, {"right", "down"}, {"down", "left"}, {"left", "up"}};
 
 const std::unordered_map<std::string, std::string> Board::counterClockwiseMap =
     {{"up", "left"}, {"left", "down"}, {"down", "right"}, {"right", "up"}};
 
 Board::~Board() {}
 
-}  // namespace pone
+} // namespace pone

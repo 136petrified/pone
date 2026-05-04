@@ -1,33 +1,29 @@
 /*   Created:  2025-07-23
- *   Modified: 2026-04-08
+ *   Modified: 2026-05-04
  */
 
 #include "yaml_tokenizer.hpp"
+#include "yaml_const.hpp"
+#include "yaml_except.hpp"
+#include "yaml_utils.hpp"
 #include <algorithm>
 #include <format>
 #include <memory>
 #include <new>
 #include <utility>
-#include "yaml_const.hpp"
-#include "yaml_except.hpp"
-#include "yaml_utils.hpp"
 
 namespace pone::YAML {
 
-Token::Token(const std::shared_ptr<Token> &parent,
-             const std::string &name,
+Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
              const Token::Class &cls)
     : m_class{cls}, m_name{name}, m_parent{parent} {}
 
-Token::Token(const std::shared_ptr<Token> &parent,
-             const std::string &name,
+Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
              const Token::Type &type)
     : m_name{name}, m_parent{parent}, m_type{type} {}
 
-Token::Token(const std::shared_ptr<Token> &parent,
-             const std::string &name,
-             const Token::Class &cls,
-             const Token::Type &type)
+Token::Token(const std::shared_ptr<Token> &parent, const std::string &name,
+             const Token::Class &cls, const Token::Type &type)
     : m_class{cls}, m_name{name}, m_parent{parent}, m_type{type} {}
 
 Token::~Token() {}
@@ -52,8 +48,7 @@ Token::Type Token::getType() const {
     return m_type;
 }
 
-void Token::printEntry(std::ostream &out,
-                       std::vector<std::string> &indent,
+void Token::printEntry(std::ostream &out, std::vector<std::string> &indent,
                        const std::string &prefix) const {
     std::size_t depth =
         std::min(static_cast<std::size_t>(m_depth), indent.size());
@@ -79,29 +74,27 @@ void Token::setType(const Token::Type &type) {
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
                          const Token::Type &type)
-    : Token(parent, setName(), Token::Class::Single, type), m_data{""} {}
+    : Token(parent, setName(), Token::Class::SINGLE, type), m_data{""} {}
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
-                         const Token::Type &type,
-                         const std::string &data)
-    : Token(parent, setName(), Token::Class::Single, type), m_data{data} {}
+                         const Token::Type &type, const std::string &data)
+    : Token(parent, setName(), Token::Class::SINGLE, type), m_data{data} {}
 
 SingleToken::SingleToken(const std::shared_ptr<Token> &parent,
-                         const Token::Type &type,
-                         std::string &&data)
-    : Token(parent, setName(), Token::Class::Single, type),
+                         const Token::Type &type, std::string &&data)
+    : Token(parent, setName(), Token::Class::SINGLE, type),
       m_data{std::move(data)} {}
 
 SingleToken::SingleToken(const SingleToken &other)
-    : Token(other.m_parent, setName(), Token::Class::Single, other.m_type),
+    : Token(other.m_parent, setName(), Token::Class::SINGLE, other.m_type),
       m_data{other.m_data} {}
 
 SingleToken &SingleToken::operator=(const SingleToken &other) {
     if (this != &other) {
-        m_class  = Token::Class::Single;  // might not be necessary
-        m_data   = other.m_data;
+        m_class = Token::Class::SINGLE; // might not be necessary
+        m_data = other.m_data;
         m_parent = other.m_parent;
-        m_type   = other.m_type;
+        m_type = other.m_type;
     }
 
     return *this;
@@ -137,8 +130,7 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
     }
 }
 
-void SingleToken::print(std::ostream &out,
-                        std::vector<std::string> &indent,
+void SingleToken::print(std::ostream &out, std::vector<std::string> &indent,
                         const std::string &prefix) const {
     printEntry(out, indent, prefix);
     out << '\n';
@@ -152,32 +144,28 @@ SingleToken::~SingleToken() {}
 
 GroupToken::GroupToken(const std::shared_ptr<Token> &parent,
                        const Token::Type &type)
-    : Token(parent, setName(), Token::Class::Group, type) {}
+    : Token(parent, setName(), Token::Class::GROUP, type) {}
 
 // Do not call clone()
 // This will not copy members directly into the current object
 
 GroupToken::GroupToken(const GroupToken &other)
-    : Token(other.m_parent, setName(), Token::Class::Group, other.m_type),
+    : Token(other.m_parent, setName(), Token::Class::GROUP, other.m_type),
       // Deep copy required
-      m_tokens{copy()},
-      m_size{other.m_size} {}
+      m_tokens{copy()}, m_size{other.m_size} {}
 
 GroupToken::GroupToken(GroupToken &&other) noexcept
-    : Token(std::move(other.m_parent),
-            setName(),
-            Token::Class::Group,
+    : Token(std::move(other.m_parent), setName(), Token::Class::GROUP,
             std::move(other.m_type)),
-      m_tokens{std::move(other.m_tokens)},
-      m_size{std::move(other.m_size)} {}
+      m_tokens{std::move(other.m_tokens)}, m_size{std::move(other.m_size)} {}
 
 GroupToken &GroupToken::operator=(const GroupToken &other) {
     if (this != &other) {
-        m_class  = Token::Class::Group;
+        m_class = Token::Class::GROUP;
         m_parent = other.m_parent;
-        m_size   = other.m_size;
-        m_type   = other.m_type;
-        clear();  // Wipe the old tokens out
+        m_size = other.m_size;
+        m_type = other.m_type;
+        clear(); // Wipe the old tokens out
         m_tokens = copy();
     }
 
@@ -186,9 +174,9 @@ GroupToken &GroupToken::operator=(const GroupToken &other) {
 
 GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
     if (this != &other) {
-        m_class = Token::Class::Group;
-        m_size  = other.m_size;
-        m_type  = std::move(other.m_type);
+        m_class = Token::Class::GROUP;
+        m_size = other.m_size;
+        m_type = std::move(other.m_type);
         clear();
         m_tokens = std::move(other.m_tokens);
     }
@@ -203,7 +191,7 @@ void GroupToken::clear() {
                               "Received nullptr at this "
                               "function."};
             throw NullTokenException(emsg);
-        } else if (token->getClass() == Token::Class::Group) {
+        } else if (token->getClass() == Token::Class::GROUP) {
             token->clear();
         }
 
@@ -214,7 +202,7 @@ void GroupToken::clear() {
 
 std::vector<std::shared_ptr<Token>> GroupToken::copy() const {
     std::vector<std::shared_ptr<Token>> newTokenVector;
-    std::shared_ptr<Token> curr = getPtr();  // Assume make_shared
+    std::shared_ptr<Token> curr = getPtr(); // Assume make_shared
 
     for (const auto &token : m_tokens) {
         if (token != curr) {
@@ -249,7 +237,7 @@ bool GroupToken::empty() const {
 void GroupToken::release() {
     if (m_parent == nullptr) {
         return;
-    } else if (m_parent->getClass() == Token::Class::Single) {
+    } else if (m_parent->getClass() == Token::Class::SINGLE) {
         ErrorMessage emsg{
             name::YAML_GLOBAL_NAMESPACE, name::TOKEN_RELEASE,
             std::format(
@@ -289,8 +277,7 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
     }
 }
 
-void GroupToken::print(std::ostream &out,
-                       std::vector<std::string> &indent,
+void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
                        const std::string &prefix) const {
     printEntry(out, indent, prefix);
 
@@ -336,10 +323,7 @@ Tokenizer::Tokenizer()
 }
 
 Tokenizer::Tokenizer(const std::string &fileName)
-    : m_fileName{fileName},
-      m_ifs{fileName},
-      m_size{0},
-      m_buf{""},
+    : m_fileName{fileName}, m_ifs{fileName}, m_size{0}, m_buf{""},
       m_endOfFile{false} {
     insertGroupToken(Token::Type::Root);
 }
@@ -368,21 +352,21 @@ void Tokenizer::comment() {
     }
 
     std::shared_ptr<GroupToken> commentToken =
-        createGroupToken(Token::Type::Comment);  // Allocate the pointer
+        createGroupToken(Token::Type::Comment); // Allocate the pointer
 
     groupStack.push(commentToken);
 
-    while (m_char != '\n') {  // Stop at indent
+    while (m_char != '\n') { // Stop at indent
         literal();
     }
 
-    groupStack.pop();  // Pop out parent commentToken
+    groupStack.pop(); // Pop out parent commentToken
 
     insertGroupToken(commentToken);
 }
 
-std::shared_ptr<GroupToken> Tokenizer::createGroupToken(
-    const Token::Type &type) const {
+std::shared_ptr<GroupToken>
+Tokenizer::createGroupToken(const Token::Type &type) const {
     try {
         return std::make_shared<GroupToken>(GroupToken{groupStack.top(), type});
     } catch (const std::bad_alloc &e) {
@@ -397,8 +381,8 @@ std::shared_ptr<GroupToken> Tokenizer::createGroupToken(GroupToken &gtok) {
     return std::dynamic_pointer_cast<GroupToken>(gtok.getPtr());
 }
 
-std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
-    const Token::Type &type) const {
+std::shared_ptr<SingleToken>
+Tokenizer::createSingleToken(const Token::Type &type) const {
     try {
         return std::make_shared<SingleToken>(
             SingleToken{groupStack.top(), type});
@@ -410,9 +394,9 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
     }
 }
 
-std::shared_ptr<SingleToken> Tokenizer::createSingleToken(
-    const Token::Type &type,
-    std::string &&data) const {
+std::shared_ptr<SingleToken>
+Tokenizer::createSingleToken(const Token::Type &type,
+                             std::string &&data) const {
     try {
         return std::make_shared<SingleToken>(
             SingleToken{groupStack.top(), type, std::move(data)});
@@ -454,7 +438,7 @@ const std::shared_ptr<Token> &Tokenizer::getTokens() const {
         throw RootNotFoundException(emsg_2);
     }
 
-    return groupStack.top();  // Which is always root
+    return groupStack.top(); // Which is always root
 }
 
 void Tokenizer::indent() {
@@ -594,7 +578,7 @@ void Tokenizer::key() {
             // and release tokens into parent Token
 
             keyToken->release();
-            groupStack.pop();  // Discard the keyToken
+            groupStack.pop(); // Discard the keyToken
 
             // The key failed, therefore the mapping does
             // throw malformed map exception
@@ -654,7 +638,7 @@ void Tokenizer::mapping() {
     // and along with it, the value.
 
     while (!isSpace(m_char)) {
-        whitespace();  // Consume all whitespace first
+        whitespace(); // Consume all whitespace first
     }
 
     try {
@@ -662,18 +646,18 @@ void Tokenizer::mapping() {
     } catch (const InvalidMappingException &e) {
     }
 
-    colon();  // Consume colon token
+    colon(); // Consume colon token
     try {
         next();
     } catch (const EndOfIfstreamException &) {
-        return;  // Discard mapping
+        return; // Discard mapping
     }
 
     // FIXME: Mapping should be rejected
     //        if colon does not have ' ' after it.
     if (!isSpace(m_char)) {
         while (!isSpace(m_char)) {
-            whitespace();  // Consume any whitespace
+            whitespace(); // Consume any whitespace
         }
     } else {
         ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKENIZER_MAPPING,
@@ -707,7 +691,7 @@ void Tokenizer::otherSymbols() {
 }
 
 void Tokenizer::print(std::ostream &out) const {
-    std::shared_ptr<Token> root = getTokens();  // returns ptr to root
+    std::shared_ptr<Token> root = getTokens(); // returns ptr to root
     std::vector<std::string> indentVector;
     root->print(out, indentVector, "");
 }
@@ -731,15 +715,15 @@ void Tokenizer::quoted() {
             literal();
         }
 
-        doubleQuote();            // Consume ending quote
-    } else if (m_char == '\'') {  // This is single-quoted
+        doubleQuote();           // Consume ending quote
+    } else if (m_char == '\'') { // This is single-quoted
         singleQuote();
 
         while (m_char != '\'') {
             literal();
         }
 
-        singleQuote();  // Consume ending quote
+        singleQuote(); // Consume ending quote
     } else {
         return;
     }
@@ -769,7 +753,7 @@ void Tokenizer::scalar() {
     }
 
     insertSingleToken(createSingleToken(Token::Type::Scalar, std::move(m_buf)));
-    clearBuf();  // Clear the buffer after creating the token
+    clearBuf(); // Clear the buffer after creating the token
 }
 
 void Tokenizer::sequence() {
@@ -787,18 +771,18 @@ void Tokenizer::sequence() {
     // Must start with dash
 
     while (m_char == '-') {
-        dash();  // Consume dash token
+        dash(); // Consume dash token
         try {
             next();
         } catch (const EndOfIfstreamException &) {
-            groupStack.pop();  // seqToken
+            groupStack.pop(); // seqToken
             return;
         }
 
         if (isSpace(m_char)) {
-            whitespace();  // Consume whitespace token
+            whitespace(); // Consume whitespace token
         } else {
-            groupStack.pop();  // Exit gracefully seqToken
+            groupStack.pop(); // Exit gracefully seqToken
             ErrorMessage emsg_2{name::YAML_GLOBAL_NAMESPACE,
                                 name::TOKENIZER_SEQ,
                                 "Failed to create a sequence "
@@ -822,7 +806,7 @@ void Tokenizer::seqElement() {
     }
 
     std::shared_ptr<GroupToken> seqElemToken =
-        createGroupToken(Token::Type::SeqElement);  // Create the token
+        createGroupToken(Token::Type::SeqElement); // Create the token
 
     groupStack.push(seqElemToken);
 
@@ -837,7 +821,7 @@ void Tokenizer::seqElement() {
 
     groupStack.pop();
 
-    insertGroupToken(seqElemToken);  // when insert phase is finished
+    insertGroupToken(seqElemToken); // when insert phase is finished
 }
 
 void Tokenizer::singleQuote() {
@@ -849,42 +833,42 @@ void Tokenizer::sym() {
         return;
 
     switch (m_char) {
-        case '\\':
-            backslash();
-            break;
-        case ':':
-            colon();
-            break;
-        case ',':
-            comma();
-            break;
-        case '-':
-            dash();
-            break;
-        case '"':
-            doubleQuote();
-            break;
-        case '{':
-            leftBrace();
-            break;
-        case '[':
-            leftBracket();
-            break;
-        case '#':
-            numSign();
-            break;
-        case '}':
-            rightBrace();
-            break;
-        case ']':
-            rightBracket();
-            break;
-        case '\'':
-            singleQuote();
-            break;
-        default:
-            otherSymbols();
-            break;
+    case '\\':
+        backslash();
+        break;
+    case ':':
+        colon();
+        break;
+    case ',':
+        comma();
+        break;
+    case '-':
+        dash();
+        break;
+    case '"':
+        doubleQuote();
+        break;
+    case '{':
+        leftBrace();
+        break;
+    case '[':
+        leftBracket();
+        break;
+    case '#':
+        numSign();
+        break;
+    case '}':
+        rightBrace();
+        break;
+    case ']':
+        rightBracket();
+        break;
+    case '\'':
+        singleQuote();
+        break;
+    default:
+        otherSymbols();
+        break;
     }
 
     try {
@@ -904,16 +888,16 @@ void Tokenizer::tab() {
 
 void Tokenizer::tokenize() {
     try {
-        next();  // Start with first token
+        next(); // Start with first token
     } catch (const EndOfIfstreamException &) {
-        return;  // Means empty file
+        return; // Means empty file
     }
 
     while (!m_endOfFile) {
         mapping();
         sequence();
-        if (m_char == '#') {  // Must be symbol
-            comment();        // This is to check for comments
+        if (m_char == '#') { // Must be symbol
+            comment();       // This is to check for comments
             try {
                 next();
             } catch (const EndOfIfstreamException &) {
@@ -932,11 +916,11 @@ void Tokenizer::value() {
         sequence();
     } else if (isQuote(m_char)) {
         quoted();
-        return;  // A value if quoted must end
+        return; // A value if quoted must end
     } else {
         while (m_char == '\n') {
             if (m_char == '#') {
-                sym();  // Directly check for '#'
+                sym(); // Directly check for '#'
             } else if (isQuote(m_char)) {
                 // Throw as this should not be in here
                 ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE,
@@ -945,12 +929,12 @@ void Tokenizer::value() {
                                   "set of quotations."};
                 throw InvalidValueException(emsg);
             }
-            mapping();  // check mapping first
+            mapping(); // check mapping first
             literal();
         }
     }
 
-    groupStack.pop();  // valueToken
+    groupStack.pop(); // valueToken
 
     insertGroupToken(std::move(valueToken));
 }
@@ -958,15 +942,15 @@ void Tokenizer::value() {
 void Tokenizer::whitespace() {
     while (isSpace(m_char)) {
         switch (m_char) {
-            case '\n':
-                newline();
-                break;
-            case ' ':
-                space();
-                break;
-            case '\t':
-                tab();
-                break;
+        case '\n':
+            newline();
+            break;
+        case ' ':
+            space();
+            break;
+        case '\t':
+            tab();
+            break;
         }
 
         try {
@@ -983,4 +967,4 @@ std::ostream &operator<<(std::ostream &out, const Tokenizer &tokenizer) {
 }
 
 Tokenizer::~Tokenizer() {}
-}  // namespace pone::YAML
+} // namespace pone::YAML

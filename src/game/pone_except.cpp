@@ -1,5 +1,5 @@
 /*   Created:  2025-07-16
- *   Modified: 2026-04-03
+ *   Modified: 2026-05-04
  */
 
 #include "pone_except.hpp"
@@ -17,4 +17,4 @@ void PoneException::logToFile(const std::string &file_name) const {
     ofs.close();
 }
 
-}  // namespace pone
+} // namespace pone

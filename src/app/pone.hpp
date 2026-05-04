@@ -1,5 +1,5 @@
 /*    Created:    2025-10-17
- *    Modified:   2026-03-03
+ *    Modified:   2026-05-04
  */
 
 #pragma once
@@ -11,17 +11,17 @@ namespace godot {
 class GodotPone : public Sprite2D {
     GDCLASS(GodotPone, Sprite2D)
 
-   private:
+  private:
     double m_timePassed;
 
-   protected:
+  protected:
     static void _bind_methods();
 
-   public:
+  public:
     GodotPone();
     ~GodotPone();
 
     void _process(double delta) override;
 };
 
-}  // namespace godot
+} // namespace godot

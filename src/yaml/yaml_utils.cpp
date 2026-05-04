@@ -1,5 +1,5 @@
 /*   Created:  2025-07-21
- *   Modified: 2026-04-08
+ *   Modified: 2026-05-04
  */
 
 #include "yaml_utils.hpp"
@@ -119,4 +119,4 @@ bool isSymbol(std::string &s) {
 
     return true;
 }
-}  // namespace pone::YAML
+} // namespace pone::YAML

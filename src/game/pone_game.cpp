@@ -1,5 +1,5 @@
 /*  Created:  2024-06-23
- *  Modified: 2026-04-19
+ *  Modified: 2026-05-04
  */
 
 #include "pone_game.hpp"
@@ -24,19 +24,19 @@ void Game::setup(const int &l, const int &w) {
 
 void Game::moveCursor(const int &d) {
     switch (d) {
-        case UP:
-            return;
-        case DOWN:
-            return;
-        case LEFT:
-            return;
-        case RIGHT:
-            return;
-        default:
-            // FIXME: Add name to this
-            ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, "placeholder",
-                                   "Invalid direction."};
-            throw InvalidDirectionException(INVAL_DIR);
+    case UP:
+        return;
+    case DOWN:
+        return;
+    case LEFT:
+        return;
+    case RIGHT:
+        return;
+    default:
+        // FIXME: Add name to this
+        ErrorMessage INVAL_DIR{name::PONE_GLOBAL_NAME, "placeholder",
+                               "Invalid direction."};
+        throw InvalidDirectionException(INVAL_DIR);
     }
 }
 
@@ -46,4 +46,4 @@ void Game::moveCursor(const int &d) {
 
 Game::~Game() {}
 
-}  // namespace pone
+} // namespace pone

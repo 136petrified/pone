@@ -1,5 +1,5 @@
 /*   Created:  2025-07-21
- *   Modified: 2026-04-08
+ *   Modified: 2026-05-04
  */
 
 #pragma once
@@ -120,4 +120,4 @@ bool isSymbol(const char *s);
  */
 bool isSymbol(std::string &s);
 
-}  // namespace pone::YAML
+} // namespace pone::YAML

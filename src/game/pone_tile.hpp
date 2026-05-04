@@ -1,5 +1,5 @@
 /*  Created:    2024-06-23
- *  Modified:   2026-04-13
+ *  Modified:   2026-05-04
  */
 
 #pragma once
@@ -12,19 +12,15 @@ namespace pone {
 using CoordPair = std::pair<int, int>;
 
 class Tile {
-   public:
+  public:
     // +----------------------------------+
     // + Tile constructors                +
     // +----------------------------------+
 
     Tile();
-    Tile(const std::string &name,
-         const int &id,
-         const int &x,
-         const int &y,
-         const std::string &color,
-         const std::string &type,
-         bool cursor);  // Full constructor
+    Tile(const std::string &name, const int &id, const int &x, const int &y,
+         const std::string &color, const std::string &type,
+         bool cursor); // Full constructor
     Tile(const Tile &other);
 
     // +----------------------------------+
@@ -91,17 +87,17 @@ class Tile {
 
     ~Tile();
 
-   private:
+  private:
     // +----------------------------------+
     // + Tile attributes                  +
     // +----------------------------------+
 
     std::string m_name;
-    int m_id;      // starting from 1
-    int m_x, m_y;  // coordinates of the tile
+    int m_id;     // starting from 1
+    int m_x, m_y; // coordinates of the tile
     std::string m_color;
-    std::string m_type;  // what is the type of this tile?
-    bool m_cursor;       // is the cursor on this tile?
+    std::string m_type; // what is the type of this tile?
+    bool m_cursor;      // is the cursor on this tile?
 
     // +----------------------------------+
     // + Tile constants                   +
@@ -112,4 +108,4 @@ class Tile {
         "down",  "left",    "right",   "goal", "collision"};
 };
 
-}  // namespace pone
+} // namespace pone

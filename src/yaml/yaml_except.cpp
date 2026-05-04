@@ -1,11 +1,11 @@
 /*   Created:  2025-09-20
- *   Modified: 2026-04-08
+ *   Modified: 2026-05-04
  */
 
 #include "yaml_except.hpp"
+#include "yaml_const.hpp"
 #include <fstream>
 #include <string_view>
-#include "yaml_const.hpp"
 
 namespace pone::YAML {
 
@@ -16,11 +16,8 @@ void logToFile(const std::string &msg) {
 
 TokenizerException::TokenizerException(const ErrorMessage &e,
                                        const std::string &name)
-    : std::runtime_error(e.m_msg),
-      m_err{e},
-      m_location{e.m_scope + e.m_func},
-      m_name{name},
-      m_parent{"TokenizerException"} {}
+    : std::runtime_error(e.m_msg), m_err{e}, m_location{e.m_scope + e.m_func},
+      m_name{name}, m_parent{"TokenizerException"} {}
 
 const std::string_view TokenizerException::getLocation() const {
     return std::string_view(m_location);
@@ -72,4 +69,4 @@ SelfParentInsertionException::SelfParentInsertionException(
     const ErrorMessage &e)
     : TokenizerException(e, "SelfParentInsertionException") {}
 
-}  // namespace pone::YAML
+} // namespace pone::YAML

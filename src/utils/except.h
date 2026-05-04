@@ -1,5 +1,5 @@
 /*   Created:  2026-01-06
- *   Modified: 2026-04-03
+ *   Modified: 2026-05-04
  */
 
 #pragma once
@@ -16,12 +16,12 @@ class ErrorMessage {
     // +--------------------------------+
     // + ErrorMessage data members      +
     // +--------------------------------+
-    std::string m_msg;    // The combined error message.
-    std::string m_func;   // Name of the function the exception is thrown in.
-    std::string m_desc;   // The error description.
-    std::string m_scope;  // Name of the current scope.
+    std::string m_msg;   // The combined error message.
+    std::string m_func;  // Name of the function the exception is thrown in.
+    std::string m_desc;  // The error description.
+    std::string m_scope; // Name of the current scope.
 
-   public:
+  public:
     /**
      * Constructs an error message.
      *
@@ -29,8 +29,7 @@ class ErrorMessage {
      * @param func the name of the current scope.
      * @param msg an error message.
      */
-    ErrorMessage(const std::string_view &scope,
-                 const std::string_view &func,
+    ErrorMessage(const std::string_view &scope, const std::string_view &func,
                  const std::string &desc);
 
     /**
@@ -50,4 +49,4 @@ class ErrorMessage {
     friend std::ostream &operator<<(std::ostream &out, const ErrorMessage &e);
 };
 
-}  // namespace pone
+} // namespace pone

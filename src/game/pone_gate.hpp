@@ -1,16 +1,16 @@
 #/*   Created:    2024-06-29
-  *   Modified:   2026-04-19
+  *   Modified:   2026-05-04
   */
 
 #pragma once
 
+#include "pone_tile.hpp"
 #include <memory>
 #include <utility>
-#include "pone_tile.hpp"
 
 namespace pone {
 
-using TilePtr  = std::shared_ptr<Tile>;
+using TilePtr = std::shared_ptr<Tile>;
 using TilePair = std::pair<TilePtr, TilePtr>;
 
 class Gate {
@@ -20,20 +20,17 @@ class Gate {
 
     std::string m_name;
     int m_id;
-    TilePair m_tp;  // Is a gate between two adjacent tiles.
+    TilePair m_tp; // Is a gate between two adjacent tiles.
     std::string m_color;
-    bool m_active;  // Is the gate on or off?
-   public:
+    bool m_active; // Is the gate on or off?
+  public:
     // +----------------------------------+
     // + Gate constructors                +
     // +----------------------------------+
 
     Gate();
-    Gate(TilePtr t1,
-         TilePtr t2,
-         const std::string &name,
-         const std::string &color,
-         bool active = false);
+    Gate(TilePtr t1, TilePtr t2, const std::string &name,
+         const std::string &color, bool active = false);
     Gate(const Gate &other);
 
     // +----------------------------------+
@@ -93,4 +90,4 @@ class Gate {
     ~Gate();
 };
 
-}  // namespace pone
+} // namespace pone

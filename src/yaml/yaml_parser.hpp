@@ -1,12 +1,12 @@
 /*   Created:  2025-07-23
- *   Modified: 2026-04-08
+ *   Modified: 2026-05-04
  */
 
 #pragma once
 
+#include "yaml_tokenizer.hpp"
 #include <string>
 #include <vector>
-#include "yaml_tokenizer.hpp"
 
 namespace pone::YAML {
 constexpr std::string PONE_RESERVED_KEYS[] = {
@@ -20,10 +20,10 @@ class Parser {
     bool m_eof;
     std::string m_fileName;
 
-   public:
+  public:
     Parser();
     Parser(const Tokenizer &tokenizer, const std::string &fileName);
     ~Parser();
 };
 
-}  // namespace pone::YAML
+} // namespace pone::YAML

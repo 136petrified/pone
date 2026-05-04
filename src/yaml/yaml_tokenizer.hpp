@@ -1,5 +1,5 @@
 /*   Created:  2025-07-23
- *   Modified: 2026-04-03
+ *   Modified: 2026-05-04
  */
 
 #pragma once
@@ -18,41 +18,41 @@ namespace pone::YAML {
 
 /* Token class. */
 class Token : public std::enable_shared_from_this<Token> {
-   public:
+  public:
     /* An enum of all types of Tokens. */
     enum class Type {
-        Backslash,    /* The backslash character \ */
-        Colon,        /* The colon character : */
-        Comma,        /* The comma character , */
-        Comment,      /* A grouped type for YAML comments */
-        Dash,         /* The dash character -*/
-        DoubleQuote,  /* The double quote character " */
-        Indent,       /* Represents an indent specified. */
-        Key,          /* A grouped type for keys */
-        LeftBrace,    /* The left brace character { */
-        LeftBracket,  /* The left bracket character [ */
-        Newline,      /* The newline character \n */
-        None,         /* Placeholder token type */
-        NumSign,      /* The number sign character # */
-        Quoted,       /* A group type for quoted keys and values */
-        RightBrace,   /* The right brace character } */
-        RightBracket, /* The right bracket character ] */
-        Root,         /* The root groupToken. */
-        Scalar,       /* An alphanumeric identifier type */
-        Sequence,     /* A grouped type for sequences */
-        SeqElement,   /* A grouped type for sequence elements */
-        SingleQuote,  /* The single quote character ' */
-        Space,        /* The space character ' ' */
-        Symbol,       /* A generic symbol character type */
-        Tab,          /* The tab character \t */
-        Value,        /* A grouped type for values */
+        BACKSLASH,    /* The backslash character \ */
+        COLON,        /* The colon character : */
+        COMMA,        /* The comma character , */
+        COMMENT,      /* A grouped type for YAML comments */
+        DASH,         /* The dash character -*/
+        DOUBLEQUOTE,  /* The double quote character " */
+        INDENT,       /* Represents an indent specified. */
+        KEY,          /* A grouped type for keys */
+        LEFTBRACE,    /* The left brace character { */
+        LEFTBRACKET,  /* The left bracket character [ */
+        NEWLINE,      /* The newline character \n */
+        NONE,         /* Placeholder token type */
+        NUMSIGN,      /* The number sign character # */
+        QUOTED,       /* A group type for quoted keys and values */
+        RIGHTBRACE,   /* The right brace character } */
+        RIGHTBRACKET, /* The right bracket character ] */
+        ROOT,         /* The root groupToken. */
+        SCALAR,       /* An alphanumeric identifier type */
+        SEQUENCE,     /* A grouped type for sequences */
+        SEQELEMENT,   /* A grouped type for sequence elements */
+        SINGLEQUOTE,  /* The single quote character ' */
+        SPACE,        /* The space character ' ' */
+        SYMBOL,       /* A generic symbol character type */
+        TAB,          /* The tab character \t */
+        VALUE,        /* A grouped type for values */
     };
 
     /* An enum of all derived Token classes */
     enum class Class {
         // This is a "type" to differentiate derived classes
-        Group, /* The GroupToken class */
-        Single /* The SingleToken class */
+        GROUP, /* The GroupToken class */
+        SINGLE /* The SingleToken class */
     };
 
     /* The total size of the token types. */
@@ -60,30 +60,30 @@ class Token : public std::enable_shared_from_this<Token> {
 
     /* Map of Types to its string name. */
     std::unordered_map<Type, std::string> tokenNameMap = {
-        {Type::Backslash, "Backslash"},
-        {Type::Colon, "Colon"},
-        {Type::Comma, "Comma"},
-        {Type::Comment, "Comment"},
-        {Type::Dash, "Dash"},
-        {Type::DoubleQuote, "DoubleQuote"},
-        {Type::Indent, "Indent"},
-        {Type::Key, "Key"},
-        {Type::LeftBrace, "LeftBrace"},
-        {Type::LeftBracket, "LeftBracket"},
-        {Type::Newline, "Newline"},
-        {Type::None, "None"},
-        {Type::NumSign, "NumSign"},
-        {Type::Quoted, "Quoted"},
-        {Type::RightBrace, "RightBrace"},
-        {Type::RightBracket, "RightBracket"},
-        {Type::Root, "Root"},
-        {Type::Scalar, "Scalar"},
-        {Type::Sequence, "Sequence"},
-        {Type::SeqElement, "SequenceElement"},
-        {Type::SingleQuote, "SingleQuote"},
-        {Type::Symbol, "Symbol"},
-        {Type::Tab, "Tab"},
-        {Type::Value, "Value"}};
+        {Type::BACKSLASH, "Backslash"},
+        {Type::COLON, "Colon"},
+        {Type::COMMA, "Comma"},
+        {Type::COMMENT, "Comment"},
+        {Type::DASH, "Dash"},
+        {Type::DOUBLEQUOTE, "DoubleQuote"},
+        {Type::INDENT, "Indent"},
+        {Type::KEY, "Key"},
+        {Type::LEFTBRACE, "LeftBrace"},
+        {Type::LEFTBRACKET, "LeftBracket"},
+        {Type::NEWLINE, "Newline"},
+        {Type::NONE, "None"},
+        {Type::NUMSIGN, "NumSign"},
+        {Type::QUOTED, "Quoted"},
+        {Type::RIGHTBRACE, "RightBrace"},
+        {Type::RIGHTBRACKET, "RightBracket"},
+        {Type::ROOT, "Root"},
+        {Type::SCALAR, "Scalar"},
+        {Type::SEQUENCE, "Sequence"},
+        {Type::SEQELEMENT, "SequenceElement"},
+        {Type::SINGLEQUOTE, "SingleQuote"},
+        {Type::SYMBOL, "Symbol"},
+        {Type::TAB, "Tab"},
+        {Type::VALUE, "Value"}};
 
     // +--------------------------------+
     // + Token constructors             +
@@ -109,8 +109,7 @@ class Token : public std::enable_shared_from_this<Token> {
      * @param name the string name.
      * @param cls the Token class.
      */
-    Token(const std::shared_ptr<Token> &parent,
-          const std::string &name,
+    Token(const std::shared_ptr<Token> &parent, const std::string &name,
           const Class &cls);
 
     /* Token constructor.
@@ -119,8 +118,7 @@ class Token : public std::enable_shared_from_this<Token> {
      * @param name the string name.
      * @param type the Token type.
      */
-    Token(const std::shared_ptr<Token> &parent,
-          const std::string &name,
+    Token(const std::shared_ptr<Token> &parent, const std::string &name,
           const Type &type);
 
     /* Token constructor.
@@ -130,10 +128,8 @@ class Token : public std::enable_shared_from_this<Token> {
      * @param class the Token class.
      * @param type the Token type.
      */
-    Token(const std::shared_ptr<Token> &parent,
-          const std::string &name,
-          const Class &cls,
-          const Type &type);
+    Token(const std::shared_ptr<Token> &parent, const std::string &name,
+          const Class &cls, const Type &type);
 
     // +--------------------------------+
     // + Token functions                +
@@ -178,8 +174,7 @@ class Token : public std::enable_shared_from_this<Token> {
      * @param indent the indent for the next child Token.
      * @param prefix the branch symbol before an entry.
      */
-    void printEntry(std::ostream &out,
-                    std::vector<std::string> &indent,
+    void printEntry(std::ostream &out, std::vector<std::string> &indent,
                     const std::string &prefix) const;
 
     /* Sets the depth of a Token.
@@ -211,8 +206,8 @@ class Token : public std::enable_shared_from_this<Token> {
      * @param parent the parent Token.
      * @return a shared_ptr of the Token copy.
      */
-    virtual std::shared_ptr<Token> clone(
-        std::shared_ptr<Token> parent) const = 0;
+    virtual std::shared_ptr<Token>
+    clone(std::shared_ptr<Token> parent) const = 0;
 
     /* Pure virtual function for getting a pointer from the current Token.
      *
@@ -227,8 +222,7 @@ class Token : public std::enable_shared_from_this<Token> {
      * @param indent the indent for the next child Token.
      * @param prefix the branch symbol before a entry.
      */
-    virtual void print(std::ostream &out,
-                       std::vector<std::string> &indent,
+    virtual void print(std::ostream &out, std::vector<std::string> &indent,
                        const std::string &prefix) const = 0;
 
     /* Pure virtual function for setting the parent of a Token.
@@ -298,9 +292,9 @@ class Token : public std::enable_shared_from_this<Token> {
      */
     virtual size_t size() const;
 
-   protected:
+  protected:
     Class m_class;
-    int m_depth = 0;  // root will always have depth = 0
+    int m_depth = 0; // root will always have depth = 0
     std::string m_name;
     std::shared_ptr<Token> m_parent;
     Type m_type;
@@ -317,7 +311,7 @@ class SingleToken : public Token {
 
     std::string m_data;
 
-   public:
+  public:
     // +--------------------------------+
     // + SingleToken constructors       +
     // +--------------------------------+
@@ -344,8 +338,7 @@ class SingleToken : public Token {
      * @param data a read-only string reference of the Token's data.
      * @sa Token
      */
-    SingleToken(const std::shared_ptr<Token> &parent,
-                const Token::Type &type,
+    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type,
                 const std::string &data);
 
     /* SingleToken constructor.
@@ -355,8 +348,7 @@ class SingleToken : public Token {
      * @param data a string rvalue reference of the Token's data.
      * @sa Token
      */
-    SingleToken(const std::shared_ptr<Token> &parent,
-                const Token::Type &type,
+    SingleToken(const std::shared_ptr<Token> &parent, const Token::Type &type,
                 std::string &&data);
 
     /* SingleToken copy constructor.
@@ -420,8 +412,7 @@ class SingleToken : public Token {
      * @param indent the indent for the next child Token.
      * @param prefix the branch symbol before a entry.
      */
-    void print(std::ostream &out,
-               std::vector<std::string> &indent,
+    void print(std::ostream &out, std::vector<std::string> &indent,
                const std::string &prefix = "") const override;
 
     /* Sets the parent of a SingleToken.
@@ -449,7 +440,7 @@ class GroupToken : public Token {
     std::vector<std::shared_ptr<Token>> m_tokens;
     size_t m_size;
 
-   public:
+  public:
     // +--------------------------------+
     // + GroupToken constructors        +
     // +--------------------------------+
@@ -577,8 +568,7 @@ class GroupToken : public Token {
      * @param indent the indent for the next child Token.
      * @param prefix the branch symbol before a entry.
      */
-    void print(std::ostream &out,
-               std::vector<std::string> &indent,
+    void print(std::ostream &out, std::vector<std::string> &indent,
                const std::string &prefix = "") const override;
 
     /* Sets the parent of a GroupToken.
@@ -598,9 +588,9 @@ class Tokenizer {
     std::string m_fileName;
     std::ifstream m_ifs;
 
-    int m_indent;  // Defined by YAML config
-    int m_depth;   // Current depth of tokenizer
-                   // not depth of a token.
+    int m_indent; // Defined by YAML config
+    int m_depth;  // Current depth of tokenizer
+                  // not depth of a token.
 
     /* A stack of GroupToken pointers. */
     std::stack<std::shared_ptr<Token>> groupStack;
@@ -611,7 +601,7 @@ class Tokenizer {
 
     bool m_endOfFile;
 
-   public:
+  public:
     // +----------------------------------+
     // + Tokenizer constructors           +
     // +----------------------------------+
@@ -699,8 +689,8 @@ class Tokenizer {
      * @param type the Token type to create the SingleToken with.
      * @return a shared pointer to the SingleToken.
      */
-    std::shared_ptr<SingleToken> createSingleToken(
-        const Token::Type &type) const;
+    std::shared_ptr<SingleToken>
+    createSingleToken(const Token::Type &type) const;
 
     /* Creates a shared SingleToken pointer with string data.
      *
@@ -878,4 +868,4 @@ class Tokenizer {
     friend std::ostream &operator<<(std::ostream &out,
                                     const Tokenizer &tokenizer);
 };
-}  // namespace pone::YAML
+} // namespace pone::YAML

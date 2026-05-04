@@ -1,5 +1,5 @@
 /*  Created:  2024-06-23
- *  Modified: 2026-04-19
+ *  Modified: 2026-05-04
  */
 
 #pragma once
@@ -31,9 +31,9 @@ class Game {
     // +----------------------------------+
     ~Game();
 
-   private:
+  private:
     Board board;
     Cursor cursor;
 };
 
-}  // namespace pone
+} // namespace pone

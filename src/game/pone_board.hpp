@@ -1,18 +1,18 @@
 /*   Created:    2024-06-23
- *   Modified:   2026-04-19
+ *   Modified:   2026-05-04
  */
 
 #pragma once
 
-#include <compare>
-#include <functional>
-#include <memory>
-#include <unordered_map>
 #include "pone_const.hpp"
 #include "pone_cursor.hpp"
 #include "pone_gate.hpp"
 #include "pone_tile.hpp"
 #include "utils/avl.h"
+#include <compare>
+#include <functional>
+#include <memory>
+#include <unordered_map>
 
 namespace pone {
 
@@ -176,7 +176,7 @@ struct compareGateByTilePair {
 
         auto cmp = compareTileByCoords()(tp1.first, tp2.first);
         if (cmp != 0)
-            return cmp;  // Short-circuit if TilePairs are not equal.
+            return cmp; // Short-circuit if TilePairs are not equal.
         return compareTileByCoords()(tp1.second, tp2.second);
     }
 };
@@ -204,9 +204,9 @@ class Board {
     // +----------------------------------+
 
     std::string m_name;
-    int m_length, m_width;  // ! - Remember to except this if not int!
+    int m_length, m_width; // ! - Remember to except this if not int!
     AVL<TilePtr, compareTileByCoords>
-        m_tileCoordPairsTree;  // A list of n * m tiles is needed for
+        m_tileCoordPairsTree; // A list of n * m tiles is needed for
     AVL<TilePtr, compareTileByName> m_tileNamesTree;
     AVL<GatePtr, compareGateByName> m_gateNamesTree;
     AVL<GatePtr, compareGateByTilePair> m_gateTilePairsTree;
@@ -218,15 +218,15 @@ class Board {
     std::unordered_map<CoordPair, TilePtr, CoordPairHasher, CoordPairEquals>
         m_tileCoordPairsMap;
 
-    int m_numGates;  // Number of gates
-    int m_numTiles;  // Number of tiles
+    int m_numGates; // Number of gates
+    int m_numTiles; // Number of tiles
 
-    Cursor m_cursor;  // track the current tile being pointed by cursor
+    Cursor m_cursor; // track the current tile being pointed by cursor
     static const std::unordered_map<std::string, std::string> clockwiseMap;
     static const std::unordered_map<std::string, std::string>
         counterClockwiseMap;
 
-   public:
+  public:
     // +----------------------------------+
     // + Board constructors               +
     // +----------------------------------+
@@ -256,11 +256,8 @@ class Board {
      * @param cursor_x the horizontal position of the cursor.
      * @param cursor_y the vertical position of the cursor.
      */
-    Board(const std::string &name,
-          const int &length,
-          const int &width,
-          const int &cursor_x,
-          const int &cursor_y);
+    Board(const std::string &name, const int &length, const int &width,
+          const int &cursor_x, const int &cursor_y);
 
     // +----------------------------------+
     // + Board functions                  +
@@ -455,15 +452,15 @@ class Board {
      *
      * @param file_name the name of the YAML file.
      */
-    void load(const std::string &file_name);  // This will use a file - of type
-                                              // .json preferrably
+    void load(const std::string &file_name); // This will use a file - of type
+                                             // .json preferrably
 
     /**
      * Saves the board into a YAML file.
      *
      * @param file_name into a YAML file.
      */
-    void save(const std::string &file_name);  // Save
+    void save(const std::string &file_name); // Save
 
     /**
      * Checks if the board has no tiles or gates.
@@ -520,7 +517,7 @@ class Board {
      * @param r the rotation to apply to the tile.
      */
     void rotateTiles(const std::string &color,
-                     const Rotation &r);  // Rotate all tiles on board
+                     const Rotation &r); // Rotate all tiles on board
 
     /**
      * Checks if the cursor is on the goal.
@@ -540,4 +537,4 @@ class Board {
     ~Board();
 };
 
-}  // namespace pone
+} // namespace pone

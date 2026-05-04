@@ -1,5 +1,5 @@
 /*   Created:  2025-10-06
- *   Modified: 2026-04-08
+ *   Modified: 2026-05-04
  */
 
 #pragma once
@@ -9,24 +9,21 @@
 
 namespace pone {
 
-template <typename T>
-class Node {
+template <typename T> class Node {
     T m_data;
     Node *m_next;
 
-   public:
+  public:
     Node(const T &data, Node *next) : m_data{data}, m_next{next} {}
 };
 
-template <typename T>
-class LinkedList {
-   public:
+template <typename T> class LinkedList {
+  public:
     LinkedList();
     ~LinkedList();
 };
 
-template <typename T>
-class UnsortedLinkedList : public LinkedList<T> {
+template <typename T> class UnsortedLinkedList : public LinkedList<T> {
     Node<T> *m_head, m_tail;
     std::size_t m_size;
 
@@ -50,13 +47,11 @@ template <typename T>
 UnsortedLinkedList<T>::UnsortedLinkedList()
     : m_head{nullptr}, m_tail{nullptr}, m_size{0} {}
 
-template <typename T>
-bool UnsortedLinkedList<T>::empty() const {
+template <typename T> bool UnsortedLinkedList<T>::empty() const {
     return m_size <= 0;
 }
 
-template <typename T>
-void UnsortedLinkedList<T>::insert(const T &data) {
+template <typename T> void UnsortedLinkedList<T>::insert(const T &data) {
     if (empty()) {
         m_head = m_tail = new Node<T>{data, m_tail};
     } else {
@@ -77,8 +72,7 @@ Node<T> *UnsortedLinkedList<T>::find(const T &data) const {
     return nullptr;
 }
 
-template <typename T>
-void UnsortedLinkedList<T>::remove(const T &data) {
+template <typename T> void UnsortedLinkedList<T>::remove(const T &data) {
     Node<T> *tmp, *curr, *prev;
 
     if (m_head == nullptr) {
@@ -94,7 +88,7 @@ void UnsortedLinkedList<T>::remove(const T &data) {
     for (curr = m_head->next, prev = m_head; curr != nullptr;
          curr = curr->next) {
         if (curr->data == data) {
-            tmp        = curr;
+            tmp = curr;
             prev->next = curr->next;
             delete tmp;
             --m_size;
@@ -103,13 +97,11 @@ void UnsortedLinkedList<T>::remove(const T &data) {
     }
 }
 
-template <typename T>
-std::size_t UnsortedLinkedList<T>::size() const {
+template <typename T> std::size_t UnsortedLinkedList<T>::size() const {
     return m_size;
 }
 
-template <typename T>
-T &UnsortedLinkedList<T>::operator[](std::size_t idx) {
+template <typename T> T &UnsortedLinkedList<T>::operator[](std::size_t idx) {
     Node<T> *curr;
     std::size_t i;
 
@@ -119,7 +111,7 @@ T &UnsortedLinkedList<T>::operator[](std::size_t idx) {
         }
     }
 
-    throw std::runtime_error("");  // TODO: Replace with OutOfBoundsException
+    throw std::runtime_error(""); // TODO: Replace with OutOfBoundsException
 }
 
 template <typename T>
@@ -133,7 +125,7 @@ const T &UnsortedLinkedList<T>::operator[](std::size_t idx) const {
         }
     }
 
-    throw std::runtime_error("");  // TODO: Replace with OutOfBoundsException
+    throw std::runtime_error(""); // TODO: Replace with OutOfBoundsException
 }
 
-}  // namespace pone
+} // namespace pone
