@@ -1,5 +1,5 @@
 /*   Created:  2025-07-23
- *   Modified: 2026-05-04
+ *   Modified: 2026-05-08
  */
 
 #include "yaml_tokenizer.hpp"
@@ -319,17 +319,17 @@ GroupToken::~GroupToken() {}
 
 Tokenizer::Tokenizer()
     : m_fileName{""}, m_ifs{""}, m_size{0}, m_buf{""}, m_endOfFile{false} {
-    insertGroupToken(Token::Type::Root);
+    insertGroupToken(Token::Type::ROOT);
 }
 
 Tokenizer::Tokenizer(const std::string &fileName)
     : m_fileName{fileName}, m_ifs{fileName}, m_size{0}, m_buf{""},
       m_endOfFile{false} {
-    insertGroupToken(Token::Type::Root);
+    insertGroupToken(Token::Type::ROOT);
 }
 
 void Tokenizer::backslash() {
-    insertSingleToken(Token::Type::Backslash);
+    insertSingleToken(Token::Type::BACKSLASH);
 }
 
 void Tokenizer::clearBuf() {
@@ -337,11 +337,11 @@ void Tokenizer::clearBuf() {
 }
 
 void Tokenizer::colon() {
-    insertSingleToken(Token::Type::Colon);
+    insertSingleToken(Token::Type::COLON);
 }
 
 void Tokenizer::comma() {
-    insertSingleToken(Token::Type::Comma);
+    insertSingleToken(Token::Type::COMMA);
 }
 
 void Tokenizer::comment() {
@@ -352,7 +352,7 @@ void Tokenizer::comment() {
     }
 
     std::shared_ptr<GroupToken> commentToken =
-        createGroupToken(Token::Type::Comment); // Allocate the pointer
+        createGroupToken(Token::Type::COMMENT); // Allocate the pointer
 
     groupStack.push(commentToken);
 
@@ -413,11 +413,11 @@ std::shared_ptr<SingleToken> Tokenizer::createSingleToken(SingleToken &stok) {
 }
 
 void Tokenizer::dash() {
-    insertSingleToken(Token::Type::Dash);
+    insertSingleToken(Token::Type::DASH);
 }
 
 void Tokenizer::doubleQuote() {
-    insertSingleToken(Token::Type::DoubleQuote);
+    insertSingleToken(Token::Type::DOUBLEQUOTE);
 }
 
 void Tokenizer::escape() {
@@ -442,11 +442,11 @@ const std::shared_ptr<Token> &Tokenizer::getTokens() const {
 }
 
 void Tokenizer::indent() {
-    GroupToken indentToken{groupStack.top(), Token::Type::Indent};
+    GroupToken indentToken{groupStack.top(), Token::Type::INDENT};
 
     // Indents comprise of only spaces
     for (int i = 0; i < m_indent && m_char == ' '; ++i) {
-        indentToken.insert(createSingleToken(Token::Type::Space));
+        indentToken.insert(createSingleToken(Token::Type::SPACE));
     }
 
     insertGroupToken(createGroupToken(indentToken));
@@ -568,7 +568,7 @@ void Tokenizer::key() {
         throw EmptyGroupStackException(emsg_1);
     }
 
-    std::shared_ptr<GroupToken> keyToken = createGroupToken(Token::Type::Key);
+    std::shared_ptr<GroupToken> keyToken = createGroupToken(Token::Type::KEY);
 
     groupStack.push(keyToken);
 
@@ -601,11 +601,11 @@ void Tokenizer::key() {
 }
 
 void Tokenizer::leftBrace() {
-    insertSingleToken(Token::Type::LeftBrace);
+    insertSingleToken(Token::Type::LEFTBRACE);
 }
 
 void Tokenizer::leftBracket() {
-    insertSingleToken(Token::Type::LeftBracket);
+    insertSingleToken(Token::Type::LEFTBRACKET);
 }
 
 void Tokenizer::literal() {
@@ -669,7 +669,7 @@ void Tokenizer::mapping() {
 }
 
 void Tokenizer::newline() {
-    insertSingleToken(Token::Type::Newline);
+    insertSingleToken(Token::Type::NEWLINE);
 }
 
 void Tokenizer::next() {
@@ -683,11 +683,11 @@ void Tokenizer::next() {
 }
 
 void Tokenizer::numSign() {
-    insertSingleToken(Token::Type::NumSign);
+    insertSingleToken(Token::Type::NUMSIGN);
 }
 
 void Tokenizer::otherSymbols() {
-    insertSingleToken(Token::Type::Symbol);
+    insertSingleToken(Token::Type::SYMBOL);
 }
 
 void Tokenizer::print(std::ostream &out) const {
@@ -704,7 +704,7 @@ void Tokenizer::quoted() {
     }
 
     std::shared_ptr<GroupToken> quotedToken =
-        createGroupToken(Token::Type::Quoted);
+        createGroupToken(Token::Type::QUOTED);
 
     groupStack.push(quotedToken);
 
@@ -732,11 +732,11 @@ void Tokenizer::quoted() {
 }
 
 void Tokenizer::rightBrace() {
-    insertSingleToken(Token::Type::RightBrace);
+    insertSingleToken(Token::Type::RIGHTBRACE);
 }
 
 void Tokenizer::rightBracket() {
-    insertSingleToken(Token::Type::RightBracket);
+    insertSingleToken(Token::Type::RIGHTBRACKET);
 }
 
 void Tokenizer::scalar() {
@@ -752,7 +752,7 @@ void Tokenizer::scalar() {
         }
     }
 
-    insertSingleToken(createSingleToken(Token::Type::Scalar, std::move(m_buf)));
+    insertSingleToken(createSingleToken(Token::Type::SCALAR, std::move(m_buf)));
     clearBuf(); // Clear the buffer after creating the token
 }
 
@@ -764,7 +764,7 @@ void Tokenizer::sequence() {
     }
 
     std::shared_ptr<GroupToken> seqToken =
-        createGroupToken(Token::Type::Sequence);
+        createGroupToken(Token::Type::SEQUENCE);
 
     groupStack.push(seqToken);
 
@@ -806,7 +806,7 @@ void Tokenizer::seqElement() {
     }
 
     std::shared_ptr<GroupToken> seqElemToken =
-        createGroupToken(Token::Type::SeqElement); // Create the token
+        createGroupToken(Token::Type::SEQELEMENT); // Create the token
 
     groupStack.push(seqElemToken);
 
@@ -825,7 +825,7 @@ void Tokenizer::seqElement() {
 }
 
 void Tokenizer::singleQuote() {
-    insertSingleToken(Token::Type::SingleQuote);
+    insertSingleToken(Token::Type::SINGLEQUOTE);
 }
 
 void Tokenizer::sym() {
@@ -879,11 +879,11 @@ void Tokenizer::sym() {
 }
 
 void Tokenizer::space() {
-    insertSingleToken(Token::Type::Space);
+    insertSingleToken(Token::Type::SPACE);
 }
 
 void Tokenizer::tab() {
-    insertSingleToken(Token::Type::Tab);
+    insertSingleToken(Token::Type::TAB);
 }
 
 void Tokenizer::tokenize() {
@@ -909,7 +909,7 @@ void Tokenizer::tokenize() {
 
 void Tokenizer::value() {
     std::shared_ptr<GroupToken> valueToken =
-        createGroupToken(Token::Type::Value);
+        createGroupToken(Token::Type::VALUE);
     groupStack.push(valueToken);
 
     if (m_char == '-') {
