@@ -1,5 +1,5 @@
 /* Created:  2026-05-23
- * Modified: 2026-05-23
+ * Modified: 2026-05-24
  */
 
 #include "toml_token.hpp"
@@ -98,7 +98,7 @@ std::shared_ptr<Token> SingleToken::clone(std::shared_ptr<Token> parent) const {
         root->setParent(parent);
         return root;
     } catch (const std::bad_alloc &e) {
-        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_CLONE,
+        ErrorMessage emsg{name::TOML_GLOBAL_NAMESPACE, name::TOKEN_CLONE,
                           "Failed to allocate a SingleToken."};
         throw FailedAllocException(emsg);
     }
@@ -116,7 +116,7 @@ std::shared_ptr<Token> SingleToken::getPtr() const {
     try {
         return std::static_pointer_cast<Token>(shared_from_this());
     } catch (const std::bad_weak_ptr &e) {
-        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_GETPTR,
+        ErrorMessage emsg{name::TOML_GLOBAL_NAMESPACE, name::TOKEN_GETPTR,
                           "Failed to allocate a pointer to SingleToken"};
         throw FailedAllocException(emsg);
     }
@@ -179,7 +179,7 @@ GroupToken &GroupToken::operator=(GroupToken &&other) noexcept {
 void GroupToken::clear() {
     for (const auto &token : m_tokens) {
         if (token == nullptr) {
-            ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_CLEAR,
+            ErrorMessage emsg{name::TOML_GLOBAL_NAMESPACE, name::TOKEN_CLEAR,
                               "Received nullptr at this "
                               "function."};
             throw NullTokenException(emsg);
@@ -211,7 +211,7 @@ const std::vector<std::shared_ptr<Token>> &GroupToken::getTokens() const {
 
 void GroupToken::insert(std::shared_ptr<Token> token) {
     if (token == nullptr) {
-        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_INSERT,
+        ErrorMessage emsg{name::TOML_GLOBAL_NAMESPACE, name::TOKEN_INSERT,
                           "Received nullptr at this "
                           "function."};
 
@@ -231,10 +231,10 @@ void GroupToken::release() {
         return;
     } else if (m_parent->getClass() == Token::Class::SINGLE) {
         ErrorMessage emsg{
-            name::YAML_GLOBAL_NAMESPACE, name::TOKEN_RELEASE,
+            name::TOML_GLOBAL_NAMESPACE, name::TOKEN_RELEASE,
             std::format(
                 "Attempted to parse {}GroupToken but received {}SingleToken.",
-                name::YAML_GLOBAL_NAMESPACE, name::YAML_GLOBAL_NAMESPACE)};
+                name::TOML_GLOBAL_NAMESPACE, name::TOML_GLOBAL_NAMESPACE)};
         throw NotAGroupException(emsg);
     }
 
@@ -262,7 +262,7 @@ std::shared_ptr<Token> GroupToken::getPtr() const {
     try {
         return std::static_pointer_cast<Token>(shared_from_this());
     } catch (const std::bad_weak_ptr &e) {
-        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_GETPTR,
+        ErrorMessage emsg{name::TOML_GLOBAL_NAMESPACE, name::TOKEN_GETPTR,
                           "Failed to allocate a pointer to "
                           "GroupToken."};
         throw FailedAllocException(emsg);
@@ -298,7 +298,7 @@ void GroupToken::print(std::ostream &out, std::vector<std::string> &indent,
 
 void GroupToken::setParent(const std::shared_ptr<Token> &parent) {
     if (parent == getPtr()) {
-        ErrorMessage emsg{name::YAML_GLOBAL_NAMESPACE, name::TOKEN_SETPARENT,
+        ErrorMessage emsg{name::TOML_GLOBAL_NAMESPACE, name::TOKEN_SETPARENT,
                           "Attempted to set a GroupToken's parent to "
                           "itself."};
         throw SelfParentInsertionException(emsg);

@@ -9,7 +9,7 @@
 #include <string>
 #include <string_view>
 
-namespace pone::YAML {
+namespace pone::TOML {
 // NOTE: string views should be converted to std::string
 //       whenever possible
 
@@ -142,7 +142,7 @@ class FailedAllocException : public TokenizerException {
 
 /* Exception thrown for an invalid Token::Key.
  *
- * @sa TokenizerException, pone::YAML::Token::Key
+ * @sa TokenizerException, pone::TOML::Token::Key
  */
 class InvalidKeyException : public TokenizerException {
   public:
@@ -160,7 +160,7 @@ class InvalidKeyException : public TokenizerException {
     InvalidKeyException(const ErrorMessage &e);
 };
 
-/* Exception thrown for an invalid YAML mapping.
+/* Exception thrown for an invalid TOML mapping.
  *
  * @note A mapping is defined as a key-value pair.
  * @sa TokenizerException
@@ -181,7 +181,7 @@ class InvalidMappingException : public TokenizerException {
     InvalidMappingException(const ErrorMessage &e);
 };
 
-/* Exception thrown for an invalid YAML sequence.
+/* Exception thrown for an invalid TOML sequence.
  *
  * @note A sequence is defined as a list with elements
  *       separated by hyphens.
@@ -203,7 +203,7 @@ class InvalidSequenceException : public TokenizerException {
     InvalidSequenceException(const ErrorMessage &e);
 };
 
-/* Exception thrown for an invalid YAML value.
+/* Exception thrown for an invalid TOML value.
  *
  * @sa TokenizerException
  */
@@ -225,7 +225,7 @@ class InvalidValueException : public TokenizerException {
 
 /* Exception thrown when a non-Group token is passed as a value.
  *
- * @sa TokenizerException, pone::YAML::Token::Class::Group
+ * @sa TokenizerException, pone::TOML::Token::Class::Group
  */
 class NotAGroupException : public TokenizerException {
   public:
@@ -245,7 +245,7 @@ class NotAGroupException : public TokenizerException {
 
 /* Exception thrown when a non-Single token is passed as a value.
  *
- * @sa TokenizerException, pone::YAML::Token::Class::Single
+ * @sa TokenizerException, pone::TOML::Token::Class::Single
  */
 class NotASingleException : public TokenizerException {
   public:
@@ -285,7 +285,7 @@ class NullTokenException : public TokenizerException {
 
 /* Exception thrown if a token with type Token::Root cannot be found.
  *
- * @sa TokenizerException, pone::YAML::Token::Type::Root
+ * @sa TokenizerException, pone::TOML::Token::Type::Root
  */
 class RootNotFoundException : public TokenizerException {
   public:
@@ -325,4 +325,4 @@ class SelfParentInsertionException : public TokenizerException {
     SelfParentInsertionException(const ErrorMessage &e);
 };
 
-} // namespace pone::YAML
+} // namespace pone::TOML

@@ -1,5 +1,5 @@
 /* Created:  2026-05-23
- * Modified: 2026-05-23
+ * Modified: 2026-05-24
  */
 
 #pragma once
@@ -178,7 +178,11 @@ class Tokenizer {
      */
     void key();
 
-    /* Processes a left bracket Token.
+    /* Processes a left brace ({) token.
+     */
+    void leftBrace();
+
+    /* Processes a left bracket ([) token.
      */
     void leftBracket();
 
@@ -219,6 +223,10 @@ class Tokenizer {
      */
     void quoted();
 
+    /* Processes a right brace ({) token.
+     */
+    void rightBrace();
+
     /* Processes a right bracket ([) token.
      */
     void rightBracket();
@@ -229,7 +237,7 @@ class Tokenizer {
 
     /* Processes a table token.
      */
-    void singleQuote();
+    void table();
 
     /* Processes a value token.
      */

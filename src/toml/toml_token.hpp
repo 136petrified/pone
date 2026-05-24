@@ -1,11 +1,12 @@
 /* Created:  2026-05-23
- * Modified: 2026-05-23
+ * Modified: 2026-05-24
  */
 
 #pragma once
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 namespace pone::TOML {
@@ -22,18 +23,50 @@ class Token : public std::enable_shared_from_this<Token> {
         COMMA,
         COMMENT,
         DOUBLE_QUOTE,
+        KEY,
+        LEFT_BRACE,
         LEFT_BRACKET,
         LITERAL,
         MAPPING,
+        NONE,
         NL,
         NUMSIGN,
         QUOTED,
+        RIGHT_BRACE,
         RIGHT_BRACKET,
         ROOT,
         SINGLE_QUOTE,
         TABLE,
+        VALUE,
         WS,
     };
+
+    /* The total size of the token types. */
+    static const int ALL_TOKENS_SIZE = 20;
+
+    /* Map of Types to its string name. */
+    std::unordered_map<Type, std::string> tokenNameMap = {
+        {Type::ARRAY, "Array"},
+        {Type::ASSIGN, "Assign"},
+        {Type::COMMA, "Comma"},
+        {Type::COMMENT, "Comment"},
+        {Type::DOUBLE_QUOTE, "DoubleQuote"},
+        {Type::KEY, "Key"},
+        {Type::LEFT_BRACE, "LeftBrace"},
+        {Type::LEFT_BRACKET, "LeftBracket"},
+        {Type::LITERAL, "Literal"},
+        {Type::MAPPING, "Mapping"},
+        {Type::NL, "Newline"},
+        {Type::NONE, "None"},
+        {Type::NUMSIGN, "NumSign"},
+        {Type::QUOTED, "Quoted"},
+        {Type::RIGHT_BRACE, "RightBrace"},
+        {Type::RIGHT_BRACKET, "RightBracket"},
+        {Type::ROOT, "Root"},
+        {Type::SINGLE_QUOTE, "SingleQuote"},
+        {Type::TABLE, "Table"},
+        {Type::VALUE, "Value"},
+        {Type::WS, "Whitespace"}};
 
     enum class Class { GROUP, SINGLE };
 
